@@ -157,12 +157,11 @@ export default function PropertyForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem key="val1" value="val1">
-                        val1
-                      </SelectItem>
-                      <SelectItem key="val2" value="val2">
-                        val2
-                      </SelectItem>
+                      {Object.keys(PropertyTypeValues).map((key) => (
+                        <SelectItem key={key} value={key}>
+                          {PropertyTypeValues[key].svalue}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
