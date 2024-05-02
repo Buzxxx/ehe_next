@@ -158,8 +158,8 @@ export default function PropertyForm({
                     </FormControl>
                     <SelectContent>
                       {Object.keys(PropertyTypeValues).map((key) => (
-                        <SelectItem key={key} value={key.toString()}>
-                          {PropertyTypeValues[key].svalue.toString()}
+                        <SelectItem key={key} value={key}>
+                          {PropertyTypeValues[key].svalue}
                         </SelectItem>
                       ))}
                     </SelectContent>
