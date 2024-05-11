@@ -1,9 +1,4 @@
-import {
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -69,7 +64,7 @@ export default function AddressForm({
               name="addressNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street number</FormLabel>
+                  <FormLabel>Property Street number</FormLabel>
                   <FormControl>
                     <Input placeholder="Street number" {...field} />
                   </FormControl>
@@ -84,7 +79,7 @@ export default function AddressForm({
               name="addressStreetname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street name</FormLabel>
+                  <FormLabel>Property Street name</FormLabel>
                   <FormControl>
                     <Input placeholder="Street Name" {...field} />
                   </FormControl>
