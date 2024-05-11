@@ -6,7 +6,7 @@ const Links = {
 };
 
 const APIENDPOINTS = {
-  ownerInventoryEndpoint: "http://localhost:8000/inventory",
+  ownerInventoryEndpoint: "https://www.eheindustries.com/inventory",
 };
 
 export { Links, APIENDPOINTS };
