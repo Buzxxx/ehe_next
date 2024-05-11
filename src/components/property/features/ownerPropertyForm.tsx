@@ -20,6 +20,9 @@ type OwnerPropertySchema = {
   ownerEmail: string;
   propertyName: string;
   propertyType: string;
+  plotIsCorner: boolean;
+  plotFacing: string;
+  propertyFurnishing: string;
   propertySize: string;
   propertyBHK: string;
   propertyCategory: string;
@@ -39,6 +42,9 @@ const DefaultValues = {
   ownerEmail: "19avijha@gmail.com",
   propertyName: "whitefield",
   propertyType: "apartment",
+  plotIsCorner: false,
+  plotFacing: "",
+  propertyFurnishing: "",
   propertySize: "",
   propertyBHK: "",
   propertyCategory: "rent",
@@ -67,7 +73,7 @@ export default function LandlordForm() {
 
   async function handelSubmit(updatedForm: OwnerPropertySchema) {
     if (handleNextStep()) {
-      //SetIsLoading(true);
+      SetIsLoading(true);
       try {
         const response = await fetch(APIENDPOINTS.ownerInventoryEndpoint, {
           method: "POST",
@@ -80,7 +86,7 @@ export default function LandlordForm() {
         if (response.ok) {
           console.log(response);
           SetIsLoading(false);
-          //SetIsSuccess(true);
+          SetIsSuccess(true);
         } else {
           // Handle error response
           SetIsLoading(false);
@@ -92,7 +98,6 @@ export default function LandlordForm() {
         SetIsLoading(false);
         SetIsSuccess(false);
       }
-      console.log(updatedForm);
     }
   }
 

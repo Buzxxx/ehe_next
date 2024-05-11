@@ -31,12 +31,16 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   propertyName: z
     .string()
     .min(4, { message: "Property Name must be at least 4 characters." }),
   propertyType: z.string(),
+  propertyFurnishing: z.string(),
+  plotFacing: z.string(),
+  plotIsCorner: z.boolean().default(false),
   propertySize: z.string(),
   propertyBHK: z.string().max(2, "Invalid BHK"),
   propertyCategory: z.string(),
@@ -55,6 +59,9 @@ type UpdateForm = z.infer<typeof formSchema> & {
 export default function PropertyForm({
   propertyName,
   propertyType,
+  propertyFurnishing,
+  plotFacing,
+  plotIsCorner,
   propertySize,
   propertyBHK,
   propertyCategory,
@@ -66,11 +73,15 @@ export default function PropertyForm({
 }: UpdateForm) {
   const [isPropertyBHK, SetIsPropertyBHK] = useState(true);
   const [isRent, SetIsRent] = useState(true);
+  const [isfurnishingType, SetFurnishingType] = useState(true);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       propertyName: propertyName,
       propertyType: propertyType,
+      propertyFurnishing: propertyFurnishing,
+      plotFacing: plotFacing,
+      plotIsCorner: plotIsCorner,
       propertySize: propertySize,
       propertyBHK: propertyBHK,
       propertyCategory: propertyCategory,
@@ -85,6 +96,9 @@ export default function PropertyForm({
     updateFields({
       propertyName: values.propertyName,
       propertyType: values.propertyType,
+      propertyFurnishing: values.propertyFurnishing,
+      plotFacing: values.plotFacing,
+      plotIsCorner: values.plotIsCorner,
       propertySize: values.propertySize,
       propertyBHK: values.propertyBHK,
       propertyCategory: values.propertyCategory,
@@ -96,12 +110,12 @@ export default function PropertyForm({
   }
 
   const PropertyTypeValues: {
-    [key: string]: { svalue: string; BHK: boolean };
+    [key: string]: { svalue: string; BHK: boolean; furnishing: boolean };
   } = {
-    apartment: { svalue: "Apartment", BHK: true },
-    individual: { svalue: "Individual house", BHK: true },
-    plot: { svalue: "Plot", BHK: false },
-    commercial: { svalue: "Commercial", BHK: false },
+    apartment: { svalue: "Apartment", BHK: true, furnishing: true },
+    individual: { svalue: "Individual house", BHK: true, furnishing: true },
+    plot: { svalue: "Plot", BHK: false, furnishing: false },
+    commercial: { svalue: "Commercial", BHK: false, furnishing: true },
   };
 
   function dynamicCategory(e: string) {
@@ -114,6 +128,7 @@ export default function PropertyForm({
 
   function dynamicType(e: string) {
     SetIsPropertyBHK(PropertyTypeValues[e].BHK);
+    SetFurnishingType(PropertyTypeValues[e].furnishing);
   }
 
   return (
@@ -142,7 +157,7 @@ export default function PropertyForm({
               name="propertyType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Type</FormLabel>
+                  <FormLabel>Property Type</FormLabel>
                   <Select
                     required
                     onValueChange={(e) => {
@@ -153,7 +168,7 @@ export default function PropertyForm({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Select a Property Type" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -168,6 +183,101 @@ export default function PropertyForm({
                 </FormItem>
               )}
             />
+            {isfurnishingType ? (
+              <FormField
+                control={form.control}
+                name="propertyFurnishing"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Furnishing</FormLabel>
+                    <Select
+                      defaultValue={field.value}
+                      onValueChange={(e) => {
+                        field.onChange(e);
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Please select the level of furnishing" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Unfurnished">Unfurnished</SelectItem>
+                        <SelectItem value="Fully Furnished">
+                          Fully-Furnished
+                        </SelectItem>
+                        <SelectItem value="Semi Furnished">
+                          Semi Furnished
+                        </SelectItem>
+                        <SelectItem value="Serviced Space">
+                          Serviced Space
+                        </SelectItem>
+                        <SelectItem value="Luxury Furnished">
+                          Luxury Furnished
+                        </SelectItem>
+                        <SelectItem value="Corporate Space">
+                          Corporate Space
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <>
+                <FormField
+                  control={form.control}
+                  name="plotFacing"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        defaultValue={field.value}
+                        onValueChange={(e) => {
+                          field.onChange(e);
+                        }}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Please select Plot Facing" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="East">East</SelectItem>
+                          <SelectItem value="West">West</SelectItem>
+                          <SelectItem value="North">North</SelectItem>
+                          <SelectItem value="South">South</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="plotIsCorner"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Corner Plot</FormLabel>
+                        <FormDescription>
+                          Use the checkbox to specify if your plot is located at
+                          a corner.
+                        </FormDescription>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
+
             <FormField
               control={form.control}
               name="propertySize"
@@ -229,6 +339,7 @@ export default function PropertyForm({
                 </FormItem>
               )}
             />
+
             {isRent ? (
               <>
                 <FormField
@@ -269,7 +380,7 @@ export default function PropertyForm({
                     <FormControl>
                       <Input type="number" placeholder="₹ 5000000" {...field} />
                     </FormControl>
-                    <FormDescription>Without regist</FormDescription>
+                    <FormDescription>Without registration</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
