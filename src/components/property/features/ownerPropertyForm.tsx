@@ -1,12 +1,12 @@
 "use client";
 
 import { Card, CardFooter } from "@/components/ui/card";
-import OwnerForm from "./ownerForm";
-import PropertyForm from "./propertyForm";
+import OwnerForm from "@/components/property/features/ownerForm";
+import PropertyForm from "@/components/property/features/propertyForm";
 import React, { useState } from "react";
 import MultiStepForm from "../layout/Multi-Step-Form/formNavHandler";
 import { Separator } from "@/components/ui/separator";
-import AddressForm from "./addressForm";
+import AddressForm from "@/components/property/features/addressForm";
 import { Progress } from "@/components/ui/progress";
 import BackIcon from "../ui/icons/back";
 import Spinner from "../ui/icons/spinner";
