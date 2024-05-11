@@ -1,12 +1,12 @@
 "use client";
 
 import { Card, CardFooter } from "@/components/ui/card";
-import OwnerForm from "./OwnerForm";
-import PropertyForm from "./PropertyForm";
+import OwnerForm from "./ownerForm";
+import PropertyForm from "./propertyForm";
 import React, { useState } from "react";
 import MultiStepForm from "../layout/Multi-Step-Form/formNavHandler";
 import { Separator } from "@/components/ui/separator";
-import AddressForm from "./AddressForm";
+import AddressForm from "./addressForm";
 import { Progress } from "@/components/ui/progress";
 import BackIcon from "../ui/icons/back";
 import Spinner from "../ui/icons/spinner";
@@ -97,9 +97,13 @@ export default function LandlordForm() {
   }
 
   const { handleNextStep, element, handleBackStep, progress } = MultiStepForm([
-    <OwnerForm {...formData} updateFields={updateFields} />,
-    <PropertyForm {...formData} updateFields={updateFields} />,
-    <AddressForm {...formData} updateFields={updateFields} />,
+    <OwnerForm key="OwnerForm" {...formData} updateFields={updateFields} />,
+    <PropertyForm
+      key="PropertyForm"
+      {...formData}
+      updateFields={updateFields}
+    />,
+    <AddressForm key="AddressForm" {...formData} updateFields={updateFields} />,
   ]);
 
   return (
