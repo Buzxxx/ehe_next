@@ -4,14 +4,14 @@ import { Card, CardFooter } from "@/components/ui/card";
 import OwnerForm from "@/components/property/features/ownerForm";
 import PropertyForm from "@/components/property/features/propertyForm";
 import React, { useState } from "react";
-import MultiStepForm from "../layout/Multi-Step-Form/formNavHandler";
+import MultiStepForm from "@/components/property/layout/Multi-Step-Form/formNavHandler";
 import { Separator } from "@/components/ui/separator";
 import AddressForm from "@/components/property/features/addressForm";
 import { Progress } from "@/components/ui/progress";
-import BackIcon from "../ui/icons/back";
-import Spinner from "../ui/icons/spinner";
-import OverlayLoading from "../layout/overlayLoading";
-import Success from "../layout/Multi-Step-Form/success";
+import BackIcon from "@/components/ui/icons/back";
+import Spinner from "@/components/ui/icons/spinner";
+import OverlayLoading from "@/components/property/layout/overlayLoading";
+import Success from "@/components/property/layout/Multi-Step-Form/success";
 import { APIENDPOINTS } from "@/lib/constant";
 
 type OwnerPropertySchema = {
