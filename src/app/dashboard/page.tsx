@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     
-      <div className=" bg-blue-50 text-center mx-auto">
+      <div className=" bg-blue-50 text-center mx-auto min-h-full">
         <div className="flex justify-center md:pt-10">
           <h2>
             If you are not redirected to our homepage automatically, please

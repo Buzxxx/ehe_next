@@ -1,0 +1,25 @@
+"use client";
+
+import React, { ReactNode, useState } from "react"; // import "./globals.css";
+
+import DashboardSideMenu from "@/components/dashboard/feature/sideBar";
+import DashboardHeader from "@/components/dashboard/feature/dashboardHeader";
+
+const DashboardLayout = ({ children }: { children: ReactNode }) => {
+  const [toggled, setToggled] = useState(false);
+  const [online, setOnline] = useState(true);
+
+  const handleToggle = () => {
+    setToggled(!toggled);
+  };
+
+  return (
+    <div className="min-h-full">
+      <DashboardHeader onNext={handleToggle} />
+      <DashboardSideMenu toggled={toggled} online={online} />
+      <div className={`${toggled ? "ml-64" : "ml-0"} transition-all duration-300 min-h-96 mt-20`}>{children}</div>
+    </div>
+  );
+};
+
+export default DashboardLayout;

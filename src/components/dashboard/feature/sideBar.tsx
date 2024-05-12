@@ -10,10 +10,10 @@ const DashboardSideMenu = ({
   online?: boolean;
 }) => {
   return (
-    <div
+    <aside
       className={`${
-        toggled ? "w-64 py-2" : "w-0 p-0"
-      } overflow-hidden flex flex-col bg-zinc-800 items-center transition-all h-screen`}
+        toggled ? "translate-x-0" : "-translate-x-64"
+      } overflow-hidden fixed top-0 w-64 left-0 pt-14 flex flex-col bg-zinc-800 items-center transition-all text-nowrap duration-300 h-screen`}
     >
       <div className="flex gap-3 items-center justify-start w-full px-4 ">
         <div className="text-white text-left flex flex-col">
@@ -26,7 +26,7 @@ const DashboardSideMenu = ({
         <p>MAIN NAVIGATION</p>
       </div>
       <SideNavMenu />
-    </div>
+    </aside>
   );
 };
 

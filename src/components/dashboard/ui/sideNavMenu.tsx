@@ -4,7 +4,7 @@ import dashboardItems from "../library/dashboardItems";
 
 const SideNavMenu = () => {
   return (
-    <div className="w-full">
+    <div className="w-full text-nowrap ">
       <ul className="text-neutral-300 text-sm">
         {dashboardItems.map((item) => (
           <SideNavItem
