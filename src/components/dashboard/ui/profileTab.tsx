@@ -11,18 +11,20 @@ interface ProfileTabProps {
   avatarClass?: string;
   className?: string;
   children?: ReactElement | null;
+  profileNameTag?: string;
 }
 
 const ProfileTab: React.FC<ProfileTabProps> = ({
   user = { name: "Avinash Jha", img: "/base/profile.webp" },
   avatarClass,
   children,
-  className
+  className,
+  profileNameTag
 }) => {
   return (
-    <div className={`flex items-center justify-around px-3 py-2 gap-2 ${className}`}>
+    <div className={`flex items-center justify-around py-2 gap-2 ${className}`}>
       <Avataar src={user.img} className={avatarClass} />
-      <div className="flex flex-col gap-1">
+      <div className={`flex-col gap-1 ${profileNameTag}`}>
         <p>{user.name}</p>
         <span className="text-xs font-light">{children}</span>
       </div>

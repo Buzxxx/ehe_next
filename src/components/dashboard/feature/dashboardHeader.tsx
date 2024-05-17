@@ -1,13 +1,21 @@
+
+import { Dispatch, SetStateAction } from "react";
 import Notifs from "../ui/notifs";
 import MenuIcon from "@/components/ui/icons/menuIcon";
 import ProfilePopover from "../ui/profilePopover";
 import ProfileTab from "../ui/profileTab";
 
 interface DashboardNavProps {
-  onNext: () => void;
+  toggled: boolean;
+  setToggled?: Dispatch<SetStateAction<boolean>>;
+  onNext: ()=>void
 }
 
-const DashboardHeader: React.FC<DashboardNavProps> = ({ onNext }) => {
+const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
+
+  const handleClick = () => {
+    onNext()
+  };
   return (
     <nav className="flex bg-sky-500 justify-between w-full items-center text-white z-50 fixed top-0">
       <div className="bg-sky-600 min-w-64 h-full py-3 hidden md:block ">
@@ -20,7 +28,7 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({ onNext }) => {
         <div className="flex gap-2 items-center">
           <Notifs />
           <ProfilePopover
-            trigger={<ProfileTab avatarClass="h-8 w-8" className="text-sm" />}
+            trigger={<ProfileTab avatarClass="h-8 w-8" className="text-sm px-3" profileNameTag="md:flex hidden" />}
             src={"./base/profile.webp"}
             className="p-0 rounded-none mr-4"
           />
