@@ -1,5 +1,12 @@
-import ResetPassword from "@/components/accounts/ui/resetPassword"
+import ResetPassword from "@/components/accounts/ui/resetPassword";
 
 export default function Home() {
-  return <ResetPassword />
+  return (
+    <>
+      <h1 className="text-center font-semibold md:text-2xl text-lg mb-4">
+        RESET PASSWORD
+      </h1>
+      <ResetPassword />
+    </>
+  );
 }

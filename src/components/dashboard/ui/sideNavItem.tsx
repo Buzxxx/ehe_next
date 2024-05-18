@@ -24,12 +24,12 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
       {subItems.length ? (
         <div className="relative w-full">
           <span
-            className={`hover:border-l-4 border-sky-600 px-4 py-3 flex gap-3 relative w-full items-center hover:text-neutral-200 ${
+            className={`hover:border-l-4 border-primary px-4 py-3 flex gap-3 relative w-full items-center hover:text-neutral-200 ${
               openMenu ? "border-l-4 bg-zinc-900" : "border-0"
             }`}
           >
             {icon} {title}
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-sky-600 text-neutral-200 p-1 text-xs rounded-sm">
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-primary text-neutral-200 p-1 text-xs rounded-sm">
               {subItems.length}
             </span>
           </span>
@@ -48,7 +48,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
       ) : (
         <Link
           href={`/${title.toLowerCase()}`}
-          className="hover:border-l-4 border-sky-600 px-4 py-3 flex gap-3 hover:text-neutral-200 w-full"
+          className="hover:border-l-4 border-primary px-4 py-3 flex gap-3 text-neutral-300 hover:text-neutral-200 w-full "
         >
           {icon} {title}
         </Link>

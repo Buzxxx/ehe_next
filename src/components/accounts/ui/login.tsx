@@ -5,8 +5,17 @@ import { z } from "zod";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import InputField from "@/components/accounts/ui/inputField";
 
+// Import dynamic from next/dynamic and InputFieldPlaceholder
+import dynamic from "next/dynamic";
+import InputFieldPlaceholder from "@/components/accounts/ui/inputFieldPlaceholder";
+
+const InputField = dynamic(
+  () => import("@/components/accounts/ui/inputField"),
+  {
+    loading: () => <InputFieldPlaceholder />,
+  }
+);
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -31,13 +40,7 @@ const Login = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full text-sm outline-none shadow-none"
-      >
-        <h1 className="text-center font-semibold text-2xl mb-4">
-          LOGIN
-        </h1>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full text-sm">
         <InputField
           label="Username"
           placeholder="username"
@@ -49,7 +52,10 @@ const Login = () => {
           field={form.register("password")}
           isPassword={true}
         />
-        <Button type="submit" className="mt-4 bg-primary hover:bg-primary-hover py-6 w-full ">
+        <Button
+          type="submit"
+          className="mt-4 bg-primary hover:bg-primary-hover py-6 w-full "
+        >
           Login
         </Button>
         <Link

@@ -1,19 +1,10 @@
-import type { Metadata } from "next";
-import DashboardLayout from "@/components/dashboard/layout/dashboardLayout";
+import React from "react";
+import Dashboard from "@/components/dashboard/layout/dashboard";
 
-export const metadata: Metadata = {
-  title: "EHE Industries",
-  description: "A Real Estate company",
-};
-
-export default function RootLayout({
+export default function DashboardLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="en">
-      <body>
-        <DashboardLayout>{children}</DashboardLayout>
-      </body>
-    </html>
-  );
+}: {
+  children: React.ReactNode;
+}) {
+  return <Dashboard>{children}</Dashboard>;
 }

@@ -34,14 +34,14 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <FormItem>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel className="md:text-sm text-xs">{label}</FormLabel>
       <FormControl>
         <div className={isPassword ? "relative" : ""}>
           <Input
             placeholder={placeholder}
             {...field}
             type={isPassword ? (visible ? "text" : "password") : "text"}
-            className="py-6"
+            className="py-6 mb-2 md:text-sm text-xs"
           />
           {isPassword && (
             <>

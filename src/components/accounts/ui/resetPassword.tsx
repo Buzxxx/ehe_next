@@ -1,11 +1,19 @@
-"use client";
+'use client'
+
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import dynamic from "next/dynamic";
+import { Button } from "@/components/ui/button";
 
-const InputField = dynamic(() => import("@/components/accounts/ui/inputField"));
+// Import dynamic from next/dynamic and InputFieldPlaceholder
+import dynamic from "next/dynamic";
+import InputFieldPlaceholder from "@/components/accounts/ui/inputFieldPlaceholder";
+
+const InputField = dynamic(() => import("@/components/accounts/ui/inputField"), {
+  loading: () => <InputFieldPlaceholder />,
+});
+
 
 const formSchema = z
   .object({
@@ -48,9 +56,7 @@ const ResetPassword = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <h1 className="text-center font-semibold text-2xl mb-4">
-          RESET PASSWORD
-        </h1>
+        
         <InputField
           label="Old Password"
           placeholder="old password"
@@ -72,7 +78,7 @@ const ResetPassword = () => {
 
         <div className="mt-4 text-slate-400 space-y-2 text-sm">
           <p>New password must contain:</p>
-          <ul className="text-sm">
+          <ul className="md:text-sm text-xs">
             <li>- At least 8 characters</li>
             <li>- At least 1 lowercase letter (a-z)</li>
             <li>- At least 1 uppercase letter (A-Z)</li>
@@ -81,16 +87,12 @@ const ResetPassword = () => {
           </ul>
         </div>
         <div className="gap-2 w-fit flex flex-row justify-between mt-4 h-10 items-center">
-          <button type="submit" className="btn-primary">
+          <Button type="submit" className="btn-primary">
             Change
-          </button>
-          <button
-            type="button"
-            className="btn-revert"
-            onClick={handleCancel}
-          >
+          </Button>
+          <Button type="button" className="btn-revert bg-transparent hover:bg-muted" onClick={handleCancel}>
             Cancel
-          </button>
+          </Button>
         </div>
       </form>
     </Form>

@@ -5,7 +5,7 @@ import React, { ReactNode, useState, useEffect } from "react"; // import "./glob
 import DashboardSideMenu from "@/components/dashboard/feature/sideBar";
 import DashboardHeader from "@/components/dashboard/feature/dashboardHeader";
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+const Dashboard = ({ children }: { children: ReactNode }) => {
   const [toggled, setToggled] = useState(false);
   const [online, setOnline] = useState(true);
 
@@ -41,4 +41,4 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default Dashboard;
