@@ -9,6 +9,4 @@ const APIENDPOINTS = {
   ownerInventoryEndpoint: "https://www.eheindustries.com/inventory",
 };
 
-const SECRET_KEY = "alibaba999"
-
-export { Links, APIENDPOINTS, SECRET_KEY };
+export { Links, APIENDPOINTS };

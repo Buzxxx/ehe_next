@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+
+// Import dynamic from next/dynamic and InputFieldPlaceholder
 import dynamic from "next/dynamic";
 import InputFieldPlaceholder from "@/components/accounts/ui/inputFieldPlaceholder";
 
-const InputField = dynamic(
-  () => import("@/components/accounts/ui/inputField"),
-  {
-    loading: () => <InputFieldPlaceholder />,
-  }
-);
+const InputField = dynamic(() => import("@/components/accounts/ui/inputField"), {
+  loading: () => <InputFieldPlaceholder />,
+});
+
 
 const formSchema = z
   .object({
@@ -45,25 +45,8 @@ const ResetPassword = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await fetch("/api/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to reset password");
-      }
-
-      const result = await response.json();
-      console.log("Password reset successful", result);
-    } catch (error) {
-      console.error("Error resetting password", error);
-    }
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
   };
 
   const handleCancel = () => {
@@ -73,25 +56,23 @@ const ResetPassword = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        
         <InputField
-          name="oldPassword"
           label="Old Password"
           placeholder="old password"
-          control={form.control}
+          field={form.register("oldPassword")}
           isPassword={true}
         />
         <InputField
-          name="newPassword"
           label="New Password"
           placeholder="new password"
-          control={form.control}
+          field={form.register("newPassword")}
           isPassword={true}
         />
         <InputField
-          name="confirmPassword"
           label="Confirm New Password"
           placeholder="confirm new password"
-          control={form.control}
+          field={form.register("confirmPassword")}
           isPassword={true}
         />
 
@@ -109,11 +90,7 @@ const ResetPassword = () => {
           <Button type="submit" className="btn-primary">
             Change
           </Button>
-          <Button
-            type="button"
-            className="btn-revert bg-transparent hover:bg-muted/70 duration-500"
-            onClick={handleCancel}
-          >
+          <Button type="button" className="btn-revert bg-transparent hover:bg-muted" onClick={handleCancel}>
             Cancel
           </Button>
         </div>

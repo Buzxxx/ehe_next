@@ -2,7 +2,7 @@ const Settings = ({ height = 20, width = 20 }) => {
 
 
   return (
-    <span className={`relative`}>
+    <g className={`relative`}>
       {/* Larger SVG */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const Settings = ({ height = 20, width = 20 }) => {
           clipRule="evenodd"
         />
       </svg>
-    </span>
+    </g>
   );
 };
 

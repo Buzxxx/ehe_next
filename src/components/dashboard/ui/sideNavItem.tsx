@@ -1,25 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
 
-interface SubItem {
-  title: string;
-  href?: string;
-  onClick?: () => void;
-}
-
 interface SideNavItemProps {
   title: string;
-  subItems: SubItem[];
-  href?: string | null;
+  subItems: string[];
   icon: React.ReactNode;
 }
 
-const SideNavItem: React.FC<SideNavItemProps> = ({
-  title,
-  subItems,
-  icon,
-  href,
-}) => {
+const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const handleItemClick = () => {
@@ -46,21 +34,12 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
             </span>
           </span>
           {openMenu && (
-            <ul className="block bg-zinc-800 pl-8 transition-all pt-2">
+            <ul className="block  bg-zinc-800 pl-8 transition-all pt-2">
               {subItems.map((subItem, index) => (
-                <li key={index} className="px-4 py-2" onClick={subItem.onClick}>
-                  {subItem.href ? (
-                    <Link
-                      href={subItem.href}
-                      className="text-neutral-300 hover:text-neutral-200"
-                    >
-                      {subItem.title}
-                    </Link>
-                  ) : (
-                    <span className="text-neutral-300 hover:text-neutral-200 cursor-pointer">
-                      {subItem.title}
-                    </span>
-                  )}
+                <li key={index} className="px-4 py-1 hover:text-neutral-200">
+                  <Link href={`/${subItem.toLowerCase()}`} className="">
+                    {subItem}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -68,8 +47,8 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
         </div>
       ) : (
         <Link
-          href={href ? href : ""}
-          className="hover:border-l-4 border-primary px-4 py-3 flex gap-3 text-neutral-300 hover:text-neutral-200 w-full"
+          href={`/${title.toLowerCase()}`}
+          className="hover:border-l-4 border-primary px-4 py-3 flex gap-3 text-neutral-300 hover:text-neutral-200 w-full "
         >
           {icon} {title}
         </Link>

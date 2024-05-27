@@ -1,7 +1,6 @@
 "use client";
 
-import React, { ReactNode, useState, useEffect } from "react"; 
-import useAuth from "@/hooks/useAuth";
+import React, { ReactNode, useState, useEffect } from "react"; // import "./globals.css";
 
 import DashboardSideMenu from "@/components/dashboard/feature/sideBar";
 import DashboardHeader from "@/components/dashboard/feature/dashboardHeader";
@@ -24,12 +23,6 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
       }
     }
   }, []);
-
-   const isAuthenticated = useAuth(); // Call the custom hook to get the authentication status
-
-   if (!isAuthenticated) {
-     return null; // Or show a loading spinner
-   }
 
 
 
