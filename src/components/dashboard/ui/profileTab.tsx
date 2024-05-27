@@ -15,7 +15,7 @@ interface ProfileTabProps {
 }
 
 const ProfileTab: React.FC<ProfileTabProps> = ({
-  user = { name: "Avinash Jha", img: "/base/profile.webp" },
+  user = { name: "Avinash Jha", img: "/base/profile.svg" },
   avatarClass,
   children,
   className,
