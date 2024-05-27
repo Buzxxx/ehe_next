@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  box-shadow: none;
-  outline: none;
-  transition: all 300ms ease;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -22,20 +13,15 @@
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
 
-    --primary: 204, 74%, 57%, 100%;
+    --primary: 220.9 39.3% 11%;
     --primary-foreground: 210 20% 98%;
 
-    --secondary: 231, 100%, 70%, 100%;
+    --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
 
-    --tertiary: 165, 94%, 42%;
-    --tertiary-foreground: 152, 69%, 31%;
-
-    --muted: 200 24% 45%;
+    --muted: 220 14.3% 95.9%;
     --muted-foreground: 220 8.9% 46.1%;
-
-    --muted-hover: 210 32% 30%;
-
+    
     --accent: 220 14.3% 95.9%;
     --accent-foreground: 220.9 39.3% 11%;
 
@@ -88,40 +74,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-a {
-  display: block;
-  color: hsl(var(--primary));
-  margin: auto;
-  width: fit-content;
-}
-
-a:hover {
-  color: hsl(var(--secondary));
-}
-
-.btn-primary {
-  background: hsl(var(--primary));
-  padding: 0.5rem 2rem;
-  color: white;
-  border-radius: 4px;
-}
-
-.btn-primary:hover {
-  background: hsl(var(--secondary));
-}
-
-.btn-revert {
-  border: 1px solid;
-  border-color: hsl(var(--muted));
-  padding: 0.5rem 2rem;
-  color: hsl(var(--muted));
-  border-radius: 4px;
-}
-
-.btn-revert:hover {
-  background: hsl(var(--muted));
-  border: hsl(var(--muted-hover));
-  color: white;
 }
