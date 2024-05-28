@@ -22,10 +22,10 @@ const ProfileTab: React.FC<ProfileTabProps> = ({
   profileNameTag
 }) => {
   return (
-    <div className={`flex items-center justify-around py-2 gap-2 ${className}`}>
+    <div className={`flex items-center justify-around py-2 gap-4 ${className}`}>
       <Avataar src={user.img} className={avatarClass} />
       <div className={`flex-col gap-1 ${profileNameTag}`}>
-        <p>{user.name}</p>
+        <p className="mb-2">{user.name}</p>
         <span className="text-xs font-light">{children}</span>
       </div>
     </div>
