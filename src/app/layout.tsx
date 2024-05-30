@@ -8,11 +8,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "EHE Industries",
   description: "A Real Estate company",
-  icons: [
-    { rel: "icon", url: "/static/favicon.ico" },
-    { rel: "apple-touch-icon", url: "/static/favicon.ico" },
-    {rel: "icon", url: "/public/logo.svg" }
-  ],
 };
 
 export default function RootLayout({

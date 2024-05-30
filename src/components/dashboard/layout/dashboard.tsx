@@ -32,8 +32,8 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
       <DashboardSideMenu toggled={toggled} online={online} />
       <div
         className={`${
-          toggled ? "md:ml-64" : "ml-0"
-        } transition-all duration-300 min-h-96 mt-20`}
+          toggled ? "md:ml-56" : "ml-0"
+        } transition-all duration-300 min-h-96 mt-10`}
       >
         {children}
       </div>

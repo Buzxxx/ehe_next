@@ -18,7 +18,7 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
   };
   return (
     <nav className="flex bg-sky-500 justify-between w-full items-center text-white z-50 fixed top-0">
-      <div className="bg-sky-600 min-w-64 h-full py-3 hidden md:block ">
+      <div className="bg-sky-600 min-w-56 h-full py-3 hidden md:block ">
         <h4 className="text-center mx-auto">CRM</h4>
       </div>
       <div className="flex justify-between flex-1 pr-4 items-center">
