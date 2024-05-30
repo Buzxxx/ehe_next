@@ -47,7 +47,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
         </div>
       ) : (
         <Link
-          href={`/${title.toLowerCase()}`}
+          href={`/dashboard/${title.toLowerCase()}`}
           className="hover:border-l-4 border-primary px-4 py-3 flex gap-3 text-neutral-300 hover:text-neutral-200 w-full "
         >
           {icon} {title}

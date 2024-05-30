@@ -1,24 +1,25 @@
+"use client"
 import {
-  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import ChevronDown from "@/components/ui/icons/chevronDown";
-import FilterIcon from "@/components/ui/icons/filterIcon";
-import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-import FilterForm from "./filterForm";
+  DropdownMenu,
+} from "@/components/ui/dropdown-menu"
+import ChevronDown from "@/components/ui/icons/chevronDown"
+import FilterIcon from "@/components/ui/icons/filterIcon"
+import { Badge } from "@/components/ui/badge"
+import { useState } from "react"
+import FilterForm from "./filterForm"
 
 const DashboardTopBar = () => {
-  const [filterVisible, setFilterVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false)
 
   const openCloseFilter = () => {
-    setFilterVisible(!filterVisible);
-  };
+    setFilterVisible(!filterVisible)
+  }
 
   return (
-    <div className="dashboard-top-bar mt-4">
+    <div className="dashboard-top-bar mt-4 relative overflow-x-clip">
       <div className="flex justify-between items-center py-1 pb-050 border-b border-slate-300">
         <form action="/lead/share" method="GET" className="dropdown">
           <DropdownMenu>
@@ -41,7 +42,7 @@ const DashboardTopBar = () => {
             New
           </Badge>
           <Badge variant={"default"} className="">
-            Self
+            User
           </Badge>
 
           <button onClick={openCloseFilter}>
@@ -50,9 +51,13 @@ const DashboardTopBar = () => {
         </div>
       </div>
 
-      <FilterForm className={`${filterVisible ? "filter-form translate-x-0 " : "translate-x-96"}`} />
+      <FilterForm
+        className={`${
+          filterVisible ? "filter-form translate-x-0 " : "translate-x-96"
+        }`}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default DashboardTopBar;
+export default DashboardTopBar

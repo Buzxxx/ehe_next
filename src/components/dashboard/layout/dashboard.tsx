@@ -27,18 +27,18 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <div className="min-h-full">
+    <div className="min-h-full w-100% antialiased ">
       <DashboardHeader toggled={toggled} onNext={handleToggle} />
       <DashboardSideMenu toggled={toggled} online={online} />
-      <div
+      <section
         className={`${
           toggled ? "md:ml-56" : "ml-0"
-        } transition-all duration-300 min-h-96 mt-10`}
+        } transition-all duration-300 min-h-96 mt-10 px-6 py-4`}
       >
         {children}
-      </div>
+      </section>
     </div>
-  );
+  )
 };
 
 export default Dashboard;
