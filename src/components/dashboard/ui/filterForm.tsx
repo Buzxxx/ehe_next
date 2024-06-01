@@ -24,7 +24,7 @@ const FilterForm = ({ className }: { className: string }) => {
     <Form {...form}>
       <form
         method="GET"
-        className={`w-1/4 ml-auto space-y-4 absolute right-0 border-x h-screen border-slate-300 p-4 duration-300 transition-all ${className}`}
+        className={`w-1/4 ml-auto space-y-4 absolute right-0 border-x h-screen border-slate-300 p-4 duration-300 transition-all bg-charcoal-foregroundAccent ${className}`}
       >
         {filterCategories.map((category) => (
           <ReusableSelect

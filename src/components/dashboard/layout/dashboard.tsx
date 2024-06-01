@@ -1,34 +1,32 @@
-"use client";
+"use client"
 
-import React, { ReactNode, useState, useEffect } from "react"; // import "./globals.css";
-
-import DashboardSideMenu from "@/components/dashboard/feature/sideBar";
-import DashboardHeader from "@/components/dashboard/feature/dashboardHeader";
+import React, { ReactNode, useState, useEffect } from "react"
+import DashboardSideMenu from "@/components/dashboard/feature/sideBar"
+import DashboardHeader from "@/components/dashboard/feature/dashboardHeader"
+import {
+  handleToggle,
+  saveToggleState,
+  loadToggleState,
+} from "@/utils/toggle"
 
 const Dashboard = ({ children }: { children: ReactNode }) => {
-  const [toggled, setToggled] = useState(false);
-  const [online, setOnline] = useState(true);
+  const [toggled, setToggled] = useState(false)
+  const [online, setOnline] = useState(true)
 
-  const handleToggle = () => {
-    setToggled(!toggled);
-    localStorage.setItem("toggled", JSON.stringify(!toggled));
-  };
+  const onToggle = () => {
+    handleToggle(toggled, setToggled)
+    saveToggleState(!toggled)
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedToggled = localStorage.getItem("toggled");
-
-      if (storedToggled !== null) {
-        setToggled(JSON.parse(storedToggled));
-      }
+      setToggled(loadToggleState())
     }
-  }, []);
-
-
+  }, [])
 
   return (
-    <div className="min-h-full w-100% antialiased ">
-      <DashboardHeader toggled={toggled} onNext={handleToggle} />
+    <div className="min-h-screen w-100% antialiased bg-charcoal-foreground">
+      <DashboardHeader toggled={toggled} onNext={onToggle} />
       <DashboardSideMenu toggled={toggled} online={online} />
       <section
         className={`${
@@ -39,6 +37,6 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
       </section>
     </div>
   )
-};
+}
 
-export default Dashboard;
+export default Dashboard

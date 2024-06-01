@@ -12,10 +12,6 @@ interface DashboardNavProps {
 }
 
 const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
-
-  const handleClick = () => {
-    onNext()
-  };
   return (
     <nav className="flex bg-sky-500 justify-between w-full items-center text-white z-50 fixed top-0">
       <div className="bg-sky-600 min-w-56 h-full py-3 hidden md:block ">

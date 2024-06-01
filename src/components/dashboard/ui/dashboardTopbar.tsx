@@ -10,13 +10,14 @@ import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
 import { useState } from "react"
 import FilterForm from "./filterForm"
+import { handleToggle } from "@/utils/toggle"
 
 const DashboardTopBar = () => {
   const [filterVisible, setFilterVisible] = useState(false)
 
-  const openCloseFilter = () => {
-    setFilterVisible(!filterVisible)
-  }
+ const onToggle = () => {
+   handleToggle(filterVisible, setFilterVisible)
+ }
 
   return (
     <div className="dashboard-top-bar mt-4 relative overflow-x-clip">
@@ -34,18 +35,18 @@ const DashboardTopBar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </form>
-        <div className="flex gap-4 justify-between text-xs">
-          <Badge variant={"default"} className="">
+        <div className="flex gap-4 justify-between text-xs items-center ">
+          <Badge variant={"default"} className="bg-sky-300/90 text-gray-500">
             0 Leads
           </Badge>
-          <Badge variant={"default"} className="">
+          <Badge variant={"default"} className="bg-sky-300/90 text-gray-500">
             New
           </Badge>
-          <Badge variant={"default"} className="">
+          <Badge variant={"default"} className="bg-sky-300/90 text-gray-500">
             User
           </Badge>
 
-          <button onClick={openCloseFilter}>
+          <button onClick={onToggle} className="text-primary">
             <FilterIcon />
           </button>
         </div>
