@@ -46,7 +46,7 @@ const DashboardTopBar = () => {
             User
           </Badge>
 
-          <button onClick={onToggle} className="text-primary">
+          <button onClick={onToggle} className="text-dashboard-primary">
             <FilterIcon />
           </button>
         </div>

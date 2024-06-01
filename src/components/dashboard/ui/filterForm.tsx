@@ -36,7 +36,7 @@ const FilterForm = ({ className }: { className: string }) => {
             placeholder={category.placeholder}
           />
         ))}
-        <Button type="submit" className="py-1 ml-1">
+        <Button type="submit" className="py-1 ml-1 bg-dashboard-primary hover:bg-dashboard-secondary">
           Filter
         </Button>
       </form>

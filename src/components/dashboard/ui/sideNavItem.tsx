@@ -27,12 +27,12 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
       {subItems.length ? (
         <div className="relative w-full">
           <span
-            className={`border-l-4 border-l-transparent hover:border-l-primary p-3 flex gap-3 relative w-full items-center hover:text-neutral-200 ${
-              openMenu ? "border-l-primary bg-charcoal-900" : "border-0"
+            className={`border-l-4 border-l-transparent hover:border-l-dashboard-primary p-3 flex gap-3 relative w-full items-center hover:text-neutral-200 ${
+              openMenu ? "border-l-dashboard-primary bg-charcoal-900" : "border-0"
             }`}
           >
             {icon} {title}
-            <Badge className="absolute right-4 top-1/2 -translate-y-1/2 bg-primary text-neutral-200 p-1 text-xs rounded-sm">
+            <Badge className="absolute right-4 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-200 p-1 text-xs rounded-sm">
               {subItems.length}
             </Badge>
           </span>
@@ -54,7 +54,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
       ) : (
         <Link
           href={`/${title.toLowerCase()}`}
-          className="border-l-4 border-l-transparent hover:border-l-primary p-3 flex gap-3 w-full justify-between items-center"
+          className="border-l-4 border-l-transparent hover:border-l-dashboard-primary p-3 flex gap-3 w-full justify-between items-center"
         >
           <div className="flex gap-3 justify-between">
             {icon} {title}
