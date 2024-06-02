@@ -13,7 +13,7 @@ const DashboardSideMenu = ({
     <aside
       className={`${
         toggled ? "translate-x-0" : "-translate-x-56"
-      } overflow-hidden fixed top-0 w-56 left-0 pt-12 flex flex-col bg-zinc-800 items-center transition-all text-nowrap duration-300 h-screen`}
+      } overflow-hidden fixed top-0 w-56 left-0 pt-12 flex flex-col bg-charcoal-700 items-center transition-all text-nowrap duration-300 h-screen`}
     >
       <div className="flex gap-3 items-center justify-start w-full px-4 ">
         <div className="text-white text-left flex flex-col">
@@ -22,7 +22,7 @@ const DashboardSideMenu = ({
           </ProfileTab>
         </div>
       </div>
-      <div className="bg-zinc-900 py-3 px-4 w-full text-neutral-500 text-xs">
+      <div className="bg-charcoal-900 py-3 px-4 w-full text-neutral-500 text-xs">
         <p>MAIN NAVIGATION</p>
       </div>
       <SideNavMenu />

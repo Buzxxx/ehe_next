@@ -12,30 +12,35 @@ interface DashboardNavProps {
 }
 
 const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
-
-  const handleClick = () => {
-    onNext()
-  };
   return (
-    <nav className="flex bg-sky-500 justify-between w-full items-center text-white z-50 fixed top-0">
-      <div className="bg-sky-600 min-w-56 h-full py-3 hidden md:block ">
+    <nav className="flex bg-dashboard-primary justify-between w-full items-center text-white z-50 fixed top-0">
+      <div className="bg-dashboard-secondary min-w-56 h-full py-3 hidden md:block ">
         <h4 className="text-center mx-auto">CRM</h4>
       </div>
       <div className="flex justify-between flex-1 pr-4 items-center">
-        <button className="hover:bg-sky-600 px-4 py-3" onClick={onNext}>
+        <button
+          className="hover:bg-dashboard-secondary px-4 py-3"
+          onClick={onNext}
+        >
           <MenuIcon />
         </button>
         <div className="flex gap-2 items-center">
           <Notifs />
           <ProfilePopover
-            trigger={<ProfileTab avatarClass="h-8 w-8" className="text-sm px-3" profileNameTag="md:flex hidden" />}
+            trigger={
+              <ProfileTab
+                avatarClass="h-8 w-8"
+                className="text-sm px-3"
+                profileNameTag="md:flex hidden"
+              />
+            }
             src={"./base/profile.webp"}
             className="p-0 rounded-none mr-4"
           />
         </div>
       </div>
     </nav>
-  );
+  )
 }
 
 export default DashboardHeader;
