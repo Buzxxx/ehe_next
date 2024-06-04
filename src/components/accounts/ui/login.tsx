@@ -1,29 +1,26 @@
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+"use client"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
 
-// Import dynamic from next/dynamic and InputFieldPlaceholder
-import dynamic from "next/dynamic";
-import InputFieldPlaceholder from "@/components/accounts/ui/inputFieldPlaceholder";
+import InputField from "./inputField"
 
-const InputField = dynamic(
-  () => import("@/components/accounts/ui/inputField"),
-  {
-    loading: () => <InputFieldPlaceholder />,
-  }
-);
+import {
+  loginUser,
+  LoginData,
+} from "@/components/accounts/authentication/route"
+
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(1, {
+    message: "Username cannot be empty",
   }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+  password: z.string().min(1, {
+    message: "Password cannot be empty",
   }),
-});
+})
 
 const Login = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -32,11 +29,13 @@ const Login = () => {
       username: "",
       password: "",
     },
-  });
+  })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
+  const onSubmit = async (values: LoginData) => {
+    try {
+      const result = await loginUser(values)
+    } catch (error) {}
+  }
 
   return (
     <Form {...form}>
@@ -68,7 +67,7 @@ const Login = () => {
         <p className="mt-12 mb-3 text-slate-400">© 2020-2021</p>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
