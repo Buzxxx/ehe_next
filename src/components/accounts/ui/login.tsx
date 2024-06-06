@@ -8,11 +8,6 @@ import { Form } from "@/components/ui/form"
 
 import InputField from "./inputField"
 
-import {
-  loginUser,
-  LoginData,
-} from "@/components/accounts/authentication/route"
-
 const formSchema = z.object({
   username: z.string().min(1, {
     message: "Username cannot be empty",
@@ -31,10 +26,10 @@ const Login = () => {
     },
   })
 
-  const onSubmit = async (values: LoginData) => {
-    try {
-      const result = await loginUser(values)
-    } catch (error) {}
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
   }
 
   return (
