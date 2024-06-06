@@ -1,6 +1,6 @@
-import DashboardBreadcrumb from "../ui/breadcrumb"
-import DashboardTopBar from "../ui/dashboardTopbar"
-import VisitorPanelBody from "../ui/visitorPanel"
+import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
+import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
+import VisitorPanelBody from "../../dashboard/ui/visitorPanel"
 
 const Lead = () => {
   return (

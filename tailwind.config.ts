@@ -32,6 +32,9 @@ const config = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        tertiary: {
+          DEFAULT: "hsl(var(--tertiary))",
+        },
         dashboard: {
           primary: "hsl(var(--dashboard-primary))",
           secondary: "hsl(var(--dashboard-secondary))",
