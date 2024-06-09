@@ -1,13 +1,14 @@
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
 import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
-import VisitorPanelBody from "../ui/visitorPanel"
+import VisitorPanelBody from "../../lead/ui/visitorPanel"
+import WorkplaceMain from "../ui/workplaceMain"
 
-const Lead = () => {
+const Work = () => {
   return (
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-neutral-600 font-normal">
-          Lead
+          Workplace
           <span className="text-base font-medium ml-4">Control Panel</span>
         </h1>
         <DashboardBreadcrumb />
@@ -16,10 +17,10 @@ const Lead = () => {
       <DashboardTopBar />
 
       <div className="visitor-panel position-relative">
-        <VisitorPanelBody />
+        <WorkplaceMain />
       </div>
     </>
   )
 }
 
-export default Lead
+export default Work
