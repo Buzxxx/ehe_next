@@ -24,7 +24,6 @@ export async function middleware(request: NextRequest) {
 
       if (refreshTokenString) {
         const newToken = await refreshToken(refreshTokenString)
-        console.log("new Token", newToken)
 
         // If the refresh token is successful, update the access token cookie
         if (newToken) {

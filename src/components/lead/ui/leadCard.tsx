@@ -7,17 +7,26 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-
-// icons
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone } from "lucide-react"
 import { ExternalLink } from "lucide-react"
 import Link from "next/link"
 
-export const LeadCard = () => (
+type LeadCardProps = {
+  isSelected: boolean
+  onToggle: () => void
+  idx: number
+}
+
+export const LeadCard: React.FC<LeadCardProps> = ({
+  isSelected,
+  onToggle,
+  idx,
+}) => (
   <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600">
     <CardHeader className="py-2 flex-row items-center gap-2 px-4">
-      <Checkbox className="mt-2" />
+      <Checkbox className="mt-2" checked={isSelected} onClick={onToggle} />
+
       <div className="flex items-center justify-between w-full">
         <Link href={`lead/lead-page/id`}>
           <CardTitle className="text-lg text-dashboard-primary ">

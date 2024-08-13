@@ -1,6 +1,5 @@
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
 import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
-import VisitorPanelBody from "../../lead/ui/visitorPanel"
 import WorkplaceMain from "../ui/workplaceMain"
 
 const Work = () => {
@@ -16,7 +15,7 @@ const Work = () => {
 
       <DashboardTopBar />
 
-      <div className="visitor-panel position-relative">
+      <div className="visitor-panel position-relative w-full">
         <WorkplaceMain />
       </div>
     </>

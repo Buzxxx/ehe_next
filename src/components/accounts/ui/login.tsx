@@ -44,7 +44,7 @@ const Login = () => {
       const response = await loginUser(values)
 
       if (!response) {
-        throw new Error("Username or Password Incorrect")
+        throw new Error("Login failed")
       }
 
 
@@ -63,7 +63,7 @@ const Login = () => {
     } catch (error) {
       setMessage({
         status: "failure",
-        message: "Login failed",
+        message: "Username of Password Incorrect",
       })
       setIsSubmitting(false)
 
