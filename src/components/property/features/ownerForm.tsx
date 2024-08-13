@@ -53,7 +53,7 @@ export default function OwnerForm({
   function onSubmit(values: z.infer<typeof formSchema>) {
     updateFields({
       ownerName: values.ownerName,
-      ownerPhonenumber: precode + values.ownerPhonenumber,
+      ownerPhonenumber: values.ownerPhonenumber,
       ownerEmail: values.ownerEmail,
     });
   }
@@ -87,23 +87,18 @@ export default function OwnerForm({
                 <FormItem>
                   <FormLabel>Phone number</FormLabel>
                   <FormControl>
-                    <div className="flex items-center mb-4">
-                      <Input
-                        className="appearance-none px-3 py-2 w-14"
-                        disabled
-                        placeholder={precode}
-                      />
-                      <Input
-                        type="number"
-                        placeholder="91********"
-                        {...field}
-                      />
-                    </div>
+                    <Input
+                      className=""
+                      type="number"
+                      placeholder="91********"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="ownerEmail"
