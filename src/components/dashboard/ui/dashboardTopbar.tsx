@@ -14,10 +14,10 @@ import FilterForm from "./filterForm"
 import { handleToggle } from "@/utils/toggle"
 
 type DashboardTopBarProps = {
-  onSelectAll: () => void
-  onUnselectAll: () => void
-  selectedCount: number
-  totalLeads: number
+  onSelectAll?: () => void
+  onUnselectAll?: () => void
+  selectedCount?: number
+  totalLeads?: number
 }
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
