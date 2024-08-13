@@ -14,10 +14,10 @@ import FilterForm from "./filterForm"
 import { handleToggle } from "@/utils/toggle"
 
 type DashboardTopBarProps = {
-  onSelectAll: () => void
-  onUnselectAll: () => void
-  selectedCount: number
-  totalLeads: number
+  onSelectAll?: () => void
+  onUnselectAll?: () => void
+  selectedCount?: number
+  totalLeads?: number
 }
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
@@ -52,12 +52,17 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           </DropdownMenu>
         </form>
         <div className="flex gap-4 justify-between text-xs items-center">
-          <Badge variant={"default"} className="bg-sky-300/90 text-gray-500">
-            {selectedCount > 0
-              ? `${selectedCount} Selected`
-              : `${totalLeads} Leads`}
-          </Badge>
-
+          {(selectedCount || totalLeads) && (
+              <Badge
+                variant={"default"}
+                className="bg-sky-300/90 text-gray-500"
+              >
+                {selectedCount && selectedCount > 0
+                  ? `${selectedCount} Selected`
+                  : `${totalLeads} Leads`
+                  }
+              </Badge>
+            )}
           <button onClick={onToggle} className="text-dashboard-primary">
             <FilterIcon />
           </button>
