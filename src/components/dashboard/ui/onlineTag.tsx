@@ -1,11 +1,11 @@
-import GreenDot from "@/components/ui/icons/greenDot";
-const OnlineTag = () => {
+import GreenDot from "@/components/ui/icons/greenDot"
+const OnlineTag = ({ text = "Online" }: { text?: "Online" | string }) => {
   return (
-    <div className="flex gap-1 items-center">
+    <span>
       <GreenDot height={10} width={10} />
-      <span className="text-xs">Online</span>
-    </div>
-  );
-};
+      <span className="text-xs pl-2">{text}</span>
+    </span>
+  )
+}
 
-export default OnlineTag;
+export default OnlineTag

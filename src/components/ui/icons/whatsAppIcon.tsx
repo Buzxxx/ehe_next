@@ -1,4 +1,4 @@
-const WhatsAppIcon = ({ className }: { className?: string }) => {
+const WhatsAppIcon = ({ className, color= '#FFFFFF' }: { className?: string, color?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +9,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => {
       viewBox="0,0,256,256"
     >
       <g
-        fill="#ffffff"
+        fill={color}
         fillRule="nonzero"
         stroke="none"
         strokeWidth="1"
