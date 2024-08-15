@@ -7,6 +7,7 @@ import BackIcon from "@/components/ui/icons/back"
 import { useRouter } from "next/navigation"
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone, Share2 } from "lucide-react"
+import LeadTimeLine from "./leadTimeline"
 
 const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
 
@@ -20,12 +21,12 @@ const LeadHeader = ({
   assignedTo?: "Avinash Jha" | string
 }) => {
   const [activeTab, setActiveTab] = useState(navItems[0]) // Set initial active tab
-    const router = useRouter()  // Initialize useRouter hook
+  const router = useRouter() // Initialize useRouter hook
 
   const renderActiveTabContent = () => {
     switch (activeTab) {
       case "Timeline":
-        return <div>Timeline Content</div>
+        return <LeadTimeLine />
       case "Profile":
         return <div>Profile Content</div>
       case "Call back":
@@ -39,9 +40,12 @@ const LeadHeader = ({
 
   return (
     <>
-      <section className="w-4/5 mx-auto shadow-xl">
+      <section className="md:w-4/5 mx-auto shadow-xl">
         <header className="flex py-4 justify-between items-center pr-4">
-          <BackIcon className="p-0 w-6 h-6 font-extrabold" onClick={router.back} />
+          <BackIcon
+            className="p-0 w-6 h-6 font-extrabold"
+            onClick={router.back}
+          />
 
           <div className="flex items-center gap-4">
             <Button className=" w-fit h-fit p-0 bg-inherit fill-green-500">
@@ -59,7 +63,7 @@ const LeadHeader = ({
         </header>
 
         <ProfileTab className="justify-start ml-8" />
-        <div className="flex gap-4 text-sm mt-2 text-center px-8">
+        <div className="flex gap-2 mt-2 text-center px-8 text-xs">
           <p className="inline">
             <OnlineTag text="" />
             {type}
@@ -67,7 +71,7 @@ const LeadHeader = ({
           |<p>{status}</p> |<p>Assigned to {assignedTo}</p>
         </div>
 
-        <nav className="py-2 px-8 mt-8 flex items-center justify-start gap-4 bg-white ">
+        <nav className="py-2 px-2 md:px-8 mt-8 flex items-center justify-start gap-4 bg-white w-full overflow-scroll">
           {navItems.map((item) => (
             <Button
               key={item}
@@ -84,7 +88,7 @@ const LeadHeader = ({
         </nav>
       </section>
 
-      <section className="mt-16 px-8 w-4/5 mx-auto shadow-xl min-h-80 min-w-80">
+      <section className="mt-4 md:px-8 md:w-4/5 mx-auto shadow-xl min-h-80 min-w-80">
         {renderActiveTabContent()}
       </section>
     </>
