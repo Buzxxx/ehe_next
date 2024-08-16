@@ -10,6 +10,7 @@ import { Phone, Share2 } from "lucide-react"
 import LeadTimeLine from "./leadTimeline"
 import LeadProfileUpdateForm from "../feature/leadProfileUpdateForm"
 import LeadCallbackForm from "../feature/leadCallbackForm"
+import LeadMeetingForm from "../feature/leadMeetingForm"
 
 const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
 
@@ -34,7 +35,7 @@ const LeadHeader = ({
       case "Call back":
         return <LeadCallbackForm/>
       case "Meeting":
-        return <div>Meeting Content</div>
+        return <LeadMeetingForm/>
       default:
         return null
     }
