@@ -9,6 +9,8 @@ import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone, Share2 } from "lucide-react"
 import LeadTimeLine from "./leadTimeline"
 import LeadProfileUpdateForm from "../feature/leadProfileUpdateForm"
+import LeadCallbackForm from "../feature/leadCallbackForm"
+import LeadMeetingForm from "../feature/leadMeetingForm"
 
 const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
 
@@ -31,9 +33,9 @@ const LeadHeader = ({
       case "Profile":
         return <LeadProfileUpdateForm />
       case "Call back":
-        return <div>Call back Content</div>
+        return <LeadCallbackForm/>
       case "Meeting":
-        return <div>Meeting Content</div>
+        return <LeadMeetingForm/>
       default:
         return null
     }
