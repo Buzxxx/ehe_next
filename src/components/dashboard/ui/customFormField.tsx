@@ -77,7 +77,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
               dateFormat={dateFormat ?? "dd/MM/yyyy"}
               showTimeSelect={showTimeSelect ?? false}
               timeInputLabel="Time:"
-              wrapperClassName="date-picker"
+              wrapperClassName="date-picker text-sm py-2 px-3 w-full h-10 rounded-md"
             />
           </FormControl>
         </div>

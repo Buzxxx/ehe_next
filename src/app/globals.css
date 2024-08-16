@@ -107,3 +107,28 @@
 .filter-form {
   animation: bounceInRight 0.3s ease-out;
 }
+
+
+.input-phone {
+  margin-top: .5rem !important;
+  height: 2.75rem !important;
+  border-radius: .375rem !important;
+  border-width: 1px !important;
+  background-color: #ffffff;
+  padding-left: .75rem !important;
+  font-size: .875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.input-phone input,
+.date-picker div,
+.date-picker input {
+  height: 100%;
+  width: 100%;
+
+}
+
+.date-picker input {
+  border-radius: calc(.5rem - 2px);
+  padding: 0.5rem 0.75rem;
+}

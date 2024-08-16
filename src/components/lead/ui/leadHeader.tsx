@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone, Share2 } from "lucide-react"
 import LeadTimeLine from "./leadTimeline"
+import LeadProfileUpdateForm from "../feature/leadProfileUpdateForm"
 
 const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
 
@@ -28,7 +29,7 @@ const LeadHeader = ({
       case "Timeline":
         return <LeadTimeLine />
       case "Profile":
-        return <div>Profile Content</div>
+        return <LeadProfileUpdateForm />
       case "Call back":
         return <div>Call back Content</div>
       case "Meeting":
