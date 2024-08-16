@@ -49,8 +49,8 @@ const LeadHeader = ({
           />
 
           <div className="flex items-center gap-4">
-            <Button className=" w-fit h-fit p-0 bg-inherit fill-green-500">
-              <WhatsAppIcon color="green-700" />
+            <Button className=" w-fit h-fit p-0 bg-inherit fill-sky-500">
+              <WhatsAppIcon color="sky-500" />
             </Button>
 
             <Button className=" w-fit h-fit p-0 bg-inherit text-sky-500">
