@@ -34,9 +34,10 @@ const LeadTimeLine = () => {
   }, [])
   return (
     <div className="timeline-wrapper py-2 max-md:px-4">
-      <div className="relative w-full my-12 py-8">
+      <h2 className="pt-4 font-bold">Timeline</h2>
+      <div className="relative w-full my-4 py-8">
         {/* Vertical Timeline Line */}
-        <div className="absolute left-[3%] md:left-1/4 transform -translate-x-1/2 h-full w-1 bg-gray-300"></div>
+        <div className="absolute left-[3%] md:left-1/4 transform -translate-x-1/2 h-[90%] mb-auto w-1 bg-gray-300"></div>
 
         {/* Current Time and Status Update Form */}
         <div className="relative mb-16 flex items-center justify-start w-full">

@@ -42,9 +42,9 @@ const LeadHeader = ({
   return (
     <>
       <section className="md:w-4/5 mx-auto shadow-xl">
-        <header className="flex py-4 justify-between items-center pr-4">
+        <header className="flex py-4 justify-between items-center px-4 md:pl-0">
           <BackIcon
-            className="p-0 w-6 h-6 font-extrabold"
+            className="p-0 w-6 h-6 md:ml-4 font-extrabold"
             onClick={router.back}
           />
 
@@ -63,24 +63,27 @@ const LeadHeader = ({
           </div>
         </header>
 
-        <ProfileTab className="justify-start ml-8" />
+        <ProfileTab
+          className="justify-start ml-8 font-bold text-xl"
+          avatarClass="rounded-full border border-sky-800 p-1 pb-0"
+        />
         <div className="flex gap-2 mt-2 text-center px-8 text-xs">
           <p className="inline">
             <OnlineTag text="" />
             {type}
-          </p>{" "}
+          </p>
           |<p>{status}</p> |<p>Assigned to {assignedTo}</p>
         </div>
 
-        <nav className="py-2 px-2 md:px-8 mt-8 flex items-center justify-start gap-4 bg-white w-full overflow-scroll">
+        <nav className="py-2 px-2 md:px-8 mt-8 flex items-center justify-start gap-4 bg-white w-full overflow-scroll max-md:pl-4">
           {navItems.map((item) => (
             <Button
               key={item}
-              className={
+              className={`text-xs px-2 h-8 ${
                 activeTab === item
                   ? "bg-blue-500 text-white"
                   : "bg-gray-200 text-gray-800"
-              }
+              }`}
               onClick={() => setActiveTab(item)}
             >
               {item}
