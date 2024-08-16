@@ -1,7 +1,7 @@
 // LeadTimeLine.js
 "use client"
 import React, { useEffect, useState } from "react"
-import LeadStatusUpdateForm from "./leadStatusUpdateForm"
+import LeadStatusUpdateForm from "../feature/leadStatusUpdateForm"
 import { getCurrentTimeInLocaleString } from "@/lib/getCurrentTimeInLocaleString"
 
 const timelineEvents = [
