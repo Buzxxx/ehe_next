@@ -8,8 +8,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
-import { Phone } from "lucide-react"
-import { ExternalLink } from "lucide-react"
+import { Phone, ExternalLink } from "@/components/ui/icons"
 import Link from "next/link"
 
 type LeadCardProps = {
