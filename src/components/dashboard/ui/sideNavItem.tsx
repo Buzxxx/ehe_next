@@ -2,7 +2,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft } from "@/components/ui/icons"
 import { deleteCookie } from "@/app/actions/cookies.actions"
 
 interface SideNavItemProps {

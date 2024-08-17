@@ -1,23 +1,22 @@
-"use client";
-import { useState } from "react";
+"use client"
+import { useState } from "react"
 import {
   FormControl,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { UseFormRegisterReturn } from "react-hook-form";
-import dynamic from "next/dynamic";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { UseFormRegisterReturn } from "react-hook-form"
 
-const ClosedEye = dynamic(() => import("@/components/ui/icons/closedEye"));
-const OpenEye = dynamic(() => import("@/components/ui/icons/openEye"));
+import ClosedEye from "@/components/ui/icons/closedEye"
+import OpenEye from "@/components/ui/icons/openEye"
 
 interface InputFieldProps {
-  label: string;
-  placeholder: string;
-  field: UseFormRegisterReturn;
-  isPassword?: boolean;
+  label: string
+  placeholder: string
+  field: UseFormRegisterReturn
+  isPassword?: boolean
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -26,11 +25,11 @@ const InputField: React.FC<InputFieldProps> = ({
   field,
   isPassword = false,
 }) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
-    setVisible((prev) => !prev);
-  };
+    setVisible((prev) => !prev)
+  }
 
   return (
     <FormItem>
@@ -63,7 +62,7 @@ const InputField: React.FC<InputFieldProps> = ({
       </FormControl>
       <FormMessage />
     </FormItem>
-  );
-};
+  )
+}
 
-export default InputField;
+export default InputField
