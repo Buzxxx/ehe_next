@@ -22,7 +22,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({
   onToggle,
   idx,
 }) => (
-  <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600">
+  <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600 sm:w-1/2 md:w-1/3 lg:w-1/4">
     <CardHeader className="py-2 flex-row items-center gap-2 px-4">
       <Checkbox className="mt-2" checked={isSelected} onClick={onToggle} />
 
@@ -49,9 +49,11 @@ export const LeadCard: React.FC<LeadCardProps> = ({
         </p>
       </div>
     </CardContent>
-    <CardFooter className="gap-2 justify-end px-4 pb-4">
+
+    <CardFooter className="gap-2 justify-end px-2 pb-4">
       <Button className="flex items-center gap-2 bg-tertiary hover:bg-tertiary hover:border-slate-500 py-1">
-        <WhatsAppIcon className="subpixel-antialised" />
+        <WhatsAppIcon />
+        <WhatsAppIcon />
         Whatsapp
       </Button>
       <Button className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 py-1">

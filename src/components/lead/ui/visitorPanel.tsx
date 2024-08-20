@@ -15,7 +15,7 @@ const VisitorPanelBody: React.FC<VisitorPanelBodyProps> = ({
   onToggleLead,
 }) => (
   <div className="visitor-panel-body pt-2">
-    <div className="grid md:grid-cols-4 p-2 gap-4">
+    <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
       {leads.map((lead, index) => (
         <LeadCard
           key={lead.id}
