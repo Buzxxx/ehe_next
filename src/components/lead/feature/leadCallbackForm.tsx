@@ -22,7 +22,7 @@ const LeadCallbackForm = () => {
   }
 
   return (
-    <div className="form-wrapper py-2 max-md:px-4">
+    <div className="form-wrapper py-2">
       <Form {...form}>
         <h2 className="pt-4 font-bold">Follow Up Call</h2>
         <form

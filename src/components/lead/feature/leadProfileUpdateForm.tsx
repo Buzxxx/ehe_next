@@ -33,7 +33,7 @@ const LeadProfileUpdateForm = () => {
   const leadTypeOptions = ["A", "B", "C", "D", "E", "F"]
 
   return (
-    <div className="form-wrapper py-2 max-md:px-4">
+    <div className="form-wrapper py-2">
       <Form {...form}>
         <h2 className="pt-4 font-bold">Profile</h2>
         <form

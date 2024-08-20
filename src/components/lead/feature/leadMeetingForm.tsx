@@ -27,7 +27,7 @@ const LeadMeetingForm = () => {
   ]
 
   return (
-    <div className="form-wrapper py-2 max-md:px-4">
+    <div className="form-wrapper py-2">
       <Form {...form}>
         <h2 className="pt-4 font-bold">Set Meeting</h2>
         <form
