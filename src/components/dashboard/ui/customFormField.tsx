@@ -14,12 +14,25 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 import Image from "next/image"
-import { Select, SelectContent, SelectTrigger, SelectValue } from "../../ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from "../../ui/select"
 import { Textarea } from "../../ui/textarea"
 import { Checkbox } from "../../ui/checkbox"
 import { Label } from "../../ui/label"
+import { useEffect, useState } from "react"
 
 const RenderField = ({ field, props }: { field: any; props: customProps }) => {
+    const [currentTime, setCurrentTime] = useState<Date | null>(null)
+
+    useEffect(() => {
+      const formattedTime = new Date()
+      setCurrentTime(formattedTime)
+    }, [])
+
   const {
     fieldType,
     iconSrc,
@@ -72,7 +85,11 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
           <FormControl>
             <DatePicker
-              selected={field.value}
+              selected={field.value ? new Date(field.value) : currentTime}
+              showIcon
+              placeholderText={
+                placeholder ? placeholder : "Click to select a date"
+              }
               onChange={(date) => field.onChange(date)}
               dateFormat={dateFormat ?? "dd/MM/yyyy"}
               showTimeSelect={showTimeSelect ?? false}
