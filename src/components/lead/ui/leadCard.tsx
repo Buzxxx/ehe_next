@@ -49,8 +49,10 @@ export const LeadCard: React.FC<LeadCardProps> = ({
         </p>
       </div>
     </CardContent>
+
     <CardFooter className="gap-2 justify-end px-2 pb-4">
       <Button className="flex items-center gap-2 bg-tertiary hover:bg-tertiary hover:border-slate-500 py-1">
+        <WhatsAppIcon />
         <WhatsAppIcon />
         Whatsapp
       </Button>
