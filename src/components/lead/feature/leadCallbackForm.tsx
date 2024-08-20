@@ -10,7 +10,6 @@ import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { FilterFormSchema } from "@/lib/validation"
-import { SelectItem } from "@/components/ui/select"
 
 const LeadCallbackForm = () => {
   const form = useForm<z.infer<typeof FilterFormSchema>>({
@@ -22,7 +21,7 @@ const LeadCallbackForm = () => {
   }
 
   return (
-    <div className="form-wrapper py-2">
+    <div className="form-wrapper py-2 max-md:px-4">
       <Form {...form}>
         <h2 className="pt-4 font-bold">Follow Up Call</h2>
         <form
@@ -34,10 +33,10 @@ const LeadCallbackForm = () => {
             fieldType={FormFieldType.DATE_PICKER}
             name="date"
             label="Preferred Date & Time"
-            showTimeSelect={true}
-            placeholder="dd-mm-yyyy h-mm"
-            dateFormat="dd-mm-yyyy h-mm aa"
-          ></CustomFormField>
+            showTimeSelect
+            placeholder="dd-mm-yyyy h:mm"
+            dateFormat="dd-MM-yyyy h:mm aa"
+          />
 
           <CustomFormField
             control={form.control}
@@ -47,7 +46,10 @@ const LeadCallbackForm = () => {
             placeholder="Add a description (if required)"
           ></CustomFormField>
 
-          <Button type="submit" variant={"default"} className="mx-auto block">
+          <Button
+            type="submit"
+            className="mx-auto block text-white border border-dashboard-primary  bg-dashboard-primary hover:text-dashboard-primary"
+          >
             Set A Follow Up
           </Button>
         </form>
