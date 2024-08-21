@@ -190,7 +190,10 @@ const LeadProfileUpdateForm = () => {
             )}
           </div>
 
-          <Button type="submit" variant={"default"} className="ml-auto block">
+          <Button
+            type="submit"
+            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white  hover:text-dashboard-primary"
+          >
             Update & Close
           </Button>
         </form>
