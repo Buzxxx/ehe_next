@@ -47,7 +47,6 @@ const LeadStatusUpdateForm = () => {
           )}
 
           <CustomFormField
-          
             control={form.control}
             fieldType={FormFieldType.SELECT}
             name="priority"
@@ -60,17 +59,19 @@ const LeadStatusUpdateForm = () => {
           </CustomFormField>
         </div>
         <CustomFormField
-         
           control={form.control}
           fieldType={FormFieldType.TEXTAREA}
           name="description"
           label="Description"
           placeholder="Description"
         ></CustomFormField>
-        <Button type="submit" variant={'default'}>
+        <Button
+          type="submit"
+          className=" border border-dashboard-primary text-white bg-dashboard-primary hover:text-dashboard-primary"
+        >
           Update
         </Button>
-        <Button type="submit" className="ml-4" variant={'destructive'}>
+        <Button type="submit" className="ml-4" variant={"destructive"}>
           Submit
         </Button>
       </form>

@@ -39,9 +39,9 @@ const LeadMeetingForm = () => {
             fieldType={FormFieldType.DATE_PICKER}
             name="date"
             label="Preferred Date & Time"
-            showTimeSelect={true}
+            showTimeSelect
             placeholder="dd-mm-yyyy h-mm"
-            dateFormat="dd-mm-yyyy h-mm aa"
+            dateFormat="dd-mm-yyyy h:mm aa"
           ></CustomFormField>
           <CustomFormField
             control={form.control}
@@ -72,7 +72,10 @@ const LeadMeetingForm = () => {
             placeholder="Add a description (if required)"
           ></CustomFormField>
 
-          <Button type="submit" variant={"default"} className="mx-auto block">
+          <Button
+            type="submit"
+            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:text-dashboard-primary"
+          >
             Set A Follow Up
           </Button>
         </form>
