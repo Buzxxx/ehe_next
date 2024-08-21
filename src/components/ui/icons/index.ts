@@ -14,6 +14,7 @@ import Settings from "./settings"
 import Spinner from "./spinner"
 import WhatsAppIcon from "./whatsAppIcon"
 import Work from "./work"
+import IconIcon from "./icon"
 import {
   ChevronRight,
   MoreHorizontal,
@@ -21,8 +22,22 @@ import {
   Search,
   X,
   Circle,
-  ChevronDown,ChevronLeft, Phone, ExternalLink,Share2, CalendarIcon,
+  ChevronDown,
+  ChevronLeft,
+  Phone,
+  ExternalLink,
+  Share2,
+  CalendarIcon,
   ChevronUp,
+  List,
+  Filter,
+  Notebook,
+  ListChecks,
+  ShoppingCart,
+  LogOut,
+  Contact,
+  Pencil,
+  CircleUserRound,
 } from "lucide-react"
 
 export {
@@ -55,4 +70,14 @@ export {
   Search,
   X,
   Circle,
+  IconIcon,
+  List,
+  Filter,
+  Notebook,
+  ListChecks,
+  ShoppingCart,
+  LogOut,
+  Contact,
+  Pencil,
+  CircleUserRound,
 }
