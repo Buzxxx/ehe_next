@@ -1,6 +1,6 @@
 import Work from "@/components/workplace/feature/work";
 
 
-export default function Home() {
+export default function Workplace() {
   return <Work />
 }
