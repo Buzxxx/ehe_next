@@ -40,8 +40,8 @@ const LeadMeetingForm = () => {
             name="date"
             label="Preferred Date & Time"
             showTimeSelect
-            placeholder="dd-mm-yyyy h-mm"
-            dateFormat="dd-mm-yyyy h:mm aa"
+            placeholder="dd-MM-yyyy h-mm"
+            dateFormat="dd-MM-yyyy h:mm aa"
           ></CustomFormField>
           <CustomFormField
             control={form.control}
