@@ -33,7 +33,7 @@ const LeadTimeLine = () => {
     setCurrentTime(formattedTime)
   }, [])
   return (
-    <div className="timeline-wrapper py-2 max-md:px-4">
+    <div className="timeline-wrapper py-2 ">
       <h2 className="pt-4 font-bold">Timeline</h2>
       <div className="relative w-full my-4 py-8">
         {/* Vertical Timeline Line */}

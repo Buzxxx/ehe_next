@@ -33,7 +33,7 @@ const LeadProfileUpdateForm = () => {
   const leadTypeOptions = ["A", "B", "C", "D", "E", "F"]
 
   return (
-    <div className="form-wrapper py-2 max-md:px-4">
+    <div className="form-wrapper py-2">
       <Form {...form}>
         <h2 className="pt-4 font-bold">Profile</h2>
         <form
@@ -146,7 +146,7 @@ const LeadProfileUpdateForm = () => {
               control={form.control}
               fieldType={FormFieldType.SELECT}
               name="productType"
-              label="Product Type Type"
+              label="Product Type"
               placeholder={"D"}
             >
               {leadTypeOptions.map((option) => (
@@ -190,7 +190,10 @@ const LeadProfileUpdateForm = () => {
             )}
           </div>
 
-          <Button type="submit" variant={"default"} className="ml-auto block">
+          <Button
+            type="submit"
+            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white  hover:text-dashboard-primary"
+          >
             Update & Close
           </Button>
         </form>

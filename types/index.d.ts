@@ -22,3 +22,14 @@ declare interface customProps {
   children?: React.ReactNode
   renderSkeleton?: (field: any) => React.ReactNode
 }
+
+declare type Lead = {
+  id: number
+  isSelected: boolean
+}
+
+declare type LeadReassignFormProps = {
+  onClose: () => void
+}
+
+

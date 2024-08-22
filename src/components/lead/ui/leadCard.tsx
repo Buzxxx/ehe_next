@@ -17,14 +17,14 @@ type LeadCardProps = {
   idx: number
 }
 
-export const LeadCard: React.FC<LeadCardProps> = ({
-  isSelected,
-  onToggle,
-  idx,
-}) => (
-  <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600">
+export const LeadCard: React.FC<LeadCardProps> = ({ isSelected, onToggle, idx }) => (
+  <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600 md:w-[49%] xl:w-1/4">
     <CardHeader className="py-2 flex-row items-center gap-2 px-4">
-      <Checkbox className="mt-2" checked={isSelected} onClick={onToggle} />
+      <Checkbox
+        className="mt-2 rounded-none data-[state=checked]:bg-dashboard-primary data-[state=checked]:border-dashboard-primary"
+        checked={isSelected}
+        onClick={onToggle}
+      />
 
       <div className="flex items-center justify-between w-full">
         <Link href={`lead/lead-page/id`}>
@@ -49,9 +49,10 @@ export const LeadCard: React.FC<LeadCardProps> = ({
         </p>
       </div>
     </CardContent>
-    <CardFooter className="gap-2 justify-end px-4 pb-4">
+
+    <CardFooter className="gap-2 justify-end px-2 pb-4">
       <Button className="flex items-center gap-2 bg-tertiary hover:bg-tertiary hover:border-slate-500 py-1">
-        <WhatsAppIcon className="subpixel-antialised" />
+        <WhatsAppIcon />
         Whatsapp
       </Button>
       <Button className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 py-1">

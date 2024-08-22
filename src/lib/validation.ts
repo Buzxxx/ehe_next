@@ -29,3 +29,8 @@ export const FilterFormSchema = z.object({
   location: z.string(),
   date: DateSchema,
 })
+
+
+export const LeadReassignFormSchema = z.object({
+  assignTo: z.string().min(1, "Please select a user"),
+})

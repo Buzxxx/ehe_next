@@ -44,7 +44,7 @@ const FilterForm = ({ className }: { className: string }) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         method="GET"
-        className={`w-3/4 md:w-1/4 ml-auto space-y-4 absolute right-0 border-x h-screen border-slate-300 p-4 duration-300 transition-all bg-charcoal-foregroundAccent overflow-scroll ${className}`}
+        className={`w-3/4 md:w-1/4 ml-auto space-y-4 absolute top-36 right-0 border-x h-screen border-slate-300 p-4 pb-16 duration-300 transition-all bg-charcoal-foregroundAccent overflow-scroll z-50 ${className}`}
       >
         {filterCategories.map((category) => {
           if (category.name === "date") {
