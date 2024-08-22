@@ -6,13 +6,16 @@ import DashboardHeader from "@/components/dashboard/feature/dashboardHeader"
 import { handleToggle, saveToggleState, loadToggleState } from "@/utils/toggle"
 
 const Dashboard = ({ children }: { children: ReactNode }) => {
-  const [toggled, setToggled] = useState(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      return false
-    }
-    return loadToggleState()
-  })
+  const [toggled, setToggled] = useState(false) // Initially set to false
   const [online, setOnline] = useState(true)
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const initialToggleState =
+        window.innerWidth < 768 ? false : loadToggleState()
+      setToggled(initialToggleState)
+    }
+  }, [])
 
   const onToggle = () => {
     handleToggle(toggled, setToggled)
