@@ -70,8 +70,8 @@ const LeadHeader = ({
           avatarClass="rounded-full border border-sky-800 p-1 pb-0"
         />
         <div className="flex gap-2 mt-2 text-center md:px-4 text-xs">
-          <p className="inline">
-            <OnlineTag text="" />
+          <p>
+           <span className="w-2 h-2 bg-green-500 inline-block mr-1"></span>
             {type}
           </p>
           |<p>{status}</p> |<p>Assigned to {assignedTo}</p>
