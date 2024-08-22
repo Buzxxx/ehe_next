@@ -146,7 +146,7 @@ const LeadProfileUpdateForm = () => {
               control={form.control}
               fieldType={FormFieldType.SELECT}
               name="productType"
-              label="Product Type Type"
+              label="Product Type"
               placeholder={"D"}
             >
               {leadTypeOptions.map((option) => (
