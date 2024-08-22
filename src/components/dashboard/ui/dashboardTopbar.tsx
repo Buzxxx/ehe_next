@@ -1,40 +1,35 @@
-// DashboardTopBar.tsx
-"use client"
+'use client'
 
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenu,
-} from "@/components/ui/dropdown-menu"
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar"
 import ChevronDown from "@/components/ui/icons/chevronDown"
 import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
-import { useState } from "react"
-import FilterForm from "./filterForm"
+import { useState, Suspense, lazy } from "react"
 import { handleToggle } from "@/utils/toggle"
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void
   onUnselectAll?: () => void
+  onReassign?: () => void
   selectedCount?: number
   totalLeads?: number
 }
 
+// Dynamically import FilterForm
+const FilterForm = lazy(() => import("./filterForm"))
+
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   onSelectAll,
   onUnselectAll,
-  selectedCount,
-  totalLeads,
+  onReassign,
+  selectedCount = 0,
+  totalLeads = 0,
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false)
 
@@ -52,13 +47,17 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           <MenubarItem>Share</MenubarItem>
           <MenubarItem onClick={onSelectAll}>Select All</MenubarItem>
           <MenubarItem onClick={onUnselectAll}>Unselect All</MenubarItem>
+          {/* Only show the "Reassign" option if selectedCount > 0 */}
+          {selectedCount > 0 && (
+            <MenubarItem onClick={onReassign}>Reassign</MenubarItem>
+          )}
         </MenubarContent>
       </MenubarMenu>
 
       <div className="flex gap-4 justify-between text-xs items-center">
-        {(selectedCount || totalLeads) && (
+        {(selectedCount > 0 || totalLeads > 0) && (
           <Badge variant={"default"} className="bg-sky-300/90 text-gray-500">
-            {selectedCount && selectedCount > 0
+            {selectedCount > 0
               ? `${selectedCount} Selected`
               : `${totalLeads} Leads`}
           </Badge>
@@ -69,13 +68,17 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
         </button>
       </div>
 
-      <FilterForm
-        className={`${
-          filterVisible
-            ? "filter-form md:translate-x-0  "
-            : "translate-x-96 2xl:translate-x-[35rem] hidden"
-        }`}
-      />
+      <Suspense fallback={<> </>}>
+        {filterVisible && (
+          <FilterForm
+            className={`${
+              filterVisible
+                ? "filter-form md:translate-x-0"
+                : "translate-x-96 2xl:translate-x-[35rem] hidden"
+            }`}
+          />
+        )}
+      </Suspense>
     </Menubar>
   )
 }
