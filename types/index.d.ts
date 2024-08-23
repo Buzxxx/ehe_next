@@ -3,6 +3,11 @@ declare type LeadCardProps = {
   onToggle: () => void
 }
 
+declare type Lead = {
+  id: number
+  isSelected: boolean
+}
+
 declare interface customProps {
   control: Control<any>
   fieldType: FormFieldType
@@ -18,29 +23,11 @@ declare interface customProps {
   renderSkeleton?: (field: any) => React.ReactNode
 }
 
-
+declare type Lead = {
+  id: number
+  isSelected: boolean
+}
 
 declare type LeadReassignFormProps = {
   onClose: () => void
-}
-
-declare type Lead = {
-
-  name: string
-  email: string
-  contact: string
-  lead_type: string
-  query?: string
-  interested_in?: string
-  assigned_to: string
-  product_code?: string
-  product_type?: string
-  source: string
-  status: number
-  priority: string
-}
-
-declare type LeadCard = Lead & {
-  id: number
-  isSelected: boolean
 }
