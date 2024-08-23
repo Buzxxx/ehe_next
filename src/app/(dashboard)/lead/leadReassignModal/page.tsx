@@ -1,8 +1,9 @@
 // /app/(dashboard)/lead/leadReassignModal/page.tsx
-'use client'
+"use client"
 
 import LeadReassignForm from "@/components/lead/feature/leadReassignForm"
 import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
 const LeadReassignModal = () => {
   const searchParams = useSearchParams()
@@ -13,9 +14,11 @@ const LeadReassignModal = () => {
     ? leadsParam.split(",").map((id) => parseInt(id))
     : []
   return (
-    <div className="shadow-md mx-auto md:max-w-[40%] md:mt-8 ">
-      <LeadReassignForm leadIds={leadIds} />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="shadow-md mx-auto md:max-w-[40%] md:mt-8 ">
+        <LeadReassignForm leadIds={leadIds} />
+      </div>
+    </Suspense>
   )
 }
 

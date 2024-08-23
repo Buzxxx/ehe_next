@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { Suspense, useState } from "react"
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
 import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
 import VisitorPanelBody from "../ui/visitorPanel"
@@ -41,7 +41,7 @@ const Lead: React.FC = () => {
   const totalLeads = LeadUtils.getTotalLeads(leads)
 
   return (
-    <>
+    <Suspense>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-neutral-900 font-normal">
           Lead
@@ -64,7 +64,7 @@ const Lead: React.FC = () => {
           onToggleLead={handleToggleLeadSelection}
         />
       </div>
-    </>
+    </Suspense>
   )
 }
 
