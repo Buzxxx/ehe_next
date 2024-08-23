@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { CreateLeadFormSchema } from "@/lib/validation"
@@ -16,21 +15,34 @@ import LeadApiClient from "@/lib/leadApiClient"
 const CreateLeadForm = () => {
   const form = useForm<z.infer<typeof CreateLeadFormSchema>>({
     resolver: zodResolver(CreateLeadFormSchema),
+    defaultValues: {
+      name: "", // Default to an empty string or a sensible default
+      email: "",
+      contact: "",
+      lead_type: "D", // Assuming "D" is a valid default
+      query: "",
+      interested_in: "",
+      assigned_to: "Virat Kohli", // Default assigned person
+      product_code: "",
+      product_type: "A", // Assuming "A" is a valid default
+      priority: "cold",
+      status: 1
+    },
   })
 
-  const onSubmit = async (data: z.infer<typeof CreateLeadFormSchema>) => {
-    console.log("Form data:", data) // Log form data on submit
+ 
+  async function onSubmit(values: z.infer<typeof CreateLeadFormSchema>) {
+  
     const leadData = {
-      ...data,
-      status: data.status ?? 1, // Default to 1 if not provided
-      source: data.source ?? "4", // Default to "4" if not provided
+      ...values,
+      status: values.status ?? 1,
+      source: values.source ?? "4",
     }
-
-    console.log("Prepared Lead Data:", leadData) // Log the data before submission
 
     try {
       const result = await LeadApiClient.createLead(leadData)
       console.log("Lead created successfully:", result)
+      form.reset()
     } catch (error) {
       console.error("Error creating lead:", error)
     }
@@ -91,14 +103,14 @@ const CreateLeadForm = () => {
             name="query"
             label="Query"
             placeholder="D"
-          ></CustomFormField>
+          />
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="interested_in"
             label="Interested In"
             placeholder="34432 Helium Fields, New York, NY"
-          ></CustomFormField>
+          />
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
@@ -119,7 +131,7 @@ const CreateLeadForm = () => {
             name="product_code"
             label="Product Code"
             placeholder="sfsdf"
-          ></CustomFormField>
+          />
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 w-full mb-4">

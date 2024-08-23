@@ -39,10 +39,10 @@ export const CreateLeadFormSchema = z.object({
   lead_type: z.enum(["A", "B", "C", "D", "E", "F"]),
   query: z.string().optional(),
   interested_in: z.string().optional(),
-  assigned_to: z.string(),
+  assigned_to: z.string().min(1, "Assigned To is required"), // Assuming this is required
   product_code: z.string().optional(),
   product_type: z.enum(["A", "B", "C", "D", "E", "F"]),
-  status: z.number(),
-  source: z.string().optional(),
+  status: z.number().optional().default(1), // Default value if not provided
+  source: z.string().optional().default("4"), // Default value if not provided
   priority: z.enum(["cold", "hot", "C", "D", "E", "F"]),
 })

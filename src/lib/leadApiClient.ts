@@ -8,7 +8,6 @@ class LeadApiClient {
   }
 
   async createLead(data: any) {
-    console.log("Preparing to send API request with data:", data)
     try {
       const response = await fetch(`${this.baseURL}/createlead`, {
         method: "POST",

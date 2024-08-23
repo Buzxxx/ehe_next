@@ -3,11 +3,6 @@ declare type LeadCardProps = {
   onToggle: () => void
 }
 
-declare type Lead = {
-  id: number
-  isSelected: boolean
-}
-
 declare interface customProps {
   control: Control<any>
   fieldType: FormFieldType
