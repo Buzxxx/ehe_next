@@ -12,21 +12,24 @@ import { Button } from "@/components/ui/button"
 import { SelectItem } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
 
-const LeadReassignForm = () => {
+interface LeadReassignFormProps {
+  leadIds: number[]
+}
+const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds })=> {
   const router = useRouter()
   const form = useForm<z.infer<typeof LeadReassignFormSchema>>({
     resolver: zodResolver(LeadReassignFormSchema),
   })
 
   const onSubmit = async (data: z.infer<typeof LeadReassignFormSchema>) => {
-    console.log(data)
+    console.log(data, leadIds)
   }
 
   const users = Array.from({ length: 5 }, (_, i) => `User ${i + 1}`)
 
   return (
     <Form {...form}>
-      <h2 className="text-2xl font-bold">Reassign</h2>
+      <h2 className="text-2xl font-bold md:p-4">Reassign</h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4">
         <CustomFormField
           control={form.control}
