@@ -21,8 +21,18 @@ import {
   Search,
   X,
   Circle,
-  ChevronDown,ChevronLeft, Phone, ExternalLink,Share2, CalendarIcon,
+  ChevronDown,
+  ChevronLeft,
+  Phone,
+  ExternalLink,
+  Share2,
+  CalendarIcon,
   ChevronUp,
+  List,
+  Filter,
+  LogOut,
+  Contact,
+  Pencil,
 } from "lucide-react"
 
 export {
@@ -55,4 +65,9 @@ export {
   Search,
   X,
   Circle,
+  List,
+  Filter,
+  LogOut,
+  Contact,
+  Pencil,
 }
