@@ -8,7 +8,7 @@ export default function LeadLayout({
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <>
-      <Suspense>{modal}</Suspense>
+      {modal}
       {children}
     </>
   )
