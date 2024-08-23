@@ -1,5 +1,7 @@
 // /app/(dashboard)/lead/leayout.tsx
 
+import { Suspense } from "react"
+
 export default function LeadLayout({
   children,
   modal,

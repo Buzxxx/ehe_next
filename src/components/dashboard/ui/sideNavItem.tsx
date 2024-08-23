@@ -5,9 +5,14 @@ import { useRouter } from "next/navigation"
 import { ChevronLeft } from "@/components/ui/icons"
 import { deleteCookie } from "@/app/actions/cookies.actions"
 
+interface SubItem {
+  name: string
+  route: string
+}
+
 interface SideNavItemProps {
   title: string
-  subItems: string[]
+  subItems: SubItem[]
   icon: React.ReactNode
 }
 
@@ -19,19 +24,20 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
     setOpenMenu((prevState) => !prevState)
   }
 
-  const handleSubItemClick = async (subItem: string) => {
-    if (subItem === "Change Password") {
-      router.push("/accounts/resetPassword")
-    } else if (subItem === "Logout") {
+  const handleSubItemClick = async (subItem: SubItem) => {
+    if (subItem.name === "Logout") {
       await deleteCookie("accessToken")
       await deleteCookie("refreshToken")
-      router.push("/accounts/login")
+      router.push(subItem.route)
+    } else {
+      router.push(subItem.route)
     }
   }
+
   return (
     <li
-      className={` flex items-center hover:bg-charcoal-900 transition-all cursor-pointer text-neutral-300 hover:text-neutral-200  ${
-        subItems.length ?? `relative`
+      className={`flex items-center hover:bg-charcoal-900 transition-all cursor-pointer text-neutral-300 hover:text-neutral-200  ${
+        subItems.length ? "relative" : ""
       }`}
       onClick={handleItemClick}
     >
@@ -51,8 +57,8 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
           </span>
 
           <ul
-            className={` bg-charcoal-800 pl-8 h-0 overflow-hidden transition-all duration-300 ${
-              openMenu ? "h-32 pt-2" : ""
+            className={`bg-charcoal-800 pl-8 h-0 overflow-hidden transition-all duration-300 ${
+              openMenu ? "h-20 py-1" : ""
             }`}
           >
             {subItems.map((subItem, index) => (
@@ -61,20 +67,19 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
                 className="px-4 py-2 hover:text-neutral-200 cursor-pointer"
                 onClick={() => handleSubItemClick(subItem)}
               >
-                {subItem}
+                {subItem.name}
               </li>
             ))}
           </ul>
         </div>
       ) : (
         <Link
-          href={`/${title.toLowerCase()}`}
+          href={`/${title.toLowerCase().replace(/\s+/g, "")}`}
           className="border-l-4 border-l-transparent hover:border-l-dashboard-primary p-3 flex gap-3 w-full justify-between items-center"
         >
           <div className="flex gap-3 justify-between">
             {icon} {title}
           </div>
-
           <ChevronLeft size={16} />
         </Link>
       )}
