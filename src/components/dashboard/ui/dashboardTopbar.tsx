@@ -12,6 +12,7 @@ import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
 import { useState, Suspense, lazy } from "react"
 import { handleToggle } from "@/utils/toggle"
+import PaginationComp from "@/components/ui/paginationComp"
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void
@@ -54,14 +55,19 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
         </MenubarContent>
       </MenubarMenu>
 
-      <div className="flex gap-4 justify-between text-xs items-center">
+      <div className="flex gap-4 justify-start text-xs items-center flex-nowrap">
         {(selectedCount > 0 || totalLeads > 0) && (
-          <Badge variant={"default"} className="bg-sky-300/90 text-gray-500">
+          <Badge
+            variant={"default"}
+            className="bg-sky-300/90 text-gray-500 whitespace-nowrap"
+          >
             {selectedCount > 0
               ? `${selectedCount} Selected`
               : `${totalLeads} Leads`}
           </Badge>
         )}
+
+        <PaginationComp totalPages={50} className="flex-shrink-0 justify-start w-fit" />
 
         <button onClick={onToggle} className="text-dashboard-primary">
           <FilterIcon />
