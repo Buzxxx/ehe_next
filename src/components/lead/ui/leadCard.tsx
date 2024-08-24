@@ -10,15 +10,26 @@ import { Checkbox } from "@/components/ui/checkbox"
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone, ExternalLink } from "@/components/ui/icons"
 import Link from "next/link"
+import { formatDate } from "@/utils/formatDate"
 
 type LeadCardProps = {
   isSelected: boolean
   onToggle: () => void
   idx: number
+  name: string
+  status: number
+  created: string
 }
 
-export const LeadCard: React.FC<LeadCardProps> = ({ isSelected, onToggle, idx }) => (
-  <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600 md:w-[49%] xl:w-1/4">
+export const LeadCard: React.FC<LeadCardProps> = ({
+  isSelected,
+  onToggle,
+  idx,
+  name,
+  status,
+  created,
+}) => (
+  <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600 md:w-[49%] xl:w-[24%]">
     <CardHeader className="py-2 flex-row items-center gap-2 px-4">
       <Checkbox
         className="mt-2 rounded-none data-[state=checked]:bg-dashboard-primary data-[state=checked]:border-dashboard-primary"
@@ -29,7 +40,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({ isSelected, onToggle, idx })
       <div className="flex items-center justify-between w-full">
         <Link href={`lead/lead-page/id`}>
           <CardTitle className="text-lg text-dashboard-primary ">
-            Card Title
+            {name ?? "Card Title"}
           </CardTitle>
         </Link>
         <Link href={`lead/lead-page/id`}>
@@ -40,12 +51,15 @@ export const LeadCard: React.FC<LeadCardProps> = ({ isSelected, onToggle, idx })
     <CardContent className="flex-col text-sm p-4 pt-0">
       <div>
         <p className="font-semibold ">
-          Name: <span className="font-normal"> Jun 04, 2024, 17:01 </span>
+          Created at:{" "}
+          <span className="font-normal">
+            {formatDate(created) ?? "Jun 04, 2024, 17:01"}
+          </span>
         </p>
       </div>
       <div>
         <p className="font-semibold ">
-          Status: <span className="font-normal">Closed</span>
+          Status: <span className="font-normal">{status ?? "Closed"}</span>
         </p>
       </div>
     </CardContent>
