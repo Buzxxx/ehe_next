@@ -67,7 +67,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           </Badge>
         )}
 
-        <PaginationComp className="flex-shrink-0 justify-start w-fit" />
+        <PaginationComp totalPages={50} className="flex-shrink-0 justify-start w-fit" />
 
         <button onClick={onToggle} className="text-dashboard-primary">
           <FilterIcon />
