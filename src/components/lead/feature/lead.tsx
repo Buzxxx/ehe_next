@@ -1,25 +1,45 @@
 "use client"
 
-import React, { Suspense, useState } from "react"
+import React, { useEffect, useState } from "react"
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
 import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
 import VisitorPanelBody from "../ui/visitorPanel"
 import { useRouter } from "next/navigation"
 import LeadUtils from "@/utils/LeadUtils" // Import the LeadUtils class
 import { Spinner } from "@/components/ui/icons"
+import leadApiClient, { Lead } from "@/lib/leadApiClient"
+import { initialLeads } from "@/lib/sampleData"
 
-const Lead: React.FC = () => {
-  const initialLeads = [
-    { id: 1, isSelected: false },
-    { id: 2, isSelected: false },
-    { id: 3, isSelected: false },
-  ]
-
-  const [leads, setLeads] = useState<Lead[]>(initialLeads)
+const LeadComp: React.FC = () => {
+  const [leads, setLeads] = useState<LeadCardProps[]>(initialLeads)
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
+
+  // Fetch leads on component mount
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        const lead = new Lead().setPerPage(10).setPage(1)
+        const fetchedLeads = await leadApiClient.getLeads(lead)
+        console.log(fetchedLeads)
+        // Convert Lead[] to LeadCard[] by adding isSelected property
+        const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
+          (lead: LeadCardProps) => ({
+            ...lead,
+            isSelected: false,
+          })
+        )
+        setLeads(leadsWithSelection)
+        console.log(leads)
+      } catch (error) {
+        console.error("Failed to fetch leads:", error)
+      }
+    }
+
+    fetchLeads()
+  }, [])
 
   const handleToggleLeadSelection = (index: number) => {
     const updatedLeads = LeadUtils.toggleLeadSelection(leads, index)
@@ -88,4 +108,4 @@ const Lead: React.FC = () => {
   )
 }
 
-export default Lead
+export default LeadComp

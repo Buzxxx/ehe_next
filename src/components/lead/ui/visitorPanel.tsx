@@ -1,6 +1,9 @@
 import { LeadCard } from "@/components/lead/ui/leadCard"
 
 type Lead = {
+  created_dt: string
+  status: number
+  name: string
   id: number
   isSelected: boolean
 }
@@ -18,6 +21,9 @@ const VisitorPanelBody: React.FC<VisitorPanelBodyProps> = ({
     <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
       {leads.map((lead, index) => (
         <LeadCard
+        created={lead.created_dt}
+        name={lead.name}
+        status={lead.status}
           key={lead.id}
           isSelected={lead.isSelected}
           idx={index}

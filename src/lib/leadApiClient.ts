@@ -1,5 +1,41 @@
 // lib/leadApiClient.ts
 
+class Lead {
+  private filter_by: string = ""
+  private sort_by: string = ""
+  private per_page: number = 10
+  private page: number = 1
+
+  setFilterBy(filter: string): this {
+    this.filter_by = filter
+    return this
+  }
+
+  setSortBy(sort: string): this {
+    this.sort_by = sort
+    return this
+  }
+
+  setPerPage(perPage: number): this {
+    this.per_page = perPage
+    return this
+  }
+
+  setPage(page: number): this {
+    this.page = page
+    return this
+  }
+
+  buildQuery(): string {
+    const params = new URLSearchParams()
+    if (this.filter_by) params.append("filter_by", this.filter_by)
+    if (this.sort_by) params.append("sort_by", this.sort_by)
+    params.append("per_page", this.per_page.toString())
+    params.append("page", this.page.toString())
+    return params.toString()
+  }
+}
+
 class LeadApiClient {
   private baseURL: string
 
@@ -28,28 +64,10 @@ class LeadApiClient {
     }
   }
 
-  async getLeads({
-    filter_by = "",
-    sort_by = "",
-    per_page = 10,
-    page = 1,
-  }: {
-    filter_by?: string
-    sort_by?: string
-    per_page?: number
-    page?: number
-  } = {}) {
+  async getLeads(lead: Lead) {
     try {
-      const queryParams = new URLSearchParams({
-        filter_by,
-        sort_by,
-        per_page: per_page.toString(),
-        page: page.toString(),
-      })
-
-      const response = await fetch(
-        `${this.baseURL}/leads?${queryParams.toString()}`
-      )
+      const queryParams = lead.buildQuery()
+      const response = await fetch(`${this.baseURL}/leads?${queryParams}`)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch leads: ${response.statusText}`)
@@ -61,47 +79,16 @@ class LeadApiClient {
     }
   }
 }
+
 export default new LeadApiClient()
+export { Lead }
 
-// async getLeads() {
-//   try {
-//     const response = await fetch(this.baseURL)
+// Usage Example:
+// const leadApiClient = new LeadApiClient()
+// const lead = new Lead()
+//   .setFilterBy("status:open")
+//   .setSortBy("date")
+//   .setPerPage(5)
+//   .setPage(2)
 
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch leads: ${response.statusText}`)
-//     }
-
-//     return await response.json()
-//   } catch (error) {
-//     throw new Error(`Failed to fetch leads: ${(error as Error).message}`)
-//   }
-// }
-
-// async getLeadById(id: string) {
-//   try {
-//     const response = await fetch(`${this.baseURL}/${id}`)
-
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch lead: ${response.statusText}`)
-//     }
-
-//     return await response.json()
-//   } catch (error) {
-//     throw new Error(`Failed to fetch lead: ${(error as Error).message}`)
-//   }
-// }
-
-// {
-// "name" : "Avinash", String
-// "email" : "avi@gmail.com", Email
-// "contact" : "919163833719", Phone WIth country code
-// "lead_type" : "Domestic", String
-// "query" : "I am Interested",String
-// "interested_in" : "Rent in DLF New Town Heights 1, Sector-90, Gurgaon", String -- Textbox
-// "assigned_to" : "Avinash.jha", Dropdown
-// "product_code" : "DFT145", Text
-// "product_type" : "Commercial", Text
-// "source" :"4", Dynamic userId - NON SELECTaBLE
-// "status" : 1, DEFAULT
-// "priority" : "cold" Dropdown
-// }
+// leadApiClient.getLeads(lead).then(console.log).catch(console.error)
