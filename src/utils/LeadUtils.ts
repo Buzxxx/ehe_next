@@ -1,27 +1,27 @@
 class LeadUtils {
-  static toggleLeadSelection(leads: Lead[], index: number): Lead[] {
+  static toggleLeadSelection(leads: LeadProps[], index: number): LeadProps[] {
     return leads.map((lead, idx) =>
       idx === index ? { ...lead, isSelected: !lead.isSelected } : lead
     )
   }
 
-  static selectAllLeads(leads: Lead[]): Lead[] {
+  static selectAllLeads(leads: LeadProps[]): LeadProps[] {
     return leads.map((lead) => ({ ...lead, isSelected: true }))
   }
 
-  static unselectAllLeads(leads: Lead[]): Lead[] {
+  static unselectAllLeads(leads: LeadProps[]): LeadProps[] {
     return leads.map((lead) => ({ ...lead, isSelected: false }))
   }
 
-  static getSelectedLeads(leads: Lead[]): number[] {
+  static getSelectedLeads(leads: LeadProps[]): number[] {
     return leads.filter((lead) => lead.isSelected).map((lead) => lead.id)
   }
 
-  static getSelectedCount(leads: Lead[]): number {
+  static getSelectedCount(leads: LeadProps[]): number {
     return leads.filter((lead) => lead.isSelected).length
   }
 
-  static getTotalLeads(leads: Lead[]): number {
+  static getTotalLeads(leads: LeadProps[]): number {
     return leads.length
   }
 }
