@@ -21,9 +21,9 @@ const VisitorPanelBody: React.FC<VisitorPanelBodyProps> = ({
     <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
       {leads.map((lead, index) => (
         <LeadCard
-        created={lead.created_dt}
-        name={lead.name}
-        status={lead.status}
+          created={lead.created_dt}
+          name={lead.name}
+          status={lead.status}
           key={lead.id}
           isSelected={lead.isSelected}
           idx={index}

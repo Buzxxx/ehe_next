@@ -39,7 +39,7 @@ const LeadComp: React.FC = () => {
     }
 
     fetchLeads()
-  }, [leads])
+  }, [])
 
   const handleToggleLeadSelection = (index: number) => {
     const updatedLeads = LeadUtils.toggleLeadSelection(leads, index)
