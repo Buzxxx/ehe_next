@@ -42,7 +42,7 @@ const PaginationComp = ({
 
   return (
     <Pagination className={`items-center ${className}`}>
-      <h2 className="text-sm mr-3">Page:</h2>
+      <h2 className="text-sm mr-3">Per Page:</h2>
       <PaginationContent>
         <DropdownMenu
           onOpenChange={(open) => setIsDropdownOpen(open)} // Handle open state change

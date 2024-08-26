@@ -4,26 +4,36 @@ import React, { useEffect, useState } from "react"
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
 import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
 import VisitorPanelBody from "../ui/visitorPanel"
-import { useRouter } from "next/navigation"
-import LeadUtils from "@/utils/LeadUtils" // Import the LeadUtils class
+import { useSearchParams, useRouter } from "next/navigation"
+import LeadUtils from "@/utils/LeadUtils"
 import { Spinner } from "@/components/ui/icons"
 import leadApiClient, { Lead } from "@/lib/leadApiClient"
-import { initialLeads } from "@/lib/sampleData"
 
 const LeadComp: React.FC = () => {
-  const [leads, setLeads] = useState<LeadCardProps[]>(initialLeads)
+  const [leads, setLeads] = useState<LeadCardProps[]>([])
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const router = useRouter()
+  const searchParams = useSearchParams() // Hook to get query params
 
-  // Fetch leads on component mount
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const lead = new Lead().setPerPage(10).setPage(1)
+        const lead = new Lead()
+        const filter_by = searchParams.get("filter_by") || ""
+        const sort_by = searchParams.get("sort_by") || ""
+        const per_page = Number(searchParams.get("per_page")) || 10
+        const page = Number(searchParams.get("page")) || 1
+
+        lead
+          .setFilterBy(filter_by)
+          .setSortBy(sort_by)
+          .setPerPage(per_page)
+          .setPage(page)
+
         const fetchedLeads = await leadApiClient.getLeads(lead)
-        console.log(fetchedLeads)
+
         // Convert Lead[] to LeadCard[] by adding isSelected property
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({
@@ -32,14 +42,15 @@ const LeadComp: React.FC = () => {
           })
         )
         setLeads(leadsWithSelection)
-        console.log(leads)
       } catch (error) {
         console.error("Failed to fetch leads:", error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
     fetchLeads()
-  }, [])
+  }, [searchParams]) // Refetch leads whenever URL query params change
 
   const handleToggleLeadSelection = (index: number) => {
     const updatedLeads = LeadUtils.toggleLeadSelection(leads, index)
@@ -63,14 +74,14 @@ const LeadComp: React.FC = () => {
   const totalLeads = LeadUtils.getTotalLeads(leads)
 
   const handleReassign = () => {
-    setIsLoading(true) // Set loading state to true
+    setIsLoading(true)
     try {
-      const selectedLeadIds = selectedLeads.join(",") // Convert selectedLeads array to a comma-separated string
+      const selectedLeadIds = selectedLeads.join(",")
       router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`)
     } catch (error) {
       console.error("Failed to navigate to reassign modal:", error)
     } finally {
-      setIsLoading(false) // Reset loading state
+      setIsLoading(false)
     }
   }
 
@@ -92,17 +103,17 @@ const LeadComp: React.FC = () => {
         totalLeads={totalLeads}
       />
 
-      {isLoading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
-          <Spinner className="animate-spin h-10 w-10 " />
-        </div>
-      )}
-
       <div className="visitor-panel w-full">
-        <VisitorPanelBody
-          leads={leads}
-          onToggleLead={handleToggleLeadSelection}
-        />
+        {isLoading ? (
+          <div className="absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50 min-h-screen">
+            <Spinner className="animate-spin h-10 w-10 " />
+          </div>
+        ) : (
+          <VisitorPanelBody
+            leads={leads}
+            onToggleLead={handleToggleLeadSelection}
+          />
+        )}
       </div>
     </>
   )
