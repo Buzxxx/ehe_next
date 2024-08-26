@@ -17,6 +17,29 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const sidebar = document.querySelector("aside")
+      if (
+        sidebar &&
+        !sidebar.contains(event.target as Node) &&
+        window.innerWidth < 768
+      ) {
+        setToggled(false)
+      }
+    }
+
+    if (toggled) {
+      document.addEventListener("click", handleClickOutside)
+    } else {
+      document.removeEventListener("click", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [toggled])
+
   const onToggle = () => {
     handleToggle(toggled, setToggled)
     saveToggleState(!toggled)
