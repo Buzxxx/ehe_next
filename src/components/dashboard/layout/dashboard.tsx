@@ -17,6 +17,29 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const sidebar = document.querySelector("aside")
+      if (
+        sidebar &&
+        !sidebar.contains(event.target as Node) &&
+        window.innerWidth < 768
+      ) {
+        setToggled(false)
+      }
+    }
+
+    if (toggled) {
+      document.addEventListener("click", handleClickOutside)
+    } else {
+      document.removeEventListener("click", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [toggled])
+
   const onToggle = () => {
     handleToggle(toggled, setToggled)
     saveToggleState(!toggled)
@@ -27,7 +50,7 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
       <DashboardHeader toggled={toggled} onNext={onToggle} />
       <DashboardSideMenu toggled={toggled} online={online} />
       <section
-        className={` transition-all duration-300 min-h-96 mt-10 px-6 py-4 ml-auto flex-0 relative ${
+        className={` transition-all duration-300 min-h-96 mt-10 px-6 py-4 ml-auto flex-0 ${
           toggled ? "md:w-[calc(100%-14rem)] ml-56" : "w-full ml-0"
         }`}
       >
