@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Pagination,
   PaginationContent,
@@ -13,12 +13,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronDown, ChevronUp } from "@/components/ui/icons" // Import Chevron icons
+import { ChevronDown, ChevronUp } from "@/components/ui/icons"
+import { useRouter } from "next/navigation"
 
 type PaginationCompProps = {
   className?: string
   totalPages: number
   initialPage?: number
+  perPage: number
   onPageChange?: (page: number) => void
 }
 
@@ -26,35 +28,51 @@ const PaginationComp = ({
   className,
   totalPages,
   initialPage = 1,
+  perPage,
   onPageChange,
 }: PaginationCompProps) => {
   const [activePage, setActivePage] = useState(initialPage)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false) // Track dropdown open state
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const router = useRouter()
 
   const handlePageChange = (page: number) => {
     setActivePage(page)
+    updateUrlParams(page, perPage) // Update the URL parameters
     if (onPageChange) onPageChange(page)
+  }
+
+  const updateUrlParams = (page: number, perPage: number) => {
+    const params = new URLSearchParams(window.location.search)
+    params.set("page", page.toString())
+    params.set("per_page", perPage.toString())
+    router.push(`?${params.toString()}`)
   }
 
   const otherPages = Array.from({ length: totalPages }, (_, i) => i + 1).filter(
     (page) => page !== activePage
   )
 
+  useEffect(() => {
+    setActivePage(initialPage)
+  }, [initialPage])
+
   return (
     <Pagination className={`items-center ${className}`}>
-      <h2 className="text-sm mr-3">Per Page:</h2>
+      <h2 className="text-sm mr-3 text-gray-500">Per Page:</h2>
       <PaginationContent>
-        <DropdownMenu
-          onOpenChange={(open) => setIsDropdownOpen(open)} // Handle open state change
-        >
-          <DropdownMenuTrigger>
+        <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
+          <DropdownMenuTrigger className="p-0 text-gray-500">
             <PaginationItem>
-              <PaginationLink href="#" isActive>
+              <PaginationLink
+                href="#"
+                isActive
+                className="bg-charcoal-foreground h-fit"
+              >
                 {activePage}
                 {isDropdownOpen ? (
-                  <ChevronUp className="ml-1 h-4 w-4" /> // Chevron up when open
+                  <ChevronUp className="ml-1 h-4 w-4" />
                 ) : (
-                  <ChevronDown className="ml-1 h-4 w-4" /> // Chevron down when closed
+                  <ChevronDown className="ml-1 h-4 w-4" />
                 )}
               </PaginationLink>
             </PaginationItem>
@@ -79,6 +97,7 @@ const PaginationComp = ({
           <PaginationPrevious
             href="#"
             onClick={() => handlePageChange(Math.max(activePage - 1, 1))}
+            className="h-fit py-1 text-gray-500"
           />
         </PaginationItem>
 
@@ -88,6 +107,7 @@ const PaginationComp = ({
             onClick={() =>
               handlePageChange(Math.min(activePage + 1, totalPages))
             }
+            className="h-fit py-1 text-gray-500"
           />
         </PaginationItem>
       </PaginationContent>

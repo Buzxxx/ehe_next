@@ -67,8 +67,9 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
         )}
 
         <PaginationComp
+          perPage={20}
           totalPages={50}
-          className="flex-shrink-0 justify-start w-fit"
+          className="flex-shrink-0 justify-start w-fit invisible md:visible"
         />
 
         <button onClick={onToggle} className="text-dashboard-primary">

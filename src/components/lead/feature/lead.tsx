@@ -15,7 +15,10 @@ const LeadComp: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const router = useRouter()
-  const searchParams = useSearchParams() // Hook to get query params
+  const searchParams = useSearchParams()
+
+  const perPage = Number(searchParams.get("per_page")) || 20
+  const page = Number(searchParams.get("page")) || 1
 
   useEffect(() => {
     const fetchLeads = async () => {
@@ -23,18 +26,15 @@ const LeadComp: React.FC = () => {
         const lead = new Lead()
         const filter_by = searchParams.get("filter_by") || ""
         const sort_by = searchParams.get("sort_by") || ""
-        const per_page = Number(searchParams.get("per_page")) || 10
-        const page = Number(searchParams.get("page")) || 1
 
         lead
           .setFilterBy(filter_by)
           .setSortBy(sort_by)
-          .setPerPage(per_page)
+          .setPerPage(perPage)
           .setPage(page)
 
         const fetchedLeads = await leadApiClient.getLeads(lead)
 
-        // Convert Lead[] to LeadCard[] by adding isSelected property
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({
             ...lead,
@@ -50,7 +50,7 @@ const LeadComp: React.FC = () => {
     }
 
     fetchLeads()
-  }, [searchParams]) // Refetch leads whenever URL query params change
+  }, [searchParams])
 
   const handleToggleLeadSelection = (index: number) => {
     const updatedLeads = LeadUtils.toggleLeadSelection(leads, index)
