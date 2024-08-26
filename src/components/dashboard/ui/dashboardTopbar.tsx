@@ -1,5 +1,6 @@
-'use client'
+"use client"
 
+import { Suspense, lazy, useState } from "react"
 import {
   Menubar,
   MenubarContent,
@@ -10,9 +11,11 @@ import {
 import ChevronDown from "@/components/ui/icons/chevronDown"
 import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
-import { useState, Suspense, lazy } from "react"
 import { handleToggle } from "@/utils/toggle"
 import PaginationComp from "@/components/ui/paginationComp"
+
+// Dynamically import FilterForm
+const FilterForm = lazy(() => import("./filterForm"))
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void
@@ -21,9 +24,6 @@ type DashboardTopBarProps = {
   selectedCount?: number
   totalLeads?: number
 }
-
-// Dynamically import FilterForm
-const FilterForm = lazy(() => import("./filterForm"))
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   onSelectAll,
@@ -39,7 +39,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   }
 
   return (
-    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50">
+    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 ">
       <MenubarMenu>
         <MenubarTrigger className="flex items-center gap-2 border shadow-sm">
           Menu <ChevronDown />
@@ -48,7 +48,6 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           <MenubarItem>Share</MenubarItem>
           <MenubarItem onClick={onSelectAll}>Select All</MenubarItem>
           <MenubarItem onClick={onUnselectAll}>Unselect All</MenubarItem>
-          {/* Only show the "Reassign" option if selectedCount > 0 */}
           {selectedCount > 0 && (
             <MenubarItem onClick={onReassign}>Reassign</MenubarItem>
           )}
@@ -67,15 +66,19 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           </Badge>
         )}
 
-        <PaginationComp totalPages={50} className="flex-shrink-0 justify-start w-fit" />
+        <PaginationComp
+          perPage={20}
+          totalPages={50}
+          className="flex-shrink-0 justify-start w-fit invisible md:visible"
+        />
 
         <button onClick={onToggle} className="text-dashboard-primary">
           <FilterIcon />
         </button>
       </div>
 
-      <Suspense fallback={<> </>}>
-        {filterVisible && (
+      {filterVisible && (
+        <Suspense fallback={<> </>}>
           <FilterForm
             className={`${
               filterVisible
@@ -83,8 +86,8 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
                 : "translate-x-96 2xl:translate-x-[35rem] hidden"
             }`}
           />
-        )}
-      </Suspense>
+        </Suspense>
+      )}
     </Menubar>
   )
 }
