@@ -21,11 +21,11 @@ const DateSchema = z.union([
 ])
 
 export const FilterFormSchema = z.object({
-  status: z.string(),
-  user: z.string(),
-  source: z.string(),
-  location: z.string(),
-  date: DateSchema,
+  status: z.string().optional(),
+  user: z.string().optional(),
+  source: z.string().optional(),
+  location: z.string().optional(),
+  date: DateSchema.optional(),
 })
 
 export const LeadReassignFormSchema = z.object({
