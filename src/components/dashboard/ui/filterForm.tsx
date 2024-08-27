@@ -76,7 +76,7 @@ const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         method="GET"
-        className={`w-3/4 md:w-1/4 ml-auto space-y-4 absolute top-[6.5rem] right-0 border-x  border-slate-300 p-4 pb-16 duration-300 transition-all bg-charcoal-foregroundAccent overflow-scroll z-50 ${className}`}
+        className={`w-3/4 md:w-1/4 ml-auto space-y-4 absolute min-h-full top-[6.5rem] right-0 border-x  border-slate-300 p-4 pb-16 duration-300 transition-all bg-charcoal-foregroundAccent overflow-scroll z-50 ${className}`}
       >
         {filterCategories.map((category) => {
           if (category.name === "date") {
