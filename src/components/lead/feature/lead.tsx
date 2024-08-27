@@ -8,11 +8,13 @@ import { useSearchParams, useRouter } from "next/navigation"
 import LeadUtils from "@/utils/LeadUtils"
 import { Spinner } from "@/components/ui/icons"
 import leadApiClient, { Lead } from "@/lib/leadApiClient"
+import Router from "next/router" // Import from next/router
 
 const LeadComp: React.FC = () => {
   const [leads, setLeads] = useState<LeadCardProps[]>([])
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [modalLoading, setModalLoading] = useState(false)
 
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -74,16 +76,20 @@ const LeadComp: React.FC = () => {
   const totalLeads = LeadUtils.getTotalLeads(leads)
 
   const handleReassign = () => {
-    setIsLoading(true)
+    setModalLoading(true) // Show the modal immediately
+
     try {
       const selectedLeadIds = selectedLeads.join(",")
       router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`)
+      
     } catch (error) {
-      console.error("Failed to navigate to reassign modal:", error)
-    } finally {
-      setIsLoading(false)
+      console.log(error)
     }
+
+    setModalLoading(false)
   }
+
+
 
   return (
     <>
@@ -102,6 +108,9 @@ const LeadComp: React.FC = () => {
         selectedCount={selectedCount}
         totalLeads={totalLeads}
       />
+      {modalLoading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-95 z-50 min-h-screen"></div>
+      )}
 
       <div className="visitor-panel w-full">
         {isLoading ? (

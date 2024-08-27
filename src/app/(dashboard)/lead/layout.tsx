@@ -1,6 +1,5 @@
 // /app/(dashboard)/lead/leayout.tsx
 
-import { Suspense } from "react"
 
 export default function LeadLayout({
   children,
@@ -8,7 +7,7 @@ export default function LeadLayout({
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <>
-      {modal}
+      {modal }
       {children}
     </>
   )

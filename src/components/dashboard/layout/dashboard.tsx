@@ -46,7 +46,7 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-charcoal-foreground ">
+    <div className="min-h-screen w-full bg-charcoal-foreground relative">
       <DashboardHeader toggled={toggled} onNext={onToggle} />
       <DashboardSideMenu toggled={toggled} online={online} />
       <section
