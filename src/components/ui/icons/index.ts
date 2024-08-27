@@ -33,7 +33,14 @@ import {
   LogOut,
   Contact,
   Pencil,
+
+  circlecheck,
+  BackIcon,
+  
+  
 } from "lucide-react"
+
+
 
 export {
   Group,
@@ -70,4 +77,8 @@ export {
   LogOut,
   Contact,
   Pencil,
+
+  circlecheck, 
+  arrowleft,
+
 }

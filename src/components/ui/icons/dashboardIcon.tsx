@@ -1,21 +1,25 @@
 const DashboardIcon = ({ width = 20, height = 20 }) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      width={width}
-      height={height}
-      strokeWidth={1.5}
-      stroke="currentColor"
-    >
-      <path
+    
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={24}
+        height={24}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#9a9898"
+        strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5"
-      />
-    </svg>
-  );
-};
+        className="lucide lucide-layout-dashboard"
+        {...props}
+      >
+        <rect width={7} height={9} x={3} y={3} rx={1} />
+        <rect width={7} height={5} x={14} y={3} rx={1} />
+        <rect width={7} height={9} x={14} y={12} rx={1} />
+        <rect width={7} height={5} x={3} y={16} rx={1} />
+      </svg>
+    );
+}
 
 export default DashboardIcon;

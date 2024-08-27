@@ -1,21 +1,23 @@
-const CheckListIcon = ({ height = 20, width = 20 }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      height={height}
-      width={width}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-      />
-    </svg>
-  );
-};
+<svg
+xmlns="http://www.w3.org/2000/svg"
+width={24}
+height={24}
+viewBox="0 0 24 24"
+fill="none"
+stroke="#9a9898"
+strokeWidth={2}
+strokeLinecap="round"
+strokeLinejoin="round"
+className="lucide lucide-list"
+{...props}
+>
+<line x1={8} x2={21} y1={6} y2={6} />
+<line x1={8} x2={21} y1={12} y2={12} />
+<line x1={8} x2={21} y1={18} y2={18} />
+<line x1={3} x2={3.01} y1={6} y2={6} />
+<line x1={3} x2={3.01} y1={12} y2={12} />
+<line x1={3} x2={3.01} y1={18} y2={18} />
+</svg>
+);
 
 export default CheckListIcon;
