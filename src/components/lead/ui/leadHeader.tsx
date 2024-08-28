@@ -33,7 +33,7 @@ const LeadHeader = ({
       case "Timeline":
         return <LeadTimeLine id={id}/>
       case "Profile":
-        return <LeadProfileUpdateForm />
+        return <LeadProfileUpdateForm id={id}/>
       case "Call back":
         return <LeadCallbackForm />
       case "Meeting":

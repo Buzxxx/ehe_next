@@ -47,6 +47,24 @@ export const CreateLeadFormSchema = z.object({
   priority: z.enum(["cold", "hot", "C", "D", "E", "F"]),
 })
 
+export const LeadProfileFormSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  contact: z.string().min(10, "Phone number must be at least 10 digits"),
+  lead_type: z.enum(["A", "B", "C", "D", "E", "F"]),
+  query: z.string().optional(),
+  interested_in: z.string().optional(),
+  budget: z.string().optional(),
+  assigned_to: z.string().min(1, "Assigned To is required"),
+  product_code: z.string().optional(),
+  received_date: z.date().optional(),
+  product_type: z.enum(["A", "B", "C", "D", "E", "F"]),
+  status: z.string(),
+  source: z.string().optional(),
+  
+})
+
 export const LeadStatusUpdateFormSchema =  z.object({
   id: z.string(),
   status: z.string(),
