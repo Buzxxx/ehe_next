@@ -34,42 +34,40 @@ const FilterForm = ({ className }: { className: string }) => {
     }
   }, [formValues])
 
-const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
-  try {
-    // Initialize a new Lead instance
-    const lead = new Lead()
+  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
+    try {
+      // Initialize a new Lead instance
+      const lead = new Lead()
 
-    // Map form data to the API request fields
-    const filterParams = []
+      // Map form data to the API request fields
+      const filterParams = []
 
-    if (data.status) filterParams.push(`status:${data.status}`)
-    if (data.user) filterParams.push(`user:${data.user}`)
-    if (data.source) filterParams.push(`source:${data.source}`)
-    if (data.location) filterParams.push(`location:${data.location}`)
-    if (data.date) {
-      if (typeof data.date === "string") {
-        filterParams.push(`date:${data.date}`)
-      } else {
-        filterParams.push(`date:${data.date.start},${data.date.end}`)
+      if (data.status) filterParams.push(`status:${data.status}`)
+      if (data.user) filterParams.push(`user:${data.user}`)
+      if (data.source) filterParams.push(`source:${data.source}`)
+      if (data.location) filterParams.push(`location:${data.location}`)
+      if (data.date) {
+        if (typeof data.date === "string") {
+          filterParams.push(`date:${data.date}`)
+        } else {
+          filterParams.push(`date:${data.date.start},${data.date.end}`)
+        }
       }
+
+      if (filterParams.length > 0) {
+        lead.setFilterBy(filterParams.join(";"))
+      }
+
+      // Fetch leads using the API client
+      const fetchedLeads = await leadApiClient.getLeads(lead)
+      console.log("Fetched Leads:", fetchedLeads)
+
+      // Handle the fetched leads (e.g., update UI)
+    } catch (error) {
+      console.error("Error fetching leads:", error)
+      // Handle error (e.g., show a notification)
     }
-
-    if (filterParams.length > 0) {
-      lead.setFilterBy(filterParams.join(";"))
-    }
-
-    // Fetch leads using the API client
-    const fetchedLeads = await leadApiClient.getLeads(lead)
-    console.log("Fetched Leads:", fetchedLeads)
-
-    // Handle the fetched leads (e.g., update UI)
-   
-  } catch (error) {
-    console.error("Error fetching leads:", error)
-    // Handle error (e.g., show a notification)
   }
-}
-
 
   return (
     <Form {...form}>
@@ -90,7 +88,7 @@ const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
                   placeholder={category.placeholder}
                 >
                   {category.options.map((option) => (
-                    <SelectItem key={option} value={option}>
+                    <SelectItem key={option} value={option.toString()}>
                       {option}
                     </SelectItem>
                   ))}
@@ -127,7 +125,7 @@ const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
               placeholder={category.placeholder}
             >
               {category.options.map((option) => (
-                <SelectItem key={option} value={option}>
+                <SelectItem key={option} value={option.toString()}>
                   {option}
                 </SelectItem>
               ))}

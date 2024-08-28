@@ -2,7 +2,7 @@
 "use client"
 
 import React, { Suspense } from "react"
-import LeadReassignForm from "@/components/lead/feature/leadReassignForm"
+import LeadReassignForm from "@/components/lead/feature/forms/leadReassignForm"
 import { useSearchParams } from "next/navigation"
 
 const LeadReassignModal = () => {
