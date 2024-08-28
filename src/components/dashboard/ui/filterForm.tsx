@@ -88,7 +88,7 @@ const FilterForm = ({ className }: { className: string }) => {
                   placeholder={category.placeholder}
                 >
                   {category.options.map((option) => (
-                    <SelectItem key={option} value={option}>
+                    <SelectItem key={option} value={option.toString()}>
                       {option}
                     </SelectItem>
                   ))}
@@ -125,7 +125,7 @@ const FilterForm = ({ className }: { className: string }) => {
               placeholder={category.placeholder}
             >
               {category.options.map((option) => (
-                <SelectItem key={option} value={option}>
+                <SelectItem key={option} value={option.toString()}>
                   {option}
                 </SelectItem>
               ))}
