@@ -9,15 +9,20 @@ import { Button } from "@/components/ui/button"
 import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { FilterFormSchema } from "@/lib/validation"
+import { LeadCallbackFormValidation } from "@/lib/validation"
 
-const LeadCallbackForm = () => {
-  const form = useForm<z.infer<typeof FilterFormSchema>>({
-    resolver: zodResolver(FilterFormSchema),
+const LeadCallbackForm = ({ id }: { id: string }) => {
+  const form = useForm<z.infer<typeof LeadCallbackFormValidation>>({
+    resolver: zodResolver(LeadCallbackFormValidation),
+    defaultValues: {
+      id: id,
+      date: new Date(Date.now()),
+      description: "",
+    },
   })
 
-  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
-    console.log(data)
+  const onSubmit = async (data: z.infer<typeof LeadCallbackFormValidation>) => {
+    console.log({ ...data, id })
   }
 
   return (

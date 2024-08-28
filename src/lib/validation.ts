@@ -71,3 +71,9 @@ export const LeadStatusUpdateFormSchema =  z.object({
   priority: z.string(),
   description: z.string().optional(),
 })
+
+export const LeadCallbackFormValidation = z.object({
+  id: z.string(),
+  date: z.date(),
+  description: z.string().optional(),
+})
