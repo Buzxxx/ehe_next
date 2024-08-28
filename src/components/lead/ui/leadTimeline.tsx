@@ -1,7 +1,7 @@
 // LeadTimeLine.js
 "use client"
 import React, { useEffect, useState } from "react"
-import LeadStatusUpdateForm from "../feature/leadStatusUpdateForm"
+import LeadStatusUpdateForm from "../feature/forms/leadStatusUpdateForm"
 import { getCurrentTimeInLocaleString } from "@/lib/getCurrentTimeInLocaleString"
 
 const timelineEvents = [
@@ -25,7 +25,7 @@ const timelineEvents = [
   },
 ]
 
-const LeadTimeLine = () => {
+const LeadTimeLine = ({id} :{id:string}) => {
   const [currentTime, setCurrentTime] = useState("")
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const LeadTimeLine = () => {
             <p className="text-sm font-bold text-gray-700">{currentTime}</p>
           </div>
           <div className="ml-8 max-md:mt-8 p-4 pt-2 bg-white border border-gray-300 rounded-lg shadow-md w-full md:w-1/2">
-            <LeadStatusUpdateForm />
+            <LeadStatusUpdateForm id={id}/>
           </div>
         </div>
         {timelineEvents.map((event, index) => (

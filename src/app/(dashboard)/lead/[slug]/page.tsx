@@ -1,10 +1,10 @@
 import LeadHeader from "@/components/lead/ui/leadHeader"
 import React from "react"
 
-const LeadPage = () => {
+const LeadPage = ({ params }: { params: { slug: string } }) => {
   return (
     <>
-      <LeadHeader />
+      <LeadHeader id={params.slug} />
     </>
   )
 }

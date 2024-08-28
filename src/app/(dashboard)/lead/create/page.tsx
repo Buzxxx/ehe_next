@@ -1,4 +1,4 @@
-import CreateLeadForm from "@/components/lead/feature/createLeadForm"
+import CreateLeadForm from "@/components/lead/feature/forms/createLeadForm"
 
 export default function CreateLead() {
   return (

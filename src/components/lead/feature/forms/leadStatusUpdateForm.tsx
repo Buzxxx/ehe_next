@@ -8,16 +8,22 @@ import { Button } from "@/components/ui/button"
 import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { FilterFormSchema } from "@/lib/validation"
+import { LeadStatusUpdateFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
 
-const LeadStatusUpdateForm = () => {
-  const form = useForm<z.infer<typeof FilterFormSchema>>({
-    resolver: zodResolver(FilterFormSchema),
+const LeadStatusUpdateForm = ({ id }: { id: string }) => {
+  const form = useForm<z.infer<typeof LeadStatusUpdateFormSchema>>({
+    resolver: zodResolver(LeadStatusUpdateFormSchema),
+    defaultValues: {
+      id: id,
+      status: "",
+      priority: "",
+      description: "",
+    },
   })
 
-  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
-    console.log(data)
+  const onSubmit = async (data: z.infer<typeof LeadStatusUpdateFormSchema>) => {
+    console.log({ ...data })
   }
 
   // Filter to get only the status field
@@ -39,7 +45,7 @@ const LeadStatusUpdateForm = () => {
               placeholder={statusCategory.placeholder}
             >
               {statusCategory.options.map((option) => (
-                <SelectItem key={option} value={option}>
+                <SelectItem key={option} value={option.toString()}>
                   {option}
                 </SelectItem>
               ))}
@@ -71,8 +77,8 @@ const LeadStatusUpdateForm = () => {
         >
           Update
         </Button>
-        <Button type="submit" className="ml-4" variant={"destructive"}>
-          Submit
+        <Button type="button" className="ml-4" variant={"destructive"}>
+          Cancel
         </Button>
       </form>
     </Form>

@@ -46,3 +46,10 @@ export const CreateLeadFormSchema = z.object({
   source: z.string().optional().default("4"), // Default value if not provided
   priority: z.enum(["cold", "hot", "C", "D", "E", "F"]),
 })
+
+export const LeadStatusUpdateFormSchema =  z.object({
+  id: z.string(),
+  status: z.string(),
+  priority: z.string(),
+  description: z.string().optional(),
+})

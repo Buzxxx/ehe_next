@@ -13,9 +13,10 @@ import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
 import { handleToggle } from "@/utils/toggle"
 import PaginationComp from "@/components/ui/paginationComp"
+import { Button } from "@/components/ui/button"
 
 // Dynamically import FilterForm
-const FilterForm = lazy(() => import("./filterForm"))
+const FilterForm = lazy(() => import("@/components/dashboard/layout/filterForm"))
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void
@@ -72,9 +73,9 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           className="flex-shrink-0 justify-start w-fit invisible md:visible"
         />
 
-        <button onClick={onToggle} className="text-dashboard-primary">
+        <Button onClick={onToggle} className="text-dashboard-primary">
           <FilterIcon />
-        </button>
+        </Button>
       </div>
 
       {filterVisible && (
