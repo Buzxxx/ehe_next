@@ -8,16 +8,37 @@ import { Button } from "@/components/ui/button"
 import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { FilterFormSchema } from "@/lib/validation"
+import { LeadProfileFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
 
-const LeadProfileUpdateForm = () => {
-  const form = useForm<z.infer<typeof FilterFormSchema>>({
-    resolver: zodResolver(FilterFormSchema),
+const LeadProfileUpdateForm = ({ id }: { id: string }) => {
+  const form = useForm<z.infer<typeof LeadProfileFormSchema>>({
+    resolver: zodResolver(LeadProfileFormSchema),
+    defaultValues: {
+      id: id,
+      name: "",
+      email: "",
+      contact: "",
+      lead_type: "A",
+      query: "",
+      interested_in: "",
+      budget: "",
+      assigned_to: "",
+      product_code: "",
+      received_date: new Date(Date.now()),
+      status: "1",
+      source: "",
+      product_type: "A",
+    },
   })
 
-  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
-    console.log(data)
+  const onSubmit = async (data: z.infer<typeof LeadProfileFormSchema>) => {
+    try {
+      console.log("Form data:", { ...data, id })
+      // Add your submission logic here, e.g., API call
+    } catch (error) {
+      console.error("Submission error:", error)
+    }
   }
 
   // Filter to get only the status field
@@ -33,10 +54,11 @@ const LeadProfileUpdateForm = () => {
 
   return (
     <div className="form-wrapper py-2">
+      {/* Make sure form props are passed correctly */}
       <Form {...form}>
         <h2 className="pt-4 font-bold">Profile</h2>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit)} // Corrected submit handler
           className="space-y-6 py-8 px-4"
         >
           <div className="flex flex-col md:flex-row gap-4">
@@ -46,14 +68,14 @@ const LeadProfileUpdateForm = () => {
               name="name"
               label="Name"
               placeholder="Kapil Dev"
-            ></CustomFormField>
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.PHONE}
-              name="phone"
+              name="contact" // Correct field name for phone number
               label="Phone Number"
               placeholder="+91 12345 67890"
-            ></CustomFormField>
+            />
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
@@ -63,31 +85,24 @@ const LeadProfileUpdateForm = () => {
               name="email"
               label="Email"
               placeholder="example@user.com"
-            ></CustomFormField>
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="assignedTo"
+              name="assigned_to" // Correct field name
               label="Assigned To"
               placeholder="Virat Kohli"
-            ></CustomFormField>
+            />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+          <div className="flex flex-col md:flex-row gap-4 w-full mb-4 md:max-w-[50%]">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
               name="budget"
-              label="Budget (in ₹) "
+              label="Budget (in ₹)"
               placeholder="5,00,00,000"
-            ></CustomFormField>
-            <CustomFormField
-              control={form.control}
-              fieldType={FormFieldType.INPUT}
-              name="sourceAssignedTo"
-              label="Source Assigned To"
-              placeholder="Virat Kohli"
-            ></CustomFormField>
+            />
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
@@ -95,13 +110,13 @@ const LeadProfileUpdateForm = () => {
               <CustomFormField
                 control={form.control}
                 fieldType={FormFieldType.SELECT}
-                name="followUpStatus"
+                name="status"
                 label="Follow Up Status"
                 placeholder={statusCategory.placeholder}
               >
                 {statusCategory.options.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
+                  <SelectItem key={option} value={option.toString()}>
+                    {String(option)}
                   </SelectItem>
                 ))}
               </CustomFormField>
@@ -110,19 +125,19 @@ const LeadProfileUpdateForm = () => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="interestedIn"
+              name="interested_in"
               label="Interested In"
               placeholder="34432 Helium Fields, New York, NY"
-            ></CustomFormField>
+            />
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.SELECT}
-              name="leadType"
+              name="lead_type"
               label="Lead Type"
-              placeholder={"D"}
+              placeholder="D"
             >
               {leadTypeOptions.map((option) => (
                 <SelectItem key={option} value={option}>
@@ -134,19 +149,19 @@ const LeadProfileUpdateForm = () => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="productCode"
+              name="product_code"
               label="Product Code"
               placeholder="sfsdf"
-            ></CustomFormField>
+            />
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.SELECT}
-              name="productType"
+              name="product_type"
               label="Product Type"
-              placeholder={"D"}
+              placeholder="D"
             >
               {leadTypeOptions.map((option) => (
                 <SelectItem key={option} value={option}>
@@ -158,10 +173,10 @@ const LeadProfileUpdateForm = () => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.DATE_PICKER}
-              name="receivedDate"
+              name="received_date"
               label="Received Date"
               placeholder="2024-08-13 14:45:57"
-            ></CustomFormField>
+            />
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
@@ -170,8 +185,8 @@ const LeadProfileUpdateForm = () => {
               fieldType={FormFieldType.INPUT}
               name="query"
               label="Query"
-              placeholder={"D"}
-            ></CustomFormField>
+              placeholder="D"
+            />
             {sourceCategory && (
               <CustomFormField
                 control={form.control}
@@ -181,7 +196,7 @@ const LeadProfileUpdateForm = () => {
                 placeholder="99 Acre"
               >
                 {sourceCategory.options.map((option) => (
-                  <SelectItem key={option} value={option}>
+                  <SelectItem key={option} value={option.toString()}>
                     {option}
                   </SelectItem>
                 ))}
@@ -191,7 +206,7 @@ const LeadProfileUpdateForm = () => {
 
           <Button
             type="submit"
-            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white  hover:text-dashboard-primary"
+            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:text-dashboard-primary"
           >
             Update & Close
           </Button>

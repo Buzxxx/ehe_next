@@ -7,15 +7,22 @@ import { Button } from "@/components/ui/button"
 import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { FilterFormSchema } from "@/lib/validation"
+import { LeadMeetingFormValidation } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
 
-const LeadMeetingForm = () => {
-  const form = useForm<z.infer<typeof FilterFormSchema>>({
-    resolver: zodResolver(FilterFormSchema),
+const LeadMeetingForm = ({id}:{id:string}) => {
+  const form = useForm<z.infer<typeof LeadMeetingFormValidation>>({
+    resolver: zodResolver(LeadMeetingFormValidation),
+    defaultValues: {
+      id:id,
+      date: new Date(Date.now()),
+      location: '',
+      meeting_reason: '',
+      description: '',
+    }
   })
 
-  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
+  const onSubmit = async (data: z.infer<typeof LeadMeetingFormValidation>) => {
     console.log(data)
   }
 
@@ -53,7 +60,7 @@ const LeadMeetingForm = () => {
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
-            name="meetingReason"
+            name="meeting_reason"
             label="Reason for Meet"
             placeholder={meetingReasons[0]}
           >
@@ -68,7 +75,7 @@ const LeadMeetingForm = () => {
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="description"
-            label="Description"
+            label="Description(Optional)"
             placeholder="Add a description (if required)"
           ></CustomFormField>
 

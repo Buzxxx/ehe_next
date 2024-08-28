@@ -1,5 +1,5 @@
 "use client"
-import OnlineTag from "@/components/dashboard/ui/onlineTag"
+
 import ProfileTab from "@/components/dashboard/ui/profileTab"
 import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -8,17 +8,19 @@ import { useRouter } from "next/navigation"
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone, Share2 } from "@/components/ui/icons"
 import LeadTimeLine from "./leadTimeline"
-import LeadProfileUpdateForm from "../feature/leadProfileUpdateForm"
-import LeadCallbackForm from "../feature/leadCallbackForm"
-import LeadMeetingForm from "../feature/leadMeetingForm"
+import LeadProfileUpdateForm from "../feature/forms/leadProfileUpdateForm"
+import LeadCallbackForm from "../feature/forms/leadCallbackForm"
+import LeadMeetingForm from "../feature/forms/leadMeetingForm"
 
 const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
 
 const LeadHeader = ({
+  id,
   type = "Cold",
   status = "Closed",
   assignedTo = "Avinash Jha",
 }: {
+  id: string
   type?: "Cold" | string
   status?: "Closed" | string
   assignedTo?: "Avinash Jha" | string
@@ -29,13 +31,13 @@ const LeadHeader = ({
   const renderActiveTabContent = () => {
     switch (activeTab) {
       case "Timeline":
-        return <LeadTimeLine />
+        return <LeadTimeLine id={id}/>
       case "Profile":
-        return <LeadProfileUpdateForm />
+        return <LeadProfileUpdateForm id={id}/>
       case "Call back":
-        return <LeadCallbackForm/>
+        return <LeadCallbackForm id={id} />
       case "Meeting":
-        return <LeadMeetingForm/>
+        return <LeadMeetingForm id={id} />
       default:
         return null
     }
@@ -71,7 +73,7 @@ const LeadHeader = ({
         />
         <div className="flex gap-2 mt-2 text-center md:px-4 text-xs">
           <p>
-           <span className="w-2 h-2 bg-green-500 inline-block mr-1"></span>
+            <span className="w-2 h-2 bg-green-500 inline-block mr-1"></span>
             {type}
           </p>
           |<p>{status}</p> |<p>Assigned to {assignedTo}</p>

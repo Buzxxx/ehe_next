@@ -1,3 +1,5 @@
+// LeadLayout.tsx
+
 "use client"
 
 import React, { useEffect, useState } from "react"
@@ -7,33 +9,38 @@ import VisitorPanelBody from "../ui/visitorPanel"
 import { useSearchParams, useRouter } from "next/navigation"
 import LeadUtils from "@/utils/LeadUtils"
 import { Spinner } from "@/components/ui/icons"
-import leadApiClient, { Lead } from "@/lib/leadApiClient"
+import { Lead } from "../feature/lead"
+import { Filter } from "../feature/filter"
 
-const LeadComp: React.FC = () => {
+const leadApiClient = new Lead()
+
+const LeadLayout = () => {
   const [leads, setLeads] = useState<LeadCardProps[]>([])
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [modalLoading, setModalLoading] = useState(false)
 
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const perPage = Number(searchParams.get("per_page")) || 20
-  const page = Number(searchParams.get("page")) || 1
-
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const lead = new Lead()
-        const filter_by = searchParams.get("filter_by") || ""
-        const sort_by = searchParams.get("sort_by") || ""
+        const filter = new Filter()
 
-        lead
-          .setFilterBy(filter_by)
-          .setSortBy(sort_by)
-          .setPerPage(perPage)
-          .setPage(page)
+        // Set parameters from the current URL
+        filter.setFilterParams(searchParams)
 
-        const fetchedLeads = await leadApiClient.getLeads(lead)
+        // Generate the full URL for redirection or API call
+        const fullUrl = filter.getUrlOrDefaultUrl()
+
+        // Redirect to this URL if necessary
+        router.push(fullUrl)
+
+        // Set the API URL with only the query parameters and fetch leads
+        const filterQuery = filter.buildQuery()
+        leadApiClient.setUrl(filterQuery)
+        const fetchedLeads = await leadApiClient.getLeads()
 
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({
@@ -74,15 +81,15 @@ const LeadComp: React.FC = () => {
   const totalLeads = LeadUtils.getTotalLeads(leads)
 
   const handleReassign = () => {
-    setIsLoading(true)
+    setModalLoading(true)
     try {
       const selectedLeadIds = selectedLeads.join(",")
       router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`)
     } catch (error) {
-      console.error("Failed to navigate to reassign modal:", error)
-    } finally {
-      setIsLoading(false)
+      console.log(error)
     }
+
+    setModalLoading(false)
   }
 
   return (
@@ -102,6 +109,9 @@ const LeadComp: React.FC = () => {
         selectedCount={selectedCount}
         totalLeads={totalLeads}
       />
+      {modalLoading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-95 z-50 min-h-screen"></div>
+      )}
 
       <div className="visitor-panel w-full">
         {isLoading ? (
@@ -119,4 +129,4 @@ const LeadComp: React.FC = () => {
   )
 }
 
-export default LeadComp
+export default LeadLayout
