@@ -77,3 +77,11 @@ export const LeadCallbackFormValidation = z.object({
   date: z.date(),
   description: z.string().optional(),
 })
+
+export const LeadMeetingFormValidation = z.object({
+  id: z.string(),
+  date: z.date(),
+  location: z.string().optional(),
+  description: z.string().optional(),
+  meeting_reason: z.string()
+})
