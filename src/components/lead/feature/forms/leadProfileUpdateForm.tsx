@@ -100,7 +100,7 @@ const LeadProfileUpdateForm = () => {
                 placeholder={statusCategory.placeholder}
               >
                 {statusCategory.options.map((option) => (
-                  <SelectItem key={option} value={option}>
+                  <SelectItem key={option} value={option.toString()}>
                     {option}
                   </SelectItem>
                 ))}
@@ -181,7 +181,7 @@ const LeadProfileUpdateForm = () => {
                 placeholder="99 Acre"
               >
                 {sourceCategory.options.map((option) => (
-                  <SelectItem key={option} value={option}>
+                  <SelectItem key={option} value={option.toString()}>
                     {option}
                   </SelectItem>
                 ))}
