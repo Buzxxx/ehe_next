@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 
 // Import dynamic from next/dynamic and InputFieldPlaceholder
 import dynamic from "next/dynamic";
-import InputFieldPlaceholder from "@/components/accounts/ui/inputFieldPlaceholder";
+import InputFieldPlaceholder from "@/components/authentication/ui/inputFieldPlaceholder";
 
-const InputField = dynamic(() => import("@/components/accounts/ui/inputField"), {
-  loading: () => <InputFieldPlaceholder />,
-});
-
+const InputField = dynamic(
+  () => import("@/components/authentication/ui/inputField"),
+  {
+    loading: () => <InputFieldPlaceholder />,
+  }
+);
 
 const formSchema = z
   .object({
@@ -45,8 +47,7 @@ const ResetPassword = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-  };
+  const onSubmit = (values: z.infer<typeof formSchema>) => {};
 
   const handleCancel = () => {
     form.reset();
@@ -55,7 +56,6 @@ const ResetPassword = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        
         <InputField
           label="Old Password"
           placeholder="old password"
@@ -89,7 +89,11 @@ const ResetPassword = () => {
           <Button type="submit" className="btn-primary">
             Change
           </Button>
-          <Button type="button" className="btn-revert bg-transparent hover:bg-muted" onClick={handleCancel}>
+          <Button
+            type="button"
+            className="btn-revert bg-transparent hover:bg-muted"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
         </div>

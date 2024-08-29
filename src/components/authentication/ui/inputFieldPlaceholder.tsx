@@ -1,4 +1,3 @@
-// components/accounts/ui/inputFieldPlaceholder.jsx
 const InputFieldPlaceholder: React.FC = () => {
   return (
     <div className="flex flex-col space-y-4 ">
