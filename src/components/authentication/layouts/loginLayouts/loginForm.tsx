@@ -57,9 +57,8 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
           status: "failure",
           message: "Username or password incorrect",
         });
+        setLoading(false);
       }
-
-      setLoading(false);
     } catch (error) {
       setMessage({
         status: "failure",
