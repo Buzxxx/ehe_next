@@ -1,4 +1,4 @@
-"use server"; // This ensures that the functions are treated as server-side
+"use server";
 
 import { cookies } from "next/headers";
 

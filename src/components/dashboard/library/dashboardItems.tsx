@@ -1,8 +1,8 @@
-import Work from "@/components/ui/icons/work"
-import CheckListIcon from "@/components/ui/icons/checklistIcon"
-import DashboardIcon from "@/components/ui/icons/dashboardIcon"
-import PersonIcon from "@/components/ui/icons/personIcon"
-import Settings from "@/components/ui/icons/settings"
+import Work from "@/components/ui/icons/work";
+import CheckListIcon from "@/components/ui/icons/checklistIcon";
+import DashboardIcon from "@/components/ui/icons/dashboardIcon";
+import PersonIcon from "@/components/ui/icons/personIcon";
+import Settings from "@/components/ui/icons/settings";
 
 const dashboardItems = [
   { title: "Dashboard", icon: <DashboardIcon />, subItems: [] },
@@ -20,10 +20,10 @@ const dashboardItems = [
     title: "Settings",
     icon: <Settings />,
     subItems: [
-      { name: "Change Password", route: "/accounts/resetPassword" },
-      { name: "Logout", route: "/accounts/login" },
+      { name: "Change Password", route: "/auth/resetPassword" },
+      { name: "Logout", route: "/auth/login" },
     ],
   },
-]
+];
 
-export default dashboardItems
+export default dashboardItems;
