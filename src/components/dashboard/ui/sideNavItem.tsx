@@ -50,7 +50,8 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
                 : "border-0"
             }`}
           >
-            {icon} {title}
+            <span className="min-w-5">{icon}</span>
+            {title}
             <Badge className="absolute right-4 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-200 p-1 text-xs rounded-sm">
               {subItems.length}
             </Badge>

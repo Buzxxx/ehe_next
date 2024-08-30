@@ -1,6 +1,7 @@
 "use client"
 
 import { Suspense, lazy, useState } from "react"
+import { useRouter } from "next/navigation"
 import {
   Menubar,
   MenubarContent,
@@ -13,10 +14,11 @@ import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
 import { handleToggle } from "@/utils/toggle"
 import PaginationComp from "@/components/ui/paginationComp"
+import { Dashboard } from "../feature/dashboard"
 
-
-// Dynamically import FilterForm
-const FilterForm = lazy(() => import("@/components/dashboard/layout/filterForm"))
+const FilterForm = lazy(
+  () => import("@/components/dashboard/layout/filterForm")
+)
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void
@@ -24,6 +26,7 @@ type DashboardTopBarProps = {
   onReassign?: () => void
   selectedCount?: number
   totalLeads?: number
+  page?: "lead" | "workplace" | "workforce" | "dashboard" | "task"
 }
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
@@ -32,26 +35,40 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   onReassign,
   selectedCount = 0,
   totalLeads = 0,
+  page = "lead",
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false)
+  const router = useRouter()
 
   const onToggle = () => {
     handleToggle(filterVisible, setFilterVisible)
   }
 
+  const navigateTo = (path: string) => {
+    router.push(path)
+  }
+
+  const menuItems = Dashboard.getMenuItems(
+    navigateTo,
+    page,
+    onSelectAll,
+    onUnselectAll,
+    onReassign,
+    selectedCount
+  )
+
   return (
-    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50 ">
+    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50">
       <MenubarMenu>
         <MenubarTrigger className="flex items-center gap-2 border shadow-sm">
           Menu <ChevronDown />
         </MenubarTrigger>
         <MenubarContent>
-          <MenubarItem>Share</MenubarItem>
-          <MenubarItem onClick={onSelectAll}>Select All</MenubarItem>
-          <MenubarItem onClick={onUnselectAll}>Unselect All</MenubarItem>
-          {selectedCount > 0 && (
-            <MenubarItem onClick={onReassign}>Reassign</MenubarItem>
-          )}
+          {menuItems.map((item, index) => (
+            <MenubarItem key={index} onClick={item.onClick}>
+              {item.label}
+            </MenubarItem>
+          ))}
         </MenubarContent>
       </MenubarMenu>
 
@@ -67,18 +84,22 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           </Badge>
         )}
 
-        <PaginationComp
-          perPage={20}
-          totalPages={50}
-          className="flex-shrink-0 justify-start w-fit invisible md:visible"
-        />
+        {page === "lead" && (
+          <>
+            <PaginationComp
+              perPage={20}
+              totalPages={50}
+              className="flex-shrink-0 justify-start w-fit invisible md:visible"
+            />
 
-        <button onClick={onToggle} className="text-dashboard-primary">
-          <FilterIcon />
-        </button>
+            <button onClick={onToggle} className="text-dashboard-primary">
+              <FilterIcon />
+            </button>
+          </>
+        )}
       </div>
 
-      {filterVisible && (
+      {page === "lead" && filterVisible && (
         <Suspense fallback={<> </>}>
           <FilterForm
             className={`${
