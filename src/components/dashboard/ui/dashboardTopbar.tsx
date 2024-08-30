@@ -14,9 +14,10 @@ import { Badge } from "@/components/ui/badge"
 import { handleToggle } from "@/utils/toggle"
 import PaginationComp from "@/components/ui/paginationComp"
 
-
 // Dynamically import FilterForm
-const FilterForm = lazy(() => import("@/components/dashboard/layout/filterForm"))
+const FilterForm = lazy(
+  () => import("@/components/dashboard/layout/filterForm")
+)
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void
@@ -24,6 +25,7 @@ type DashboardTopBarProps = {
   onReassign?: () => void
   selectedCount?: number
   totalLeads?: number
+  isLeadPage?: boolean // New prop to indicate if it's the lead page
 }
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
@@ -32,6 +34,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   onReassign,
   selectedCount = 0,
   totalLeads = 0,
+  isLeadPage = false, // Default value set to false
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false)
 
@@ -67,28 +70,33 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           </Badge>
         )}
 
-        <PaginationComp
-          perPage={20}
-          totalPages={50}
-          className="flex-shrink-0 justify-start w-fit invisible md:visible"
-        />
+        {isLeadPage && ( // Only show these components if on the lead page
+          <>
+            <PaginationComp
+              perPage={20}
+              totalPages={50}
+              className="flex-shrink-0 justify-start w-fit invisible md:visible"
+            />
 
-        <button onClick={onToggle} className="text-dashboard-primary">
-          <FilterIcon />
-        </button>
+            <button onClick={onToggle} className="text-dashboard-primary">
+              <FilterIcon />
+            </button>
+          </>
+        )}
       </div>
 
-      {filterVisible && (
-        <Suspense fallback={<> </>}>
-          <FilterForm
-            className={`${
-              filterVisible
-                ? "filter-form md:translate-x-0"
-                : "translate-x-96 2xl:translate-x-[35rem] hidden"
-            }`}
-          />
-        </Suspense>
-      )}
+      {isLeadPage &&
+        filterVisible && ( // Conditionally render FilterForm
+          <Suspense fallback={<> </>}>
+            <FilterForm
+              className={`${
+                filterVisible
+                  ? "filter-form md:translate-x-0"
+                  : "translate-x-96 2xl:translate-x-[35rem] hidden"
+              }`}
+            />
+          </Suspense>
+        )}
     </Menubar>
   )
 }

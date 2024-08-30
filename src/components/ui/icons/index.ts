@@ -33,6 +33,7 @@ import {
   LogOut,
   Contact,
   Pencil,
+  Edit
 } from "lucide-react"
 
 export {
@@ -70,4 +71,5 @@ export {
   LogOut,
   Contact,
   Pencil,
+  Edit
 }
