@@ -50,7 +50,7 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
       <DashboardHeader toggled={toggled} onNext={onToggle} />
       <DashboardSideMenu toggled={toggled} online={online} />
       <section
-        className={` transition-all duration-300 min-h-96 mt-10 px-6 py-4 ml-auto flex-0 relative ${
+        className={` transition-all duration-300 min-h-96 mt-10 px-6 py-4 ml-auto flex-0 ${
           toggled ? "md:w-[calc(100%-14rem)] ml-56" : "w-full ml-0"
         }`}
       >

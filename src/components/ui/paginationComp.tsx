@@ -32,13 +32,21 @@ const PaginationComp = ({
   onPageChange,
 }: PaginationCompProps) => {
   const [activePage, setActivePage] = useState(initialPage)
+  const [itemsPerPage, setItemsPerPage] = useState(perPage) // State for items per page
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const router = useRouter()
 
+  const perPageOptions = [10, 20, 50, 100, 200]
+
   const handlePageChange = (page: number) => {
     setActivePage(page)
-    updateUrlParams(page, perPage) // Update the URL parameters
+    updateUrlParams(page, itemsPerPage)
     if (onPageChange) onPageChange(page)
+  }
+
+  const handlePerPageChange = (perPage: number) => {
+    setItemsPerPage(perPage)
+    updateUrlParams(activePage, perPage)
   }
 
   const updateUrlParams = (page: number, perPage: number) => {
@@ -60,6 +68,38 @@ const PaginationComp = ({
     <Pagination className={`items-center ${className}`}>
       <h2 className="text-sm mr-3 text-gray-500">Per Page:</h2>
       <PaginationContent>
+        <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
+          <DropdownMenuTrigger className="p-0 text-gray-500">
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                isActive
+                className="bg-charcoal-foreground h-fit"
+              >
+                {itemsPerPage}
+                {isDropdownOpen ? (
+                  <ChevronUp className="ml-1 h-4 w-4" />
+                ) : (
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                )}
+              </PaginationLink>
+            </PaginationItem>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="max-h-96 w-fit overflow-y-auto p-1">
+            {perPageOptions.map((option) => (
+              <DropdownMenuItem
+                className="w-fit px-2 py-1"
+                key={option}
+                onSelect={() => handlePerPageChange(option)}
+              >
+                <PaginationLink href="#" className="w-fit text-center">
+                  {option}
+                </PaginationLink>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
           <DropdownMenuTrigger className="p-0 text-gray-500">
             <PaginationItem>
