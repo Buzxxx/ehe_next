@@ -11,8 +11,7 @@ const WorkforceTabs = () => {
   const [activeTab, setActiveTab] = useState(tabList[0]) // Set initial active tab
   const [data, setData] = useState<Worker[]>([])
 
-  // Define data for both tabs
-  const activeData = [
+  const workerDataSet = [
     {
       userId: 42,
       name: "Gaurav J",
@@ -20,11 +19,8 @@ const WorkforceTabs = () => {
       email: "user@example.com",
       manager: "Avinash J",
       department: "IT",
+      status: "active",
     },
-    // ...
-  ]
-
-  const inActiveData = [
     {
       userId: 43,
       name: "Subrath Nayak",
@@ -32,8 +28,16 @@ const WorkforceTabs = () => {
       email: "user@example.com",
       manager: "Avinash J",
       department: "IT",
+      status: "inactive",
     },
   ]
+
+  // Define data for both tabs
+  const activeData = workerDataSet.filter((worker) => worker.status == "active")
+
+  const inActiveData = workerDataSet.filter(
+    (worker) => worker.status == "inactive"
+  )
 
   // Update data when the active tab changes
   useEffect(() => {
@@ -44,15 +48,24 @@ const WorkforceTabs = () => {
     }
   }, [activeTab])
 
+  // Handle status change
+  const handleStatusChange = (userId: number, newStatus: string) => {
+    setData((prevData) =>
+      prevData.map((worker) =>
+        worker.userId === userId ? { ...worker, status: newStatus } : worker
+      )
+    )
+  }
+
   return (
     <div>
-      <nav className="py-2 md:px-4 mt-8 flex items-center justify-start gap-4 bg-slate-200 w-full max-md:pl-4">
+      <nav className="py-0 flex items-center justify-start bg-gray-200 w-full max-md:pl-4 rounded-t-md">
         {tabList.map((item) => (
           <Button
             key={item}
-            className={`text-xs px-2 h-8 hover:text-dashboard-primary hover:bg-dashboard-primary hover:text-white ${
+            className={`rounded-none text-xs px-2 h-8 hover:text-dashboard-primary hover:bg-dashboard-primary hover:text-white py-5 rounded-t-md ${
               activeTab === item
-                ? "bg-dashboard-primary text-white"
+                ? "bg-charcoal-foreground text-dashboard-primary border border-b-0 border-gray-300"
                 : "bg-gray-200 text-gray-800"
             }`}
             onClick={() => setActiveTab(item)}

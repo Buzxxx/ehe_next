@@ -1,5 +1,3 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 import ActionCell from "./actionCell"
 
@@ -12,6 +10,7 @@ export type Worker = {
   email: string
   manager: string
   department: string
+  status: string
 }
 
 export const columns: ColumnDef<Worker>[] = [
@@ -33,7 +32,7 @@ export const columns: ColumnDef<Worker>[] = [
     id: "actions",
     cell: ({ row }) => {
       const worker = row.original
-      return <ActionCell userId={worker.userId} />
+      return <ActionCell workerStatus={worker.status} userId={worker.userId} />
     },
   },
 ]

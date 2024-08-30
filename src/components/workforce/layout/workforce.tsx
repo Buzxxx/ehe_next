@@ -7,13 +7,13 @@ const Work = () => {
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-neutral-600 font-normal">
-          Workplace
+          Workforce
           <span className="text-base font-medium ml-4">Control Panel</span>
         </h1>
         <DashboardBreadcrumb />
       </div>
 
-      <DashboardTopBar />
+      <DashboardTopBar page="workforce"/>
 
       <div className="visitor-panel relative w-full">
         <WorkforceTabs />

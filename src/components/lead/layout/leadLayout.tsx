@@ -108,7 +108,7 @@ const LeadLayout = () => {
         onReassign={handleReassign}
         selectedCount={selectedCount}
         totalLeads={totalLeads}
-        isLeadPage={true}
+        page={'lead'}
       />
       {modalLoading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-95 z-50 min-h-screen"></div>
