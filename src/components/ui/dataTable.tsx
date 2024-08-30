@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="rounded-md border">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="md:hidden absolute right-2 top-0 translate-y-1/2 py-0">
+        <DropdownMenuTrigger asChild className="md:hidden absolute right-2 -top-5 translate-y-1/2 py-0">
           <Button variant="outline" className="ml-auto">
             Columns
           </Button>
