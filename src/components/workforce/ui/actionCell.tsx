@@ -15,13 +15,12 @@ import { Edit, GreenDot, Plus, DotIcon } from "@/components/ui/icons"
 type ActionCellProps = {
   workerStatus: string
   userId: number
+  onOpenModal: () => void // Define the modal handler prop
 }
 
-// New component to handle the actions cell
-const ActionCell = ({ workerStatus, userId }: ActionCellProps) => {
+const ActionCell = ({ workerStatus, userId, onOpenModal }: ActionCellProps) => {
   return (
-    // Render this content for mobile screens
-    <DropdownMenu> 
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
           <span className="sr-only">Open menu</span>
@@ -37,7 +36,10 @@ const ActionCell = ({ workerStatus, userId }: ActionCellProps) => {
           <Edit size={16} color="grey" /> Edit
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex gap-2 cursor-pointer">
+        <DropdownMenuItem
+          className="flex gap-2 cursor-pointer"
+          onClick={onOpenModal} // Call the handler to open the modal
+        >
           {workerStatus === "active" ? (
             <>
               <DotIcon color="red" size={8} /> Deactivate

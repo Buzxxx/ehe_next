@@ -3,7 +3,7 @@ import ActionCell from "./actionCell"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Worker = {
+export type WorkforceUser = {
   userId: number
   name: string
   mobile: string
@@ -13,7 +13,7 @@ export type Worker = {
   status: string
 }
 
-export const columns: ColumnDef<Worker>[] = [
+export const columns: ColumnDef<WorkforceUser>[] = [
   {
     id: "userId",
     accessorKey: "userId",
@@ -32,7 +32,7 @@ export const columns: ColumnDef<Worker>[] = [
     id: "actions",
     cell: ({ row }) => {
       const worker = row.original
-      return <ActionCell workerStatus={worker.status} userId={worker.userId} />
+      // return <ActionCell workerStatus={worker.status} userId={worker.userId} />
     },
   },
 ]
