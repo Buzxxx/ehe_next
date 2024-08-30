@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
+import CreateUserCustomFormField from "@/components/dashboard/ui/createUserCustomFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { SelectItem } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
+import { Separator } from "@/components/ui/separator"
 
 const workerFormSchema = z.object({
   first_name: z.string().min(1, { message: "First Name is required" }),
@@ -51,7 +52,7 @@ const CreateWorkerForm = ({
     try {
       toast({
         title: "User Created",
-				variant: 'dashboard'
+        variant: "dashboard",
       })
       form.reset()
       setIsLoading(false)
@@ -67,62 +68,71 @@ const CreateWorkerForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 py-8 px-4"
+        className="space-y-6 py-8 shadow-md px-12 mx-16 mt-8 "
       >
+        <h6 className="text-sm font-bold">
+          <span className="text-red-600">*</span> Required
+        </h6>
+        <Separator />
         <div className="flex flex-col md:flex-row gap-4">
-          <CustomFormField
+          <p className="font-semibold text-sm mt-2 w-32 text-slate-800">
+            {" "}
+            Name:
+          </p>
+          <CreateUserCustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="first_name"
-            label="Name"
+            label="First Name"
             placeholder="Avinash"
+            required={true}
           />
-          <CustomFormField
+          <CreateUserCustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="second_name"
             label="Second Name"
             placeholder="Kumar"
           />
-          <CustomFormField
+          <CreateUserCustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="last_name"
             label="Last Name"
             placeholder="Jha"
+            required={true}
           />
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
-          <CustomFormField
+          <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
+            Username:
+          </p>
+          <CreateUserCustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="username"
-            label="Username"
             placeholder="Aj"
-          />
-          <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.INPUT}
-            name="email"
-            label="Email"
-            placeholder="user@example.com"
+            required={true}
           />
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
-          <CustomFormField
+          <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
+            Email:
+          </p>
+          <CreateUserCustomFormField
             control={form.control}
-            fieldType={FormFieldType.PHONE}
-            name="phone_number"
-            label="Phone Number"
-            placeholder="+91 9876543210"
+            fieldType={FormFieldType.INPUT}
+            name="email"
+            placeholder="user@example.com"
+            required={true}
           />
-          <CustomFormField
+
+          {/* <CreateUserCustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
             name="supervisor"
-            label="Supervisor"
             placeholder="D"
           >
             {supervisorOptions.map((option) => (
@@ -130,7 +140,20 @@ const CreateWorkerForm = ({
                 {option}
               </SelectItem>
             ))}
-          </CustomFormField>
+          </CreateUserCustomFormField> */}
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+          <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
+            Phone:
+          </p>
+          <CreateUserCustomFormField
+            control={form.control}
+            fieldType={FormFieldType.PHONE}
+            name="phone_number"
+            placeholder="+91 9876543210"
+            required={true}
+          />
         </div>
 
         <Button
