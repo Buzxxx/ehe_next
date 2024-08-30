@@ -53,7 +53,10 @@ const ActionCell: React.FC<{ worker: Worker }> = ({ worker }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem className="flex gap-2" onClick={() => console.log(worker.userId)}>
+        <DropdownMenuItem
+          className="flex gap-2"
+          onClick={() => console.log(worker.userId)}
+        >
           <Edit size={16} color="grey" /> Edit
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -70,7 +73,7 @@ const ActionCell: React.FC<{ worker: Worker }> = ({ worker }) => {
   ) : (
     // Render this content for non-mobile screens
     <div className="flex gap-2">
-      <button>
+      <button onClick={() => console.log(worker.userId)}>
         <Edit size={16} color="grey" />
       </button>
       <button>
