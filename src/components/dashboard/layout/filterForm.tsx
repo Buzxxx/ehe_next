@@ -50,7 +50,7 @@ const FilterForm = ({ className }: { className: string }) => {
 
   return (
     <div
-      className={`w-3/4 md:w-1/4 ml-auto space-y-2 absolute min-h-full top-[6.5rem] right-0 border-x border-slate-300 p-4 duration-300 transition-all bg-charcoal-foregroundAccent overflow-scroll z-50 ${className}`}
+      className={`w-3/4 md:w-1/4 ml-auto space-y-2 absolute min-h-screen top-[6.5rem] right-0 border-x border-slate-300 p-4 duration-300 transition-all bg-charcoal-foregroundAccent overflow-scroll z-50 ${className}`}
     >
       {filterCategories.map((category) => {
         if (category.name === "date") {

@@ -13,7 +13,7 @@ import FilterIcon from "@/components/ui/icons/filterIcon"
 import { Badge } from "@/components/ui/badge"
 import { handleToggle } from "@/utils/toggle"
 import PaginationComp from "@/components/ui/paginationComp"
-import { Button } from "@/components/ui/button"
+
 
 // Dynamically import FilterForm
 const FilterForm = lazy(() => import("@/components/dashboard/layout/filterForm"))
@@ -40,7 +40,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   }
 
   return (
-    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 ">
+    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50 ">
       <MenubarMenu>
         <MenubarTrigger className="flex items-center gap-2 border shadow-sm">
           Menu <ChevronDown />
@@ -73,9 +73,9 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           className="flex-shrink-0 justify-start w-fit invisible md:visible"
         />
 
-        <Button onClick={onToggle} className="text-dashboard-primary">
+        <button onClick={onToggle} className="text-dashboard-primary">
           <FilterIcon />
-        </Button>
+        </button>
       </div>
 
       {filterVisible && (
