@@ -24,6 +24,24 @@ import { Textarea } from "../../ui/textarea"
 import { Checkbox } from "../../ui/checkbox"
 import { Label } from "../../ui/label"
 import { useEffect, useState } from "react"
+import { Control } from "react-hook-form"
+
+
+declare interface customProps {
+  control: Control<any>
+  fieldType: FormFieldType
+  name: string
+  label?: string
+  placeholder?: string
+  iconSrc?: string
+  iconAlt?: string
+  disabled?: boolean
+  dateFormat?: string
+  showTimeSelect?: boolean
+  children?: React.ReactNode
+  renderSkeleton?: (field: any) => React.ReactNode
+  required?: boolean
+}
 
 const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     const [currentTime, setCurrentTime] = useState<Date | null>(null)
