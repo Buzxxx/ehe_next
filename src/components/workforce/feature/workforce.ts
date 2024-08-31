@@ -1,4 +1,17 @@
+
 import { WorkforceUser } from "../ui/tableColumns"
+
+
+export type Alias = {
+  type: string
+  username: string
+  created: string
+}
+
+export type UserAliases = {
+  id: number
+  aliases: Alias[]
+}
 
 export class Workforce {
   static handleStatusChange(
@@ -20,5 +33,10 @@ export class Workforce {
   ): WorkforceUser | undefined {
     // Convert id to number and find user by id
     return data.find((p) => p.userId === Number(id))
+  }
+
+  static getAliasesById(id: string, aliasesData: UserAliases[]): Alias[] {
+    const aliasEntry = aliasesData.find((alias) => alias.id === Number(id))
+    return aliasEntry ? aliasEntry.aliases : []
   }
 }

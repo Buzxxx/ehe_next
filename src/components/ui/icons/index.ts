@@ -36,7 +36,8 @@ import {
   Pencil,
   Edit,
   Dot,
-  Plus
+  Plus,
+  Trash2
 } from "lucide-react"
 
 export {
@@ -77,5 +78,6 @@ export {
   Pencil,
   Edit,
   Dot, 
-  Plus
+  Plus,
+  Trash2
 }
