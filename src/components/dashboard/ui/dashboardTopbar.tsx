@@ -10,7 +10,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar"
 import ChevronDown from "@/components/ui/icons/chevronDown"
-import FilterIcon from "@/components/ui/icons/filterIcon"
+import { Filter } from "@/components/ui/icons"
 import { Badge } from "@/components/ui/badge"
 import { handleToggle } from "@/utils/toggle"
 import PaginationComp from "@/components/ui/paginationComp"
@@ -93,7 +93,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
             />
 
             <button onClick={onToggle} className="text-dashboard-primary">
-              <FilterIcon />
+              <Filter color="grey" className={`hover:fill-gray-500 ${filterVisible && 'fill-gray-500'}`}/>
             </button>
           </>
         )}
