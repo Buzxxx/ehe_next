@@ -11,6 +11,7 @@ import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { SelectItem } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
+import { WorkforceUser } from "./tableColumns"
 
 const workerFormSchema = z.object({
   first_name: z.string().min(1, { message: "First Name is required" }),
@@ -28,21 +29,25 @@ const workerFormSchema = z.object({
 const CreateWorkerForm = ({
   isLoading,
   setIsLoading,
+  page,
+  userValues,
 }: {
   isLoading: boolean
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  page?: "create" | "edit"
+  userValues?: WorkforceUser
 }) => {
   const { toast } = useToast()
   const form = useForm<z.infer<typeof workerFormSchema>>({
     resolver: zodResolver(workerFormSchema),
     defaultValues: {
-      first_name: "", // Default to an empty string or a sensible default
-      second_name: "",
-      last_name: "",
-      username: "",
-      email: "",
-      phone_number: "",
-      supervisor: "D",
+      first_name: userValues?.first_name || "",
+      second_name: userValues?.second_name || "",
+      last_name: userValues?.last_name || "",
+      username: userValues?.username || "",
+      email: userValues?.email || "",
+      phone_number: userValues?.mobile || "",
+      supervisor: userValues?.supervisor || "D",
     },
   })
 
@@ -51,7 +56,7 @@ const CreateWorkerForm = ({
     console.log({ ...values })
     try {
       toast({
-        title: "User Created",
+        title: page === "create" ? "User Created" : "User Edited",
         variant: "dashboard",
       })
       form.reset()
@@ -68,7 +73,7 @@ const CreateWorkerForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 py-8 shadow-md px-12 mx-16 mt-8 "
+        className="space-y-6 py-8 md:shadow-md md:px-12  md:mx-16 mt-8 "
       >
         <h6 className="text-sm font-bold">
           <span className="text-red-600">*</span> Required
@@ -76,7 +81,6 @@ const CreateWorkerForm = ({
         <Separator />
         <div className="flex flex-col md:flex-row gap-4">
           <p className="font-semibold text-sm mt-2 w-32 text-slate-800">
-            {" "}
             Name:
           </p>
           <CreateUserCustomFormField
@@ -103,33 +107,41 @@ const CreateWorkerForm = ({
             required={true}
           />
         </div>
+        {page !== "edit" && (
+          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
+              Username:
+            </p>
+            <CreateUserCustomFormField
+              control={form.control}
+              fieldType={FormFieldType.INPUT}
+              name="username"
+              placeholder="Aj"
+              required={true}
+            />
+          </div>
+        )}
 
+        {page !== "edit" && (
+          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
+              Email:
+            </p>
+            <CreateUserCustomFormField
+              control={form.control}
+              fieldType={FormFieldType.INPUT}
+              name="email"
+              placeholder="user@example.com"
+              required={true}
+             
+            />
+          </div>
+        )}
         <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
           <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
-            Username:
+            Supervisor:
           </p>
           <CreateUserCustomFormField
-            control={form.control}
-            fieldType={FormFieldType.INPUT}
-            name="username"
-            placeholder="Aj"
-            required={true}
-          />
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
-          <p className="font-semibold text-sm mt-2 w-32 before:content-['*'] before:text-red-600 text-slate-800">
-            Email:
-          </p>
-          <CreateUserCustomFormField
-            control={form.control}
-            fieldType={FormFieldType.INPUT}
-            name="email"
-            placeholder="user@example.com"
-            required={true}
-          />
-
-          {/* <CreateUserCustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
             name="supervisor"
@@ -140,7 +152,7 @@ const CreateWorkerForm = ({
                 {option}
               </SelectItem>
             ))}
-          </CreateUserCustomFormField> */}
+          </CreateUserCustomFormField>
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
@@ -158,7 +170,7 @@ const CreateWorkerForm = ({
 
         <Button
           type="submit"
-          className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+          className="max-md:mx-auto md:ml-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
         >
           Create
         </Button>

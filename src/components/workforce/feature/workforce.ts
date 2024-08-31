@@ -13,4 +13,12 @@ export class Workforce {
 
     return updatedData // Return the modified dataset
   }
+
+  static getUserbyId(
+    id: string,
+    data: WorkforceUser[]
+  ): WorkforceUser | undefined {
+    // Convert id to number and find user by id
+    return data.find((p) => p.userId === Number(id))
+  }
 }

@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react"
 import { columns, WorkforceUser } from "./tableColumns"
 import Modal from "@/components/workforce/ui/workforceModal" // Import Modal Component
 import { Workforce } from "../feature/workforce" // Import Workforce Class
+import { sampleData } from "../lib/sampleData"
 
 const WorkforceTabs = () => {
   const tabList = ["Active", "Inactive"]
@@ -15,26 +16,7 @@ const WorkforceTabs = () => {
   const [isModalOpen, setIsModalOpen] = useState(false) // Modal state
   const [currentWorker, setCurrentWorker] = useState<WorkforceUser | null>(null) // Current worker state
 
-  const [workerDataSet, setWorkerDataSet] = useState<WorkforceUser[]>([
-    {
-      userId: 42,
-      name: "Gaurav J",
-      mobile: "+91 1234567890",
-      email: "user@example.com",
-      manager: "Avinash J",
-      department: "IT",
-      status: "active",
-    },
-    {
-      userId: 43,
-      name: "Subrath Nayak",
-      mobile: "+91 1234567890",
-      email: "user@example.com",
-      manager: "Avinash J",
-      department: "IT",
-      status: "inactive",
-    },
-  ])
+  const [workerDataSet, setWorkerDataSet] = useState<WorkforceUser[]>(sampleData)
 
   // Re-filter data based on active tab
   useEffect(() => {
@@ -107,7 +89,7 @@ const WorkforceTabs = () => {
           }
         >
           <p>
-            Are you sure you want to change the status of {currentWorker.name}{" "}
+            Are you sure you want to change the status of {currentWorker.first_name}{" "}{currentWorker.last_name}
             to {currentWorker.status === "active" ? "inactive" : "active"}?
           </p>
         </Modal>

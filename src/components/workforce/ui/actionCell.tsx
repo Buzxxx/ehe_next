@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Edit, GreenDot, Plus, DotIcon } from "@/components/ui/icons"
+import { useRouter } from "next/navigation"
 
 type ActionCellProps = {
   workerStatus: string
@@ -19,6 +20,12 @@ type ActionCellProps = {
 }
 
 const ActionCell = ({ workerStatus, userId, onOpenModal }: ActionCellProps) => {
+  const router = useRouter() // Initialize router
+
+  const handleEditClick = () => {
+    router.push(`/workforce/edit?id=${userId}`)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,7 +38,7 @@ const ActionCell = ({ workerStatus, userId, onOpenModal }: ActionCellProps) => {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem
           className="flex gap-2 cursor-pointer"
-          onClick={() => console.log(userId)}
+          onClick={handleEditClick}
         >
           <Edit size={16} color="grey" /> Edit
         </DropdownMenuItem>
