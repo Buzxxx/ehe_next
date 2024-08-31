@@ -1,24 +1,51 @@
 // @/app/(dashboard)/workforce/edit/[id]/alias/page.tsx
+
 "use client"
 import UserAliasTable from "@/components/workforce/layout/userAliasTable"
-import React from "react"
+import React, { useState } from "react"
 import { useParams } from "next/navigation"
-import { Workforce } from "@/components/workforce/feature/workforce"
-import { sampleData,aliases } from "@/components/workforce/lib/sampleData"
-
+import { Alias, Workforce } from "@/components/workforce/feature/workforce"
+import { sampleData, aliases } from "@/components/workforce/lib/sampleData"
 
 const EditAlias = () => {
-  const { id } = useParams() // Get the dynamic route parameter [id]
+  const { id } = useParams() 
 
   const user = Workforce.getUserbyId(id.toString(), sampleData)
-  const userAliases = Workforce.getAliasesById(id.toString(), aliases) // Fetch aliases by id
+  const initialUserAliases = Workforce.getAliasesById(id.toString(), aliases)
+  const [userAliases, setUserAliases] = useState<Alias[]>(initialUserAliases)
+
+  const deleteAlias = (aliasToDelete: Alias) => {
+    setUserAliases((prevAliases) =>
+      prevAliases.filter((alias) => alias !== aliasToDelete)
+    )
+  }
+
+  const updateAlias = (updatedAlias: Alias) => {
+    setUserAliases((prevAliases) =>
+      prevAliases.map((alias) =>
+        alias.type === updatedAlias.type &&
+        alias.created === updatedAlias.created
+          ? updatedAlias
+          : alias
+      )
+    )
+  }
+
+  const addAlias = (newAlias: Alias) => {
+    setUserAliases((prevAliases) => [...prevAliases, newAlias])
+  }
 
   return (
     <>
       <h1 className="text-2xl text-neutral-900 font-normal">
         {user?.first_name} {user?.last_name}
       </h1>
-      <UserAliasTable userAliases={userAliases} />
+      <UserAliasTable
+        userAliases={userAliases}
+        onDelete={deleteAlias}
+        onUpdate={updateAlias}
+        onAdd={addAlias}
+      />
     </>
   )
 }
