@@ -14,7 +14,6 @@ export class Dashboard {
           { label: "Share", onClick: () => {} },
           { label: "Select All", onClick: onSelectAll },
           { label: "Unselect All", onClick: onUnselectAll },
-          { label: "Dashboard", onClick: () => navigateTo("/dashboard") }, // Redirect to Dashboard
           ...(selectedCount && selectedCount > 0
             ? [{ label: "Reassign", onClick: onReassign }]
             : []),

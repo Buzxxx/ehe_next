@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Button } from "@/components/ui/button"
-import { Edit, GreenDot, Plus, DotIcon } from "@/components/ui/icons"
+import { Edit, Plus, DotIcon } from "@/components/ui/icons"
 import { useRouter } from "next/navigation"
 
 type ActionCellProps = {
@@ -23,7 +23,7 @@ const ActionCell = ({ workerStatus, userId, onOpenModal }: ActionCellProps) => {
   const router = useRouter() // Initialize router
 
   const handleEditClick = () => {
-    router.push(`/workforce/edit?id=${userId}`)
+    router.push(`/workforce/edit/${userId}`)
   }
 
   return (

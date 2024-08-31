@@ -2,25 +2,13 @@
 import OverlayLoading from "@/components/ui/overlayLoading"
 import { Spinner } from "@/components/ui/icons"
 import CreateWorkerForm from "@/components/workforce/ui/createUserForm"
-import React, { Suspense, useState } from "react"
-import { useSearchParams } from "next/navigation"
+import React, { useState } from "react"
 import { sampleData } from "@/components/workforce/lib/sampleData"
 import { Workforce } from "@/components/workforce/feature/workforce"
 
-const Page = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ClientComponent />
-    </Suspense>
-  )
-}
-
-export default Page
-
-const ClientComponent = () => {
+const Page = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const searchParams = useSearchParams()
-  const id = searchParams.get("id")
+  const id = params.id
   const user = Workforce.getUserbyId(id!, sampleData)
 
   return (
@@ -45,3 +33,6 @@ const ClientComponent = () => {
     </>
   )
 }
+
+export default Page
+
