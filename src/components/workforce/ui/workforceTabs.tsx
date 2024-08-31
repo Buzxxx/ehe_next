@@ -7,6 +7,7 @@ import { columns, WorkforceUser } from "./tableColumns"
 import Modal from "@/components/workforce/ui/workforceModal" // Import Modal Component
 import { Workforce } from "../feature/workforce" // Import Workforce Class
 import { sampleData } from "../lib/sampleData"
+import { useToast } from "@/components/ui/use-toast"
 
 const WorkforceTabs = () => {
   const tabList = ["Active", "Inactive"]
@@ -16,7 +17,10 @@ const WorkforceTabs = () => {
   const [isModalOpen, setIsModalOpen] = useState(false) // Modal state
   const [currentWorker, setCurrentWorker] = useState<WorkforceUser | null>(null) // Current worker state
 
-  const [workerDataSet, setWorkerDataSet] = useState<WorkforceUser[]>(sampleData)
+  const [workerDataSet, setWorkerDataSet] =
+    useState<WorkforceUser[]>(sampleData)
+
+  const { toast } = useToast()
 
   // Re-filter data based on active tab
   useEffect(() => {
@@ -38,7 +42,10 @@ const WorkforceTabs = () => {
     setCurrentWorker(null)
   }
 
-  const handleStatusChangeAndUpdateData = (userId: number, newStatus: string) => {
+  const handleStatusChangeAndUpdateData = (
+    userId: number,
+    newStatus: string
+  ) => {
     // Use the Workforce class's static method to update the dataset
     const updatedData = Workforce.handleStatusChange(
       userId,
@@ -48,6 +55,10 @@ const WorkforceTabs = () => {
 
     setWorkerDataSet(updatedData) // Update state with the modified dataset
     handleCloseModal() // Close the modal
+    toast({
+      title: `User ${userId} is now ${newStatus}`,
+      variant: "dashboard",
+    })
   }
 
   return (
@@ -80,7 +91,11 @@ const WorkforceTabs = () => {
         <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          header= {currentWorker.status === 'active' ? 'Deactivate Account? ' : 'Activate Account'}
+          header={
+            currentWorker.status === "active"
+              ? "Deactivate Account? "
+              : "Activate Account"
+          }
           onConfirm={() =>
             handleStatusChangeAndUpdateData(
               currentWorker.userId,
@@ -89,7 +104,8 @@ const WorkforceTabs = () => {
           }
         >
           <p>
-            Are you sure you want to change the status of {currentWorker.first_name}{" "}{currentWorker.last_name}
+            Are you sure you want to change the status of{" "}
+            {currentWorker.first_name} {currentWorker.last_name}
             to {currentWorker.status === "active" ? "inactive" : "active"}?
           </p>
         </Modal>

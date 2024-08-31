@@ -35,7 +35,7 @@ const LeadLayout = () => {
         const fullUrl = filter.getUrlOrDefaultUrl()
 
         // Redirect to this URL if necessary
-        router.push(fullUrl)
+        router.push(fullUrl, {scroll: false})
 
         // Set the API URL with only the query parameters and fetch leads
         const filterQuery = filter.buildQuery()
