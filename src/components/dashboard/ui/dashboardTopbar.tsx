@@ -92,8 +92,16 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
               className="flex-shrink-0 justify-start w-fit invisible md:visible"
             />
 
-            <button onClick={onToggle} className="text-dashboard-primary">
-              <Filter color="grey" className={`hover:fill-gray-500 ${filterVisible && 'fill-gray-500'}`}/>
+            <button
+              onClick={onToggle}
+              className="text-dashboard-primary invisible md:visible"
+            >
+              <Filter
+                color="grey"
+                className={`hover:fill-gray-500 ${
+                  filterVisible && "fill-gray-500"
+                }`}
+              />
             </button>
           </>
         )}
