@@ -99,7 +99,7 @@ const PaginationComp = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-
+{/* 
         <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
           <DropdownMenuTrigger className="p-0 text-gray-500">
             <PaginationItem>
@@ -131,7 +131,7 @@ const PaginationComp = ({
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         <PaginationItem>
           <PaginationPrevious

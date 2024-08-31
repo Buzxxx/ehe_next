@@ -1,7 +1,4 @@
-"use client"
-
 import * as React from "react"
-
 import {
   ColumnDef,
   flexRender,
@@ -26,24 +23,22 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./button"
+import ActionCell from "../workforce/ui/actionCell"
+import { WorkforceUser } from "../workforce/ui/tableColumns"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+interface DataTableProps {
+  columns: ColumnDef<WorkforceUser>[]
+  data: WorkforceUser[]
+  onOpenModal: (worker: WorkforceUser) => void
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable({ columns, data, onOpenModal }: DataTableProps) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
-  // useEffect hook to set column visibility based on screen width
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        // For mobile devices
         setColumnVisibility({
           mobile: false,
           email: false,
@@ -54,11 +49,9 @@ export function DataTable<TData, TValue>({
       }
     }
 
-    // Initial call to set visibility based on current screen width
     handleResize()
     window.addEventListener("resize", handleResize)
 
-    // Cleanup listener on component unmount
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
@@ -100,18 +93,16 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
@@ -124,7 +115,15 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {cell.column.id === "actions" ? (
+                      <ActionCell
+                        workerStatus={row.original.status}
+                        userId={row.original.userId}
+                        onOpenModal={() => onOpenModal(row.original)}
+                      />
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
                   </TableCell>
                 ))}
               </TableRow>

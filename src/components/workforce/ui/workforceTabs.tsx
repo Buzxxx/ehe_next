@@ -3,62 +3,55 @@
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/dataTable"
 import React, { useState, useEffect } from "react"
-import { columns, Worker } from "./tableColumns"
+import { columns, WorkforceUser } from "./tableColumns"
+import Modal from "@/components/workforce/ui/workforceModal" // Import Modal Component
+import { Workforce } from "../feature/workforce" // Import Workforce Class
+import { sampleData } from "../lib/sampleData"
 
 const WorkforceTabs = () => {
   const tabList = ["Active", "Inactive"]
 
-  const [activeTab, setActiveTab] = useState(tabList[0]) // Set initial active tab
-  const [data, setData] = useState<Worker[]>([])
+  const [activeTab, setActiveTab] = useState(tabList[0])
+  const [data, setData] = useState<WorkforceUser[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false) // Modal state
+  const [currentWorker, setCurrentWorker] = useState<WorkforceUser | null>(null) // Current worker state
 
-  const workerDataSet = [
-    {
-      userId: 42,
-      name: "Gaurav J",
-      mobile: "+91 1234567890",
-      email: "user@example.com",
-      manager: "Avinash J",
-      department: "IT",
-      status: "active",
-    },
-    {
-      userId: 43,
-      name: "Subrath Nayak",
-      mobile: "+91 1234567890",
-      email: "user@example.com",
-      manager: "Avinash J",
-      department: "IT",
-      status: "inactive",
-    },
-  ]
+  const [workerDataSet, setWorkerDataSet] = useState<WorkforceUser[]>(sampleData)
 
-  // Define data for both tabs
-  const activeData = workerDataSet.filter((worker) => worker.status == "active")
-
-  const inActiveData = workerDataSet.filter(
-    (worker) => worker.status == "inactive"
-  )
-
-  // Update data when the active tab changes
+  // Re-filter data based on active tab
   useEffect(() => {
-    if (activeTab === "Active") {
-      setData(activeData)
-    } else if (activeTab === "Inactive") {
-      setData(inActiveData)
-    }
-  }, [activeTab])
+    const filteredData =
+      activeTab === "Active"
+        ? workerDataSet.filter((worker) => worker.status === "active")
+        : workerDataSet.filter((worker) => worker.status === "inactive")
 
-  // Handle status change
-  const handleStatusChange = (userId: number, newStatus: string) => {
-    setData((prevData) =>
-      prevData.map((worker) =>
-        worker.userId === userId ? { ...worker, status: newStatus } : worker
-      )
+    setData(filteredData)
+  }, [activeTab, workerDataSet]) // Re-run when activeTab or workerDataSet changes
+
+  const handleOpenModal = (worker: WorkforceUser) => {
+    setCurrentWorker(worker)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setCurrentWorker(null)
+  }
+
+  const handleStatusChangeAndUpdateData = (userId: number, newStatus: string) => {
+    // Use the Workforce class's static method to update the dataset
+    const updatedData = Workforce.handleStatusChange(
+      userId,
+      newStatus,
+      workerDataSet
     )
+
+    setWorkerDataSet(updatedData) // Update state with the modified dataset
+    handleCloseModal() // Close the modal
   }
 
   return (
-    <div>
+    <>
       <nav className="py-0 flex items-center justify-start bg-gray-200 w-full max-md:pl-4 rounded-t-md">
         {tabList.map((item) => (
           <Button
@@ -75,9 +68,33 @@ const WorkforceTabs = () => {
         ))}
       </nav>
       <section>
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={data}
+          onOpenModal={handleOpenModal} // Pass modal handler
+        />
       </section>
-    </div>
+
+      {/* Render Modal */}
+      {isModalOpen && currentWorker && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          header= {currentWorker.status === 'active' ? 'Deactivate Account? ' : 'Activate Account'}
+          onConfirm={() =>
+            handleStatusChangeAndUpdateData(
+              currentWorker.userId,
+              currentWorker.status === "active" ? "inactive" : "active"
+            )
+          }
+        >
+          <p>
+            Are you sure you want to change the status of {currentWorker.first_name}{" "}{currentWorker.last_name}
+            to {currentWorker.status === "active" ? "inactive" : "active"}?
+          </p>
+        </Modal>
+      )}
+    </>
   )
 }
 
