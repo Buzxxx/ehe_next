@@ -125,7 +125,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} value={field.value}>
             <FormControl className="shad-select-trigger">
               <SelectTrigger>
                 <SelectValue
