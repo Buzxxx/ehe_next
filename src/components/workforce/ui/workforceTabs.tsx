@@ -63,7 +63,7 @@ const WorkforceTabs = () => {
 
   return (
     <>
-      <nav className="py-0 flex items-center justify-start bg-gray-200 w-full max-md:pl-4 rounded-t-md">
+      <nav className="py-0 flex items-center justify-start bg-gray-200 w-full  rounded-t-md">
         {tabList.map((item) => (
           <Button
             key={item}
