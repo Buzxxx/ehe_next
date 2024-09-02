@@ -25,6 +25,8 @@ import {
 import { Button } from "./button"
 import ActionCell from "../workforce/ui/actionCell"
 import { WorkforceUser } from "../workforce/ui/tableColumns"
+import ChevronDown from "./icons/chevronDown"
+import { Separator } from "./separator"
 
 interface DataTableProps {
   columns: ColumnDef<WorkforceUser>[]
@@ -66,25 +68,37 @@ export function DataTable({ columns, data, onOpenModal }: DataTableProps) {
   return (
     <div className="rounded-md border">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="md:hidden absolute right-2 -top-5 translate-y-1/2 py-0">
-          <Button variant="outline" className="ml-auto">
+        <DropdownMenuTrigger
+          asChild
+          className="md:hidden absolute right-1 top-5 -translate-y-1/2 py-2 h-fit bg-transparent  "
+        >
+          <Button
+            variant="outline"
+            className="ml-auto text-xs hover:border-dashboard-primary flex items-center border border-slate-300 active:border-dashboard-primary"
+          >
             Columns
+            <ChevronDown />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="end" className="bg-charcoal-foreground">
           {table
             .getAllColumns()
             .filter((column) => column.getCanHide())
             .map((column) => {
               return (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
+                <>
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                  <Separator />
+                </>
               )
             })}
         </DropdownMenuContent>

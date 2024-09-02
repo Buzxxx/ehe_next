@@ -41,6 +41,7 @@ declare interface customProps {
   children?: React.ReactNode
   renderSkeleton?: (field: any) => React.ReactNode
   required?: boolean
+  rows?: number
 }
 
 const RenderField = ({ field, props }: { field: any; props: customProps }) => {
@@ -59,6 +60,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     showTimeSelect,
     dateFormat,
     renderSkeleton,
+    rows,
   } = props
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -77,7 +79,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
             <Input
               placeholder={placeholder}
               {...field}
-              className="shad-input border-0"
+              className="shad-input border-0 "
             />
           </FormControl>
         </div>
@@ -123,7 +125,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} value={field.value}>
             <FormControl className="shad-select-trigger">
               <SelectTrigger>
                 <SelectValue
@@ -147,7 +149,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
             {...field}
             placeholder={placeholder}
             className="shad-textArea"
-            disabled={props.disabled}
+            rows={rows}
           />
         </FormControl>
       )

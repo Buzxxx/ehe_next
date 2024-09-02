@@ -18,7 +18,7 @@ const Page = () => {
         Workforce
         <span className="text-base ml-4 text-neutral-600">Create User</span>
       </h1>
-      <CreateWorkerForm isLoading={isLoading} setIsLoading={setIsLoading} />
+      <CreateWorkerForm isLoading={isLoading} setIsLoading={setIsLoading} page="create" />
     </>
   )
 }

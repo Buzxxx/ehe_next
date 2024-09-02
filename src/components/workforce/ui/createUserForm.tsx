@@ -10,7 +10,6 @@ import CreateUserCustomFormField from "@/components/dashboard/ui/createUserCusto
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { SelectItem } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import { Separator } from "@/components/ui/separator"
 import { WorkforceUser } from "./tableColumns"
 
 const workerFormSchema = z.object({
@@ -75,10 +74,6 @@ const CreateWorkerForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6 py-8 md:shadow-md md:px-12  md:mx-16 mt-8 "
       >
-        <h6 className="text-sm font-bold">
-          <span className="text-red-600">*</span> Required
-        </h6>
-        <Separator />
         <div className="flex flex-col md:flex-row gap-4">
           <p className="font-semibold text-sm mt-2 w-32 text-slate-800">
             Name:
@@ -133,7 +128,6 @@ const CreateWorkerForm = ({
               name="email"
               placeholder="user@example.com"
               required={true}
-             
             />
           </div>
         )}
@@ -168,12 +162,22 @@ const CreateWorkerForm = ({
           />
         </div>
 
-        <Button
-          type="submit"
-          className="max-md:mx-auto md:ml-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
-        >
-          Create
-        </Button>
+        <div className="flex gap-2 justify-end">
+          <Button
+            type="button"
+            onClick={() => form.reset()}
+            className=" text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
+          >
+            Reset All
+          </Button>
+
+          <Button
+            type="submit"
+            className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+          >
+            Update & Close
+          </Button>
+        </div>
       </form>
     </Form>
   )
