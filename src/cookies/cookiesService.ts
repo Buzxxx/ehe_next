@@ -12,16 +12,16 @@ interface CookieOptions {
   sameSite?: "strict" | "lax" | "none";
 }
 
-export const getCookie = (name: string): string | null => {
+export const getCookie = async (name: string) => {
   const cookieStore = cookies();
   return cookieStore.get(name)?.value || null;
 };
 
-export const setCookie = (
+export const setCookie = async (
   name: string,
   value: string,
   options: CookieOptions = {}
-): void => {
+) => {
   const cookieStore = cookies();
   cookieStore.set(name, value, {
     path: "/",
@@ -31,7 +31,7 @@ export const setCookie = (
   });
 };
 
-export const deleteCookie = (name: string): void => {
+export const deleteCookie = async (name: string) => {
   const cookieStore = cookies();
   cookieStore.set(name, "", {
     path: "/",

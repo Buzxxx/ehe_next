@@ -20,7 +20,7 @@ const Login = () => {
       <LoginForm setLoading={setIsLoading} />
       <Link
         className="mt-2 text-sm block"
-        href={paths.ResetPassword}
+        href={paths.resetPassword}
         prefetch={true}
       >
         Forgot Password

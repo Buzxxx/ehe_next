@@ -1,14 +1,32 @@
 import SideNavMenu from "../ui/sideNavMenu";
 import OnlineTag from "../ui/onlineTag";
 import ProfileTab from "../ui/profileTab";
+import { useState, useEffect } from "react";
+import { get_user_data_as_cookie } from "@/components/authentication/features/UserObject";
 
 const DashboardSideMenu = ({
   toggled,
-  online,
 }: {
   toggled: boolean;
-  online?: boolean;
+  name: string;
+  img: string;
 }) => {
+  const [name, setName] = useState<string>("Loading...");
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const userData = await get_user_data_as_cookie();
+        setName(userData.name);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setName("Unknown User");
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
+  const img = "/base/profile.webp";
   return (
     <aside
       className={`${
@@ -17,8 +35,13 @@ const DashboardSideMenu = ({
     >
       <div className="flex gap-3 items-center justify-start w-full px-4 ">
         <div className="text-white text-left flex flex-col">
-          <ProfileTab avatarClass="h-11 w-11" className="mb-1 font-semibold text-sm">
-            {online ? <OnlineTag /> : null}
+          <ProfileTab
+            name={name}
+            img={img}
+            avatarClass="h-11 w-11"
+            className="mb-1 font-semibold text-sm"
+          >
+            <OnlineTag />
           </ProfileTab>
         </div>
       </div>

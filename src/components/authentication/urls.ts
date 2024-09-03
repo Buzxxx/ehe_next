@@ -1,9 +1,10 @@
 export const paths = {
   // This is Default login redirection path
-  LoginRedirect: "/lead",
-  ResetPassword: "/auth/resetPassword",
+  loginRedirect: "/lead",
+  logoutRedirect: "/auth/login",
+  resetPassword: "/auth/resetPassword",
 };
 
-export default {
-  paths,
+export const apiPaths = {
+  login: "/auth/api/login",
 };
