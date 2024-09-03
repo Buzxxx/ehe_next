@@ -3,12 +3,12 @@ export interface Server {
   version: string;
 }
 
-const ProdServer: Server = {
+export const ProdServer: Server = {
   baseDomain: "https://www.eheindia.com/",
   version: "1.0.0",
 };
 
-const ProdBackendServer: Server = {
+export const ProdBackendServer: Server = {
   baseDomain: "https://www.eheindustries.com/",
   version: "1.0.0",
 };

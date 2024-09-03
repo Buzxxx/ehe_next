@@ -1,38 +1,39 @@
-import { useState } from "react"
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { useRouter } from "next/navigation"
-import { ChevronLeft } from "@/components/ui/icons"
-import { deleteCookie } from "@/app/actions/cookies.actions"
+import { useState } from "react";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "@/components/ui/icons";
+import { logout } from "@/components/authentication/features/UserObject";
 
 interface SubItem {
-  name: string
-  route: string
+  name: string;
+  route: string;
 }
 
 interface SideNavItemProps {
-  title: string
-  subItems: SubItem[]
-  icon: React.ReactNode
+  title: string;
+  subItems: SubItem[];
+  icon: React.ReactNode;
 }
 
 const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
-  const [openMenu, setOpenMenu] = useState<boolean>(false)
-  const router = useRouter()
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleItemClick = () => {
-    setOpenMenu((prevState) => !prevState)
-  }
+    setOpenMenu((prevState) => !prevState);
+  };
 
   const handleSubItemClick = async (subItem: SubItem) => {
     if (subItem.name === "Logout") {
-      await deleteCookie("accessToken")
-      await deleteCookie("refreshToken")
-      router.push(subItem.route)
+      const path = await logout();
+      if (path) {
+        router.push(path);
+      }
     } else {
-      router.push(subItem.route)
+      router.push(subItem.route);
     }
-  }
+  };
 
   return (
     <li
@@ -84,7 +85,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
         </Link>
       )}
     </li>
-  )
-}
+  );
+};
 
-export default SideNavItem
+export default SideNavItem;

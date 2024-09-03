@@ -8,10 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import InputField from "@/components/authentication/ui/inputField";
-import { loginUser } from "@/app/actions/auth.actions";
 import { paths } from "@/components/authentication/urls";
+import { login } from "../../features/UserObject";
 
-// Define the schema for the form
+// Defined is the schema for the form
 const loginFormSchema = z.object({
   username: z.string().min(1, {
     message: "Username cannot be empty",
@@ -28,7 +28,7 @@ interface LoginFormProps {
 const LoginForm = ({ setLoading }: LoginFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectPath = searchParams.get("redirect") || paths.LoginRedirect; // Default redirect path if not set
+  const redirectPath = searchParams.get("redirect") || paths.loginRedirect; // Default redirect path if not set
   const [message, setMessage] = useState({ status: "", message: "" });
 
   const Loginform = useForm<z.infer<typeof loginFormSchema>>({
@@ -39,33 +39,22 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
     },
   });
 
+  const {
+    formState: { errors },
+  } = Loginform;
+
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
     setLoading(true);
-    try {
-      const response = await loginUser(values);
-
-      if (!response) {
-        throw new Error("Login failed");
-      }
-
-      if (response.access) {
-        setMessage({ status: "success", message: "Login successful" });
-        Loginform.reset();
-        router.push(redirectPath);
-      } else {
-        setMessage({
-          status: "failure",
-          message: "Username or password incorrect",
-        });
-        setLoading(false);
-      }
-    } catch (error) {
-      setMessage({
-        status: "failure",
-        message: "Username or Password Incorrect",
-      });
-      setLoading(false);
+    const loginResponse = await login(values);
+    if (loginResponse.access) {
+      Loginform.reset();
+      router.push(redirectPath);
     }
+    setMessage({
+      status: loginResponse.status,
+      message: loginResponse.message,
+    });
+    setLoading(false);
   }
 
   return (
@@ -79,6 +68,10 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
           placeholder="username"
           field={Loginform.register("username")}
         />
+        {/* Display the username validation error */}
+        {errors.username && (
+          <p className="text-red-600 text-xs mt-1">{errors.username.message}</p>
+        )}
 
         <InputField
           label="Password"
@@ -86,11 +79,15 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
           field={Loginform.register("password")}
           isPassword={true}
         />
+        {/* Display the password validation error */}
+        {errors.password && (
+          <p className="text-red-600 text-xs mt-1">{errors.password.message}</p>
+        )}
         {message.message && (
           <div className="relative py-4">
             <div
               className={`absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-center items-center space-x-2 p-4 rounded-lg ${
-                message.status === "failure"
+                message.status === "failed"
                   ? " text-red-600"
                   : " text-green-600"
               }`}
