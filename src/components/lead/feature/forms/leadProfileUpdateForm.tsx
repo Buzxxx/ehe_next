@@ -10,8 +10,14 @@ import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { LeadProfileFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
+import { useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
+import OverlayLoading from "@/components/ui/overlayLoading"
+import { Spinner } from "@/components/ui/icons"
 
 const LeadProfileUpdateForm = ({ id }: { id: string }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
   const form = useForm<z.infer<typeof LeadProfileFormSchema>>({
     resolver: zodResolver(LeadProfileFormSchema),
     defaultValues: {
@@ -33,11 +39,16 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
   })
 
   const onSubmit = async (data: z.infer<typeof LeadProfileFormSchema>) => {
-    try {
-      console.log("Form data:", { ...data, id })
-      // Add your submission logic here, e.g., API call
-    } catch (error) {
-      console.error("Submission error:", error)
+    {
+      setIsLoading(true)
+      console.log({ ...data, id })
+      setTimeout(() => {
+        setIsLoading(false)
+        toast({
+          title: `Lead Profile Updated Successfully!`,
+          variant: "dashboard",
+        })
+      }, 1000)
     }
   }
 
@@ -54,14 +65,18 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
 
   return (
     <div className="form-wrapper py-2">
-      {/* Make sure form props are passed correctly */}
+      {isLoading ? (
+        <OverlayLoading>
+          <Spinner className="w-8 h-8 md:w-14 md:h-16 "></Spinner>
+        </OverlayLoading>
+      ) : null}
       <Form {...form}>
         <h2 className="pt-4 font-bold">Profile</h2>
         <form
-          onSubmit={form.handleSubmit(onSubmit)} // Corrected submit handler
+          onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6 py-8 px-4"
         >
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="grid grid-cols-fr  sm:grid-cols-2 gap-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -76,9 +91,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
               label="Phone Number"
               placeholder="+91 12345 67890"
             />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -93,9 +105,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
               label="Assigned To"
               placeholder="Virat Kohli"
             />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4 md:max-w-[50%]">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -103,9 +112,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
               label="Budget (in ₹)"
               placeholder="5,00,00,000"
             />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             {statusCategory && (
               <CustomFormField
                 control={form.control}
@@ -122,16 +128,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
               </CustomFormField>
             )}
 
-            <CustomFormField
-              control={form.control}
-              fieldType={FormFieldType.INPUT}
-              name="interested_in"
-              label="Interested In"
-              placeholder="34432 Helium Fields, New York, NY"
-            />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.SELECT}
@@ -153,9 +149,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
               label="Product Code"
               placeholder="sfsdf"
             />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.SELECT}
@@ -177,9 +170,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
               label="Received Date"
               placeholder="2024-08-13 14:45:57"
             />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -202,14 +192,33 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
                 ))}
               </CustomFormField>
             )}
+            <div className="col-span-1  md:col-span-2">
+              <CustomFormField
+                control={form.control}
+                fieldType={FormFieldType.TEXTAREA}
+                name="interested_in"
+                label="Interested In"
+                placeholder="34432 Helium Fields, New York, NY"
+              />
+            </div>
           </div>
 
-          <Button
-            type="submit"
-            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:text-dashboard-primary"
-          >
-            Update & Close
-          </Button>
+          <div className="flex gap-2 justify-end">
+            <Button
+              type="button"
+              onClick={() => form.reset()}
+              className=" text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
+            >
+              Reset All
+            </Button>
+
+            <Button
+              type="submit"
+              className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+            >
+              Update & Close
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

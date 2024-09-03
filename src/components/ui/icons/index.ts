@@ -14,6 +14,7 @@ import Settings from "./settings"
 import Spinner from "./spinner"
 import WhatsAppIcon from "./whatsAppIcon"
 import Work from "./work"
+import DotIcon from "./dotIcon"
 import {
   ChevronRight,
   MoreHorizontal,
@@ -33,10 +34,15 @@ import {
   LogOut,
   Contact,
   Pencil,
+  Edit,
+  Dot,
+  Plus,
+  Trash2
 } from "lucide-react"
 
 export {
   Group,
+  DotIcon,
   MenuIcon,
   NotifIcon,
   OpenEye,
@@ -70,4 +76,8 @@ export {
   LogOut,
   Contact,
   Pencil,
+  Edit,
+  Dot, 
+  Plus,
+  Trash2
 }

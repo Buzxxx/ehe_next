@@ -27,7 +27,7 @@ import { useEffect, useState } from "react"
 import { Control } from "react-hook-form"
 
 
-declare interface customProps {
+export interface customProps {
   control: Control<any>
   fieldType: FormFieldType
   name: string
@@ -41,16 +41,15 @@ declare interface customProps {
   children?: React.ReactNode
   renderSkeleton?: (field: any) => React.ReactNode
   required?: boolean
-  rows?: number
 }
 
 const RenderField = ({ field, props }: { field: any; props: customProps }) => {
-    const [currentTime, setCurrentTime] = useState<Date | null>(null)
+  const [currentTime, setCurrentTime] = useState<Date | null>(null)
 
-    useEffect(() => {
-      const formattedTime = new Date()
-      setCurrentTime(formattedTime)
-    }, [])
+  useEffect(() => {
+    const formattedTime = new Date()
+    setCurrentTime(formattedTime)
+  }, [])
 
   const {
     fieldType,
@@ -60,12 +59,11 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     showTimeSelect,
     dateFormat,
     renderSkeleton,
-    rows,
   } = props
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        <div className="flex rounded-md border border-dark-500 bg-dark-400 flex-1">
           {iconSrc && (
             <Image
               src={iconSrc}
@@ -79,7 +77,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
             <Input
               placeholder={placeholder}
               {...field}
-              className="shad-input border-0 "
+              className="shad-input border-0"
             />
           </FormControl>
         </div>
@@ -125,7 +123,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={field.onChange} value={field.value}>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl className="shad-select-trigger">
               <SelectTrigger>
                 <SelectValue
@@ -149,7 +147,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
             {...field}
             placeholder={placeholder}
             className="shad-textArea"
-            rows={rows}
+            disabled={props.disabled}
           />
         </FormControl>
       )
@@ -173,18 +171,23 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
   return <Input type="text" placeholder="John Doe" {...field} />
 }
 
-const CustomFormField = (props: customProps) => {
-  const { control, fieldType, name, label } = props
+const CreateUserCustomFormField = (props: customProps) => {
+  const { control, fieldType, name, label, required } = props
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex-1">
-          {fieldType !== FormFieldType.CHECKBOX && label && (
-            <FormLabel>{label}</FormLabel>
-          )}
+        <FormItem
+          className='flex-1 flex-col flex justify-between'
+        >
           <RenderField field={field} props={props} />
+          {fieldType !== FormFieldType.CHECKBOX && label && (
+            <FormLabel className="text-slate-600 font-normal pl-1 flex items-start">
+              {required && <span className="text-red-600 pr-1">*</span>}
+              {label}
+            </FormLabel>
+          )}
           <FormMessage className="shad-error" />
         </FormItem>
       )}
@@ -192,4 +195,4 @@ const CustomFormField = (props: customProps) => {
   )
 }
 
-export default CustomFormField
+export default CreateUserCustomFormField
