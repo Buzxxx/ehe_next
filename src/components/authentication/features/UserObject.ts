@@ -86,7 +86,6 @@ export async function login(values: UserLogin) {
     values.password
   );
   if (response) {
-    console.log(response);
     try {
       await set_tokens_as_cookie({
         accessToken: response.access,
@@ -96,6 +95,7 @@ export async function login(values: UserLogin) {
     } catch (error: any) {
       console.error("Error saving tokens", error);
     }
+
     return { access: true, status: "success", message: "Login successful" };
   } else {
     return {
