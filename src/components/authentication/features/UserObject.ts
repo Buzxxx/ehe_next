@@ -118,9 +118,11 @@ export async function logout(logoutRedirectPath?: string) {
   }
 }
 
-export default {
+const userObjectModule = {
   login,
   logout,
   redirect_to_login,
   authenticate_user,
 };
+
+export default userObjectModule;

@@ -9,7 +9,8 @@ export async function fetch_User_Data() {
     return "Unknown User";
   }
 }
-
-export default {
+const fetchUserDataModule = {
   fetch_User_Data,
 };
+
+export default fetchUserDataModule;

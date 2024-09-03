@@ -153,10 +153,12 @@ export async function set_refresh_token(refreshToken: string) {
   }
 }
 
-export default {
+const tokenObjectsModule = {
   set_tokens_as_cookie,
   set_refresh_token,
   set_access_token,
   delete_tokens_from_cookies,
   authenticate,
 };
+
+export default tokenObjectsModule;
