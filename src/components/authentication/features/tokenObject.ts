@@ -27,8 +27,6 @@ async function verify_access_token() {
     if (access) {
       const payload = await verifyJwtToken(access);
       if (payload) {
-        console.log("verfy token");
-        console.log(payload);
         return true;
       } else {
         return false;
