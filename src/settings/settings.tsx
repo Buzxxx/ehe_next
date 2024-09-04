@@ -13,7 +13,9 @@ export const ProdBackendServer: Server = {
   version: "1.0.0",
 };
 
-export default {
+const Servers = {
   ProdBackendServer,
   ProdServer,
 };
+
+export default Servers;
