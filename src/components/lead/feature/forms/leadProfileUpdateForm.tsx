@@ -8,16 +8,48 @@ import { Button } from "@/components/ui/button"
 import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { FilterFormSchema } from "@/lib/validation"
+import { LeadProfileFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
+import { useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
+import OverlayLoading from "@/components/ui/overlayLoading"
+import { Spinner } from "@/components/ui/icons"
 
-const LeadProfileUpdateForm = () => {
-  const form = useForm<z.infer<typeof FilterFormSchema>>({
-    resolver: zodResolver(FilterFormSchema),
+const LeadProfileUpdateForm = ({ id }: { id: string }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
+  const form = useForm<z.infer<typeof LeadProfileFormSchema>>({
+    resolver: zodResolver(LeadProfileFormSchema),
+    defaultValues: {
+      id: id,
+      name: "",
+      email: "",
+      contact: "",
+      lead_type: "A",
+      query: "",
+      interested_in: "",
+      budget: "",
+      assigned_to: "",
+      product_code: "",
+      received_date: new Date(Date.now()),
+      status: "1",
+      source: "",
+      product_type: "A",
+    },
   })
 
-  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
-    console.log(data)
+  const onSubmit = async (data: z.infer<typeof LeadProfileFormSchema>) => {
+    {
+      setIsLoading(true)
+      console.log({ ...data, id })
+      setTimeout(() => {
+        setIsLoading(false)
+        toast({
+          title: `Lead Profile Updated Successfully!`,
+          variant: "dashboard",
+        })
+      }, 1000)
+    }
   }
 
   // Filter to get only the status field
@@ -33,75 +65,64 @@ const LeadProfileUpdateForm = () => {
 
   return (
     <div className="form-wrapper py-2">
+      {isLoading ? (
+        <OverlayLoading>
+          <Spinner className="w-8 h-8 md:w-14 md:h-16 "></Spinner>
+        </OverlayLoading>
+      ) : null}
       <Form {...form}>
         <h2 className="pt-4 font-bold">Profile</h2>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6 py-8 px-4"
         >
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="grid grid-cols-fr  sm:grid-cols-2 gap-4">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
               name="name"
               label="Name"
               placeholder="Kapil Dev"
-            ></CustomFormField>
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.PHONE}
-              name="phone"
+              name="contact" // Correct field name for phone number
               label="Phone Number"
               placeholder="+91 12345 67890"
-            ></CustomFormField>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
               name="email"
               label="Email"
               placeholder="example@user.com"
-            ></CustomFormField>
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="assignedTo"
+              name="assigned_to" // Correct field name
               label="Assigned To"
               placeholder="Virat Kohli"
-            ></CustomFormField>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
               name="budget"
-              label="Budget (in ₹) "
+              label="Budget (in ₹)"
               placeholder="5,00,00,000"
-            ></CustomFormField>
-            <CustomFormField
-              control={form.control}
-              fieldType={FormFieldType.INPUT}
-              name="sourceAssignedTo"
-              label="Source Assigned To"
-              placeholder="Virat Kohli"
-            ></CustomFormField>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            />
             {statusCategory && (
               <CustomFormField
                 control={form.control}
                 fieldType={FormFieldType.SELECT}
-                name="followUpStatus"
+                name="status"
                 label="Follow Up Status"
                 placeholder={statusCategory.placeholder}
               >
                 {statusCategory.options.map((option) => (
                   <SelectItem key={option} value={option.toString()}>
-                    {option}
+                    {String(option)}
                   </SelectItem>
                 ))}
               </CustomFormField>
@@ -109,20 +130,10 @@ const LeadProfileUpdateForm = () => {
 
             <CustomFormField
               control={form.control}
-              fieldType={FormFieldType.INPUT}
-              name="interestedIn"
-              label="Interested In"
-              placeholder="34432 Helium Fields, New York, NY"
-            ></CustomFormField>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
-            <CustomFormField
-              control={form.control}
               fieldType={FormFieldType.SELECT}
-              name="leadType"
+              name="lead_type"
               label="Lead Type"
-              placeholder={"D"}
+              placeholder="D"
             >
               {leadTypeOptions.map((option) => (
                 <SelectItem key={option} value={option}>
@@ -134,19 +145,16 @@ const LeadProfileUpdateForm = () => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="productCode"
+              name="product_code"
               label="Product Code"
               placeholder="sfsdf"
-            ></CustomFormField>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.SELECT}
-              name="productType"
+              name="product_type"
               label="Product Type"
-              placeholder={"D"}
+              placeholder="D"
             >
               {leadTypeOptions.map((option) => (
                 <SelectItem key={option} value={option}>
@@ -158,20 +166,17 @@ const LeadProfileUpdateForm = () => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.DATE_PICKER}
-              name="receivedDate"
+              name="received_date"
               label="Received Date"
               placeholder="2024-08-13 14:45:57"
-            ></CustomFormField>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
+            />
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
               name="query"
               label="Query"
-              placeholder={"D"}
-            ></CustomFormField>
+              placeholder="D"
+            />
             {sourceCategory && (
               <CustomFormField
                 control={form.control}
@@ -187,14 +192,33 @@ const LeadProfileUpdateForm = () => {
                 ))}
               </CustomFormField>
             )}
+            <div className="col-span-1  md:col-span-2">
+              <CustomFormField
+                control={form.control}
+                fieldType={FormFieldType.TEXTAREA}
+                name="interested_in"
+                label="Interested In"
+                placeholder="34432 Helium Fields, New York, NY"
+              />
+            </div>
           </div>
 
-          <Button
-            type="submit"
-            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white  hover:text-dashboard-primary"
-          >
-            Update & Close
-          </Button>
+          <div className="flex gap-2 justify-end">
+            <Button
+              type="button"
+              onClick={() => form.reset()}
+              className=" text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
+            >
+              Reset All
+            </Button>
+
+            <Button
+              type="submit"
+              className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+            >
+              Update & Close
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

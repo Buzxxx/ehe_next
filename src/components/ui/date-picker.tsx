@@ -23,7 +23,7 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = ({ date, onChange, label }) => {
   return (
-    <div className="space-y-2">
+    <div className=" flex items-start flex-col justify-start mt-4 gap-1">
       {label && <Label className="text-sm font-medium">{label}</Label>}
       <Popover>
         <PopoverTrigger asChild>

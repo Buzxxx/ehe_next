@@ -1,4 +1,3 @@
-
 import { Dispatch, SetStateAction } from "react";
 import Notifs from "../ui/notifs";
 import MenuIcon from "@/components/ui/icons/menuIcon";
@@ -8,10 +7,17 @@ import ProfileTab from "../ui/profileTab";
 interface DashboardNavProps {
   toggled: boolean;
   setToggled?: Dispatch<SetStateAction<boolean>>;
-  onNext: ()=>void
+  onNext: () => void;
+  name: string;
+  img: string;
 }
 
-const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
+const DashboardHeader: React.FC<DashboardNavProps> = ({
+  toggled,
+  onNext,
+  name,
+  img,
+}) => {
   return (
     <nav className="flex bg-dashboard-primary justify-between w-full items-center text-white z-50 fixed top-0">
       <div className="bg-dashboard-secondary min-w-56 h-full py-3 hidden md:block ">
@@ -29,6 +35,8 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
           <ProfilePopover
             trigger={
               <ProfileTab
+                name={name}
+                img={img}
                 avatarClass="h-8 w-8"
                 className="text-sm px-3"
                 profileNameTag="md:flex hidden"
@@ -40,7 +48,7 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({ toggled, onNext }) => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
 export default DashboardHeader;

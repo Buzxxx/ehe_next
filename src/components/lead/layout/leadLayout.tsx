@@ -1,96 +1,96 @@
 // LeadLayout.tsx
 
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
-import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
-import VisitorPanelBody from "../ui/visitorPanel"
-import { useSearchParams, useRouter } from "next/navigation"
-import LeadUtils from "@/utils/LeadUtils"
-import { Spinner } from "@/components/ui/icons"
-import { Lead } from "../feature/lead"
-import { Filter } from "../feature/filter"
+import React, { useEffect, useState } from "react";
+import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb";
+import DashboardTopBar from "../../dashboard/ui/dashboardTopbar";
+import VisitorPanelBody from "../ui/visitorPanel";
+import { useSearchParams, useRouter } from "next/navigation";
+import LeadUtils from "@/utils/LeadUtils";
+import { Spinner } from "@/components/ui/icons";
+import { Lead } from "../feature/lead";
+import { Filter } from "../feature/filter";
 
-const leadApiClient = new Lead()
+const leadApiClient = new Lead();
 
 const LeadLayout = () => {
-  const [leads, setLeads] = useState<LeadCardProps[]>([])
-  const [selectedLeads, setSelectedLeads] = useState<number[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [modalLoading, setModalLoading] = useState(false)
+  const [leads, setLeads] = useState<LeadCardProps[]>([]);
+  const [selectedLeads, setSelectedLeads] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [modalLoading, setModalLoading] = useState(false);
 
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const filter = new Filter()
+        const filter = new Filter();
 
         // Set parameters from the current URL
-        filter.setFilterParams(searchParams)
+        filter.setFilterParams(searchParams);
 
         // Generate the full URL for redirection or API call
-        const fullUrl = filter.getUrlOrDefaultUrl()
+        const fullUrl = filter.getUrlOrDefaultUrl();
 
         // Redirect to this URL if necessary
-        router.push(fullUrl)
+        router.push(fullUrl, { scroll: false });
 
         // Set the API URL with only the query parameters and fetch leads
-        const filterQuery = filter.buildQuery()
-        leadApiClient.setUrl(filterQuery)
-        const fetchedLeads = await leadApiClient.getLeads()
+        const filterQuery = filter.buildQuery();
+        leadApiClient.setUrl(filterQuery);
+        const fetchedLeads = await leadApiClient.getLeads();
 
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({
             ...lead,
             isSelected: false,
           })
-        )
-        setLeads(leadsWithSelection)
+        );
+        setLeads(leadsWithSelection);
       } catch (error) {
-        console.error("Failed to fetch leads:", error)
+        console.error("Failed to fetch leads:", error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchLeads()
-  }, [searchParams])
+    fetchLeads();
+  }, [searchParams, router]);
 
   const handleToggleLeadSelection = (index: number) => {
-    const updatedLeads = LeadUtils.toggleLeadSelection(leads, index)
-    setLeads(updatedLeads)
-    setSelectedLeads(LeadUtils.getSelectedLeads(updatedLeads))
-  }
+    const updatedLeads = LeadUtils.toggleLeadSelection(leads, index);
+    setLeads(updatedLeads);
+    setSelectedLeads(LeadUtils.getSelectedLeads(updatedLeads));
+  };
 
   const handleSelectAllLeads = () => {
-    const updatedLeads = LeadUtils.selectAllLeads(leads)
-    setLeads(updatedLeads)
-    setSelectedLeads(LeadUtils.getSelectedLeads(updatedLeads))
-  }
+    const updatedLeads = LeadUtils.selectAllLeads(leads);
+    setLeads(updatedLeads);
+    setSelectedLeads(LeadUtils.getSelectedLeads(updatedLeads));
+  };
 
   const handleUnselectAllLeads = () => {
-    const updatedLeads = LeadUtils.unselectAllLeads(leads)
-    setLeads(updatedLeads)
-    setSelectedLeads([])
-  }
+    const updatedLeads = LeadUtils.unselectAllLeads(leads);
+    setLeads(updatedLeads);
+    setSelectedLeads([]);
+  };
 
-  const selectedCount = LeadUtils.getSelectedCount(leads)
-  const totalLeads = LeadUtils.getTotalLeads(leads)
+  const selectedCount = LeadUtils.getSelectedCount(leads);
+  const totalLeads = LeadUtils.getTotalLeads(leads);
 
   const handleReassign = () => {
-    setModalLoading(true)
+    setModalLoading(true);
     try {
-      const selectedLeadIds = selectedLeads.join(",")
-      router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`)
+      const selectedLeadIds = selectedLeads.join(",");
+      router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
 
-    setModalLoading(false)
-  }
+    setModalLoading(false);
+  };
 
   return (
     <>
@@ -108,6 +108,7 @@ const LeadLayout = () => {
         onReassign={handleReassign}
         selectedCount={selectedCount}
         totalLeads={totalLeads}
+        page={"lead"}
       />
       {modalLoading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-95 z-50 min-h-screen"></div>
@@ -126,7 +127,7 @@ const LeadLayout = () => {
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default LeadLayout
+export default LeadLayout;

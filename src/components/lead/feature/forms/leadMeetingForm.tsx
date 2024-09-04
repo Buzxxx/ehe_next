@@ -1,22 +1,44 @@
-import React from "react"
+import React, { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import filterCategories from "@/components/dashboard/library/filterCategories"
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { FilterFormSchema } from "@/lib/validation"
+import { LeadMeetingFormValidation } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
+import { useToast } from "@/components/ui/use-toast"
+import { formatDate } from "@/utils/formatDate"
+import OverlayLoading from "@/components/ui/overlayLoading"
+import { Spinner } from "@/components/ui/icons"
 
-const LeadMeetingForm = () => {
-  const form = useForm<z.infer<typeof FilterFormSchema>>({
-    resolver: zodResolver(FilterFormSchema),
+const LeadMeetingForm = ({ id }: { id: string }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
+  const form = useForm<z.infer<typeof LeadMeetingFormValidation>>({
+    resolver: zodResolver(LeadMeetingFormValidation),
+    defaultValues: {
+      id: id,
+      date: new Date(Date.now()),
+      location: "",
+      meeting_reason: "",
+      description: "",
+    },
   })
 
-  const onSubmit = async (data: z.infer<typeof FilterFormSchema>) => {
-    console.log(data)
+  const onSubmit = async (data: z.infer<typeof LeadMeetingFormValidation>) => {
+    {
+      setIsLoading(true)
+      console.log({ ...data, id })
+      setTimeout(() => {
+        setIsLoading(false)
+        toast({
+          title: `Meeting Set for ${formatDate(data.date.toISOString())} hrs`,
+          variant: "dashboard",
+        })
+      }, 1000)
+    }
   }
 
   const meetingReasons = [
@@ -28,6 +50,11 @@ const LeadMeetingForm = () => {
 
   return (
     <div className="form-wrapper py-2">
+      {isLoading ? (
+        <OverlayLoading>
+          <Spinner className="w-8 h-8 md:w-14 md:h-16 "></Spinner>
+        </OverlayLoading>
+      ) : null}
       <Form {...form}>
         <h2 className="pt-4 font-bold">Set Meeting</h2>
         <form
@@ -53,7 +80,7 @@ const LeadMeetingForm = () => {
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
-            name="meetingReason"
+            name="meeting_reason"
             label="Reason for Meet"
             placeholder={meetingReasons[0]}
           >
@@ -68,16 +95,26 @@ const LeadMeetingForm = () => {
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="description"
-            label="Description"
+            label="Description(Optional)"
             placeholder="Add a description (if required)"
           ></CustomFormField>
 
-          <Button
-            type="submit"
-            className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:text-dashboard-primary"
-          >
-            Set A Follow Up
-          </Button>
+          <div className="flex gap-2 justify-end">
+            {/* <Button
+              type="button"
+              onClick={() => form.reset()}
+              className=" text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
+            >
+              Reset All
+            </Button> */}
+
+            <Button
+              type="submit"
+              className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+            >
+              Set a follow up
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

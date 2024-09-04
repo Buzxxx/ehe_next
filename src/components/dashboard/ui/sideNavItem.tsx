@@ -1,38 +1,39 @@
-import { useState } from "react"
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { useRouter } from "next/navigation"
-import { ChevronLeft } from "@/components/ui/icons"
-import { deleteCookie } from "@/app/actions/cookies.actions"
+import { useState } from "react";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "@/components/ui/icons";
+import { logout } from "@/components/authentication/features/UserObject";
 
 interface SubItem {
-  name: string
-  route: string
+  name: string;
+  route: string;
 }
 
 interface SideNavItemProps {
-  title: string
-  subItems: SubItem[]
-  icon: React.ReactNode
+  title: string;
+  subItems: SubItem[];
+  icon: React.ReactNode;
 }
 
 const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
-  const [openMenu, setOpenMenu] = useState<boolean>(false)
-  const router = useRouter()
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleItemClick = () => {
-    setOpenMenu((prevState) => !prevState)
-  }
+    setOpenMenu((prevState) => !prevState);
+  };
 
   const handleSubItemClick = async (subItem: SubItem) => {
     if (subItem.name === "Logout") {
-      await deleteCookie("accessToken")
-      await deleteCookie("refreshToken")
-      router.push(subItem.route)
+      const path = await logout();
+      if (path) {
+        router.push(path);
+      }
     } else {
-      router.push(subItem.route)
+      router.push(subItem.route);
     }
-  }
+  };
 
   return (
     <li
@@ -50,7 +51,8 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
                 : "border-0"
             }`}
           >
-            {icon} {title}
+            <span className="min-w-5">{icon}</span>
+            {title}
             <Badge className="absolute right-4 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-200 p-1 text-xs rounded-sm">
               {subItems.length}
             </Badge>
@@ -84,7 +86,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
         </Link>
       )}
     </li>
-  )
-}
+  );
+};
 
-export default SideNavItem
+export default SideNavItem;

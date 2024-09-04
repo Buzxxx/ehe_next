@@ -11,8 +11,10 @@ import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { CreateLeadFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
 import LeadApiClient from "@/lib/leadApiClient"
+import { useToast } from "@/components/ui/use-toast"
 
 const CreateLeadForm = () => {
+  const { toast } = useToast()
   const form = useForm<z.infer<typeof CreateLeadFormSchema>>({
     resolver: zodResolver(CreateLeadFormSchema),
     defaultValues: {
@@ -26,13 +28,11 @@ const CreateLeadForm = () => {
       product_code: "",
       product_type: "A", // Assuming "A" is a valid default
       priority: "cold",
-      status: 1
+      status: 1,
     },
   })
 
- 
   async function onSubmit(values: z.infer<typeof CreateLeadFormSchema>) {
-  
     const leadData = {
       ...values,
       status: values.status ?? 1,
@@ -41,10 +41,24 @@ const CreateLeadForm = () => {
 
     try {
       const result = await LeadApiClient.createLead(leadData)
-      console.log("Lead created successfully:", result)
-      form.reset()
+      if (result.lead) {
+        console.log("Lead created successfully:", result)
+        toast({
+          title: "Lead created successfully",
+          variant: "dashboard",
+          description: `LeadId: ${result.lead}`,
+        })
+      } else {
+        toast({
+          title: "Something went wrong",
+          variant: "destructive",
+          description: `Please try again later or contact the administrator`,
+        })
+      }
     } catch (error) {
       console.error("Error creating lead:", error)
+    } finally {
+      form.reset()
     }
   }
 
@@ -54,9 +68,9 @@ const CreateLeadForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 py-8 px-4"
+        className="space-y-6 px-4 py-8 md:shadow-md md:px-12 md:mx-8 mt-4 md:border-t border-gray-300"
       >
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="grid grid-cols-fr md:grid-cols-3 sm:grid-cols-2 gap-4">
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
@@ -71,9 +85,6 @@ const CreateLeadForm = () => {
             label="Email"
             placeholder="example@user.com"
           />
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.PHONE}
@@ -94,9 +105,6 @@ const CreateLeadForm = () => {
               </SelectItem>
             ))}
           </CustomFormField>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
@@ -104,16 +112,6 @@ const CreateLeadForm = () => {
             label="Query"
             placeholder="D"
           />
-          <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.TEXTAREA}
-            name="interested_in"
-            label="Interested In"
-            placeholder="34432 Helium Fields, New York, NY"
-          />
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
@@ -132,9 +130,6 @@ const CreateLeadForm = () => {
             label="Product Code"
             placeholder="sfsdf"
           />
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 w-full mb-4">
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
@@ -159,6 +154,17 @@ const CreateLeadForm = () => {
               {"cold"}
             </SelectItem>
           </CustomFormField>
+
+          <div className="col-span-1  md:col-span-3">
+            <CustomFormField
+              control={form.control}
+              fieldType={FormFieldType.TEXTAREA}
+              name="interested_in"
+              label="Interested In"
+              placeholder="34432 Helium Fields, New York, NY"
+              rows={1}
+            />
+          </div>
         </div>
 
         <Button

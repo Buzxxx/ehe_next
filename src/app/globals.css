@@ -127,6 +127,11 @@
   width: 100%;
   display: flex;
   align-items: center;
+  border-radius: .375rem !important;
+}
+
+.input-phone input:focus-visible{
+  outline: none;
 }
 
 .date-picker input {
