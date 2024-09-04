@@ -33,12 +33,13 @@ import {
   LogOut,
   Contact,
   Pencil,
+  DotIcon
 } from "lucide-react"
 
 export {
   Group,
   DotIcon,
-  MenuIcon,
+  MenuIcon, 
   NotifIcon,
   OpenEye,
   Settings,
