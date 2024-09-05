@@ -1,5 +1,13 @@
-import { setCookie, deleteCookie, getCookie } from "@/cookies/cookiesService";
+import {
+  setCookie,
+  deleteCookie,
+  getCookie,
+  setResponseCookie,
+} from "@/cookies/cookiesService";
 import { verifyJwtToken } from "../utils/verifyToken";
+import apiClient from "@/apiServices/apiClient";
+import { apiPaths } from "@/components/authentication/urls";
+import { NextResponse } from "next/server";
 
 interface UserTokens {
   accessToken: string;
@@ -7,17 +15,24 @@ interface UserTokens {
 }
 
 const accessTokenName = "accessToken";
+const accessTokenMaxAge = 60 * 60 * 24; // 24 hours
 const refreshTokenName = "refreshToken";
+const refreshTokenMaxAge = 60 * 60 * 24 * 7; // 1 week, adjust as needed
 
 export async function authenticate() {
   if (await verify_access_token()) {
     return true;
   } else {
-    if (await renew_access_token()) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
+  }
+}
+
+export async function re_authenticate(response: NextResponse) {
+  const res = await renew_access_token(response);
+  if (res) {
+    return res;
+  } else {
+    return false;
   }
 }
 
@@ -25,8 +40,8 @@ async function verify_access_token() {
   try {
     const access = await get_access_token();
     if (access) {
-      const payload = await verifyJwtToken(access);
-      if (payload) {
+      const verify = await verifyJwtToken(access);
+      if (verify) {
         return true;
       } else {
         return false;
@@ -40,8 +55,44 @@ async function verify_access_token() {
   }
 }
 
-async function renew_access_token() {
-  return false;
+async function renew_access_token(response: NextResponse) {
+  try {
+    const refresh = await get_refresh_token();
+    if (refresh) {
+      const resObj = await get_new_access_token_from_server(refresh);
+      if (resObj) {
+        const res = await set_access_token_via_response(
+          resObj.access,
+          response
+        );
+        return res;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } catch (error: any) {
+    console.error("error getting renew access token :", error);
+    return false;
+  }
+}
+
+export async function get_new_access_token_from_server(refresh: string) {
+  try {
+    const response = await apiClient(
+      apiPaths.getNewAccess,
+      "ProdBackendServer",
+      {
+        method: "POST",
+        body: JSON.stringify({ refresh }),
+      }
+    );
+    return response;
+  } catch (error: any) {
+    console.error("Error resolving refresh token from server:", error);
+    return false;
+  }
 }
 
 /**
@@ -132,10 +183,30 @@ export async function delete_refresh_token() {
 export async function set_access_token(accessToken: string) {
   try {
     await setCookie(accessTokenName, accessToken, {
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: accessTokenMaxAge,
     });
   } catch (error: any) {
     console.error("accessToken set error:", error.message);
+  }
+}
+
+export async function set_access_token_via_response(
+  accessToken: string,
+  response: NextResponse
+) {
+  try {
+    const responseObj = await setResponseCookie(
+      accessTokenName,
+      accessToken,
+      {
+        maxAge: accessTokenMaxAge,
+      },
+      response
+    );
+    return responseObj;
+  } catch (error: any) {
+    console.error("response accessToken set error:", error.message);
+    return false;
   }
 }
 
@@ -146,7 +217,7 @@ export async function set_access_token(accessToken: string) {
 export async function set_refresh_token(refreshToken: string) {
   try {
     await setCookie(refreshTokenName, refreshToken, {
-      maxAge: 60 * 60 * 24 * 7, // 1 week, adjust as needed
+      maxAge: refreshTokenMaxAge,
     });
   } catch (error: any) {
     console.error("refreshToken set error:", error.message);

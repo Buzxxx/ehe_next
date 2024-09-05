@@ -2,6 +2,7 @@ import {
   set_tokens_as_cookie,
   delete_tokens_from_cookies,
   authenticate,
+  re_authenticate,
 } from "./tokenObject";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
@@ -22,9 +23,17 @@ interface UserLogin {
 
 const userDataCookieName = "payload";
 
-export async function authenticate_user(request: NextRequest) {
+export async function authenticate_user(
+  request: NextRequest,
+  response: NextResponse
+) {
   if (!(await authenticate())) {
-    return redirect_to_login(request);
+    const res = await re_authenticate(response);
+    if (res) {
+      return res;
+    } else {
+      return redirect_to_login(request);
+    }
   }
   if (request.nextUrl.pathname === paths.logoutRedirect) {
     return NextResponse.next();

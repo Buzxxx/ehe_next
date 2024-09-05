@@ -7,4 +7,5 @@ export const paths = {
 
 export const apiPaths = {
   login: "/auth/api/login",
+  getNewAccess: "auth/api/token/refresh",
 };

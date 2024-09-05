@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { authenticate_user } from "@/components/authentication/features/UserObject";
 
 export async function middleware(request: NextRequest) {
-  return await authenticate_user(request);
+  const response = NextResponse.next();
+  return await authenticate_user(request, response);
 }
 
 // Specify the paths where the middleware should run
