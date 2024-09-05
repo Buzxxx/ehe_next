@@ -26,6 +26,10 @@ const ActionCell = ({ workerStatus, userId, onOpenModal }: ActionCellProps) => {
     router.push(`/workforce/edit/${userId}`)
   }
 
+  const handleAliasClick = () => {
+    router.push(`/workforce/edit/${userId}/alias`)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -58,7 +62,7 @@ const ActionCell = ({ workerStatus, userId, onOpenModal }: ActionCellProps) => {
           )}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex gap-2 cursor-pointer">
+        <DropdownMenuItem className="flex gap-2 cursor-pointer" onClick={handleAliasClick}>
           <Plus size={14} /> Alias
         </DropdownMenuItem>
       </DropdownMenuContent>
