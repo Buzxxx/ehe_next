@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 interface CookieOptions {
   path?: string;
@@ -45,4 +46,19 @@ export const updateCookie = (
   options: CookieOptions = {}
 ): void => {
   setCookie(name, value, options);
+};
+
+export const setResponseCookie = async (
+  name: string,
+  value: string,
+  options: CookieOptions = {},
+  response: NextResponse
+) => {
+  await response.cookies.set(name, value, {
+    path: "/",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    ...options,
+  });
+  return response;
 };
