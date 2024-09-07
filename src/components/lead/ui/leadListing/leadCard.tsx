@@ -4,25 +4,35 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
-import { Phone, ExternalLink } from "@/components/ui/icons"
-import Link from "next/link"
-import { formatDate } from "@/utils/formatDate"
-import { LeadCardProps } from "../feature/leadApiClient"
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon";
+import { Phone, ExternalLink } from "@/components/ui/icons";
+import Link from "next/link";
+import { formatDate } from "@/utility/formatDate";
+import { paths } from "../../urls";
 
+type Lead = {
+  created_dt: string;
+  status: number;
+  name: string;
+  id: number;
+  isSelected: boolean;
+};
 
+type LeadCardProps = {
+  isSelected: boolean;
+  onToggle: () => void;
+  idx: number;
+  lead: Lead;
+};
 
 export const LeadCard: React.FC<LeadCardProps> = ({
+  idx,
+  lead,
   isSelected,
   onToggle,
-  idx,
-  name,
-  status,
-  created,
-  id
 }) => (
   <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600 md:w-[49%] xl:w-[24%]">
     <CardHeader className="py-2 flex-row items-center gap-2 px-4">
@@ -33,12 +43,12 @@ export const LeadCard: React.FC<LeadCardProps> = ({
       />
 
       <div className="flex items-center justify-between w-full">
-        <Link href={`/lead/${id}`}>
+        <Link href={paths.leadPage + lead.id}>
           <CardTitle className="text-lg text-dashboard-primary ">
-            {name ?? "Card Title"}
+            {lead.name ?? "Card Title"}
           </CardTitle>
         </Link>
-        <Link href={`/lead/${id}`}>
+        <Link href={paths.leadPage + lead.id}>
           <ExternalLink className="text-zinc-300 hover:text-zinc-400/50 transition-all" />
         </Link>
       </div>
@@ -48,13 +58,13 @@ export const LeadCard: React.FC<LeadCardProps> = ({
         <p className="font-semibold ">
           Created at:{" "}
           <span className="font-normal">
-            {formatDate(created) ?? "Jun 04, 2024, 17:01"}
+            {formatDate(lead.created_dt) ?? "Jun 04, 2024, 17:01"}
           </span>
         </p>
       </div>
       <div>
         <p className="font-semibold ">
-          Status: <span className="font-normal">{status ?? "Closed"}</span>
+          Status: <span className="font-normal">{lead.status ?? "Closed"}</span>
         </p>
       </div>
     </CardContent>
@@ -70,4 +80,4 @@ export const LeadCard: React.FC<LeadCardProps> = ({
       </Button>
     </CardFooter>
   </Card>
-)
+);

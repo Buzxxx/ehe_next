@@ -1,13 +1,10 @@
-// LeadLayout.tsx
-
 "use client";
 
 import React, { useEffect, useState } from "react";
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb";
-import DashboardTopBar from "../../dashboard/ui/dashboardTopbar";
-import VisitorPanelBody from "../ui/visitorPanel";
 import { useSearchParams, useRouter } from "next/navigation";
-import LeadUtils from "@/utils/LeadUtils";
+import LeadUtils from "@/components/lead/features/leadListing/LeadUtils";
+import DashboardTopBar from "@/components/dashboard/ui/dashboardTopbar";
 import { Spinner } from "@/components/ui/icons";
 import { Filter } from "../feature/filter";
 import { getLeads, LeadCardProps, setUrl } from "../feature/leadApiClient";
@@ -58,6 +55,9 @@ const LeadLayout = () => {
     fetchLeads();
   }, [searchParams, router]);
 
+  const selectedCount = LeadUtils.getSelectedCount(leads);
+  const totalLeads = LeadUtils.getTotalLeads(leads);
+
   const handleToggleLeadSelection = (index: number) => {
     const updatedLeads = LeadUtils.toggleLeadSelection(leads, index);
     setLeads(updatedLeads);
@@ -75,9 +75,6 @@ const LeadLayout = () => {
     setLeads(updatedLeads);
     setSelectedLeads([]);
   };
-
-  const selectedCount = LeadUtils.getSelectedCount(leads);
-  const totalLeads = LeadUtils.getTotalLeads(leads);
 
   const handleReassign = () => {
     setModalLoading(true);
@@ -109,11 +106,12 @@ const LeadLayout = () => {
         totalLeads={totalLeads}
         page={"lead"}
       />
+
       {modalLoading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-95 z-50 min-h-screen"></div>
       )}
 
-      <div className="visitor-panel w-full">
+      <div className="w-full">
         {isLoading ? (
           <div className="absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50 min-h-screen">
             <Spinner className="animate-spin h-10 w-10 " />

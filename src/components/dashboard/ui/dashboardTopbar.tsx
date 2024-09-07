@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import { Suspense, lazy, useState } from "react"
-import { useRouter } from "next/navigation"
+import { Suspense, lazy, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar"
-import ChevronDown from "@/components/ui/icons/chevronDown"
-import { Filter } from "@/components/ui/icons"
-import { Badge } from "@/components/ui/badge"
-import { handleToggle } from "@/utils/toggle"
-import PaginationComp from "@/components/ui/paginationComp"
-import { Dashboard } from "../feature/dashboard"
+} from "@/components/ui/menubar";
+import ChevronDown from "@/components/ui/icons/chevronDown";
+import { Filter } from "@/components/ui/icons";
+import { Badge } from "@/components/ui/badge";
+import { handleToggle } from "@/utility/toggle";
+import PaginationComp from "@/components/ui/paginationComp";
+import { Dashboard } from "../feature/dashboard";
 
 const FilterForm = lazy(
   () => import("@/components/dashboard/layout/filterForm")
-)
+);
 
 type DashboardTopBarProps = {
-  onSelectAll?: () => void
-  onUnselectAll?: () => void
-  onReassign?: () => void
-  selectedCount?: number
-  totalLeads?: number
-  page?: "lead" | "workplace" | "workforce" | "dashboard" | "task"
-}
+  onSelectAll?: () => void;
+  onUnselectAll?: () => void;
+  onReassign?: () => void;
+  selectedCount?: number;
+  totalLeads?: number;
+  page?: "lead" | "workplace" | "workforce" | "dashboard" | "task";
+};
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   onSelectAll,
@@ -37,16 +37,16 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   totalLeads = 0,
   page = "lead",
 }) => {
-  const [filterVisible, setFilterVisible] = useState<boolean>(false)
-  const router = useRouter()
+  const [filterVisible, setFilterVisible] = useState<boolean>(false);
+  const router = useRouter();
 
   const onToggle = () => {
-    handleToggle(filterVisible, setFilterVisible)
-  }
+    handleToggle(filterVisible, setFilterVisible);
+  };
 
   const navigateTo = (path: string) => {
-    router.push(path)
-  }
+    router.push(path);
+  };
 
   const menuItems = Dashboard.getMenuItems(
     navigateTo,
@@ -55,7 +55,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
     onUnselectAll,
     onReassign,
     selectedCount
-  )
+  );
 
   return (
     <Menubar className=" mt-4 bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50 ">
@@ -119,7 +119,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
         </Suspense>
       )}
     </Menubar>
-  )
-}
+  );
+};
 
-export default DashboardTopBar
+export default DashboardTopBar;

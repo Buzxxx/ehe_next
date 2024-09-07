@@ -9,9 +9,9 @@ const LeadPage = async ({ params }: { params: { slug: string } }) => {
   
   return (
     <>
-      <LeadHeader id={params.slug} />
+      <LeadPageLayout leadId={params.slug} />
     </>
-  )
-}
+  );
+};
 
-export default LeadPage
+export default LeadPage;
