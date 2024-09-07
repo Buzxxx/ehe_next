@@ -56,9 +56,9 @@ export const LeadCard: React.FC<LeadCardProps> = ({
       <div>
         <p className="font-semibold ">
           Created at:{" "}
-          <span className="font-normal">
+          {/* <span className="font-normal">
             {formatDate(created) ?? "Jun 04, 2024, 17:01"}
-          </span>
+          </span> */}
         </p>
       </div>
       <div>
