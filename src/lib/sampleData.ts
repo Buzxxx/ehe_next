@@ -1,4 +1,6 @@
-export  const initialLeads: LeadCardProps[] = [
+import { Lead } from "@/components/lead/features/leadApiClient";
+
+export  const initialLeads: Lead[] = [
   {
     id: 1,
     isSelected: false,
@@ -11,7 +13,7 @@ export  const initialLeads: LeadCardProps[] = [
     source: "4",
     status: 1,
     brokerage: null,
-    created_dt: null,
+    created_dt: '',
     follow_up_current_status: null,
     golden: null,
     hash_key: "hash1",
@@ -37,7 +39,7 @@ export  const initialLeads: LeadCardProps[] = [
     source: "4",
     status: 1,
     brokerage: null,
-    created_dt: null,
+    created_dt: 'null',
     follow_up_current_status: null,
     golden: null,
     hash_key: "hash2",
@@ -63,7 +65,7 @@ export  const initialLeads: LeadCardProps[] = [
     source: "4",
     status: 1,
     brokerage: null,
-    created_dt: null,
+    created_dt: 'null',
     follow_up_current_status: null,
     golden: null,
     hash_key: "hash3",

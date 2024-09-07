@@ -9,7 +9,7 @@ import { Spinner } from "@/components/ui/icons";
 import { Lead } from "../features/lead";
 import { Filter } from "../features/filter";
 import { LeadCard } from "@/components/lead/ui/leadListing/leadCard";
-import { get_leads_from_server } from "../features/leadObject";
+import { LeadCardProps } from "@/components/lead/features/leadApiClient";
 
 const leadApiClient = new Lead();
 
@@ -38,7 +38,8 @@ const LeadLayout = () => {
 
         // Set the API URL with only the query parameters and fetch leads
         const filterQuery = filter.buildQuery();
-        const fetchedLeads = await get_leads_from_server(filterQuery);
+        leadApiClient.setUrl(filterQuery);
+        const fetchedLeads = await leadApiClient.getLeads();
 
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({

@@ -16,6 +16,8 @@ import WhatsAppIcon from "./whatsAppIcon"
 import Work from "./work"
 import DotIcon from "./dotIcon"
 import {
+  MoveRight,
+  MoveLeft,
   ChevronRight,
   MoreHorizontal,
   Check,
@@ -37,10 +39,13 @@ import {
   Edit,
   Dot,
   Plus,
-  Trash2
+  Trash2,CheckCircle
 } from "lucide-react"
 
 export {
+  MoveRight,
+  CheckCircle,
+  MoveLeft,
   Group,
   DotIcon,
   MenuIcon,
