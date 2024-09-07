@@ -28,18 +28,10 @@ const apiClient = async (
 
     // Assuming the API returns JSON
     return await response.json();
-  } catch (error) {
+  } catch (error: any) {
     // Check if error is an instance of Error
-    if (error instanceof Error) {
-      // Handle known error types
-      console.error("Fetch error:", error.message);
-      throw new Error(error.message || "An unknown error occurred");
-    } else {
-      // Handle unknown error types
-      console.error("An unknown error occurred: mcode:2851");
-      throw new Error("An unknown error occurred: mcode:2851");
-    }
-    return;
+    console.error("api client error :", error);
+    return false;
   }
 };
 
