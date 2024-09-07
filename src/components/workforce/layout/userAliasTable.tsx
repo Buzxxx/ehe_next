@@ -42,8 +42,11 @@ const UserAliasTable: React.FC<UserAliasTableProps> = ({
     };
 
     onAdd(newAlias);
+    console.log("Added new alias name:", newAliasUsername)
     setNewAliasUsername("");
   };
+
+  
 
   return (
     <Table className="py-8 md:shadow-md md:max-w-[96%] mx-auto mt-8 md:text-sm text-xs">
