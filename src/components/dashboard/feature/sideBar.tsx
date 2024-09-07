@@ -32,7 +32,7 @@ const DashboardSideMenu = ({
   return (
     <aside
       className={`${
-        toggled ? "translate-x-0" : "-translate-x-56"
+        toggled ? "translate-x-0" : "md:-translate-x-56 -translate-x-full"
       } overflow-hidden fixed z-10 top-0 w-3/4 md:w-56 left-0 pt-12 flex flex-col bg-charcoal-700 items-center transition-all text-nowrap duration-300 h-screen`}
     >
       <div className="flex gap-3 items-center justify-start w-full px-4 ">
