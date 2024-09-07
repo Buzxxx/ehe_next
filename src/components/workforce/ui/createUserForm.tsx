@@ -72,7 +72,7 @@ const CreateWorkerForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 py-8 md:shadow-md md:px-12  md:mx-16 mt-8 "
+        className="space-y-6 py-6 md:shadow-md md:px-12  md:mx-16 md:mt-8 "
       >
         <div className="flex flex-col md:flex-row gap-4">
           <p className="font-semibold text-sm mt-2 w-32 text-slate-800">

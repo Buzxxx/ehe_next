@@ -6,11 +6,10 @@ import { useSearchParams, useRouter } from "next/navigation";
 import LeadUtils from "@/components/lead/features/leadListing/LeadUtils";
 import DashboardTopBar from "@/components/dashboard/ui/dashboardTopbar";
 import { Spinner } from "@/components/ui/icons";
-import { Lead } from "../features/lead";
-import { Filter } from "../features/filter";
-import { LeadCard } from "@/components/lead/ui/leadListing/leadCard";
+import { Filter } from "@/components/lead/features/filter";
+import { getLeads, LeadCardProps, setUrl } from "@/components/lead/features/leadApiClient";
+import VisitorPanelBody from "@/components/lead/ui/visitorPanel";
 
-const leadApiClient = new Lead();
 
 const LeadLayout = () => {
   const [leads, setLeads] = useState<LeadCardProps[]>([]);
@@ -37,8 +36,8 @@ const LeadLayout = () => {
 
         // Set the API URL with only the query parameters and fetch leads
         const filterQuery = filter.buildQuery();
-        leadApiClient.setUrl(filterQuery);
-        const fetchedLeads = await leadApiClient.getLeads();
+        setUrl(filterQuery);
+        const fetchedLeads = await getLeads();
 
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({
@@ -119,19 +118,11 @@ const LeadLayout = () => {
             <Spinner className="animate-spin h-10 w-10 " />
           </div>
         ) : (
-          <div className="pt-2">
-            <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
-              {leads.map((lead, index) => (
-                <LeadCard
-                  key={lead.id}
-                  idx={index}
-                  lead={lead}
-                  isSelected={lead.isSelected}
-                  onToggle={() => handleToggleLeadSelection(index)}
-                />
-              ))}
-            </div>
-          </div>
+          <VisitorPanelBody
+            leads={leads}
+
+            onToggleLead={handleToggleLeadSelection}
+          />
         )}
       </div>
     </>

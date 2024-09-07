@@ -1,10 +1,10 @@
-import React from "react";
-import SideNavItem from "./sideNavItem";
-import dashboardItems from "../library/dashboardItems";
+import React from "react"
+import SideNavItem from "./sideNavItem"
+import dashboardItems from "../library/dashboardItems"
 
-const SideNavMenu = () => {
+const SideNavMenu = ({ onMenuItemClick }: { onMenuItemClick: () => void }) => {
   return (
-    <div className="w-full text-nowrap ">
+    <div className="w-full text-nowrap  ">
       <ul className="text-neutral-300 text-sm">
         {dashboardItems.map((item) => (
           <SideNavItem
@@ -12,11 +12,12 @@ const SideNavMenu = () => {
             title={item.title}
             subItems={item.subItems}
             icon={item.icon}
+            onMenuItemClick={onMenuItemClick} // Pass the onMenuItemClick function
           />
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default SideNavMenu;
+export default SideNavMenu

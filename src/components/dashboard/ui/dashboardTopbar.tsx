@@ -58,7 +58,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   );
 
   return (
-    <Menubar className="dashboard-top-bar mt-4 overflow-hidden bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50">
+    <Menubar className=" mt-4 bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50 ">
       <MenubarMenu>
         <MenubarTrigger className="flex items-center gap-2 border shadow-sm">
           Menu <ChevronDown />
@@ -72,7 +72,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
         </MenubarContent>
       </MenubarMenu>
 
-      <div className="flex gap-4 justify-start text-xs items-center flex-nowrap">
+      <div className="flex gap-4 justify-between text-xs items-center">
         {(selectedCount > 0 || totalLeads > 0) && (
           <Badge
             variant={"default"}
@@ -89,12 +89,12 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
             <PaginationComp
               perPage={20}
               totalPages={50}
-              className="flex-shrink-0 justify-start w-fit invisible md:visible"
+              className="flex-shrink-0 justify-start "
             />
 
             <button
               onClick={onToggle}
-              className="text-dashboard-primary invisible md:visible"
+              className="text-dashboard-primary visible"
             >
               <Filter
                 color="grey"
@@ -112,8 +112,8 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
           <FilterForm
             className={`${
               filterVisible
-                ? "filter-form md:translate-x-0"
-                : "translate-x-96 2xl:translate-x-[35rem] hidden"
+                ? "filter-form translate-x-0"
+                : "translate-x-96 2xl:translate-x-[35rem]"
             }`}
           />
         </Suspense>
