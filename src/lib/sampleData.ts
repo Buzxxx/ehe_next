@@ -1,4 +1,4 @@
-import { Lead } from "@/components/lead/feature/leadApiClient";
+import { Lead } from "@/components/lead/features/leadApiClient";
 
 export  const initialLeads: Lead[] = [
   {

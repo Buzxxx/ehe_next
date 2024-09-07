@@ -6,8 +6,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import LeadUtils from "@/components/lead/features/leadListing/LeadUtils";
 import DashboardTopBar from "@/components/dashboard/ui/dashboardTopbar";
 import { Spinner } from "@/components/ui/icons";
-import { Filter } from "../feature/filter";
-import { getLeads, LeadCardProps, setUrl } from "../feature/leadApiClient";
+import { Filter } from "@/components/lead/features/filter";
+import { getLeads, LeadCardProps, setUrl } from "@/components/lead/features/leadApiClient";
+import VisitorPanelBody from "@/components/lead/ui/visitorPanel";
 
 
 const LeadLayout = () => {

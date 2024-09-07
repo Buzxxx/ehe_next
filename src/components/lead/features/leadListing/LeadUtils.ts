@@ -1,4 +1,4 @@
-import { LeadCardProps } from "@/components/lead/feature/leadApiClient"
+import { LeadCardProps } from "@/components/lead/features/leadApiClient"
 
 class LeadUtils {
   static toggleLeadSelection(leads: LeadCardProps[], index: number): LeadCardProps[] {

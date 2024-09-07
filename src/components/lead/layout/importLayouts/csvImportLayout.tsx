@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
 import { HeaderMapping } from "@/components/lead/layout/importLayouts/headerMapping"
-import { UploadLeadsFromCsv } from "../../feature/leadApiClient"
+import { UploadLeadsFromCsv } from "@/components/lead/features/leadApiClient"
 
 const CsvImportLayout = () => {
   const [files, setFiles] = useState<File[]>([])

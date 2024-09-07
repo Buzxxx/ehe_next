@@ -1,6 +1,6 @@
-import { LeadCard } from "@/components/lead/ui/leadCard"
-import { LeadCardProps } from "../feature/leadApiClient"
-
+// VisitorPanelBody.tsx
+import { LeadCard } from "@/components/lead/ui/leadListing/leadCard"
+import { LeadCardProps } from "@/components/lead/features/leadApiClient"
 
 type VisitorPanelBodyProps = {
   leads: LeadCardProps[]
@@ -15,7 +15,7 @@ const VisitorPanelBody: React.FC<VisitorPanelBodyProps> = ({
     <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
       {leads.map((lead, index) => (
         <LeadCard
-        id={lead.id}
+          id={lead.id}
           created={lead.created}
           name={lead.name}
           status={lead.status}

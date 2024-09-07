@@ -10,7 +10,7 @@ import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { CreateLeadFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
-import { createLead } from "@/components/lead/feature/leadApiClient"
+import { createLead } from "@/components/lead/features/leadApiClient"
 import { useToast } from "@/components/ui/use-toast"
 
 const CreateLeadForm = () => {
