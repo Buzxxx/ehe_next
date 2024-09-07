@@ -11,15 +11,9 @@ import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
 import { Phone, ExternalLink } from "@/components/ui/icons"
 import Link from "next/link"
 import { formatDate } from "@/utils/formatDate"
+import { LeadCardProps } from "../feature/leadApiClient"
 
-type LeadCardProps = {
-  isSelected: boolean
-  onToggle: () => void
-  idx: number
-  name: string
-  status: number
-  created: string
-}
+
 
 export const LeadCard: React.FC<LeadCardProps> = ({
   isSelected,
@@ -28,6 +22,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({
   name,
   status,
   created,
+  id
 }) => (
   <Card className="bg-charcoal-foreground border border-slate-300 text-stone-600 md:w-[49%] xl:w-[24%]">
     <CardHeader className="py-2 flex-row items-center gap-2 px-4">
@@ -38,12 +33,12 @@ export const LeadCard: React.FC<LeadCardProps> = ({
       />
 
       <div className="flex items-center justify-between w-full">
-        <Link href={`lead/lead-page/id`}>
+        <Link href={`/lead/${id}`}>
           <CardTitle className="text-lg text-dashboard-primary ">
             {name ?? "Card Title"}
           </CardTitle>
         </Link>
-        <Link href={`lead/lead-page/id`}>
+        <Link href={`/lead/${id}`}>
           <ExternalLink className="text-zinc-300 hover:text-zinc-400/50 transition-all" />
         </Link>
       </div>

@@ -4,4 +4,10 @@ export const paths = {
   LeadDetails: "/lead/:id",
   LeadReassignModal: "/lead/leadReassignModal",
   ShareLead: "/lead/share",
+  ImportLead: 'lead/import'
+}
+
+export const apiPaths = {
+  getLeadsbyId: "",
+  baseApiUrl: "lead/api/leads",
 }

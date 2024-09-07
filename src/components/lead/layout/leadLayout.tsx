@@ -9,10 +9,9 @@ import VisitorPanelBody from "../ui/visitorPanel";
 import { useSearchParams, useRouter } from "next/navigation";
 import LeadUtils from "@/utils/LeadUtils";
 import { Spinner } from "@/components/ui/icons";
-import { Lead } from "../feature/lead";
 import { Filter } from "../feature/filter";
+import { getLeads, LeadCardProps, setUrl } from "../feature/leadApiClient";
 
-const leadApiClient = new Lead();
 
 const LeadLayout = () => {
   const [leads, setLeads] = useState<LeadCardProps[]>([]);
@@ -39,8 +38,8 @@ const LeadLayout = () => {
 
         // Set the API URL with only the query parameters and fetch leads
         const filterQuery = filter.buildQuery();
-        leadApiClient.setUrl(filterQuery);
-        const fetchedLeads = await leadApiClient.getLeads();
+        setUrl(filterQuery);
+        const fetchedLeads = await getLeads();
 
         const leadsWithSelection: LeadCardProps[] = fetchedLeads.leads.map(
           (lead: LeadCardProps) => ({
@@ -122,6 +121,7 @@ const LeadLayout = () => {
         ) : (
           <VisitorPanelBody
             leads={leads}
+
             onToggleLead={handleToggleLeadSelection}
           />
         )}

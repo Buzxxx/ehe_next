@@ -10,7 +10,7 @@ import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { CreateLeadFormSchema } from "@/lib/validation"
 import { SelectItem } from "@/components/ui/select"
-import LeadApiClient from "@/lib/leadApiClient"
+import { createLead } from "@/components/lead/feature/leadApiClient"
 import { useToast } from "@/components/ui/use-toast"
 
 const CreateLeadForm = () => {
@@ -40,7 +40,7 @@ const CreateLeadForm = () => {
     }
 
     try {
-      const result = await LeadApiClient.createLead(leadData)
+      const result = await createLead(leadData)
       if (result.lead) {
         console.log("Lead created successfully:", result)
         toast({

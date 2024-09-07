@@ -59,9 +59,11 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
           </span>
 
           <ul
-            className={`bg-charcoal-800 pl-8 h-0 overflow-hidden transition-all duration-300 ${
-              openMenu ? "h-20 py-1" : ""
-            }`}
+            style={{
+              height: openMenu ? `${subItems.length * 2.25}rem` : "0", 
+              transition: "height 0.3s ease",
+            }}
+            className="bg-charcoal-800 pl-8 overflow-hidden"
           >
             {subItems.map((subItem, index) => (
               <li
@@ -86,7 +88,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({ title, subItems, icon }) => {
         </Link>
       )}
     </li>
-  );
+  )
 };
 
 export default SideNavItem;

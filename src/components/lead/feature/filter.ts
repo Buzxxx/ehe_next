@@ -1,7 +1,7 @@
 // File: Filter.ts
 
 export class Filter {
-  private baseUrl: string = window.location.origin + "/lead" // Default to current origin
+  private baseUrl: string =  window.location.origin+ "/lead" // Default to current origin
   private filters: { [key: string]: string } = {} // Hold individual filter key-value pairs
   private sort_by: string = ""
   private per_page: number = 20
