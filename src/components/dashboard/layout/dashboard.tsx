@@ -1,7 +1,11 @@
 "use client";
 
 import React, { ReactNode, useState, useEffect } from "react";
-import { handleToggle, saveToggleState, loadToggleState } from "@/utils/toggle";
+import {
+  handleToggle,
+  saveToggleState,
+  loadToggleState,
+} from "@/utility/toggle";
 import DashboardSideMenu from "@/components/dashboard/feature/sideBar";
 import DashboardHeader from "@/components/dashboard/feature/dashboardHeader";
 import { fetch_User_Data } from "../feature/fetchUserData";

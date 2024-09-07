@@ -1,8 +1,7 @@
-// LeadTimeLine.js
-"use client"
-import React, { useEffect, useState } from "react"
-import LeadStatusUpdateForm from "../feature/forms/leadStatusUpdateForm"
-import { getCurrentTimeInLocaleString } from "@/lib/getCurrentTimeInLocaleString"
+"use client";
+import React, { useEffect, useState } from "react";
+import LeadStatusUpdateForm from "@/components/lead/features/leadPage/leadStatusUpdateForm";
+import { getCurrentTimeInLocaleString } from "@/lib/getCurrentTimeInLocaleString";
 
 const timelineEvents = [
   {
@@ -23,15 +22,15 @@ const timelineEvents = [
     description: "Lead closed by Y",
     username: "admin",
   },
-]
+];
 
-const LeadTimeLine = ({id} :{id:string}) => {
-  const [currentTime, setCurrentTime] = useState("")
+const LeadTimeLine = ({ id }: { id: string }) => {
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
-    const formattedTime = getCurrentTimeInLocaleString()
-    setCurrentTime(formattedTime)
-  }, [])
+    const formattedTime = getCurrentTimeInLocaleString();
+    setCurrentTime(formattedTime);
+  }, []);
   return (
     <div className="timeline-wrapper py-2 ">
       <h2 className="pt-4 font-bold">Timeline</h2>
@@ -47,7 +46,7 @@ const LeadTimeLine = ({id} :{id:string}) => {
             <p className="text-sm font-bold text-gray-700">{currentTime}</p>
           </div>
           <div className="ml-8 max-md:mt-8 p-4 pt-2 bg-white border border-gray-300 rounded-lg shadow-md w-full md:w-1/2">
-            <LeadStatusUpdateForm id={id}/>
+            <LeadStatusUpdateForm id={id} />
           </div>
         </div>
         {timelineEvents.map((event, index) => (
@@ -71,7 +70,7 @@ const LeadTimeLine = ({id} :{id:string}) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LeadTimeLine
+export default LeadTimeLine;

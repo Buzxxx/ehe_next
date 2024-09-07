@@ -1,47 +1,31 @@
 "use client";
 
-import ProfileTab from "@/components/lead/ui/profileTab";
-import React, { useState } from "react";
+import ProfileTab from "@/components/lead/ui/leadPage/profile";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import BackIcon from "@/components/ui/icons/back";
 import { useRouter } from "next/navigation";
 import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon";
 import { Phone, Share2 } from "@/components/ui/icons";
-import LeadTimeLine from "./leadTimeline";
-import LeadProfileUpdateForm from "../feature/forms/leadProfileUpdateForm";
-import LeadCallbackForm from "../feature/forms/leadCallbackForm";
-import LeadMeetingForm from "../feature/forms/leadMeetingForm";
 
 const navItems = ["Timeline", "Profile", "Call back", "Meeting"];
 
-const LeadHeader = ({
+const LeadPageHeader = ({
   id,
+  activeTab,
+  setActiveTab,
   type = "Cold",
   status = "Closed",
   assignedTo = "Avinash Jha",
 }: {
   id: string;
+  setActiveTab: any;
+  activeTab: any;
   type?: "Cold" | string;
   status?: "Closed" | string;
   assignedTo?: "Avinash Jha" | string;
 }) => {
-  const [activeTab, setActiveTab] = useState(navItems[0]); // Set initial active tab
   const router = useRouter(); // Initialize useRouter hook
-
-  const renderActiveTabContent = () => {
-    switch (activeTab) {
-      case "Timeline":
-        return <LeadTimeLine id={id} />;
-      case "Profile":
-        return <LeadProfileUpdateForm id={id} />;
-      case "Call back":
-        return <LeadCallbackForm id={id} />;
-      case "Meeting":
-        return <LeadMeetingForm id={id} />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <>
@@ -97,12 +81,8 @@ const LeadHeader = ({
           ))}
         </nav>
       </section>
-
-      <section className="mt-4 md:px-8 md:w-4/5 mx-auto md:shadow-xl min-h-80 min-w-80">
-        {renderActiveTabContent()}
-      </section>
     </>
   );
 };
 
-export default LeadHeader;
+export default LeadPageHeader;

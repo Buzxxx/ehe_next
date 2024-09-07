@@ -1,6 +1,6 @@
 // @/components/workforce/layout/userAliasTable.tsx
 
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,19 +9,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-import { Alias } from "../feature/workforce"
-import WorkforceTableRow from "../ui/workforceTableRow"
-import { Input } from "@/components/ui/input"
-import { Plus } from "@/components/ui/icons"
-import { WorkforceFormatDate } from "@/utils/formatDate"
+import { Alias } from "../feature/workforce";
+import WorkforceTableRow from "../ui/workforceTableRow";
+import { Input } from "@/components/ui/input";
+import { Plus } from "@/components/ui/icons";
+import { WorkforceFormatDate } from "@/utility/formatDate";
 
 interface UserAliasTableProps {
-  userAliases: Alias[]
-  onDelete: (alias: Alias) => void // Add onDelete prop
-  onUpdate: (updatedAlias: Alias) => void // Add onUpdate prop
-  onAdd: (newAlias: Alias) => void // Add onAdd prop
+  userAliases: Alias[];
+  onDelete: (alias: Alias) => void; // Add onDelete prop
+  onUpdate: (updatedAlias: Alias) => void; // Add onUpdate prop
+  onAdd: (newAlias: Alias) => void; // Add onAdd prop
 }
 
 const UserAliasTable: React.FC<UserAliasTableProps> = ({
@@ -30,20 +30,20 @@ const UserAliasTable: React.FC<UserAliasTableProps> = ({
   onUpdate,
   onAdd,
 }) => {
-  const [newAliasUsername, setNewAliasUsername] = useState("") // State for new alias username
+  const [newAliasUsername, setNewAliasUsername] = useState(""); // State for new alias username
 
   const handleAddClick = () => {
-    if (newAliasUsername.trim() === "") return // Prevent adding empty aliases
+    if (newAliasUsername.trim() === "") return; // Prevent adding empty aliases
 
     const newAlias: Alias = {
       type: "Alias",
       username: newAliasUsername,
       created: WorkforceFormatDate(new Date()),
-    }
+    };
 
-    onAdd(newAlias)
-    setNewAliasUsername("") 
-  }
+    onAdd(newAlias);
+    setNewAliasUsername("");
+  };
 
   return (
     <Table className="py-8 md:shadow-md md:max-w-[96%] mx-auto mt-8 md:text-sm text-xs">
@@ -84,7 +84,7 @@ const UserAliasTable: React.FC<UserAliasTableProps> = ({
         </TableRow>
       </TableBody>
     </Table>
-  )
-}
+  );
+};
 
-export default UserAliasTable
+export default UserAliasTable;

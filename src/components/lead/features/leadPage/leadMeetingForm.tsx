@@ -1,21 +1,21 @@
-import React, { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { LeadMeetingFormValidation } from "@/lib/validation"
-import { SelectItem } from "@/components/ui/select"
-import { useToast } from "@/components/ui/use-toast"
-import { formatDate } from "@/utils/formatDate"
-import OverlayLoading from "@/components/ui/overlayLoading"
-import { Spinner } from "@/components/ui/icons"
+import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
+import { LeadMeetingFormValidation } from "@/lib/validation";
+import { SelectItem } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import { formatDate } from "@/utility/formatDate";
+import OverlayLoading from "@/components/ui/overlayLoading";
+import { Spinner } from "@/components/ui/icons";
 
 const LeadMeetingForm = ({ id }: { id: string }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof LeadMeetingFormValidation>>({
     resolver: zodResolver(LeadMeetingFormValidation),
     defaultValues: {
@@ -25,28 +25,28 @@ const LeadMeetingForm = ({ id }: { id: string }) => {
       meeting_reason: "",
       description: "",
     },
-  })
+  });
 
   const onSubmit = async (data: z.infer<typeof LeadMeetingFormValidation>) => {
     {
-      setIsLoading(true)
-      console.log({ ...data, id })
+      setIsLoading(true);
+      console.log({ ...data, id });
       setTimeout(() => {
-        setIsLoading(false)
+        setIsLoading(false);
         toast({
           title: `Meeting Set for ${formatDate(data.date.toISOString())} hrs`,
           variant: "dashboard",
-        })
-      }, 1000)
+        });
+      }, 1000);
     }
-  }
+  };
 
   const meetingReasons = [
     "Meeting Requested",
     "Meeting Planned",
     "Follow up meeting",
     "Site Visit",
-  ]
+  ];
 
   return (
     <div className="form-wrapper py-2">
@@ -118,7 +118,7 @@ const LeadMeetingForm = ({ id }: { id: string }) => {
         </form>
       </Form>
     </div>
-  )
-}
+  );
+};
 
-export default LeadMeetingForm
+export default LeadMeetingForm;

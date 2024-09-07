@@ -9,7 +9,7 @@ const filterCategories = [
     name: "assigned_to",
     label: "User",
     placeholder: "User",
-    options: [36],
+    options: [36, 26, 4],
   },
   {
     name: "source",
@@ -18,17 +18,11 @@ const filterCategories = [
     options: ["All", "housing", "Magic Bricks", "Magic Bricks Bangalore"],
   },
   {
-    name: "location",
-    label: "Locations",
-    placeholder: "Locations",
-    options: ["All"],
-  },
-  {
     name: "date",
     label: "Date",
     placeholder: "Date",
     options: ["Today", "Custom"],
   },
-]
+];
 
-export default filterCategories
+export default filterCategories;

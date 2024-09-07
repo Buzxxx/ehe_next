@@ -1,22 +1,22 @@
 // /components/lead/feature/LeadProfileUpdateForm.tsx
 
-import React, { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { LeadCallbackFormValidation } from "@/lib/validation"
-import { useToast } from "@/components/ui/use-toast"
-import OverlayLoading from "@/components/ui/overlayLoading"
-import { Spinner } from "@/components/ui/icons"
-import { formatDate } from "@/utils/formatDate"
+import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
+import { LeadCallbackFormValidation } from "@/lib/validation";
+import { useToast } from "@/components/ui/use-toast";
+import OverlayLoading from "@/components/ui/overlayLoading";
+import { Spinner } from "@/components/ui/icons";
+import { formatDate } from "@/utility/formatDate";
 
 const LeadCallbackForm = ({ id }: { id: string }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof LeadCallbackFormValidation>>({
     resolver: zodResolver(LeadCallbackFormValidation),
     defaultValues: {
@@ -24,19 +24,19 @@ const LeadCallbackForm = ({ id }: { id: string }) => {
       date: new Date(Date.now()),
       description: "",
     },
-  })
+  });
 
   const onSubmit = async (data: z.infer<typeof LeadCallbackFormValidation>) => {
-    setIsLoading(true)
-    console.log({ ...data, id })
+    setIsLoading(true);
+    console.log({ ...data, id });
     setTimeout(() => {
-      setIsLoading(false)
+      setIsLoading(false);
       toast({
         title: `Callback Set for ${formatDate(data.date.toISOString())} hrs`,
         variant: "dashboard",
-      })
-    }, 1000)
-  }
+      });
+    }, 1000);
+  };
 
   return (
     <div className="form-wrapper py-2 max-md:px-4">
@@ -87,7 +87,7 @@ const LeadCallbackForm = ({ id }: { id: string }) => {
         </form>
       </Form>
     </div>
-  )
-}
+  );
+};
 
-export default LeadCallbackForm
+export default LeadCallbackForm;

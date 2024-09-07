@@ -1,52 +1,52 @@
 // File: components/FilterForm.tsx
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import filterCategories from "../library/filterCategories"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import filterCategories from "../library/filterCategories";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import DatePicker from "@/components/ui/date-picker"
-import { Label } from "@/components/ui/label"
-import { Filter } from "@/components/lead/feature/filter"
+} from "@/components/ui/select";
+import DatePicker from "@/components/ui/date-picker";
+import { Label } from "@/components/ui/label";
+import { Filter } from "@/components/lead/features/filter";
 
 // Create a single instance of the Filter class
-const filter = new Filter()
+const filter = new Filter();
 
 const FilterForm = ({ className }: { className: string }) => {
   // State to hold selected values
-  const [formValues, setFormValues] = useState<{ [key: string]: string }>({})
-  const [fromDate, setFromDate] = useState<Date | undefined>(undefined)
-  const [toDate, setToDate] = useState<Date | undefined>(undefined)
+  const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
+  const [fromDate, setFromDate] = useState<Date | undefined>(undefined);
+  const [toDate, setToDate] = useState<Date | undefined>(undefined);
 
   // Handle select changes
   const handleSelectChange = (categoryName: string, value: string) => {
-    const stringValue = value.toString() // Ensure the value is converted to string
+    const stringValue = value.toString(); // Ensure the value is converted to string
     setFormValues((prev) => ({
       ...prev,
       [categoryName]: stringValue,
-    }))
+    }));
 
     // Update the Filter instance based on the select change
-    filter.setFilter(categoryName, stringValue)
+    filter.setFilter(categoryName, stringValue);
 
     // Trigger URL update with the new parameters
-    filter.updateUrl()
-  }
+    filter.updateUrl();
+  };
 
   // Update the URL when date pickers are used (for custom date selection)
   useEffect(() => {
     if (formValues.date === "Custom" && fromDate && toDate) {
       // Convert dates to string format or keep any desired formatting
-      filter.setFilter("from", fromDate.toISOString())
-      filter.setFilter("to", toDate.toISOString())
-      filter.updateUrl()
+      filter.setFilter("from", fromDate.toISOString());
+      filter.setFilter("to", toDate.toISOString());
+      filter.updateUrl();
     }
-  }, [fromDate, toDate, formValues.date])
+  }, [fromDate, toDate, formValues.date]);
 
   return (
     <div
@@ -89,7 +89,7 @@ const FilterForm = ({ className }: { className: string }) => {
                 </div>
               )}
             </div>
-          )
+          );
         }
 
         return (
@@ -116,11 +116,10 @@ const FilterForm = ({ className }: { className: string }) => {
               </SelectContent>
             </Select>
           </div>
-        )
+        );
       })}
- 
     </div>
-  )
-}
+  );
+};
 
-export default FilterForm
+export default FilterForm;
