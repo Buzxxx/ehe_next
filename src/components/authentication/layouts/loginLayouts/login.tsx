@@ -1,5 +1,5 @@
 "use client";
-import LoginForm from "@/components/authentication/layouts/loginLayouts/loginForm";
+import LoginForm from "@/components/authentication/features/forms/loginForm";
 import Link from "next/link";
 import { useState } from "react";
 import OverlayLoading from "@/components/authentication/ui/overlayLoading";

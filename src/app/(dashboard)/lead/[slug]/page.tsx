@@ -1,12 +1,12 @@
-import LeadHeader from "@/components/lead/ui/leadHeader"
-import React from "react"
+import LeadPageLayout from "@/components/lead/layout/leadPageLayout";
+import React from "react";
 
 const LeadPage = ({ params }: { params: { slug: string } }) => {
   return (
     <>
-      <LeadHeader id={params.slug} />
+      <LeadPageLayout leadId={params.slug} />
     </>
-  )
-}
+  );
+};
 
-export default LeadPage
+export default LeadPage;
