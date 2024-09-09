@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Separator } from "@/components/ui/separator"
 
 interface PreviewTableProps {
   data: any[]
@@ -45,7 +44,6 @@ const PreviewTable: React.FC<PreviewTableProps> = ({ data }) => {
           Showing {startIndex}-{endIndex} of {data.length} entries
         </p>
       </div>
-      <Separator />
       <Table className=" md:shadow-md md:max-w-[96%] mx-auto  md:text-sm text-xs">
         <TableCaption>A preview of the imported leads data.</TableCaption>
         <TableHeader>

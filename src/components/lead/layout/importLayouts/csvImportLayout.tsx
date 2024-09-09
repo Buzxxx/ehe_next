@@ -1,13 +1,10 @@
-import PreviewTable from "@/components/lead/ui/previewTable"
 import { useState, useEffect } from "react"
-import { handleFilesSelected } from "@/components/import/feature/importObject"
 import DragNDropLayout from "@/components/import/layout/dragNDropLayout"
 import ImportHeader from "../../ui/importHeader"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
 import { HeaderMapping } from "@/components/lead/layout/importLayouts/headerMapping"
-import { UploadLeadsFromCsv } from "@/components/lead/features/leadApiClient"
 
 const CsvImportLayout = () => {
   const [files, setFiles] = useState<File[]>([])
@@ -19,10 +16,6 @@ const CsvImportLayout = () => {
   const [currentStep, setCurrentStep] = useState(0) // Track the current step
   const [uploadProgress, setUploadProgress] = useState<number>(0)
   const [isUploading, setIsUploading] = useState<boolean>(false)
-
-  const onFilesSelected = (selectedFiles: File[]) => {
-    handleFilesSelected(selectedFiles, setFiles, setCsvData)
-  }
 
   const handleHeaderSelect = (mapping: { [key: string]: string }) => {
     setHeaderMapping(mapping)
@@ -91,36 +84,37 @@ const CsvImportLayout = () => {
       <Separator />
 
       {currentStep === 0 ? (
-        files.length === 0 ? (
-          <div className="flex items-center justify-center h-full">
-            <DragNDropLayout
-              onFilesSelected={onFilesSelected}
-              supportedFileTypes={".csv"}
-              className="md:w-4/5 mt-8 mx-auto"
-            />
+        <>
+          <div className="min-h-10 w-full">
+            {files.length > 0 && (
+              <div className="flex justify-between items-center mt-4">
+                <Button
+                  type="button"
+                  onClick={handleRemoveFile}
+                  className="text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
+                >
+                  <Trash2 size={16} className="mr-2" />
+                  Remove File
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleNextStep}
+                  className="ml-auto flex gap-1 items-center bg-dashboard-primary hover:bg-dashboard-secondary"
+                >
+                  Next <MoveRight />
+                </Button>
+              </div>
+            )}
           </div>
-        ) : (
-          <>
-            <div className="flex justify-between items-center mt-4">
-              <Button
-                type="button"
-                onClick={handleRemoveFile}
-                className="text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
-              >
-                <Trash2 size={16} className="mr-2" />
-                Remove File
-              </Button>
-              <Button
-                type="button"
-                onClick={handleNextStep}
-                className="ml-auto flex gap-1 items-center bg-dashboard-primary hover:bg-dashboard-secondary"
-              >
-                Next <MoveRight />
-              </Button>
-            </div>
-            <PreviewTable data={csvData} />
-          </>
-        )
+          <DragNDropLayout
+            supportedFileTypes={".csv"}
+            className="md:w-4/5 mt-8 mx-auto"
+            csvData={csvData}
+            setCsvData={setCsvData}
+            files={files}
+            setFiles={setFiles}
+          />
+        </>
       ) : currentStep === 1 ? (
         <HeaderMapping
           headers={headers}
