@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import PreviewTable from "@/components/import/ui/previewTable"
-import { parseCsvFile } from "./importObject"
+import { parseFile } from "./importObject"
 
 interface DragNdropProps {
   supportedFileTypes?: string
@@ -23,10 +23,8 @@ const DragNdrop: React.FC<DragNdropProps> = ({
   csvData,
   setCsvData,
   setFiles,
-  files
+  files,
 }) => {
-
-
   // Handle file selection from input
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files
@@ -49,7 +47,7 @@ const DragNdrop: React.FC<DragNdropProps> = ({
   }
 
   const handleFileParsing = (file: File) => {
-    parseCsvFile(file)
+    parseFile(file)
       .then((parsedData) => setCsvData(parsedData)) // Set parsed CSV data
       .catch((error) => console.error(error))
   }

@@ -1,12 +1,14 @@
+'use client'
+
 import { useState, useEffect } from "react"
 import DragNDropLayout from "@/components/import/layout/dragNDropLayout"
 import ImportHeader from "../../ui/importHeader"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
-import { HeaderMapping } from "@/components/lead/layout/importLayouts/headerMapping"
+import { HeaderMapping } from "@/components/lead/features/headerMapping"
 
-const CsvImportLayout = () => {
+const LeadImportLayout = () => {
   const [files, setFiles] = useState<File[]>([])
   const [csvData, setCsvData] = useState<any[]>([])
   const [headers, setHeaders] = useState<string[]>([])
@@ -169,4 +171,4 @@ const CsvImportLayout = () => {
   )
 }
 
-export default CsvImportLayout
+export default LeadImportLayout
