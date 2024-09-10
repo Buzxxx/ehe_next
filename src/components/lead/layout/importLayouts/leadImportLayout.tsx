@@ -5,9 +5,8 @@ import { useState, useEffect } from "react"
 import DragNDropLayout from "@/components/import/layout/dragNDropLayout"
 import ImportHeader from "../../ui/importHeader"
 import { Separator } from "@/components/ui/separator"
-import { CheckCircle, MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
+import { MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
 import { HeaderMapping } from "@/components/lead/features/headerMapping"
-import LeadImportNavButtons from "@/components/lead/features/importLeads/leadImportNavButtons"
 import FileUploader from "../../features/importLeads/fileUploader"
 
 const LeadImportLayout = () => {
