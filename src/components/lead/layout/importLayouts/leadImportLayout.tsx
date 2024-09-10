@@ -1,12 +1,14 @@
-'use client'
+/* eslint-disable react/jsx-key */
+"use client"
 
 import { useState, useEffect } from "react"
 import DragNDropLayout from "@/components/import/layout/dragNDropLayout"
 import ImportHeader from "../../ui/importHeader"
 import { Separator } from "@/components/ui/separator"
-import { Button } from "@/components/ui/button"
 import { CheckCircle, MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
 import { HeaderMapping } from "@/components/lead/features/headerMapping"
+import LeadImportNavButtons from "@/components/lead/features/importLeads/leadImportNavButtons"
+import FileUploader from "../../features/importLeads/fileUploader"
 
 const LeadImportLayout = () => {
   const [files, setFiles] = useState<File[]>([])
@@ -39,10 +41,8 @@ const LeadImportLayout = () => {
   }
 
   useEffect(() => {
-    console.log("CSV Data:", csvData)
-    console.log("Header Mapping:", headerMapping)
     if (csvData.length > 0) {
-      setHeaders(Object.keys(csvData[0])) // Assuming the first row contains header names
+      setHeaders(Object.keys(csvData[0]))
     }
   }, [csvData])
 
@@ -80,93 +80,73 @@ const LeadImportLayout = () => {
     // }
   }
 
+  // Array of steps with components and optional buttons
+  const fileUploadSteps = [
+    <DragNDropLayout
+      supportedFileTypes={".csv"}
+      className="md:w-4/5 mt-8 mx-auto"
+      csvData={csvData}
+      setCsvData={setCsvData}
+      files={files}
+      setFiles={setFiles}
+      buttons={[
+        {
+          btnText: "Remove File",
+          btnIcon: <Trash2 size={16} />,
+          btnFn: handleRemoveFile,
+          disabled: false,
+        },
+        {
+          btnText: "Next Step",
+          btnIcon: <MoveRight size={16} />,
+          btnFn: handleNextStep,
+          disabled: files.length === 0,
+          variant: "affirmative",
+        },
+      ]}
+    />,
+    <HeaderMapping
+      headers={headers}
+      onHeaderSelect={handleHeaderSelect}
+      buttons={[
+        {
+          btnText: "Previous Step",
+          btnIcon: <MoveLeft size={16} />,
+          btnFn: handlePrevStep,
+          disabled: false,
+        },
+        {
+          btnText: "Submit Mapping",
+          btnIcon: <MoveRight size={16} />,
+          btnFn: handleHeaderSelect,
+          variant: "affirmative",
+          disabled: false,
+        },
+      ]}
+    />,
+
+    <FileUploader
+      files={files}
+      uploadProgress={uploadProgress}
+      handleUpload={handleUpload}
+      isUploading={isUploading}
+      buttons={[
+        {
+          btnText: "Prev Step",
+          btnIcon: <MoveLeft size={16} />,
+          btnFn: handlePrevStep,
+          disabled: false,
+        },
+      ]}
+    />,
+  ]
+
   return (
     <div className="py-2">
       <ImportHeader currentStep={currentStep} />
       <Separator />
 
-      {currentStep === 0 ? (
-        <>
-          <div className="min-h-10 w-full">
-            {files.length > 0 && (
-              <div className="flex justify-between items-center mt-4">
-                <Button
-                  type="button"
-                  onClick={handleRemoveFile}
-                  className="text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
-                >
-                  <Trash2 size={16} className="mr-2" />
-                  Remove File
-                </Button>
-                <Button
-                  type="button"
-                  onClick={handleNextStep}
-                  className="ml-auto flex gap-1 items-center bg-dashboard-primary hover:bg-dashboard-secondary"
-                >
-                  Next <MoveRight />
-                </Button>
-              </div>
-            )}
-          </div>
-          <DragNDropLayout
-            supportedFileTypes={".csv"}
-            className="md:w-4/5 mt-8 mx-auto"
-            csvData={csvData}
-            setCsvData={setCsvData}
-            files={files}
-            setFiles={setFiles}
-          />
-        </>
-      ) : currentStep === 1 ? (
-        <HeaderMapping
-          headers={headers}
-          data={csvData}
-          onHeaderSelect={handleHeaderSelect}
-          handlePrevStep={handlePrevStep}
-        />
-      ) : (
-        <div>
-          <Button
-            onClick={handlePrevStep}
-            className="mt-4 text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
-          >
-            <MoveLeft className="mr-2" />
-            Prev Step
-          </Button>
-          <div className="min-h-40 w-full rounded-md border border-dashed border-dashboard-primary mt-4 p-4 flex flex-col items-center justify-center">
-            {uploadProgress !== 100 ? (
-              <>
-                <p className="flex gap-2">Upload {files[0].name}</p>
-                <Button
-                  type="button"
-                  className=" block mx-auto mt-8 rounded-none bg-gray-200 text-black border border-slate-800 "
-                  onClick={handleUpload}
-                  disabled={isUploading}
-                >
-                  Upload
-                </Button>
-              </>
-            ) : (
-              <>
-                <CheckCircle color="green" />
-                <p className="mt-4 text-green-600 text-center">
-                  CSV data uploaded successfully!
-                </p>
-              </>
-            )}
-
-            {/* Progress Bar */}
-            {isUploading && (
-              <div className="relative w-full bg-gray-200 mt-4 h-4 rounded">
-                <div
-                  className="absolute top-0 left-0 h-4 bg-blue-500 rounded"
-                  style={{ width: `${uploadProgress}%` }}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {fileUploadSteps[currentStep]}
     </div>
   )
 }

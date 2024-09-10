@@ -1,7 +1,10 @@
 // /components/import/layout/dragNDropLayout.tsx
 import React from "react"
-import DragNdrop from "../feature/dragNDrop"
-import PreviewTable from "../ui/previewTable"
+import DragNdrop from "../feature/dragNDrop/dragNDrop"
+import PreviewTable from "../feature/dragNDrop/previewTable"
+import LeadImportNavButtons, {
+  LeadImportButtonProps,
+} from "@/components/lead/features/importLeads/leadImportNavButtons"
 
 interface DragNDropLayoutProps {
   supportedFileTypes?: string
@@ -10,6 +13,7 @@ interface DragNDropLayoutProps {
   setCsvData: React.Dispatch<React.SetStateAction<any[]>>
   setFiles: React.Dispatch<React.SetStateAction<File[]>>
   files: File[]
+  buttons: LeadImportButtonProps[]
 }
 
 const DragNDropLayout: React.FC<DragNDropLayoutProps> = ({
@@ -19,24 +23,29 @@ const DragNDropLayout: React.FC<DragNDropLayoutProps> = ({
   setCsvData,
   setFiles,
   files,
+  buttons,
 }) => {
   return (
-    <div>
-      {csvData.length === 0 ? (
-        <DragNdrop
-          supportedFileTypes={supportedFileTypes}
-          className={className}
-          csvData={csvData}
-          setCsvData={setCsvData}
-          setFiles={setFiles}
-          files={files}
-        />
-      ) : (
-        <section className="mt-4">
-          <PreviewTable data={csvData} />
-        </section>
-      )}
-    </div>
+    <>
+      {files.length > 0 && <LeadImportNavButtons buttons={buttons} />}
+
+      <div>
+        {csvData.length === 0 ? (
+          <DragNdrop
+            supportedFileTypes={supportedFileTypes}
+            className={className}
+            csvData={csvData}
+            setCsvData={setCsvData}
+            setFiles={setFiles}
+            files={files}
+          />
+        ) : (
+          <section className="mt-4">
+            <PreviewTable data={csvData} />
+          </section>
+        )}
+      </div>
+    </>
   )
 }
 

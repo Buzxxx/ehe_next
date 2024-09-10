@@ -5,8 +5,8 @@ import "@/app/drag-drop.css"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import PreviewTable from "@/components/import/ui/previewTable"
-import { parseFile } from "./importObject"
+import PreviewTable from "@/components/import/feature/dragNDrop/previewTable"
+import { parseFile } from "../importObject"
 
 interface DragNdropProps {
   supportedFileTypes?: string
@@ -26,30 +26,26 @@ const DragNdrop: React.FC<DragNdropProps> = ({
   files,
 }) => {
   // Handle file selection from input
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files
     if (selectedFiles && selectedFiles.length > 0) {
       const newFiles = Array.from(selectedFiles)
       setFiles((prevFiles) => [...prevFiles, ...newFiles])
-      handleFileParsing(newFiles[0])
+        const parsedFile = await parseFile(newFiles[0])
+        setCsvData(parsedFile)
     }
   }
 
   // Handle file drop
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     const droppedFiles = event.dataTransfer.files
     if (droppedFiles.length > 0) {
       const newFiles = Array.from(droppedFiles)
       setFiles((prevFiles) => [...prevFiles, ...newFiles])
-      handleFileParsing(newFiles[0])
+      const parsedFile = await parseFile(newFiles[0])
+      setCsvData(parsedFile)
     }
-  }
-
-  const handleFileParsing = (file: File) => {
-    parseFile(file)
-      .then((parsedData) => setCsvData(parsedData)) // Set parsed CSV data
-      .catch((error) => console.error(error))
   }
 
   // Handle file removal

@@ -6,21 +6,19 @@ import {
   SelectValue,
   SelectItem,
 } from "@/components/ui/select"
-import { MoveLeft, MoveRight } from "@/components/ui/icons"
 import { useState } from "react"
+import LeadImportNavButtons, { LeadImportButtonProps } from "./importLeads/leadImportNavButtons"
 
 interface HeaderMappingProps {
   headers: string[]
-  data: any[]
   onHeaderSelect: (mapping: { [key: string]: string }) => void
-  handlePrevStep: () => void
+  buttons: LeadImportButtonProps[]
 }
 
 export const HeaderMapping = ({
   headers,
-  data,
   onHeaderSelect,
-  handlePrevStep,
+  buttons
 }: HeaderMappingProps) => {
   const [selectedMapping, setSelectedMapping] = useState<{
     [key: string]: string
@@ -42,23 +40,7 @@ export const HeaderMapping = ({
 
   return (
     <>
-      <div className="flex gap-2 justify-between items-center">
-        <Button
-          onClick={handlePrevStep}
-          className="mt-4 text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
-        >
-          <MoveLeft className="mr-2" />
-          Prev Step
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          className="mt-4 px-4 py-2 bg-dashboard-primary hover:bg-dashboard-secondary text-white rounded"
-        >
-          Submit Mapping
-          <MoveRight className="ml-2" />
-        </Button>
-      </div>
-
+    <LeadImportNavButtons buttons={buttons}/>
       <div className="mt-6 grid md:grid-cols-2 gap-4">
         {headers.map((header) => (
           <div key={header} className="flex items-center justify-between">
@@ -83,29 +65,6 @@ export const HeaderMapping = ({
           </div>
         ))}
       </div>
-
-      {/* <Table className="w-full table-auto border-collapse mt-6">
-        <TableHeader>
-          <TableRow>
-            {headers.map((header) => (
-              <TableHead key={header} className="border p-2">
-                {header}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.slice(0, 20).map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {headers.map((header) => (
-                <TableCell key={header} className="border p-2">
-                  {row[header]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table> */}
     </>
   )
 }
