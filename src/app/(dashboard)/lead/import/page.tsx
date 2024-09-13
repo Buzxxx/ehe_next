@@ -1,8 +1,8 @@
 // /app/(dashboard)/lead/import/page.tsx
-"use client"
+"use client";
 
-import CsvImportLayout from "@/components/lead/layout/importLayouts/csvImportLayout"
+import CsvImportLayout from "@/components/lead/layout/importLayouts/csvImportLayout";
 
 export default function ImportLeads() {
-  return <CsvImportLayout />
+  return <CsvImportLayout />;
 }

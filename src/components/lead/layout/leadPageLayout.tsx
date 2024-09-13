@@ -5,7 +5,6 @@ import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline";
 import LeadProfileUpdateForm from "@/components/lead/features/leadPage/leadProfileUpdateForm";
 import LeadCallbackForm from "@/components/lead/features/leadPage/leadCallbackForm";
 import LeadMeetingForm from "@/components/lead/features/leadPage/leadMeetingForm";
-import { filter_string, URLPARAMETER } from "../features/filterObject";
 
 type LeadPageLayoutProps = {
   leadId: string;
@@ -15,13 +14,12 @@ const NAVITEMS = ["Timeline", "Profile", "Call back", "Meeting"];
 
 const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
   const [activeTab, setActiveTab] = useState(NAVITEMS[0]);
-  const urlParams: URLPARAMETER = {
+  const urlParams = {
     filter_by: { id: leadId },
   };
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        filter_string(urlParams);
       } catch (error) {
         console.error("Failed to fetch leads:", error);
       }

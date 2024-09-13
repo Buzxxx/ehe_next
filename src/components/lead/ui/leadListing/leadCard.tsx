@@ -12,14 +12,7 @@ import { Phone, ExternalLink } from "@/components/ui/icons";
 import Link from "next/link";
 import { formatDate } from "@/utility/formatDate";
 import { paths } from "../../urls";
-
-type Lead = {
-  created_dt: string;
-  status: number;
-  name: string;
-  id: number;
-  isSelected: boolean;
-};
+import { Lead } from "@/components/lead/features/leadObject";
 
 type LeadCardProps = {
   isSelected: boolean;
