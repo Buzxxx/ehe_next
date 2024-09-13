@@ -5,6 +5,7 @@ import { LeadCard } from "@/components/lead/ui/leadListing/leadCard";
 import {
   lead_listing_controller,
   LeadsResponse,
+  DefaultLeadsResponse,
 } from "@/components/lead/features/leadObject";
 
 interface LeadListProps {
@@ -13,7 +14,7 @@ interface LeadListProps {
 }
 
 const LeadList: React.FC<LeadListProps> = ({
-  leadsResponse,
+  leadsResponse = DefaultLeadsResponse,
   setLeadsResponse,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,11 +26,13 @@ const LeadList: React.FC<LeadListProps> = ({
         setIsLoading(true);
         const params = new URLSearchParams(window.location.search);
         const leadsList = await lead_listing_controller(params);
-        setLeadsResponse(leadsList);
+        if (leadsList) {
+          setLeadsResponse(leadsList);
+          setIsLoading(false);
+        }
       } catch (error: any) {
         console.error("error fetching leads from component: ", error);
       }
-      setIsLoading(false);
     };
 
     fetchLeads();
@@ -38,6 +41,8 @@ const LeadList: React.FC<LeadListProps> = ({
   function handleToggleLeadSelection(index: number) {
     console.log(index);
   }
+
+  const hasLeads = leadsResponse?.leads?.length > 0;
 
   return (
     <div className="w-full">
@@ -48,21 +53,19 @@ const LeadList: React.FC<LeadListProps> = ({
       ) : (
         <div className="pt-2">
           <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
-            {leadsResponse ? (
-              leadsResponse.leads.length ? (
-                leadsResponse.leads.map((lead, index) => (
-                  <LeadCard
-                    key={lead.id}
-                    idx={index}
-                    lead={lead}
-                    isSelected={lead.isSelected}
-                    onToggle={() => handleToggleLeadSelection(index)}
-                  />
-                ))
-              ) : (
-                <p>No leads available</p>
-              )
-            ) : null}
+            {hasLeads ? (
+              leadsResponse.leads.map((lead, index) => (
+                <LeadCard
+                  key={lead.id}
+                  idx={index}
+                  lead={lead}
+                  isSelected={lead.isSelected}
+                  onToggle={() => handleToggleLeadSelection(index)}
+                />
+              ))
+            ) : (
+              <p>No leads available</p>
+            )}
           </div>
         </div>
       )}

@@ -45,17 +45,19 @@ export async function lead_listing_controller(params: URLSearchParams) {
 }
 
 export function get_total_leads(LeadsResponse: LeadsResponse) {
-  return LeadsResponse.pagination.total_items | 0;
+  return LeadsResponse?.pagination?.total_items || 0;
 }
 
 export function get_selected_leads(LeadsResponse: LeadsResponse) {
-  return LeadsResponse.leads
-    .filter((lead) => lead.isSelected)
-    .map((lead) => lead.id);
+  return (
+    LeadsResponse?.leads
+      ?.filter((lead) => lead.isSelected)
+      .map((lead) => lead.id) || []
+  );
 }
 
 export function get_selected_leads_count(LeadsResponse: LeadsResponse) {
-  return get_selected_leads(LeadsResponse).length | 0;
+  return get_selected_leads(LeadsResponse).length || 0;
 }
 
 async function get_leads_from_server(queryParams: string) {
