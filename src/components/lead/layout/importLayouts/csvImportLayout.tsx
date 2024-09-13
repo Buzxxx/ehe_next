@@ -1,78 +1,83 @@
-import PreviewTable from "@/components/lead/ui/previewTable"
-import { useState, useEffect } from "react"
-import { handleFilesSelected } from "@/components/import/feature/importObject"
-import DragNDropLayout from "@/components/import/layout/dragNDropLayout"
-import ImportHeader from "../../ui/importHeader"
-import { Separator } from "@/components/ui/separator"
-import { Button } from "@/components/ui/button"
-import { CheckCircle, MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons"
-import { HeaderMapping } from "@/components/lead/layout/importLayouts/headerMapping"
-import { UploadLeadsFromCsv } from "@/components/lead/features/leadApiClient"
+import PreviewTable from "@/components/lead/ui/previewTable";
+import { useState, useEffect } from "react";
+import { handleFilesSelected } from "@/components/import/feature/importObject";
+import DragNDropLayout from "@/components/import/layout/dragNDropLayout";
+import ImportHeader from "../../ui/importHeader";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import {
+  CheckCircle,
+  MoveLeft,
+  MoveRight,
+  Trash2,
+} from "@/components/ui/icons";
+import { HeaderMapping } from "@/components/lead/layout/importLayouts/headerMapping";
+import { UploadLeadsFromCsv } from "@/components/lead/features/leadApiClient";
 
 const CsvImportLayout = () => {
-  const [files, setFiles] = useState<File[]>([])
-  const [csvData, setCsvData] = useState<any[]>([])
-  const [headers, setHeaders] = useState<string[]>([])
+  const [files, setFiles] = useState<File[]>([]);
+  const [csvData, setCsvData] = useState<any[]>([]);
+  const [headers, setHeaders] = useState<string[]>([]);
   const [headerMapping, setHeaderMapping] = useState<{
-    [key: string]: string
-  } | null>(null)
-  const [currentStep, setCurrentStep] = useState(0) // Track the current step
-  const [uploadProgress, setUploadProgress] = useState<number>(0)
-  const [isUploading, setIsUploading] = useState<boolean>(false)
+    [key: string]: string;
+  } | null>(null);
+  const [currentStep, setCurrentStep] = useState(0); // Track the current step
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const onFilesSelected = (selectedFiles: File[]) => {
-    handleFilesSelected(selectedFiles, setFiles, setCsvData)
-  }
+    handleFilesSelected(selectedFiles, setFiles, setCsvData);
+  };
 
   const handleHeaderSelect = (mapping: { [key: string]: string }) => {
-    setHeaderMapping(mapping)
-    handleNextStep() // Move to the next step after mapping headers
-  }
+    setHeaderMapping(mapping);
+    handleNextStep(); // Move to the next step after mapping headers
+  };
 
   const handleNextStep = () => {
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 2))
-  }
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 2));
+  };
 
   const handlePrevStep = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))
-  }
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
+  };
 
   const handleRemoveFile = () => {
     // Reset all state related to file selection and data
-    setFiles([])
-    setCsvData([])
-  }
+    setFiles([]);
+    setCsvData([]);
+  };
 
   useEffect(() => {
-    console.log("CSV Data:", csvData)
-    console.log("Header Mapping:", headerMapping)
+    console.log("CSV Data:", csvData);
+    console.log("Header Mapping:", headerMapping);
     if (csvData.length > 0) {
-      setHeaders(Object.keys(csvData[0])) // Assuming the first row contains header names
+      setHeaders(Object.keys(csvData[0])); // Assuming the first row contains header names
     }
-  }, [csvData])
+  }, [csvData, headerMapping]);
 
   // Function to handle CSV upload
   const handleUpload = async () => {
     if (!headerMapping) {
-      alert("Please map the headers before uploading.")
-      return
+      alert("Please map the headers before uploading.");
+      return;
     }
 
-    setIsUploading(true)
-    setUploadProgress(0)
+    setIsUploading(true);
+    setUploadProgress(0);
 
     // Simulate the upload process
     const interval = setInterval(() => {
       setUploadProgress((prevProgress) => {
         if (prevProgress >= 100) {
-          clearInterval(interval)
-          setIsUploading(false)
+          clearInterval(interval);
+          setIsUploading(false);
 
-          return 100
+          return 100;
         }
-        return prevProgress + 10 // Increment progress
-      })
-    }, 500) // Update every 500 milliseconds
+        return prevProgress + 10; // Increment progress
+      });
+    }, 500); // Update every 500 milliseconds
 
     // try {
     //   await UploadLeadsFromCsv({ data: csvData, headers: headerMapping })
@@ -83,7 +88,7 @@ const CsvImportLayout = () => {
     // } finally {
     //   setIsUploading(false)
     // }
-  }
+  };
 
   return (
     <div className="py-2">
@@ -172,7 +177,7 @@ const CsvImportLayout = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CsvImportLayout
+export default CsvImportLayout;

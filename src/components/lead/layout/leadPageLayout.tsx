@@ -1,6 +1,6 @@
 "use client";
 import LeadPageHeader from "../features/leadPage/leadPageHeader";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline";
 import LeadProfileUpdateForm from "@/components/lead/features/leadPage/leadProfileUpdateForm";
 import LeadCallbackForm from "@/components/lead/features/leadPage/leadCallbackForm";
@@ -14,6 +14,19 @@ const NAVITEMS = ["Timeline", "Profile", "Call back", "Meeting"];
 
 const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
   const [activeTab, setActiveTab] = useState(NAVITEMS[0]);
+  const urlParams = {
+    filter_by: { id: leadId },
+  };
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+      } catch (error) {
+        console.error("Failed to fetch leads:", error);
+      }
+    };
+
+    fetchLeads();
+  }, []);
 
   const renderActiveTabContent = () => {
     switch (activeTab) {
