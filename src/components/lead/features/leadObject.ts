@@ -1,6 +1,6 @@
 import apiClient from "@/apiServices/apiClient";
 import { apiPaths } from "../urls";
-import { encodeUrlParameters } from "./filterObject";
+import { encodeUrlParameters, get_access_token } from "./filterObject";
 import update_url from "@/utility/updateUrl";
 
 export interface Lead {
@@ -62,9 +62,13 @@ export function get_selected_leads_count(LeadsResponse: LeadsResponse) {
 
 async function get_leads_from_server(queryParams: string) {
   const urlPart = apiPaths.leadPage + queryParams;
+  const token = await get_access_token();
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response;
   } catch (error: any) {
