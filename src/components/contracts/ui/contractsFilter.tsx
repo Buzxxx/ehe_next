@@ -17,6 +17,7 @@ import React, { useEffect, useState } from "react"
 
 import styles from "@/app/contract/contract.module.css"
 import { Label } from "@/components/ui/label"
+import { stepInputFields } from "../features/contractsObject"
 
 type SelectedOptions = {
   [key: string]: string[]
@@ -46,86 +47,6 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({
   selectedOptions,
   handleSelectOption,
 }) => {
-  const stepInputFields = [
-    {
-      title: "capability",
-      description:
-        "Which of the following capabilities do you need the software to support?",
-      imagePath: "/contracts/images/capabilities.webp",
-      inputType: "multiSelect" as const,
-      choices: [
-        "Change Management",
-        "Configurable Approval Workflows",
-        "AI Built in",
-        "Version Comparison Redlining & Negotiation",
-        "Repository and Integration Capabilities",
-        "Custom Reporting and Queries",
-        "Obligation Tracking and Upload of Evidence",
-      ],
-    },
-    {
-      title: "organizational function",
-      description:
-        "Which of the following functions do you need the software to support?",
-      imagePath: "/contracts/images/capabilities.webp",
-      inputType: "multiSelect" as const,
-      choices: [
-        "Commercial",
-        "Legal",
-        "Other Dept",
-        "Procurement",
-        "Risk/Compliance",
-      ],
-    },
-    {
-      title: "contract type",
-      description:
-        "Which of the following contract types do you need the software to support?",
-      imagePath: "/contracts/images/capabilities.webp",
-      inputType: "multiSelect" as const,
-      choices: [
-        "Buy Side",
-        "Distribution",
-        "Employment",
-        "Other Type",
-        "Sell Side",
-      ],
-    },
-    {
-      title: "licensing model",
-      description:
-        "Which of the following integrations do you need the software to support?",
-      imagePath: "/contracts/images/capabilities.webp",
-      inputType: "multiSelect" as const,
-      choices: [
-        "Annual subscription fee",
-        "Annual subscription fee with maintenance",
-        "Monthly subscription fee",
-        "Perpetual",
-        "Volume-based",
-      ],
-    },
-    {
-      title: "integrations",
-      description: "Do you require use of the software on specific device(s)?",
-      imagePath: "/contracts/images/capabilities.webp",
-      inputType: "multiSelect" as const,
-      choices: [
-        "Application Integration (API)",
-        "E-mail Client",
-        "eSignatures",
-        "Financials and Supply Chain Management (FSCM)",
-      ],
-    },
-    {
-      title: "regions",
-      description: "Do you require use of the software on specific device(s)?",
-      imagePath: "/contracts/images/capabilities.webp",
-      inputType: "multiSelect" as const,
-      choices: ["APAC", "EMEA", "LatAm", "North America"],
-    },
-  ]
-
   // State to manage selected choices based on step titles
   const [selectedChoices, setSelectedChoices] =
     useState<SelectedOptions>(selectedOptions)
@@ -194,8 +115,7 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({
                       variant="outline"
                       role="combobox"
                       aria-expanded={!!openPopover[step.title]}
-                      className={`w-full justify-between flex items-center text-sm ${ selectedChoices[step.title]?.length
-                        ? styles.textPrimary : styles.textGray}`}
+                      className={`w-full justify-between flex items-center text-sm ${selectedChoices[step.title]?.length ? styles.textPrimary : styles.textGray}`}
                     >
                       {selectedChoices[step.title]?.length
                         ? `${

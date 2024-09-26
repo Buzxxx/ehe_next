@@ -95,7 +95,7 @@ export function MultiSelectCombobox({
       />
       <div className="flex-1">
         <div className="mb-3">
-          <h1 className="md:text-xl text-lg font-medium">{title}</h1>
+          <h1 className="md:text-xl text-lg font-medium capitalize">{title}</h1>
           <p className="md:text-sm text-xs">{description}</p>
         </div>
 

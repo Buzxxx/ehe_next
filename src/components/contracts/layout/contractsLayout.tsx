@@ -12,12 +12,10 @@ export interface SelectedOptions {
   [key: string]: string[]
 }
 
-// contractsLayout.tsx
-
 const ContractsLayout = () => {
   const ContractSteps = ["Step 1", "Step 2", "Results"]
 
-  const [activeTab, setActiveTab] = React.useState(2) // Initial active tab
+  const [activeTab, setActiveTab] = React.useState(0) // Initial active tab
   const [selectedOptions, setSelectedOptions] = React.useState<SelectedOptions>(
     {
       capability: [],

@@ -10,15 +10,14 @@ import { SelectedOptions } from "../layout/contractsLayout"
 // resultsTab.tsx
 
 interface ResultsTabProps {
-  selectedOptions: SelectedOptions;
+  selectedOptions: SelectedOptions
   handleSelectOption: (
     optionTitle: string | number,
     selectedItems: string[]
-  ) => void;
-  selectedVendors: string[]; // Selected vendors state
-  handleSelectVendor: (vendorId: string, isSelected: boolean) => void; // Vendor selection handler
+  ) => void
+  selectedVendors: string[]
+  handleSelectVendor: (vendorId: string, isSelected: boolean) => void
 }
-
 const ResultsTab: React.FC<ResultsTabProps> = ({
   selectedOptions,
   handleSelectOption,
@@ -26,8 +25,8 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   handleSelectVendor,
 }) => {
   return (
-    <div className="flex gap-4">
-      <div className="md:w-1/4">
+    <div className="flex min-h-screen gap-8">
+      <div className="md:w-1/4 max-h-screen sticky top-20 ">
         <h2 className="text-2xl font-semibold mb-2">Search Results</h2>
         <ContractsFilter
           selectedOptions={selectedOptions}
@@ -52,8 +51,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ResultsTab;
-
+export default ResultsTab
