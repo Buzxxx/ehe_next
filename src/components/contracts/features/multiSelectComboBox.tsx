@@ -1,10 +1,7 @@
-// /components/contracts/ui/multiSelectComboBox.tsx
-
 "use client"
 
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,6 +20,8 @@ import {
 import SelectionDisplayBox from "../ui/selectionDisplayBox"
 import Image from "next/image"
 
+import styles from "@/app/contract/contract.module.css"
+
 interface Framework {
   value: string
   label: string
@@ -32,31 +31,44 @@ interface MultiSelectComboboxProps {
   title: string
   description: string
   imagePath: string
-  options: string[]
+  inputType?: "singleSelect" | "multiSelect" | string
+  choices: string[]
+  selectedItems: string[]
+  onSelectItems: (selectedItems: string[]) => void
 }
 
 export function MultiSelectCombobox({
   title,
   description,
   imagePath,
-  options,
+  inputType,
+  choices,
+  selectedItems,
+  onSelectItems,
 }: MultiSelectComboboxProps) {
   const [open, setOpen] = React.useState(false)
-  const [selectedItems, setSelectedItems] = React.useState<string[]>([])
 
   /**
-   * Handles the selection of an item. If the item is already selected, removes it from the selected items array. Otherwise, adds it to the selected items array.
+   * Handles the selection of an item. If the item is already selected, removes it from the selected items array.
+   * If inputType is singleSelect, only one item can be selected at a time.
    * @param item The item to select or deselect.
    */
   const handleSelectItem = React.useCallback(
     (item: string) => {
-      const updatedItems = selectedItems.includes(item)
-        ? selectedItems.filter((selectedItem) => selectedItem !== item)
-        : [...selectedItems, item]
+      let updatedItems = []
 
-      setSelectedItems(updatedItems)
+      if (inputType === "singleSelect") {
+        updatedItems = [item] // Only keep the current item for singleSelect
+        setOpen(false) // Close the dropdown after selecting
+      } else {
+        updatedItems = selectedItems.includes(item)
+          ? selectedItems.filter((selectedItem) => selectedItem !== item)
+          : [...selectedItems, item]
+      }
+
+      onSelectItems(updatedItems)
     },
-    [selectedItems, setSelectedItems]
+    [inputType, selectedItems, onSelectItems]
   )
 
   /**
@@ -65,33 +77,38 @@ export function MultiSelectCombobox({
    */
   const handleRemoveItem = React.useCallback(
     (item: string): void => {
-      setSelectedItems((prevItems) => prevItems.filter((i) => i !== item))
+      onSelectItems(selectedItems.filter((i) => i !== item))
     },
-    [selectedItems, setSelectedItems]
+    [selectedItems, onSelectItems]
   )
 
   return (
-    <div className="flex gap-6 h-60">
+    <div
+      className={`flex gap-6 h-60 rounded-xl shadow-lg p-4 ${styles.vendorResultDisplayCard} border border-slate-200`}
+    >
       <Image
         src={imagePath}
         alt="image"
-        width={300}
-        height={200}
-        className="object-cover"
+        width={250}
+        height={250}
+        className="object-cover aspect-square rounded-l-lg"
       />
       <div className="flex-1">
-        <div className="mb-4">
-          <h1 className="md:text-3xl text-xl font-medium">{title}</h1>
+        <div className="mb-3">
+          <h1 className="md:text-xl text-lg font-medium">{title}</h1>
           <p className="md:text-sm text-xs">{description}</p>
         </div>
 
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild className="rounded-none rounded-t-md">
+          <PopoverTrigger
+            asChild
+            className="rounded-none rounded-t-md  border-slate-300"
+          >
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-full justify-between flex items-center"
+              className={`w-full justify-between flex items-center ${styles.textGray}`}
             >
               {selectedItems.length
                 ? `${selectedItems.length} item(s) selected`
@@ -101,27 +118,30 @@ export function MultiSelectCombobox({
           </PopoverTrigger>
           <PopoverContent className="w-[500px] ml-auto p-0">
             <Command>
-              <CommandInput placeholder="Search framework..." />
+              {choices.length > 5 && (
+                <CommandInput placeholder="Search framework..." />
+              )}
+
               <CommandList>
-                <CommandEmpty>No framework found.</CommandEmpty>
+                <CommandEmpty>Nothing found.</CommandEmpty>
                 <CommandGroup>
-                  {options.map((option) => (
+                  {choices.map((choice) => (
                     <CommandItem
-                      key={option}
-                      value={option}
+                      key={choice}
+                      value={choice}
                       onSelect={() => {
-                        handleSelectItem(option)
+                        handleSelectItem(choice)
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          selectedItems.includes(option)
+                          selectedItems.includes(choice)
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {option}
+                      {choice}
                     </CommandItem>
                   ))}
                 </CommandGroup>

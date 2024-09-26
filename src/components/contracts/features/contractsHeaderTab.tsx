@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
-import { ContractSteps } from "../lib/contractSteps"
+import styles from "@/app/contract/contract.module.css"
 
 const ContractsHeaderTab = ({
   activeTab,
@@ -8,25 +8,36 @@ const ContractsHeaderTab = ({
   activeTab: number
   setActiveTab: Dispatch<SetStateAction<number>>
 }) => {
+  const ContractSteps = ["Step 1", "Step 2", "Results"]
+
   return (
-    <div className="flex justify-between items-center gap-2">
+    <div
+      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto ${styles.contractsHeaderTab}`}
+    >
       {ContractSteps.map((step, index) => (
-        <div
-          key={index}
-          className={`cursor-pointer p-4 flex-1 text-center flex gap-2 items-center justify-center bg-[#D9D9D9] text-sm font-medium ${
-            activeTab === index ? "text-[#4C49E9]" : " text-gray-600"
-          }`}
-          onClick={() => setActiveTab(index)}
-        >
-          <span
-            className={`${
-              activeTab === index ? "bg-[#4C49E9]" : "bg-gray-600"
-            } rounded-full h-5 w-5 flex items-center justify-center text-white text-sm `}
+        <React.Fragment key={index}>
+          <div
+            className={`cursor-pointer py-4 p-2 text-center flex gap-1 items-center justify-center  flex-1 font-medium ${
+              activeTab === index
+                ? styles.textSecondary
+                : 'text-gray-500'
+            }`}
+            onClick={() => setActiveTab(index)}
           >
-            {index + 1}
-          </span>
-          {step.tab}
-        </div>
+            <span
+              className={`${
+                activeTab === index ? styles.bgSecondary +  ' ' + styles.textWhitePrimary : styles.bgTertiary + ' text-gray-300' 
+              } 
+              } rounded-full p-2 h-5 w-5 flex items-center justify-center  text-xs `}
+            >
+              {index + 1}
+            </span>
+            {step}
+          </div>
+          {index !== ContractSteps.length - 1 && (
+            <div className="w-auto flex-1 h-px bg-gray-300"></div>
+          )}
+        </React.Fragment>
       ))}
     </div>
   )

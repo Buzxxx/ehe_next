@@ -1,4 +1,6 @@
-import React from "react"
+/**
+ * @path src/app/contract/page.tsx
+ */
 
 import ContractsLayout from "@/components/contracts/layout/contractsLayout"
 
