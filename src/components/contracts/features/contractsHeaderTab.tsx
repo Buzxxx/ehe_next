@@ -12,12 +12,12 @@ const ContractsHeaderTab = ({
 
   return (
     <div
-      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto ${styles.contractsHeaderTab}`}
+      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto w-full max-md:px-4`}
     >
       {ContractSteps.map((step, index) => (
         <React.Fragment key={index}>
           <div
-            className={`cursor-pointer py-4 p-2 text-center flex gap-1 items-center justify-center  flex-1 font-medium ${
+            className={`cursor-pointer py-4 p-2 text-center flex gap-1 items-center justify-center  flex-1 font-medium text-xs md:text-sm ${
               activeTab === index
                 ? styles.textSecondary
                 : 'text-gray-500'

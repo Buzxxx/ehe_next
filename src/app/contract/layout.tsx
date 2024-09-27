@@ -15,7 +15,7 @@ export default function ContractLayout({
   modal: React.ReactNode
 }) {
   return (
-    <div className={`bg-gray-100 ${styles.contractsLayout}`}>
+    <div className={`bg-gray-100 ${styles.contractsLayout} overflow-hidden w-full`}>
       <ContractsNavbar />
       <Suspense fallback={<Loading />}>
         {modal}
