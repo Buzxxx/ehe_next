@@ -42,15 +42,16 @@ declare interface customProps {
   renderSkeleton?: (field: any) => React.ReactNode
   required?: boolean
   rows?: number
+  onChange?: (args: any) => void
 }
 
 const RenderField = ({ field, props }: { field: any; props: customProps }) => {
-    const [currentTime, setCurrentTime] = useState<Date | null>(null)
+  const [currentTime, setCurrentTime] = useState<Date | null>(null)
 
-    useEffect(() => {
-      const formattedTime = new Date()
-      setCurrentTime(formattedTime)
-    }, [])
+  useEffect(() => {
+    const formattedTime = new Date()
+    setCurrentTime(formattedTime)
+  }, [])
 
   const {
     fieldType,
@@ -61,7 +62,9 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
     dateFormat,
     renderSkeleton,
     rows,
+    onChange,
   } = props
+
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -122,6 +125,7 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
 
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null
+
     case FormFieldType.SELECT:
       return (
         <FormControl>
@@ -150,9 +154,14 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
             placeholder={placeholder}
             className="shad-textArea"
             rows={rows}
+            onChange={(e) => {
+              field.onChange(e) // Update form state with react-hook-form
+              if (onChange) onChange(e) // Call the custom onChange handler
+            }}
           />
         </FormControl>
       )
+
     case FormFieldType.CHECKBOX:
       return (
         <FormControl>
@@ -168,9 +177,10 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
           </div>
         </FormControl>
       )
+
     default:
+      return <Input type="text" placeholder="John Doe" {...field} />
   }
-  return <Input type="text" placeholder="John Doe" {...field} />
 }
 
 const CustomFormField = (props: customProps) => {

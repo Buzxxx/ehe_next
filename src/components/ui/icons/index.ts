@@ -39,7 +39,12 @@ import {
   Edit,
   Dot,
   Plus,
-  Trash2,CheckCircle
+  Trash2,
+  CheckCircle,
+  BadgeCheck,
+  Ellipsis,
+  MapPin,
+  ReceiptText,
 } from "lucide-react"
 
 export {
@@ -82,7 +87,11 @@ export {
   Contact,
   Pencil,
   Edit,
-  Dot, 
+  Dot,
   Plus,
-  Trash2
+  Trash2,
+  BadgeCheck,
+  Ellipsis,
+  MapPin,
+  ReceiptText,
 }
