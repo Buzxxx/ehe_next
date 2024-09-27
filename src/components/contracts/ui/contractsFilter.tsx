@@ -92,7 +92,7 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({
   console.log(selectedOptions)
 
   return (
-    <div className={`w-full p-4 ${styles.bgPrimary} rounded-xl shadow-lg`}>
+    <div className={`w-full p-4 ${styles.bgPrimary} rounded-xl shadow-lg `}>
       <div>
         {stepInputFields.map((step) => (
           <div className="mb-6" key={step.title}>

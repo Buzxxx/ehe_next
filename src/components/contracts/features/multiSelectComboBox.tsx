@@ -84,17 +84,30 @@ export function MultiSelectCombobox({
 
   return (
     <div
-      className={`flex gap-6 h-60 rounded-xl shadow-lg p-4 ${styles.vendorResultDisplayCard} border border-slate-200`}
+      className={`flex md:flex-row flex-col md:gap-6 gap-2  rounded-xl shadow-lg p-4 ${styles.vendorResultDisplayCard} border border-slate-200`}
     >
+      <div className="flex gap-4 items-start justify-between md:hidden">
+        <Image
+          src={imagePath}
+          alt="image"
+          width={250}
+          height={250}
+          className="object-cover aspect-square rounded-l-lg max-md:w-20 max-md:h-20"
+        />
+        <div className="mb-3">
+          <h1 className="md:text-xl text-lg font-medium capitalize">{title}</h1>
+          <p className="md:text-sm text-xs">{description}</p>
+        </div>
+      </div>
       <Image
         src={imagePath}
         alt="image"
         width={250}
         height={250}
-        className="object-cover aspect-square rounded-l-lg"
+        className="object-cover aspect-square rounded-l-lg hidden md:block md:max-h-48"
       />
-      <div className="flex-1">
-        <div className="mb-3">
+      <div className="flex-1 h-fit">
+        <div className="mb-3 md:block hidden">
           <h1 className="md:text-xl text-lg font-medium capitalize">{title}</h1>
           <p className="md:text-sm text-xs">{description}</p>
         </div>

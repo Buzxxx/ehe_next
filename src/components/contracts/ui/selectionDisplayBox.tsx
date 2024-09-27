@@ -16,8 +16,8 @@ const SelectionDisplayBox: React.FC<SelectionDisplayBoxProps> = ({
   onRemoveItem,
 }) => {
   return (
-    <div className="border border-slate-300 mt-2 py-2 px-4 min-h-20 overflow-scroll ">
-      <div className={`flex gap-2 flex-wrap h-20 `}>
+    <div className="border border-slate-300 mt-2 py-2 px-4  overflow-scroll ">
+      <div className={`flex gap-2 flex-wrap md:h-16 h-10 `}>
         {selectedItems.length > 0 ? (
           selectedItems.map((item, index) => (
             <Badge

@@ -37,7 +37,7 @@ const VendorResultDisplayCard = ({
   return (
     <div
       onClick={() => openVendorModal("1")}
-      className={`flex p-6 gap-3 flex-col rounded-2xl drop-shadow-lg shadow-lg
+      className={`flex md:p-6 px-2 py-4 gap-3 flex-col rounded-2xl drop-shadow-lg shadow-lg
          cursor-pointer ${styles.vendorResultDisplayCard}`}
     >
       <div className="flex items-center justify-between gap-4">
@@ -85,12 +85,12 @@ const VendorResultDisplayCard = ({
         matters and risk. It is a Delaware C Corporation, and is privately held
         by Ontario Teachers’ Pension Plan, headquartered in Toronto, ON.
       </p>
-      <div className="flex flex-col gap-2 rounded-lg bg-gray-400/10 p-4 ">
-        <div className={` flex justify-between `}>
-          <div className="flex items-center gap-6 text-sm font-semibold">
+      <div className="flex rounded-lg bg-gray-400/10 md:p-4 ">
+        <div className={` flex justify-between w-full`}>
+          <div className="flex items-center md:gap-6 gap-2 md:text-sm text-xs font-semibold">
             <div className="flex items-center gap-1">
               <MapPin className={`${styles.textGray} stroke-2`} size={20} />
-              <p className={styles.textPrimary}>Mumbai, Maharastra, India</p>
+              <p className={styles.textPrimary}>Mumbai, </p>
             </div>
             <div className="flex items-center gap-1">
               <ReceiptText
@@ -103,7 +103,7 @@ const VendorResultDisplayCard = ({
           <div className="flex items-center gap-2">
             <Badge
               variant="default"
-              className={`rounded-md bg-green-600 flex gap-1 py-1`}
+              className={`rounded-md bg-green-600 flex gap-1 py-1 max-md:text-xs`}
             >
               <BadgeCheck size={16} />
               Verified

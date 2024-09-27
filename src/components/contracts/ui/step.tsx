@@ -25,7 +25,7 @@ const Step = ({
   }
 
   return (
-    <div className="flex flex-col gap-12 md:w-3/4 mx-auto">
+    <div className="flex flex-col gap-12 md:w-3/4 mx-auto max-md:px-4">
       {inputFields.map((inputField) => (
         <MultiSelectCombobox
           key={inputField.title}

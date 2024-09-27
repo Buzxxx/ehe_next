@@ -14,7 +14,7 @@ export interface SelectedOptions {
 
 const ContractsLayout = () => {
   const ContractSteps = ["Step 1", "Step 2", "Results"]
-
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
   const [activeTab, setActiveTab] = React.useState(0) // Initial active tab
   const [selectedOptions, setSelectedOptions] = React.useState<SelectedOptions>(
     {
@@ -73,7 +73,7 @@ const ContractsLayout = () => {
 
   return (
     <>
-      <div className="md:p-16 flex flex-col gap-12 min-h-screen">
+      <div className="md:p-16 flex flex-col md:gap-12  min-h-screen overflow-hidden w-full">
         <ContractsHeaderTab activeTab={activeTab} setActiveTab={setActiveTab} />
         {activeTab !== totalSteps - 1 ? (
           <Step onSelectItems={handleSelectOption} step={activeTab} />
@@ -83,15 +83,23 @@ const ContractsLayout = () => {
             handleSelectOption={handleSelectOption}
             selectedVendors={selectedVendors} // Pass selected vendors
             handleSelectVendor={handleSelectVendor} // Pass vendor selection handler
+            isDrawerOpen={isDrawerOpen} // Pass drawer state
+            setIsDrawerOpen={setIsDrawerOpen} // Pass drawer state setter
           />
         )}
       </div>
       {/* Next/Show Results Button */}
       <div
-        className={`fixed bottom-0 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full`}
+        className={`fixed bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full`}
       >
         {activeTab === totalSteps - 1 ? (
           <div className={`justify-center gap-4 flex`}>
+            <Button
+              className={`${styles.btnSecondary} h-fit md:hidden`}
+              onClick={() => setIsDrawerOpen(true)}
+            >
+              Filter
+            </Button>
             <Button className={`${styles.btnSecondary} h-fit `}>Reset</Button>
             <Button
               className={`${styles.btnSecondary} h-fit `}
