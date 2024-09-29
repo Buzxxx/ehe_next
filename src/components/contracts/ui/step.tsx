@@ -19,7 +19,6 @@ const Step = ({
 
   const inputFields = getInputFieldsForStep(step)
   const handleSelectItems = (title: string, selectedItems: string[]) => {
-    console.log("hello")
     setSelectedItems((prev) => ({ ...prev, [title]: selectedItems }))
     onSelectItems(title.toLowerCase(), selectedItems)
   }

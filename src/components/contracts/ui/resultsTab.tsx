@@ -2,7 +2,7 @@
  * @path src/components/contracts/ui/resulsTab.tsx
  */
 
-import React, { useState } from "react"
+import React from "react"
 import VendorResultDisplayCard from "./vendorResultDisplayCard"
 import ContractsFilter from "./contractsFilter"
 import { SelectedOptions } from "../layout/contractsLayout"
@@ -34,9 +34,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   return (
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-        {/* <DrawerTrigger className="ml-8 md:hidden">
-          <Filter color="gray" />
-        </DrawerTrigger> */}
+      
         <DrawerContent className="w-screen top-0 mt-2 md:hidden h-full">
           <div className="flex justify-between items-center px-4">
             <h2 className="text-lg font-semibold">Filters</h2>

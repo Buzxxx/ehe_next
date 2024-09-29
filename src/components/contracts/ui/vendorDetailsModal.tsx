@@ -16,7 +16,7 @@ const VendorDetailsModal = () => {
 
   return (
     <>
-      <div className="flex gap-4 items-center mb-8">
+      <div className="flex md:gap-4 items-center mb-8 max-md:px-4">
         <Image
           className="inline mr-4 rounded-full p-2 border border-slate-200 h-16 w-16 object-contain"
           src={"/contracts/images/eraclm-logo.png"}
@@ -24,12 +24,12 @@ const VendorDetailsModal = () => {
           width={400}
           height={400}
         />
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="text-left flex-1">
+          <div className="flex md:items-center gap-2 md:flex-row flex-col">
             <h2 className="text-4xl inline-block font-semibold">MitraTech</h2>
             <Link
               href={"/"}
-              className="bg-gray-300 text-blue-500 rounded-md text-sm px-2 py-px"
+              className="bg-gray-300 text-blue-500 rounded-md text-sm px-2 py-px w-fit"
             >
               https://miratech.com
             </Link>
@@ -41,7 +41,7 @@ const VendorDetailsModal = () => {
           </div>
         </div>
       </div>
-      <div className="px-24">
+      <div className="md:px-24 px-4">
         <GeneralInfo />
       </div>
     </>

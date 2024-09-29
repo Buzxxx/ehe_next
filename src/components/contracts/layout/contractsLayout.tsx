@@ -1,4 +1,7 @@
-// ContractsLayout.tsx
+/**
+ * @path src/components/contracts/layout/contractsLayout.tsx
+ */
+
 "use client"
 import React from "react"
 import ContractsHeaderTab from "../features/contractsHeaderTab"
@@ -7,27 +10,23 @@ import ResultsTab from "../ui/resultsTab"
 
 import styles from "@/app/contract/contract.module.css"
 import { Button } from "@/components/ui/button"
+import { isSelectedOptionsEmpty } from "../features/contractsObject"
+import Modal from "@/components/ui/modal"
+import VendorCompareTable from "../ui/vendorCompareTable"
+import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 
 export interface SelectedOptions {
   [key: string]: string[]
 }
 
 const ContractsLayout = () => {
-  const ContractSteps = ["Step 1", "Step 2", "Results"]
+  const [activeStep, setActiveStep] = React.useState(2)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-  const [activeTab, setActiveTab] = React.useState(0) // Initial active tab
-  const [selectedOptions, setSelectedOptions] = React.useState<SelectedOptions>(
-    {
-      capability: [],
-      organizational_function: [],
-      contract_type: [],
-      licensing_model: [],
-      integrations: [],
-      regions: [],
-    }
-  )
-
-  const [selectedVendors, setSelectedVendors] = React.useState<string[]>([]) // State for selected vendors
+  const [selectedOptions, setSelectedOptions] = React.useState<
+    Record<string, string[]>
+  >({})
+  const [selectedVendors, setSelectedVendors] = React.useState<string[]>([])
+  const [showComparision, setShowComparison] = React.useState(false)
 
   const handleSelectOption = (
     optionTitle: string | number,
@@ -38,61 +37,50 @@ const ContractsLayout = () => {
       [optionTitle]: selectedItems,
     }))
   }
-
   const handleSelectVendor = (vendorId: string, isSelected: boolean) => {
-    setSelectedVendors(
-      (prevSelected) =>
-        isSelected
-          ? [...prevSelected, vendorId] // Add vendor if selected
-          : prevSelected.filter((id) => id !== vendorId) // Remove vendor if unselected
+    setSelectedVendors((prevSelected) =>
+      isSelected
+        ? [...prevSelected, vendorId]
+        : prevSelected.filter((id) => id !== vendorId)
     )
   }
 
-  const totalSteps = ContractSteps.length
+  const totalSteps = 3
 
   const handleNext = () => {
-    if (activeTab < totalSteps - 1) {
-      setActiveTab((prev) => prev + 1)
-    } else {
-      const filteredSelectedOptions = Object.fromEntries(
-        Object.entries(selectedOptions).filter(
-          ([key, value]) => value.length > 0
-        )
-      )
-
-      console.log("Final Selected Options:", filteredSelectedOptions)
-    }
+    setActiveStep((prev) => (prev >= totalSteps - 1 ? prev : prev + 1))
   }
 
-  // Utility function to check if all selectedOptions are empty
-  const isSelectedOptionsEmpty = () => {
-    return Object.values(selectedOptions).every(
-      (options) => options.length === 0
-    )
+  const handleReset = () => {
+    setActiveStep(0)
+    setSelectedOptions({})
   }
 
   return (
     <>
       <div className="md:p-16 flex flex-col md:gap-12  min-h-screen overflow-hidden w-full">
-        <ContractsHeaderTab activeTab={activeTab} setActiveTab={setActiveTab} />
-        {activeTab !== totalSteps - 1 ? (
-          <Step onSelectItems={handleSelectOption} step={activeTab} />
+        <ContractsHeaderTab
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+        />
+        {activeStep !== totalSteps - 1 ? (
+          <Step onSelectItems={handleSelectOption} step={activeStep} />
         ) : (
           <ResultsTab
             selectedOptions={selectedOptions}
             handleSelectOption={handleSelectOption}
-            selectedVendors={selectedVendors} // Pass selected vendors
-            handleSelectVendor={handleSelectVendor} // Pass vendor selection handler
-            isDrawerOpen={isDrawerOpen} // Pass drawer state
-            setIsDrawerOpen={setIsDrawerOpen} // Pass drawer state setter
+            selectedVendors={selectedVendors}
+            handleSelectVendor={handleSelectVendor}
+            isDrawerOpen={isDrawerOpen}
+            setIsDrawerOpen={setIsDrawerOpen}
           />
         )}
       </div>
       {/* Next/Show Results Button */}
       <div
-        className={`fixed bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full`}
+        className={`fixed bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 md:px-16 px-4 border w-full`}
       >
-        {activeTab === totalSteps - 1 ? (
+        {activeStep === totalSteps - 1 ? (
           <div className={`justify-center gap-4 flex`}>
             <Button
               className={`${styles.btnSecondary} h-fit md:hidden`}
@@ -100,29 +88,52 @@ const ContractsLayout = () => {
             >
               Filter
             </Button>
-            <Button className={`${styles.btnSecondary} h-fit `}>Reset</Button>
             <Button
               className={`${styles.btnSecondary} h-fit `}
-              disabled={selectedVendors.length < 2} // Disable if less than 2 vendors
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
+            <Button
+              className={`${styles.btnSecondary} h-fit `}
+              disabled={selectedVendors.length < 2}
+              onClick={() => setShowComparison((prev) => !prev)}
             >
               Compare
             </Button>
           </div>
         ) : (
           <div className={`justify-center gap-4 flex`}>
-            <Button className={`${styles.btnSecondary} h-fit `}>Reset</Button>
+            <Button
+              className={`${styles.btnSecondary} h-fit `}
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
             <Button
               onClick={handleNext}
               className={`${styles.btnSecondary}  px-4 h-fit `}
               disabled={
-                isSelectedOptionsEmpty() && activeTab === totalSteps - 2
+                isSelectedOptionsEmpty(selectedOptions) &&
+                activeStep === totalSteps - 2
               }
             >
-              {activeTab === totalSteps - 2 ? "Show Results" : "Next"}
+              {activeStep === totalSteps - 2 ? "Show Results" : "Next"}
             </Button>
           </div>
         )}
       </div>
+
+      <Dialog open={showComparision} defaultOpen={false}>
+        <DialogOverlay className="">
+          <DialogContent className="h-[400] overflow-scroll transition-all">
+            <VendorCompareTable
+              selectedVendors={selectedVendors}
+              selectedOptions={selectedOptions}
+            />
+          </DialogContent>
+        </DialogOverlay>
+      </Dialog>
     </>
   )
 }
