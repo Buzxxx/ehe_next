@@ -124,9 +124,12 @@ const ContractsLayout = () => {
         )}
       </div>
 
-      <Dialog open={showComparision} defaultOpen={false}>
+      <Dialog
+        open={showComparision && !isSelectedOptionsEmpty(selectedOptions)}
+        defaultOpen={false} onOpenChange={() => setShowComparison(false)}
+      >
         <DialogOverlay className="">
-          <DialogContent className="h-[400] overflow-scroll transition-all">
+          <DialogContent className="h-[400] overflow-scroll transition-all px-2">
             <VendorCompareTable
               selectedVendors={selectedVendors}
               selectedOptions={selectedOptions}
