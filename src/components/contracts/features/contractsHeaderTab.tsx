@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
-import styles from "@/app/contract/contract.module.css"
+import styles from "@/app/contracts/contract.module.css"
 
 const ContractsHeaderTab = ({
   activeTab,
@@ -12,7 +12,7 @@ const ContractsHeaderTab = ({
 
   return (
     <div
-      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto w-full max-md:px-4`}
+      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto w-full max-md:px-4 mt-12`}
     >
       {ContractSteps.map((step, index) => (
         <React.Fragment key={index}>

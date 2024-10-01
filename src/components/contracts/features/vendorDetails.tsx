@@ -1,11 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
+import { GeneralInfo } from "../ui/vendorInfo"
 
-import styles from "@/app/contract/contract.module.css"
-import VendorTabs from "./vendorTabs"
-import { GeneralInfo } from "./vendorInfo"
+import styles from "@/app/contracts/contract.module.css"
 
-const VendorDetailsModal = () => {
+const VendorDetails = () => {
   const tabs = [
     {
       tabName: "General Information",
@@ -48,4 +47,4 @@ const VendorDetailsModal = () => {
   )
 }
 
-export default VendorDetailsModal
+export default VendorDetails

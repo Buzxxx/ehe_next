@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import styles from "@/app/contract/contract.module.css"
+import styles from "@/app/contracts/contract.module.css"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -51,8 +50,6 @@ export const GeneralInfo = () => {
   ]
 
   const [showAll, setShowAll] = useState(false) // State to toggle full gallery
-
-  const visibleImages = showAll ? images : images.slice(0, 3)
 
   return (
     <div className="flex gap-4">
