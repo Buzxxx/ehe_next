@@ -28,7 +28,7 @@ const ContractsLayout = () => {
     >
       <ContractsNavbar />
       <div className=" flex flex-col md:gap-12  min-h-screen overflow-hidden w-full">
-        <ContractsHeaderTab activeTab={activeTab} setActiveTab={setActiveTab} />
+        <ContractsHeaderTab activeStep={activeTab} setActiveStep={setActiveTab} />
         <ContractBody
           activeTab={activeTab}
           setActiveTab={setActiveTab}
