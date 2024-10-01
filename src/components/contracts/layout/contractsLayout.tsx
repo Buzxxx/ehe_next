@@ -2,6 +2,10 @@
  * @path src/components/contracts/layout/contractsLayout.tsx
  */
 
+/**
+ * @path src/components/contracts/layout/contractsLayout.tsx
+ */
+
 "use client"
 import React from "react"
 import ContractsHeaderTab from "../features/contractsHeaderTab"

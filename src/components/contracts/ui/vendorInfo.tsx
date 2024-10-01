@@ -52,7 +52,7 @@ export const GeneralInfo = () => {
   const [showAll, setShowAll] = useState(false) // State to toggle full gallery
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 md:flex-row flex-col">
       <div className="md:w-2/3 flex flex-col gap-8">
         <div>
           <h4 className={`${styles.textPrimary} font-semibold text-lg mb-2`}>
