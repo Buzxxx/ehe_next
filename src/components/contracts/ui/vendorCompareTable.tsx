@@ -34,7 +34,7 @@ const VendorCompareTable = ({
       <div className="flex gap-4">
         <div className="w-1/3 font-bold"></div>
         {selectedVendorDetails.map((vendor) => (
-          <div key={vendor.id} className="w-1/4 font-bold text-center">
+          <div key={vendor.id} className="w-1/4 font-bold text-xs text-center">
             {vendor.vendorName}
           </div>
         ))}

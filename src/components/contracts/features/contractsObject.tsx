@@ -22,7 +22,7 @@ export interface Vendor {
 export const vendors = [
   {
     id: "1",
-    vendorName: "Luminance",
+    vendorName: "Basware",
     email: "contact@luminance.com",
     website: "https://www.luminance.com",
     regions: ["APAC", "North America"],
@@ -38,7 +38,7 @@ export const vendors = [
   },
   {
     id: "2",
-    vendorName: "Brightify",
+    vendorName: "Bravo Solution Now Jagger",
     email: "info@brightify.com",
     website: "https://www.brightify.com",
     regions: ["EMEA", "LatAm"],
@@ -56,7 +56,7 @@ export const vendors = [
   },
   {
     id: "3",
-    vendorName: "ShineTech",
+    vendorName: "Cobblestone Systems",
     email: "support@shinetech.com",
     website: "https://www.shinetech.com",
     regions: ["APAC", "EMEA", "North America"],
