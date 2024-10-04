@@ -76,7 +76,7 @@ export const stepInputFields = [
     title: "capabilities",
     description:
       "Which of the following capabilities do you need the software to support?",
-    imagePath: "/contracts/images/capabilities.webp",
+    imagePath: "/contracts/images/capability.png",
     inputType: "multiSelect" as const,
     choices: [
       "Change Management",
@@ -92,7 +92,7 @@ export const stepInputFields = [
     title: "organizational function",
     description:
       "Which of the following functions do you need the software to support?",
-    imagePath: "/contracts/images/capabilities.webp",
+    imagePath: "/contracts/images/organizational_function.png",
     inputType: "multiSelect" as const,
     choices: [
       "Commercial",
@@ -106,7 +106,7 @@ export const stepInputFields = [
     title: "contract type",
     description:
       "Which of the following contract types do you need the software to support?",
-    imagePath: "/contracts/images/capabilities.webp",
+    imagePath: "/contracts/images/contract.png",
     inputType: "multiSelect" as const,
     choices: [
       "Buy Side",
@@ -120,7 +120,7 @@ export const stepInputFields = [
     title: "licensing model",
     description:
       "Which of the following integrations do you need the software to support?",
-    imagePath: "/contracts/images/capabilities.webp",
+    imagePath: "/contracts/images/license.png",
     inputType: "multiSelect" as const,
     choices: [
       "Annual subscription fee",
@@ -133,7 +133,7 @@ export const stepInputFields = [
   {
     title: "integrations",
     description: "Do you require use of the software on specific device(s)?",
-    imagePath: "/contracts/images/capabilities.webp",
+    imagePath: "/contracts/images/integrations.png",
     inputType: "multiSelect" as const,
     choices: [
       "Application Integration (API)",
@@ -145,7 +145,7 @@ export const stepInputFields = [
   {
     title: "regions",
     description: "Do you require use of the software on specific device(s)?",
-    imagePath: "/contracts/images/capabilities.webp",
+    imagePath: "/contracts/images/regions.png",
     inputType: "multiSelect" as const,
     choices: ["APAC", "EMEA", "LatAm", "North America"],
   },
