@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { BadgeCheck, MapPin, ReceiptText } from "@/components/ui/icons"
 import Image from "next/image"
 
-import styles from "@/app/contract/contract.module.css"
+import styles from "@/app/contracts/contract.module.css"
 import CircularProgress from "@/components/ui/icons/circularProgressBar"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
@@ -22,7 +22,7 @@ const VendorResultDisplayCard = ({
 }) => {
   const router = useRouter()
   const openVendorModal = (vendorId: string) => {
-    router.push(`/contract/vendor/${vendorId}`)
+    router.push(`/contracts/vendor/${vendorId}`)
   }
 
   // Prevent event from propagating when clicking on the checkbox

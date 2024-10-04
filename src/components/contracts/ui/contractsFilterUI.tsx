@@ -1,3 +1,5 @@
+// File: /components/ui/ContractsFilterUI.tsx
+
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -13,86 +15,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Check, ChevronsUpDown } from "lucide-react"
-import React, { useEffect, useState } from "react"
-
-import styles from "@/app/contract/contract.module.css"
 import { Label } from "@/components/ui/label"
-import { stepInputFields } from "../features/contractsObject"
+import styles from "@/app/contracts/contract.module.css"
 
-type SelectedOptions = {
-  [key: string]: string[]
+interface ContractsFilterUIProps {
+  stepInputFields: { title: string; choices: string[] }[]
+  selectedChoices: { [key: string]: string[] }
+  openPopover: { [key: string]: boolean }
+  handleOpenChange: (stepTitle: string, isOpen: boolean) => void
+  handleCheckboxChange: (stepTitle: string, choice: string) => void
 }
 
-// Define props for ContractsFilter
-interface ContractsFilterProps {
-  selectedOptions: SelectedOptions
-  handleSelectOption: (
-    optionTitle: keyof SelectedOptions,
-    selectedItems: string[]
-  ) => void
-}
-
-/**
- * A component that renders a filter for contracts based on multiple options.
- *
- * @param {{
- *   selectedOptions: import("../layout/contractsLayout").SelectedOptions,
- *   handleSelectOption: (
- *     optionTitle: keyof SelectedOptions,
- *     selectedItems: string[]
- *   ) => void,
- * }} props
- */
-const ContractsFilter: React.FC<ContractsFilterProps> = ({
-  selectedOptions,
-  handleSelectOption,
+const ContractsFilterUI: React.FC<ContractsFilterUIProps> = ({
+  stepInputFields,
+  selectedChoices,
+  openPopover,
+  handleOpenChange,
+  handleCheckboxChange,
 }) => {
-  // State to manage selected choices based on step titles
-  const [selectedChoices, setSelectedChoices] =
-    useState<SelectedOptions>(selectedOptions)
-
-  const [openPopover, setOpenPopover] = useState<Record<string, boolean>>({})
-
-  useEffect(() => {
-    // Initialize selectedChoices with selectedOptions from props
-    setSelectedChoices(selectedOptions)
-  }, [selectedOptions])
-
-  const handleCheckboxChange = (
-    stepTitle: keyof SelectedOptions,
-    choice: string
-  ) => {
-    setSelectedChoices((prevSelectedChoices) => {
-      const selectedSet = new Set(prevSelectedChoices[stepTitle] || [])
-
-      if (selectedSet.has(choice)) {
-        selectedSet.delete(choice)
-      } else {
-        selectedSet.add(choice)
-      }
-
-      const updatedChoices = {
-        ...prevSelectedChoices,
-        [stepTitle]: Array.from(selectedSet),
-      }
-
-      // Update the parent component with the selected choices
-      handleSelectOption(stepTitle, Array.from(selectedSet))
-      return updatedChoices
-    })
-  }
-
-  const handleOpenChange = (stepTitle: string, isOpen: boolean) => {
-    setOpenPopover((prevState) => ({
-      ...prevState,
-      [stepTitle]: isOpen,
-    }))
-  }
-
-  console.log(selectedOptions)
-
   return (
-    <div className={`w-full p-4 ${styles.bgPrimary} rounded-xl shadow-lg `}>
+    <div className={`w-full p-4 ${styles.bgPrimary} rounded-xl shadow-lg`}>
       <div>
         {stepInputFields.map((step) => (
           <div className="mb-6" key={step.title}>
@@ -115,7 +57,11 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({
                       variant="outline"
                       role="combobox"
                       aria-expanded={!!openPopover[step.title]}
-                      className={`w-full justify-between flex items-center text-sm ${selectedChoices[step.title]?.length ? styles.textPrimary : styles.textGray}`}
+                      className={`w-full justify-between flex items-center text-sm ${
+                        selectedChoices[step.title]?.length
+                          ? styles.textPrimary
+                          : styles.textGray
+                      }`}
                     >
                       {selectedChoices[step.title]?.length
                         ? `${
@@ -139,10 +85,7 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({
                               key={choice}
                               value={choice}
                               onSelect={() =>
-                                handleCheckboxChange(
-                                  step.title as keyof SelectedOptions,
-                                  choice
-                                )
+                                handleCheckboxChange(step.title, choice)
                               }
                               className="border-b border-slate-200 text-sm"
                             >
@@ -170,4 +113,4 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({
   )
 }
 
-export default ContractsFilter
+export default ContractsFilterUI

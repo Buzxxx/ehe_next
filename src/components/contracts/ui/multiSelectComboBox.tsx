@@ -17,10 +17,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import SelectionDisplayBox from "../ui/selectionDisplayBox"
+import SelectionDisplayBox from "./selectionDisplayBox"
 import Image from "next/image"
 
-import styles from "@/app/contract/contract.module.css"
+import styles from "@/app/contracts/contract.module.css"
 
 interface Framework {
   value: string

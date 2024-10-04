@@ -1,27 +1,29 @@
 /**
- * @path src/components/contracts/ui/resulsTab.tsx
+ * @path src/components/contracts/features/resulsTab.tsx
  */
 
-import React, { useState } from "react"
-import VendorResultDisplayCard from "./vendorResultDisplayCard"
+import React, { Dispatch, SetStateAction } from "react"
+import VendorResultDisplayCard from "../ui/vendorResultDisplayCard"
 import ContractsFilter from "./contractsFilter"
-import { SelectedOptions } from "../layout/contractsLayout"
+import { SelectedOptions } from "../features/contractsObject"
 import { Button } from "@/components/ui/button"
-import { Filter, X } from "lucide-react"
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
+import { X } from "lucide-react"
+import { Drawer, DrawerContent } from "@/components/ui/drawer"
 
-// resultsTab.tsx
+import styles from "@/app/contracts/contract.module.css"
 
 interface ResultsTabProps {
   selectedOptions: SelectedOptions
   handleSelectOption: (
-    optionTitle: string | number,
+    title: keyof SelectedOptions,
     selectedItems: string[]
   ) => void
   selectedVendors: string[]
   handleSelectVendor: (vendorId: string, isSelected: boolean) => void
   isDrawerOpen: boolean
-  setIsDrawerOpen: (open: boolean) => void
+  setIsDrawerOpen: Dispatch<SetStateAction<boolean>>
+  setShowComparison: Dispatch<SetStateAction<boolean>>
+  handleReset: () => void
 }
 const ResultsTab: React.FC<ResultsTabProps> = ({
   selectedOptions,
@@ -30,13 +32,13 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   handleSelectVendor,
   isDrawerOpen,
   setIsDrawerOpen,
+  setShowComparison,
+  handleReset
 }) => {
   return (
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-        {/* <DrawerTrigger className="ml-8 md:hidden">
-          <Filter color="gray" />
-        </DrawerTrigger> */}
+      
         <DrawerContent className="w-screen top-0 mt-2 md:hidden h-full">
           <div className="flex justify-between items-center px-4">
             <h2 className="text-lg font-semibold">Filters</h2>
@@ -55,7 +57,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
           />
         </DrawerContent>
       </Drawer>
-      <div className="flex min-h-screen gap-8 ">
+      <div className="flex min-h-screen gap-8 pb-20">
         <div
           className={`md:w-1/4 w-full z-40 max-h-screen md:sticky hidden md:block`}
         >
@@ -83,6 +85,26 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
             isSelected={selectedVendors.includes("3")}
             onSelectVendor={handleSelectVendor}
           />
+        </div>
+      </div>
+      <div
+        className={`fixed left-0 bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full`}
+      >
+        <div className={`justify-center gap-4 flex`}>
+          <Button
+            className={`${styles.btnSecondary} h-fit md:hidden`}
+            onClick={() => setIsDrawerOpen(true)}
+          >
+            Filter
+          </Button>
+          <Button className={`${styles.btnSecondary} h-fit `} onClick={handleReset}>Reset</Button>
+          <Button
+            className={`${styles.btnSecondary} h-fit `}
+            disabled={selectedVendors.length < 2} 
+            onClick={() => setShowComparison(true)}
+          >
+            Compare
+          </Button>
         </div>
       </div>
     </>

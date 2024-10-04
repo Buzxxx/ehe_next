@@ -1,10 +1,31 @@
+/**
+ * @path src/components/contracts/features/contractsObject.tsx
+ */
+
+export interface SelectedOptions {
+  [key: string]: string[]
+}
+
+export interface Vendor {
+  id: string
+  vendorName: string
+  email: string
+  website: string
+  region: string[]
+  capabilities: string[]
+  organizationalFunction: string[]
+  contractType: string[]
+  licensingModel: string[]
+  integrations: string[]
+}
+
 export const vendors = [
   {
-    id: 1,
+    id: "1",
     vendorName: "Luminance",
     email: "contact@luminance.com",
     website: "https://www.luminance.com",
-    region: ["APAC", "North America"],
+    regions: ["APAC", "North America"],
     capabilities: [
       "Change Management",
       "Configurable Approval Workflows",
@@ -16,11 +37,11 @@ export const vendors = [
     integrations: ["Application Integration (API)", "eSignatures"],
   },
   {
-    id: 2,
+    id: "2",
     vendorName: "Brightify",
     email: "info@brightify.com",
     website: "https://www.brightify.com",
-    region: ["EMEA", "LatAm"],
+    regions: ["EMEA", "LatAm"],
     capabilities: [
       "Repository and Integration Capabilities",
       "Custom Reporting and Queries",
@@ -34,11 +55,11 @@ export const vendors = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     vendorName: "ShineTech",
     email: "support@shinetech.com",
     website: "https://www.shinetech.com",
-    region: ["APAC", "EMEA", "North America"],
+    regions: ["APAC", "EMEA", "North America"],
     capabilities: [
       "Version Comparison Redlining & Negotiation",
       "Obligation Tracking and Upload of Evidence",
@@ -52,7 +73,7 @@ export const vendors = [
 
 export const stepInputFields = [
   {
-    title: "capability",
+    title: "capabilities",
     description:
       "Which of the following capabilities do you need the software to support?",
     imagePath: "/contracts/images/capabilities.webp",
@@ -133,4 +154,39 @@ export const stepInputFields = [
 // Function to map step number to the correct slice of stepInputFields
 export function getInputFieldsForStep(step: number) {
   return stepInputFields.slice(step * 3, (step + 1) * 3)
+}
+
+// Utility function to check if all selectedOptions are empty
+export function isSelectedOptionsEmpty(selectedOptions: SelectedOptions) {
+  return Object.values(selectedOptions).every((options) => options.length === 0)
+}
+
+export function toCamelCase(str: string) {
+  // Split the string by spaces
+  const words = str.split(" ")
+
+  // Convert the first word to lowercase and capitalize the first letter of subsequent words
+  const camelCased = words
+    .map((word, index) => {
+      if (index === 0) {
+        return word.toLowerCase() // First word is lowercase
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() // Capitalize the rest
+    })
+    .join("") // Join all the words together
+
+  return camelCased
+}
+
+// Function to calculate the percentage match for each category
+export function calculateMatchPercentage(
+  selectedValues: string[],
+  vendorValues: string[]
+) {
+  const matches = selectedValues.filter((value) =>
+    vendorValues.includes(value)
+  ).length
+  const totalValues = selectedValues.length
+  const percentage = (matches / totalValues) * 100
+  return Math.round(percentage) // Return a rounded percentage
 }

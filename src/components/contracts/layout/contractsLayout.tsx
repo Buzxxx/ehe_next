@@ -1,129 +1,53 @@
-// ContractsLayout.tsx
+/**
+ * @path src/components/contracts/layout/contractsLayout.tsx
+ */
+
+/**
+ * @path src/components/contracts/layout/contractsLayout.tsx
+ */
+
 "use client"
 import React from "react"
 import ContractsHeaderTab from "../features/contractsHeaderTab"
-import Step from "../ui/step"
-import ResultsTab from "../ui/resultsTab"
-
-import styles from "@/app/contract/contract.module.css"
-import { Button } from "@/components/ui/button"
-
-export interface SelectedOptions {
-  [key: string]: string[]
-}
+import ContractsNavbar from "../features/contractsNavbar"
+import ContractBody from "../features/contractBody"
+import VendorCompareModal from "../features/vendorCompareModal"
 
 const ContractsLayout = () => {
-  const ContractSteps = ["Step 1", "Step 2", "Results"]
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-  const [activeTab, setActiveTab] = React.useState(0) // Initial active tab
-  const [selectedOptions, setSelectedOptions] = React.useState<SelectedOptions>(
-    {
-      capability: [],
-      organizational_function: [],
-      contract_type: [],
-      licensing_model: [],
-      integrations: [],
-      regions: [],
-    }
-  )
-
-  const [selectedVendors, setSelectedVendors] = React.useState<string[]>([]) // State for selected vendors
-
-  const handleSelectOption = (
-    optionTitle: string | number,
-    selectedItems: string[]
-  ) => {
-    setSelectedOptions((prevSelected) => ({
-      ...prevSelected,
-      [optionTitle]: selectedItems,
-    }))
-  }
-
-  const handleSelectVendor = (vendorId: string, isSelected: boolean) => {
-    setSelectedVendors(
-      (prevSelected) =>
-        isSelected
-          ? [...prevSelected, vendorId] // Add vendor if selected
-          : prevSelected.filter((id) => id !== vendorId) // Remove vendor if unselected
-    )
-  }
-
-  const totalSteps = ContractSteps.length
-
-  const handleNext = () => {
-    if (activeTab < totalSteps - 1) {
-      setActiveTab((prev) => prev + 1)
-    } else {
-      const filteredSelectedOptions = Object.fromEntries(
-        Object.entries(selectedOptions).filter(
-          ([key, value]) => value.length > 0
-        )
-      )
-
-      console.log("Final Selected Options:", filteredSelectedOptions)
-    }
-  }
-
-  // Utility function to check if all selectedOptions are empty
-  const isSelectedOptionsEmpty = () => {
-    return Object.values(selectedOptions).every(
-      (options) => options.length === 0
-    )
-  }
+  const [activeTab, setActiveTab] = React.useState(0)
+  const [selectedOptions, setSelectedOptions] = React.useState<
+    Record<string, string[]>
+  >({})
+  const [selectedVendors, setSelectedVendors] = React.useState<string[]>([])
+  const [showComparison, setShowComparison] = React.useState(false)
 
   return (
-    <>
-      <div className="md:p-16 flex flex-col md:gap-12  min-h-screen overflow-hidden w-full">
-        <ContractsHeaderTab activeTab={activeTab} setActiveTab={setActiveTab} />
-        {activeTab !== totalSteps - 1 ? (
-          <Step onSelectItems={handleSelectOption} step={activeTab} />
-        ) : (
-          <ResultsTab
-            selectedOptions={selectedOptions}
-            handleSelectOption={handleSelectOption}
-            selectedVendors={selectedVendors} // Pass selected vendors
-            handleSelectVendor={handleSelectVendor} // Pass vendor selection handler
-            isDrawerOpen={isDrawerOpen} // Pass drawer state
-            setIsDrawerOpen={setIsDrawerOpen} // Pass drawer state setter
-          />
-        )}
+    <div
+      className={`bg-gray-100 overflow-hidden w-full`}
+    >
+      <ContractsNavbar />
+      <div className=" flex flex-col md:gap-12  min-h-screen overflow-hidden w-full">
+        <ContractsHeaderTab activeStep={activeTab} setActiveStep={setActiveTab} />
+        <ContractBody
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          selectedOptions={selectedOptions}
+          setSelectedOptions={setSelectedOptions}
+          selectedVendors={selectedVendors}
+          setSelectedVendors={setSelectedVendors}
+          isDrawerOpen={isDrawerOpen}
+          setIsDrawerOpen={setIsDrawerOpen}
+          setShowComparison={setShowComparison}
+        />
       </div>
-      {/* Next/Show Results Button */}
-      <div
-        className={`fixed bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full`}
-      >
-        {activeTab === totalSteps - 1 ? (
-          <div className={`justify-center gap-4 flex`}>
-            <Button
-              className={`${styles.btnSecondary} h-fit md:hidden`}
-              onClick={() => setIsDrawerOpen(true)}
-            >
-              Filter
-            </Button>
-            <Button className={`${styles.btnSecondary} h-fit `}>Reset</Button>
-            <Button
-              className={`${styles.btnSecondary} h-fit `}
-              disabled={selectedVendors.length < 2} // Disable if less than 2 vendors
-            >
-              Compare
-            </Button>
-          </div>
-        ) : (
-          <div className={`justify-center gap-4 flex`}>
-            <Button className={`${styles.btnSecondary} h-fit `}>Reset</Button>
-            <Button
-              onClick={handleNext}
-              className={`${styles.btnSecondary}  px-4 h-fit `}
-              disabled={
-                isSelectedOptionsEmpty() && activeTab === totalSteps - 2
-              }
-            >
-              {activeTab === totalSteps - 2 ? "Show Results" : "Next"}
-            </Button>
-          </div>
-        )}
-      </div>
-    </>
+      <VendorCompareModal
+        selectedVendors={selectedVendors}
+        showComparision={showComparison}
+        setShowComparison={setShowComparison}
+        selectedOptions={selectedOptions}
+      />
+    </div>
   )
 }
 

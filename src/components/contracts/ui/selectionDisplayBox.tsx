@@ -2,9 +2,8 @@
 
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
-import React from "react"
 
-import styles from '@/app/contract/contract.module.css'
+import styles from '@/app/contracts/contract.module.css'
 
 interface SelectionDisplayBoxProps {
   selectedItems: string[]

@@ -40,9 +40,9 @@ const config = {
           secondary: "hsl(var(--dashboard-secondary))",
         },
         charcoal: {
-          700: "hsl(var(--charcoal-700))",
-          800: "hsl(var(--charcoal-800))",
-          900: "hsl(var(--charcoal-900))",
+          "700": "hsl(var(--charcoal-700))",
+          "800": "hsl(var(--charcoal-800))",
+          "900": "hsl(var(--charcoal-900))",
           foreground: "hsl(var(--charcoal-foreground))",
           foregroundAccent: "hsl(var(--charcoal-foreground-accent))",
         },
@@ -74,12 +74,20 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
