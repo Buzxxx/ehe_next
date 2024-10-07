@@ -93,7 +93,7 @@ const ContractsFilterUI: React.FC<ContractsFilterUIProps> = ({
                           {step.choices.map((choice) => (
                             <CommandItem
                               key={choice.id}
-                              value={choice.id}
+                              value={choice.id.toString()}
                               onSelect={() =>
                                 handleCheckboxChange(
                                   toCamelCase(

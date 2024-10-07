@@ -137,7 +137,7 @@ export function MultiSelectCombobox({
                   {choices.map((choice) => (
                     <CommandItem
                       key={choice.id}
-                      value={choice.id}
+                      value={choice.id.toString()}
                       onSelect={() => {
                         handleSelectItem(choice.id)
                       }}
