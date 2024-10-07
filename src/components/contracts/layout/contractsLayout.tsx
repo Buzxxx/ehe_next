@@ -18,7 +18,6 @@ const ContractsLayout = () => {
     defaultSelectedOptions
   )
   const [selectedVendors, setSelectedVendors] = React.useState<string[]>([])
-  console.log(activeTab)
   const steps = [
     <Step1
       key={0}

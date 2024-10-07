@@ -239,16 +239,17 @@ export function calculateVendorMatchBreakdown(
   })
 }
 
-export function calculateVendorAverageMatchPercentage(selectedOptions: SelectedOptions) {
-  return vendors.map((vendor) => {
-    const breakdown = getPercentageBreakdown(vendor, selectedOptions)
-    const averageMatchPercentage = Math.floor(getAveragePercentage(breakdown))
+export function calculateVendorAverageMatchPercentage(
+  selectedOptions: SelectedOptions
+) {
+  return vendors
+    .map((vendor) => {
+      const breakdown = getPercentageBreakdown(vendor, selectedOptions)
+      const averageMatchPercentage = Math.floor(getAveragePercentage(breakdown))
 
-    return {
-      vendorName: vendor.vendorName,
-      averageMatchPercentage,
-    }
-  })
+      return { ...vendor, vendorMatchPercentage:averageMatchPercentage }
+    })
+    .sort((a, b) => b.vendorMatchPercentage - a.vendorMatchPercentage)
 }
 
 export function filterSelectedOptions(obj: SelectedOptions) {
