@@ -102,13 +102,12 @@ const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
                         vendor.breakdown[key]?.values || {}
 
                       // Check if the vendor has this specific item by accessing the object
-                      const hasItem = !!vendorCategoryValues[item]
                       return (
                         <div
                           key={vendor.id}
                           className="w-1/3 justify-center text-left flex items-center "
                         >
-                          {hasItem ? (
+                          {vendorCategoryValues[item] ? (
                             <Check color="green" size={18} />
                           ) : (
                             <X color="red" size={18} />
