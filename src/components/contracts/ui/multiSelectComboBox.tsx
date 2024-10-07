@@ -21,20 +21,16 @@ import SelectionDisplayBox from "./selectionDisplayBox"
 import Image from "next/image"
 
 import styles from "@/app/contracts/contract.module.css"
-
-interface Framework {
-  value: string
-  label: string
-}
+import { toCamelCase } from "../features/contractsObject"
 
 interface MultiSelectComboboxProps {
   title: string
   description: string
   imagePath: string
   inputType?: "singleSelect" | "multiSelect" | string
-  choices: string[]
-  selectedItems: string[]
-  onSelectItems: (selectedItems: string[]) => void
+  choices: {id: number; name: string}[]
+  selectedItems: number[]
+  onSelectItems: (selectedItems: number[]) => void
 }
 
 export function MultiSelectCombobox({
@@ -51,19 +47,19 @@ export function MultiSelectCombobox({
   /**
    * Handles the selection of an item. If the item is already selected, removes it from the selected items array.
    * If inputType is singleSelect, only one item can be selected at a time.
-   * @param item The item to select or deselect.
+   * @param id of the item to select or deselect.
    */
   const handleSelectItem = React.useCallback(
-    (item: string) => {
+    (id: number) => {
       let updatedItems = []
 
       if (inputType === "singleSelect") {
-        updatedItems = [item] // Only keep the current item for singleSelect
+        updatedItems = [id] // Only keep the current item for singleSelect
         setOpen(false) // Close the dropdown after selecting
       } else {
-        updatedItems = selectedItems.includes(item)
-          ? selectedItems.filter((selectedItem) => selectedItem !== item)
-          : [...selectedItems, item]
+        updatedItems = selectedItems.includes(id)
+          ? selectedItems.filter((selectedItem) => selectedItem !== id)
+          : [...selectedItems, id]
       }
 
       onSelectItems(updatedItems)
@@ -76,8 +72,8 @@ export function MultiSelectCombobox({
    * @param item The item to remove.
    */
   const handleRemoveItem = React.useCallback(
-    (item: string): void => {
-      onSelectItems(selectedItems.filter((i) => i !== item))
+    (id: number): void => {
+      onSelectItems(selectedItems.filter((i) => i !== id))
     },
     [selectedItems, onSelectItems]
   )
@@ -140,21 +136,21 @@ export function MultiSelectCombobox({
                 <CommandGroup>
                   {choices.map((choice) => (
                     <CommandItem
-                      key={choice}
-                      value={choice}
+                      key={choice.id}
+                      value={choice.id}
                       onSelect={() => {
-                        handleSelectItem(choice)
+                        handleSelectItem(choice.id)
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          selectedItems.includes(choice)
+                          selectedItems.includes(choice.id)
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {choice}
+                      {choice.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -164,6 +160,9 @@ export function MultiSelectCombobox({
         </Popover>
 
         <SelectionDisplayBox
+        category={
+          toCamelCase(title)
+        }
           selectedItems={selectedItems}
           onRemoveItem={handleRemoveItem}
         />

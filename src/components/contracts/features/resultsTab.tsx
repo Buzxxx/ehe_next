@@ -2,74 +2,96 @@
  * @path src/components/contracts/features/resulsTab.tsx
  */
 
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import VendorResultDisplayCard from "../ui/vendorResultDisplayCard"
 import ContractsFilter from "./contractsFilter"
-import { SelectedOptions } from "../features/contractsObject"
+import {
+  calculateVendorAverageMatchPercentage,
+  calculateVendorMatchBreakdown,
+  defaultSelectedOptions,
+  SelectedOptions,
+  Vendor,
+} from "../features/contractsObject"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
 
 import styles from "@/app/contracts/contract.module.css"
+import VendorCompareModal from "./vendorCompareModal"
+import { vendors } from "../noSql"
 
 interface ResultsTabProps {
+  setActiveTab: Dispatch<SetStateAction<number>>
   selectedOptions: SelectedOptions
-  handleSelectOption: (
-    title: keyof SelectedOptions,
-    selectedItems: string[]
-  ) => void
+  setSelectedOptions: Dispatch<SetStateAction<SelectedOptions>>
   selectedVendors: string[]
-  handleSelectVendor: (vendorId: string, isSelected: boolean) => void
+  setSelectedVendors: Dispatch<SetStateAction<string[]>>
   isDrawerOpen: boolean
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>
-  setShowComparison: Dispatch<SetStateAction<boolean>>
-  handleReset: () => void
 }
 const ResultsTab: React.FC<ResultsTabProps> = ({
+  setActiveTab,
   selectedOptions,
-  handleSelectOption,
+  setSelectedOptions,
   selectedVendors,
-  handleSelectVendor,
+  setSelectedVendors,
   isDrawerOpen,
   setIsDrawerOpen,
-  setShowComparison,
-  handleReset,
 }) => {
-  const vendorData = [
-    {
-      vendorId: "1",
-      vendorName: "Basware",
-      vendorLogo: "/contracts/images/basware.svg",
-      vendorDesc:
-        "Track spending on assets within your purchase-to-pay process. Costs and warranty information are collected in your e-procurement system. Helps you conduct life cycle value comparisons, track which assets are on warranties and service contracts, properly depreciate fixed assets and get the most useful life from your equipment",
-      vendorLocation: "Mumbai",
-      vendorServices: "12 Services",
-      vendorMatchPercentage: 90,
-      isVerified: true,
-    },
-    {
-      vendorId: "2",
-      vendorName: "Bravo Solution Now Jagger",
-      vendorLogo: "/contracts/images/Jaggaer-Logo-Red.svg",
-      vendorDesc:
-        " JAGGAER Contracts enables you to manage every phase of contract development from initiation through approval and execution. In JAGGAER ONE it is a complete end-to-end solution that provides full authoring and automated review and approval workflows to reduce risk and increase compliance.",
-      vendorLocation: "Delhi",
-      vendorServices: "15 Services",
-      vendorMatchPercentage: 75,
-      isVerified: false,
-    },
-    {
-      vendorId: "3",
-      vendorName: "Cobblestone Systems",
-      vendorLogo: "/contracts/images/hub.webp",
-      vendorDesc:
-        "Cobblestone's flagship product is Contract Insight Enterprise. Based on the summary of our clients’ feedback, Contract Insight Enterprise is a “great solution to an organization’s needs.",
-      vendorLocation: "Bangalore",
-      vendorServices: "10 Services",
-      vendorMatchPercentage: 21,
-      isVerified: true,
-    },
-  ]
+  const [vendorData, setVendorData] = useState(vendors)
+  const [showComparison, setShowComparison] = React.useState(false)
+  const [comparisonData, setComparisonData] = React.useState<
+    { vendorName: string; breakdown: {}; averageMatchPercentage: number }[]
+  >([])
+
+  useEffect(() => {
+    // Get match percentages for each vendor
+    const matchPercentages =
+      calculateVendorAverageMatchPercentage(selectedOptions)
+
+    // Update vendorData with the calculated match percentages
+    const updatedVendorData = vendorData.map((vendor: Vendor) => {
+      const match = matchPercentages.find(
+        (m) => m.vendorName === vendor.vendorName
+      )
+      return match
+        ? { ...vendor, vendorMatchPercentage: match.averageMatchPercentage }
+        : vendor
+    })
+
+    setVendorData(updatedVendorData)
+  }, [selectedOptions])
+
+  const handleSelectOption = (
+    title: keyof SelectedOptions,
+    items: number[]
+  ) => {
+    setSelectedOptions((prevSelected) =>
+      prevSelected[title] === items
+        ? { ...prevSelected }
+        : { ...prevSelected, [title]: items }
+    )
+  }
+
+  const handleReset = () => {
+    setActiveTab(0)
+    setSelectedOptions(defaultSelectedOptions)
+  }
+
+  const handleShowComparison = () => {
+    const data = calculateVendorMatchBreakdown(selectedOptions, selectedVendors)
+    setComparisonData(data)
+    setShowComparison(true)
+  }
+
+  const handleSelectVendor = (vendorId: string, isSelected: boolean) => {
+    setSelectedVendors(
+      (prevSelected) =>
+        isSelected
+          ? [...prevSelected, vendorId] // Add vendor if selected
+          : prevSelected.filter((id) => id !== vendorId) // Remove vendor if unselected
+    )
+  }
 
   return (
     <>
@@ -105,13 +127,13 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
         <div className="flex-1 flex flex-col gap-4 md:w-3/4 ml-auto max-md:px-4 max-md:mt-4">
           {vendorData.map((vendor) => (
             <VendorResultDisplayCard
-              key={vendor.vendorId}
-              vendorId={vendor.vendorId}
-              isSelected={selectedVendors.includes(vendor.vendorId)}
+              key={vendor.id}
+              vendorId={vendor.id}
+              isSelected={selectedVendors.includes(vendor.id)}
               onSelectVendor={handleSelectVendor}
               vendorName={vendor.vendorName}
-              vendorLogo={vendor.vendorLogo}
-              vendorDesc={vendor.vendorDesc}
+              vendorLogo={vendor.logo}
+              vendorDesc={vendor.description}
               vendorLocation={vendor.vendorLocation}
               vendorServices={vendor.vendorServices}
               vendorMatchPercentage={vendor.vendorMatchPercentage}
@@ -140,12 +162,19 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
           <Button
             className={`${styles.btnSecondary} h-fit`}
             disabled={selectedVendors.length < 2}
-            onClick={() => setShowComparison(true)}
+            onClick={handleShowComparison}
           >
             Compare
           </Button>
         </div>
       </div>
+
+      <VendorCompareModal
+        vendorComparisonData={comparisonData}
+        showComparision={showComparison}
+        setShowComparison={setShowComparison}
+        selectedOptions={selectedOptions}
+      />
     </>
   )
 }

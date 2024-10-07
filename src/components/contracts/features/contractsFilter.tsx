@@ -5,18 +5,14 @@
 
 import React, { useEffect, useState } from "react"
 import ContractsFilterUI from "@/components/contracts/ui/contractsFilterUI"
-import { stepInputFields } from "./contractsObject"
-
-type SelectedOptions = {
-  [key: string]: string[]
-}
+import { stepInputFields, SelectedOptions } from "./contractsObject"
 
 // Define props for ContractsFilter
 interface ContractsFilterProps {
   selectedOptions: SelectedOptions
   handleSelectOption: (
     title: keyof SelectedOptions,
-    selectedItems: string[]
+    selectedItems: number[]
   ) => void
 }
 
@@ -29,7 +25,7 @@ const ContractsFilter: React.FC<ContractsFilterProps> = ({ selectedOptions, hand
   }, [selectedOptions])
 
   const memoizedHandleCheckboxChange = React.useCallback(
-    (stepTitle: keyof SelectedOptions, choice: string) => {
+    (stepTitle: keyof SelectedOptions, choice: number) => {
       setSelectedChoices((prevSelectedChoices) => {
         const selectedSet = new Set(prevSelectedChoices[stepTitle] || [])
 
