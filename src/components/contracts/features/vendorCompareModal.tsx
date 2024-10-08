@@ -7,13 +7,13 @@ import { Dispatch, SetStateAction } from "react"
 const VendorCompareModal = ({
   showComparision,
   selectedOptions,
-  selectedVendors,
   setShowComparison,
+  vendorComparisonData,
 }: {
   showComparision?: boolean
   selectedOptions: SelectedOptions
-  selectedVendors: string[]
   setShowComparison: Dispatch<SetStateAction<boolean>>
+  vendorComparisonData: any
 }) => {
   return (
     <Dialog
@@ -24,8 +24,8 @@ const VendorCompareModal = ({
       <DialogOverlay className="">
         <DialogContent className="h-[400] overflow-scroll transition-all px-2">
           <VendorCompareTable
-            selectedVendors={selectedVendors}
             selectedOptions={selectedOptions}
+            vendorComparisonData={vendorComparisonData}
           />
         </DialogContent>
       </DialogOverlay>

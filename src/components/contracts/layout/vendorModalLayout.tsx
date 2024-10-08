@@ -1,9 +1,7 @@
+import { Suspense } from "react"
 import Modal from "@/components/ui/modal"
-import React, { Suspense } from "react"
 import VendorDetailsModal from "../features/vendorDetails"
-import OverlayLoading from "@/components/ui/overlayLoading"
-import { Spinner } from "@/components/ui/icons"
-import LoadingSpinner from "../features/loadingSpinner"
+import LoadingSpinner from "../ui/loadingSpinner"
 
 const VendorModalLayout = () => {
   return (

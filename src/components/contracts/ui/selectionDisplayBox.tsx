@@ -2,32 +2,43 @@
 
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
-
-import styles from '@/app/contracts/contract.module.css'
+import styles from "@/app/contracts/contract.module.css"
+import { getDisplayName, SelectedOptions } from "../features/contractsObject"
+import {
+  regions,
+  capabilities,
+  organizationalFunctions,
+  contractTypes,
+  licensingModels,
+  integrations,
+} from "../noSql"
 
 interface SelectionDisplayBoxProps {
-  selectedItems: string[]
-  onRemoveItem: (item: string) => void
+  selectedItems: number[]
+  onRemoveItem: (item: number) => void
+  category: string
 }
 
 const SelectionDisplayBox: React.FC<SelectionDisplayBoxProps> = ({
   selectedItems,
   onRemoveItem,
+  category,
 }) => {
   return (
-    <div className="border border-slate-300 mt-2 py-2 px-4  overflow-scroll ">
-      <div className={`flex gap-2 flex-wrap md:h-16 h-10 `}>
-        {selectedItems.length > 0 ? (
-          selectedItems.map((item, index) => (
+    <div className="border border-slate-300 mt-2 py-2 px-4 overflow-scroll">
+      <div className="flex gap-2 flex-wrap md:h-16 h-10">
+        {Object.keys(selectedItems).length > 0 ? (
+          selectedItems.map((itemId) => (
             <Badge
-              key={index}
-              className={` ${styles.textPrimary} hover:bg-white px-2 py-1 rounded-full text-xs flex items-center justify-between gap-2 h-fit w-fit bg-slate-300/40`}
+              key={`${category}-${itemId}`}
+              className={`${styles.textPrimary} hover:bg-white px-2 py-1 rounded-full text-xs flex items-center justify-between gap-2 h-fit w-fit bg-slate-300/40`}
             >
-              {item}
+              {getDisplayName(category, itemId)}
+
               <button
                 type="button"
-                onClick={() => onRemoveItem(item)}
-                className=" "
+                onClick={() => onRemoveItem(itemId)} // Pass category and item ID to the onRemoveItem handler
+                className="ml-2"
               >
                 <X className="h-4 w-4" />
               </button>

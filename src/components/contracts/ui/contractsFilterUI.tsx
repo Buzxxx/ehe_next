@@ -17,13 +17,17 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import styles from "@/app/contracts/contract.module.css"
+import { SelectedOptions, toCamelCase } from "../features/contractsObject"
 
 interface ContractsFilterUIProps {
-  stepInputFields: { title: string; choices: string[] }[]
-  selectedChoices: { [key: string]: string[] }
+  stepInputFields: { title: string; choices: {id: number, name: string}[] }[]
+  selectedChoices: SelectedOptions
   openPopover: { [key: string]: boolean }
   handleOpenChange: (stepTitle: string, isOpen: boolean) => void
-  handleCheckboxChange: (stepTitle: string, choice: string) => void
+  handleCheckboxChange: (
+    stepTitle: keyof SelectedOptions,
+    choice: number
+  ) => void
 }
 
 const ContractsFilterUI: React.FC<ContractsFilterUIProps> = ({
@@ -58,14 +62,20 @@ const ContractsFilterUI: React.FC<ContractsFilterUIProps> = ({
                       role="combobox"
                       aria-expanded={!!openPopover[step.title]}
                       className={`w-full justify-between flex items-center text-sm ${
-                        selectedChoices[step.title]?.length
+                        selectedChoices[
+                          toCamelCase(step.title) as keyof SelectedOptions
+                        ]?.length
                           ? styles.textPrimary
                           : styles.textGray
                       }`}
                     >
-                      {selectedChoices[step.title]?.length
+                      {selectedChoices[
+                        toCamelCase(step.title) as keyof SelectedOptions
+                      ]?.length
                         ? `${
-                            selectedChoices[step.title].length
+                            selectedChoices[
+                              toCamelCase(step.title) as keyof SelectedOptions
+                            ].length
                           } item(s) selected`
                         : "Select Function(s)"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -82,21 +92,30 @@ const ContractsFilterUI: React.FC<ContractsFilterUIProps> = ({
                         <CommandGroup>
                           {step.choices.map((choice) => (
                             <CommandItem
-                              key={choice}
-                              value={choice}
+                              key={choice.id}
+                              value={choice.id.toString()}
                               onSelect={() =>
-                                handleCheckboxChange(step.title, choice)
+                                handleCheckboxChange(
+                                  toCamelCase(
+                                    step.title
+                                  ) as keyof SelectedOptions,
+                                  choice.id
+                                )
                               }
                               className="border-b border-slate-200 text-sm"
                             >
                               <Check
                                 className={`mr-2 h-4 w-4 ${
-                                  selectedChoices[step.title]?.includes(choice)
+                                  selectedChoices[
+                                    toCamelCase(
+                                      step.title
+                                    ) as keyof SelectedOptions
+                                  ]?.includes(choice.id)
                                     ? "opacity-100"
                                     : "opacity-0"
                                 }`}
                               />
-                              {choice}
+                              {choice.name}
                             </CommandItem>
                           ))}
                         </CommandGroup>
