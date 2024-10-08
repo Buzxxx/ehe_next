@@ -207,7 +207,7 @@ export function calculateVendorMatchBreakdown(
     const averageMatchPercentage = Math.round(getAveragePercentage(breakdown))
 
     return {
-      vendorName: vendor.vendorName,
+      ...vendor,
       breakdown: {
         regions: {
           percentage: breakdown.regionMatch.percentage,

@@ -92,9 +92,12 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   React.useEffect(() => {
     const updatedVendorsData =
       calculateVendorAverageMatchPercentage(selectedOptions)
+      
 
     setVendorsData(updatedVendorsData)
   }, [selectedOptions])
+
+
 
   return (
     <>
