@@ -31,6 +31,7 @@ const VendorCompareTable = ({
 
   const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
   const filteredSelectedOptionsKeys = Object.keys(filteredSelectedOptions)
+  console.log('vc', vendorComparisonData)
 
   // Toggle accordion for categories
   const toggleAccordion = (category: string) => {
@@ -87,15 +88,13 @@ const VendorCompareTable = ({
                     <ChevronDown />
                     <p className="font-medium capitalize text-sm flex-1">
                       {camelCaseToLowercase(key)}
+                      
                     </p>
                   </div>
                 </TableCell>
 
                 {vendorComparisonData.map(
-                  (vendor: {
-                    id: React.Key | null
-                    averageMatchPercentage: number
-                  }) => (
+                  (vendor: any) => (
                     <TableCell
                       key={vendor.id}
                       align="center"
@@ -103,7 +102,7 @@ const VendorCompareTable = ({
                       style={{ width: `${67 / vendorComparisonData.length}%` }}
                     >
                       <CircularProgress
-                        percentage={vendor.averageMatchPercentage}
+                        percentage={vendor.breakdown[key]?.percentage || 0}
                       />
                     </TableCell>
                   )
@@ -133,7 +132,7 @@ const VendorCompareTable = ({
                     >
                       {filteredSelectedOptions[key].map((item: number) => {
                         const vendorCategoryValues =
-                          vendor.breakdown[key]?.values || {}
+                          vendor.breakdown[key]?.values 
                         return (
                           <div key={item} className="mb-2">
                             {vendorCategoryValues[item] ? (

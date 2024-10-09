@@ -125,7 +125,7 @@ export function MultiSelectCombobox({
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[500px] ml-auto p-0">
+          <PopoverContent className="md:w-[500px] ml-auto p-0">
             <Command>
               {choices.length > 5 && (
                 <CommandInput placeholder="Search framework..." />

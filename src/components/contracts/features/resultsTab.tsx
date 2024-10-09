@@ -131,7 +131,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
           />
         </div>
 
-        <div className="flex-1 flex flex-col gap-4 md:w-3/4 ml-auto max-md:px-4 max-md:mt-4">
+        <div className="flex-1 flex flex-col gap-4 md:w-3/4 ml-auto  max-md:mt-4">
           {vendorsData.map((vendor) => (
             <VendorResultDisplayCard
               key={vendor.id}
@@ -151,7 +151,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
       </div>
 
       <div
-        className={`fixed left-0 bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full`}
+        className={`fixed left-0 bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 md:px-16 px-4 border w-full`}
       >
         <div className="justify-center gap-4 flex">
           {/* Filter button that opens the drawer on mobile devices */}
