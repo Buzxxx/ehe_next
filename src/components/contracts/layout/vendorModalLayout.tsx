@@ -3,10 +3,12 @@ import Modal from "@/components/ui/modal"
 import VendorDetailsModal from "../features/vendorDetails"
 import LoadingSpinner from "../ui/loadingSpinner"
 
+import styles from "@/app/contracts/contract.module.css"
+
 const VendorModalLayout = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <Modal>
+      <Modal className={styles.contractsLayout}>
         <VendorDetailsModal />
       </Modal>
     </Suspense>

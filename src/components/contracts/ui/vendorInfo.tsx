@@ -228,7 +228,7 @@ export const GeneralInfo = () => {
           </Form>
         </div>
 
-        <p className={` text-sm ${styles.textMuted}`}>
+        <p className={` text-sm ${styles.textMuted} `}>
           &#9432; This site is protected by reCAPTCHA and the Google Privacy
           Policy and Terms of Service apply.
         </p>

@@ -3,7 +3,13 @@
 import { MultiSelectCombobox } from "../ui/multiSelectComboBox"
 import { Button } from "@/components/ui/button"
 import styles from "@/app/contracts/contract.module.css"
-import { defaultSelectedOptions, getInputFieldsForStep, isSelectedOptionsEmpty, SelectedOptions, toCamelCase } from "./contractsObject"
+import {
+  defaultSelectedOptions,
+  getInputFieldsForStep,
+  isSelectedOptionsEmpty,
+  SelectedOptions,
+  toCamelCase,
+} from "./contractsObject"
 import { integrations, licensingModels, regions } from "../noSql"
 import { StepUIProps } from "./step1"
 
@@ -119,7 +125,6 @@ const Step2: React.FC<StepUIProps> = ({
             <Button
               onClick={handleNext}
               className={`${styles.btnSecondary} px-4 h-fit `}
-              disabled={isSelectedOptionsEmpty(selectedItems)}
             >
               Show Results
             </Button>

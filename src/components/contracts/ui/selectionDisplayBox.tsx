@@ -2,16 +2,9 @@
 
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
+import { getDisplayName } from "../features/contractsObject"
+
 import styles from "@/app/contracts/contract.module.css"
-import { getDisplayName, SelectedOptions } from "../features/contractsObject"
-import {
-  regions,
-  capabilities,
-  organizationalFunctions,
-  contractTypes,
-  licensingModels,
-  integrations,
-} from "../noSql"
 
 interface SelectionDisplayBoxProps {
   selectedItems: number[]
@@ -25,7 +18,7 @@ const SelectionDisplayBox: React.FC<SelectionDisplayBoxProps> = ({
   category,
 }) => {
   return (
-    <div className="border border-slate-300 mt-2 py-2 px-4 overflow-scroll">
+    <div className={`${styles.selectionDisplayBox} border border-slate-300 mt-2 py-2 px-4 overflow-x-clip overflow-y-auto h-full`}>
       <div className="flex gap-2 flex-wrap md:h-16 h-10">
         {Object.keys(selectedItems).length > 0 ? (
           selectedItems.map((itemId) => (

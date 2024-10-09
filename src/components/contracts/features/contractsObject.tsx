@@ -156,15 +156,16 @@ function getPercentageBreakdown(
     string,
     { percentage: number; breakdown: Record<number, boolean> }
   > = {}
-  const keys = Object.keys(selectedOptions) as (keyof SelectedOptions)[]
+  const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
+  const keys = Object.keys(filteredSelectedOptions) as (keyof SelectedOptions)[]
 
   for (const key of keys) {
     results[key] = calculateFeatureMatchPercentage(
-      selectedOptions[key],
+      filteredSelectedOptions[key],
       vendor[key]
     )
   }
-
+  console.log(results)
   return results
 }
 
@@ -175,6 +176,7 @@ function getAveragePercentage(
     (acc, val) => acc + val.percentage,
     0
   )
+  if (totalPercentage === 0) return 0
   return totalPercentage / Object.keys(breakdown).length
 }
 

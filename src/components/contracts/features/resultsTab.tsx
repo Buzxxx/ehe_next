@@ -9,12 +9,14 @@ import {
   calculateVendorAverageMatchPercentage,
   calculateVendorMatchBreakdown,
   defaultSelectedOptions,
+  isSelectedOptionsEmpty,
   SelectedOptions,
   Vendor,
 } from "../features/contractsObject"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
+import { useToast } from "@/components/ui/use-toast"
 
 import styles from "@/app/contracts/contract.module.css"
 import VendorCompareModal from "./vendorCompareModal"
@@ -38,6 +40,8 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   isDrawerOpen,
   setIsDrawerOpen,
 }) => {
+  const { toast } = useToast()
+
   // Store the vendors data in a state variable so that we can update it
   // when the user selects new options
   const [vendorsData, setVendorsData] = React.useState<Vendor[]>(vendors)
@@ -70,9 +74,21 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   // This function is called when the user clicks the compare button
   // It calculates the match breakdown for the selected vendors and shows the modal
   const handleShowComparison = React.useCallback(() => {
-    const data = calculateVendorMatchBreakdown(selectedOptions, selectedVendors)
-    setComparisonData(data)
-    setShowComparison(true)
+    if (isSelectedOptionsEmpty(selectedOptions)) {
+      toast({
+        title: "Please select an option!",
+        variant: "destructive",
+        description: " Select at least one option/filter to compare vendors.",
+        className: 'sm:top-0 top-0'
+      })
+    } else {
+      const data = calculateVendorMatchBreakdown(
+        selectedOptions,
+        selectedVendors
+      )
+      setComparisonData(data)
+      setShowComparison(true)
+    }
   }, [selectedOptions, selectedVendors])
 
   // This function is called when the user selects a vendor in the results tab
@@ -92,12 +108,9 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
   React.useEffect(() => {
     const updatedVendorsData =
       calculateVendorAverageMatchPercentage(selectedOptions)
-      
 
     setVendorsData(updatedVendorsData)
   }, [selectedOptions])
-
-
 
   return (
     <>
