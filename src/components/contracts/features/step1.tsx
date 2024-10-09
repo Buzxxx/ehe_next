@@ -76,7 +76,7 @@ const Step1: React.FC<StepUIProps> = ({
 
   return (
     <>
-      <div className="flex flex-col gap-12 md:w-3/4 mx-auto max-md:px-4 pb-20">
+      <div className="flex flex-col gap-12 md:w-3/4 mx-auto pb-20">
         <MultiSelectCombobox
           key={steps[0].title}
           title={steps[0].title}
@@ -123,9 +123,9 @@ const Step1: React.FC<StepUIProps> = ({
           }
         />
         <div
-          className={`fixed left-0 bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 px-16 border w-full mt-8`}
+          className={`fixed left-0 bottom-0 z-50 flex justify-end gap-8 items-center ${styles.bgAccentMuted} bg-gray-300/50 backdrop-blur-3xl py-3 md:px-16 px-4 border w-full mt-8`}
         >
-          <div className="justify-center gap-4 flex">
+          <div className="gap-4 flex ">
             <Button
               className={`${styles.btnSecondary} h-fit `}
               onClick={handleReset}

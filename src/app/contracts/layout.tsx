@@ -7,7 +7,7 @@ export default function ContractsLayout({
   modal,
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
-    <div className={styles.contractsLayout}>
+    <div className={`${styles.contractsLayout} contractsLayout`}>
       {modal}
       {children}
     </div>

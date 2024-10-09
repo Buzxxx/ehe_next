@@ -32,6 +32,14 @@ const VendorCompareTable = ({
   const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
   const filteredSelectedOptionsKeys = Object.keys(filteredSelectedOptions)
 
+  console.log(
+    Object.values(
+      vendorComparisonData[1].breakdown[filteredSelectedOptionsKeys[0]]
+        .breakdown
+    )
+  )
+  console.log(filteredSelectedOptionsKeys)
+
   // Toggle accordion for categories
   const toggleAccordion = (category: string) => {
     setOpenCategories((prev) => {
@@ -47,7 +55,7 @@ const VendorCompareTable = ({
 
   return (
     <Table>
-      <TableHeader >
+      <TableHeader>
         <TableRow>
           <TableHead className="w-1/3"></TableHead>
           {vendorComparisonData.map((vendor: Vendor) => (
@@ -55,7 +63,6 @@ const VendorCompareTable = ({
               key={vendor.id}
               className="text-center font-bold text-xs"
               style={{ width: `${67 / vendorComparisonData.length}%` }}
-            
             >
               <div className="flex flex-col gap-2 items-center justify-start">
                 <Image
@@ -91,23 +98,18 @@ const VendorCompareTable = ({
                   </div>
                 </TableCell>
 
-                {vendorComparisonData.map(
-                  (vendor: {
-                    id: React.Key | null
-                    averageMatchPercentage: number
-                  }) => (
-                    <TableCell
-                      key={vendor.id}
-                      align="center"
-                      className="items-center justify-center p-0 py-2"
-                      style={{ width: `${67 / vendorComparisonData.length}%` }}
-                    >
-                      <CircularProgress
-                        percentage={vendor.averageMatchPercentage}
-                      />
-                    </TableCell>
-                  )
-                )}
+                {vendorComparisonData.map((vendor: any) => (
+                  <TableCell
+                    key={vendor.id}
+                    align="center"
+                    className="items-center justify-center p-0 py-2"
+                    style={{ width: `${67 / vendorComparisonData.length}%` }}
+                  >
+                    <CircularProgress
+                      percentage={vendor.breakdown[key]?.percentage || 0}
+                    />
+                  </TableCell>
+                ))}
               </TableRow>
 
               {/* Secondary row for sub-items comparison (accordion content) */}
@@ -133,7 +135,7 @@ const VendorCompareTable = ({
                     >
                       {filteredSelectedOptions[key].map((item: number) => {
                         const vendorCategoryValues =
-                          vendor.breakdown[key]?.values || {}
+                          vendor.breakdown[key]?.breakdown || []
                         return (
                           <div key={item} className="mb-2">
                             {vendorCategoryValues[item] ? (

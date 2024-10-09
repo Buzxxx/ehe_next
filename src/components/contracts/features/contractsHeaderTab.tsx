@@ -12,12 +12,12 @@ const ContractsHeaderTab = ({
 
   return (
     <div
-      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto w-full max-md:px-4 mt-12`}
+      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto w-full max-sm:px-4 mt-12`}
     >
       {ContractSteps.map((step, index) => (
         <React.Fragment key={index}>
           <div
-            className={`cursor-pointer py-4 p-2 text-center flex gap-1 items-center justify-center  flex-1 font-medium text-xs md:text-sm ${
+            className={`cursor-pointer py-4 sm:p-2 text-center flex gap-1 items-center justify-center  flex-1 font-medium text-xs md:text-sm ${
               activeStep === index ? styles.textSecondary : "text-gray-500"
             }`}
             onClick={() => setActiveStep(index)}
@@ -28,7 +28,7 @@ const ContractsHeaderTab = ({
                   ? styles.bgSecondary + " " + styles.textWhitePrimary
                   : styles.bgTertiary + " text-gray-300"
               } 
-              } rounded-full p-2 h-5 w-5 flex items-center justify-center  text-xs `}
+              } rounded-full sm:p-2 sm:h-5 sm:w-5 w-4 h-4 flex items-center justify-center  sm:text-xs text-[0.75rem] `}
             >
               {index + 1}
             </span>
