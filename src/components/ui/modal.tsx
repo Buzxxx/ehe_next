@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
   return (
     <Dialog open={true} defaultOpen={true} onOpenChange={handleOpenChange} >
       <DialogOverlay className="">
-        <DialogContent className="max-w-6xl overflow-scroll h-full">{children}</DialogContent>
+        <DialogContent className="max-w-6xl overflow-auto h-full">{children}</DialogContent>
       </DialogOverlay>
     </Dialog>
   )

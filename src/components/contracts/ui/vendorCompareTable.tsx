@@ -54,7 +54,7 @@ const VendorCompareTable = ({
   }
 
   return (
-    <Table>
+    <Table className=" w-full  static overflow-hidden ">
       <TableHeader>
         <TableRow>
           <TableHead className="w-1/3"></TableHead>
@@ -78,7 +78,7 @@ const VendorCompareTable = ({
         </TableRow>
       </TableHeader>
 
-      <TableBody>
+      <TableBody className="h-full overflow-auto">
         {filteredSelectedOptionsKeys.map((key) => {
           const isOpen = openCategories.has(key)
 
@@ -86,7 +86,7 @@ const VendorCompareTable = ({
             <React.Fragment key={key}>
               {/* Primary row for category name and average match percentages */}
               <TableRow
-                className={`cursor-pointer ${isOpen && "border-0"}`}
+                className={`cursor-pointer   ${isOpen && "border-0"}`}
                 onClick={() => toggleAccordion(key)}
               >
                 <TableCell className="w-1/3 p-0 pl-2">
@@ -114,7 +114,7 @@ const VendorCompareTable = ({
 
               {/* Secondary row for sub-items comparison (accordion content) */}
               {isOpen && (
-                <TableRow className="border-b border-slate-200  w-full ml-4">
+                <TableRow className="border-b border-gray-200  w-full ml-4  ">
                   {/* Display the sub-items vertically for each vendor */}
                   <TableCell className="w-1/3 p-0 pl-8">
                     {filteredSelectedOptions[key].map((item: number) => (

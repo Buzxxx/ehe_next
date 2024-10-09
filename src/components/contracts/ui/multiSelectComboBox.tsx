@@ -80,7 +80,7 @@ export function MultiSelectCombobox({
 
   return (
     <div
-      className={`flex md:flex-row flex-col md:gap-6 gap-2  rounded-xl shadow-lg p-4 ${styles.vendorResultDisplayCard} border border-slate-200`}
+      className={`flex md:flex-row flex-col md:gap-6 gap-2  rounded-xl shadow-lg p-4  border border-slate-200`}
     >
       <div className="flex gap-4 items-start justify-between md:hidden">
         <Image

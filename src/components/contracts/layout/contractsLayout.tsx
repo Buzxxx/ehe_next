@@ -46,9 +46,9 @@ const ContractsLayout = () => {
   ]
 
   return (
-    <div className={`bg-gray-100 overflow-hidden w-full relative`}>
+    <div className={`bg-gray-100 overflow-hidden w-full relative overflow-auto`}>
       <ContractsNavbar />
-      <div className=" flex flex-col md:gap-12  min-h-screen overflow-hidden w-full">
+      <div className=" flex flex-col md:gap-12  min-h-screen overflow-hidden w-full ">
         <ContractsHeaderTab
           activeStep={activeTab}
           setActiveStep={setActiveTab}
