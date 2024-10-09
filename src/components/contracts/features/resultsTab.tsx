@@ -47,7 +47,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
 
   // Store the data for the comparison modal in a state variable
   const [comparisonData, setComparisonData] = React.useState<
-    { vendorName: string; breakdown: {}; averageMatchPercentage: number }[]
+    { vendorName: string; breakdown: {} }[]
   >([])
 
   // This function is called when the user selects new options in the filter

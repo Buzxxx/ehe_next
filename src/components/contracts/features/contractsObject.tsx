@@ -142,7 +142,6 @@ function calculateFeatureMatchPercentage(
   selectedValues.forEach((value) => {
     breakdown[value] = vendorValues.includes(value)
   })
-
   const matches = Object.values(breakdown).filter(Boolean).length
   const percentage = Math.round((matches / selectedValues.length) * 100)
 
@@ -150,35 +149,23 @@ function calculateFeatureMatchPercentage(
 }
 
 function getPercentageBreakdown(
-  vendor: Vendor,
-  selectedOptions: SelectedOptions
+  selectedOptions: SelectedOptions,
+  vendor: Vendor
 ) {
-  return {
-    regionMatch: calculateFeatureMatchPercentage(
-      vendor.regions,
-      selectedOptions.regions
-    ),
-    capabilitiesMatch: calculateFeatureMatchPercentage(
-      vendor.capabilities,
-      selectedOptions.capabilities
-    ),
-    organizationalFunctionMatch: calculateFeatureMatchPercentage(
-      vendor.organizationalFunctions,
-      selectedOptions.organizationalFunctions
-    ),
-    contractTypeMatch: calculateFeatureMatchPercentage(
-      vendor.contractTypes,
-      selectedOptions.contractTypes
-    ),
-    licensingModelMatch: calculateFeatureMatchPercentage(
-      vendor.licensingModels,
-      selectedOptions.licensingModels
-    ),
-    integrationMatch: calculateFeatureMatchPercentage(
-      vendor.integrations,
-      selectedOptions.integrations
-    ),
+  const results: Record<
+    string,
+    { percentage: number; breakdown: Record<number, boolean> }
+  > = {}
+  const keys = Object.keys(selectedOptions) as (keyof SelectedOptions)[]
+
+  for (const key of keys) {
+    results[key] = calculateFeatureMatchPercentage(
+      selectedOptions[key],
+      vendor[key]
+    )
   }
+
+  return results
 }
 
 function getAveragePercentage(
@@ -202,39 +189,11 @@ export function calculateVendorMatchBreakdown(
 
   // Calculate the match percentages for the filtered vendors only
   return filteredVendors.map((vendor) => {
-    const breakdown = getPercentageBreakdown(vendor, selectedOptions)
-
-    const averageMatchPercentage = Math.round(getAveragePercentage(breakdown))
+    const breakdown = getPercentageBreakdown(selectedOptions, vendor)
 
     return {
       ...vendor,
-      breakdown: {
-        regions: {
-          percentage: breakdown.regionMatch.percentage,
-          values: breakdown.regionMatch.breakdown,
-        },
-        capabilities: {
-          percentage: breakdown.capabilitiesMatch.percentage,
-          values: breakdown.capabilitiesMatch.breakdown,
-        },
-        organizationalFunctions: {
-          percentage: breakdown.organizationalFunctionMatch.percentage,
-          values: breakdown.organizationalFunctionMatch.breakdown,
-        },
-        contractTypes: {
-          percentage: breakdown.contractTypeMatch.percentage,
-          values: breakdown.contractTypeMatch.breakdown,
-        },
-        licensingModels: {
-          percentage: breakdown.licensingModelMatch.percentage,
-          values: breakdown.licensingModelMatch.breakdown,
-        },
-        integrations: {
-          percentage: breakdown.integrationMatch.percentage,
-          values: breakdown.integrationMatch.breakdown,
-        },
-      },
-      averageMatchPercentage,
+      breakdown,
     }
   })
 }
@@ -244,10 +203,10 @@ export function calculateVendorAverageMatchPercentage(
 ) {
   return vendors
     .map((vendor) => {
-      const breakdown = getPercentageBreakdown(vendor, selectedOptions)
+      const breakdown = getPercentageBreakdown(selectedOptions, vendor)
       const averageMatchPercentage = Math.floor(getAveragePercentage(breakdown))
 
-      return { ...vendor, vendorMatchPercentage:averageMatchPercentage }
+      return { ...vendor, vendorMatchPercentage: averageMatchPercentage }
     })
     .sort((a, b) => b.vendorMatchPercentage - a.vendorMatchPercentage)
 }
