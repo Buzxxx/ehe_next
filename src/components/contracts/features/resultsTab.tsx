@@ -158,6 +158,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
               vendorServices={vendor.vendorServices}
               vendorMatchPercentage={vendor.vendorMatchPercentage}
               isVerified={vendor.isVerified}
+              estYr={vendor.estYr}
             />
           ))}
         </div>

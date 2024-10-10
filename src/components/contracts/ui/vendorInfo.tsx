@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Vendor } from "../features/contractsObject"
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -25,7 +26,7 @@ const formSchema = z.object({
   message: z.string().min(2),
 })
 
-export const GeneralInfo = () => {
+export const GeneralInfo = ({ vendor }: { vendor: Vendor }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,20 +76,7 @@ export const GeneralInfo = () => {
           <div
             className={`${styles.bgPrimary} px-4 py-6 rounded-lg shadow-lg `}
           >
-            <p className={`text-sm ${styles.textGray}`}>
-              SirionLabs, the SaaS leader in enterprise contract management
-              (CLM), helps organizations manage the complete contracting
-              lifecycle on a single, easy-to-use platform. Our AI-led, smarter
-              contracting platform, SirionOne, unlocks the power of contract
-              intelligence and brings enterprise teams together across the
-              contracting lifecycle to drive business acceleration, mitigate
-              risk, and enhance value realization in commercial engagements.
-              SirionOne’s end-to-end capabilities – from contract analytics and
-              authoring to ongoing obligation and compliance management – are
-              trusted by over 200 of the world’s most successful organizations
-              to manage 5+ million contracts worth over $450 billion across 70+
-              countries.
-            </p>
+            <p className={`text-sm ${styles.textGray}`}>{vendor.description}</p>
           </div>
         </div>
         <div>
@@ -99,25 +87,23 @@ export const GeneralInfo = () => {
             className={`${styles.bgPrimary} px-4 py-6 rounded-lg shadow-lg `}
           >
             <p className={`text-sm ${styles.textGray}`}>
-              SirionOne leverages cutting-edge technologies including AI, NLP,
-              and machine learning to enable end-to-end management of the
-              contract lifecycle. It leverages configurable workflows,
+              {vendor.vendorName} leverages cutting-edge technologies including
+              AI, NLP, and machine learning to enable end-to-end management of
+              the contract lifecycle. It leverages configurable workflows,
               pre-approved clause and template libraries, advanced collaboration
               capabilities and AI-powered legal review to enable the creation of
               stronger, compliant contracts, faster than ever before. <br />{" "}
               <br />
-              SirionOne helps enterprises digitize their existing contracts to
-              analyze hidden risks and opportunities across their legacy
-              contract portfolio. It plugs into an enterprise’s existing tech
-              stack, pulls in contracts and associated artefacts from across
-              various systems, and uses AI to digitize legacy contracts
+              {vendor.vendorName} helps enterprises digitize their existing
+              contracts to analyze hidden risks and opportunities across their
+              legacy contract portfolio. It plugs into an enterprise’s existing
+              tech stack, pulls in contracts and associated artefacts from
+              across various systems, and uses AI to digitize legacy contracts
               (including the auto-capture of 100s of metadata fields), and
               migrate them to a centralized repository. These contracts can then
-              be easily interrogated for insights. <br /> <br /> SirionOne
-              offers advanced capabilities for tracking the embedded obligations
-              and service levels till fulfilment and eventual renewal or
-              expiration. This applies to new contracts authored in SirionOne as
-              well as digitzed legacy contracts.
+              be easily interrogated for insights. <br /> <br />{" "}
+              {vendor.vendorName} offers advanced capabilities for tracking the embedded obligations and service levels till fulfilment and eventual renewal or expiration. This applies to new contracts authored in{" "}
+              {vendor.vendorName} as well as digitzed legacy contracts.
             </p>
           </div>
         </div>
@@ -221,7 +207,10 @@ export const GeneralInfo = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className={`${styles.btnSecondary} block w-fit ml-auto mt-2`}>
+              <Button
+                type="submit"
+                className={`${styles.btnSecondary} block w-fit ml-auto mt-2`}
+              >
                 Submit
               </Button>
             </form>

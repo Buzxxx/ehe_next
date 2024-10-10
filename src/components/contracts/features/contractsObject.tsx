@@ -27,6 +27,7 @@ export interface Vendor {
   logo: string
   email: string
   website: string
+  estYr: number
   description: string
   regions: number[]
   capabilities: number[]
