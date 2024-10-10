@@ -3,6 +3,7 @@
  */
 
 import VendorModalLayout from "@/components/contracts/layout/vendorModalLayout"
+
 const VendorPage = () => {
   return <VendorModalLayout />
 }

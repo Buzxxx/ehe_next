@@ -21,6 +21,7 @@ interface VendorResultDisplayCardProps {
   vendorServices: string
   vendorMatchPercentage: number
   isVerified: boolean
+  estYr: number
 }
 
 const VendorResultDisplayCard = ({
@@ -34,6 +35,7 @@ const VendorResultDisplayCard = ({
   vendorServices,
   vendorMatchPercentage,
   isVerified,
+  estYr
 }: VendorResultDisplayCardProps) => {
   const router = useRouter()
 
@@ -77,7 +79,7 @@ const VendorResultDisplayCard = ({
               <h4 className={`${styles.textPrimary} font-bold`}>
                 {vendorName}
               </h4>
-              <p className={`${styles.textGray} text-xs`}>Estd. 1947</p>
+              <p className={`${styles.textGray} text-xs`}>Estd. {estYr}</p>
             </div>
           </div>
 
