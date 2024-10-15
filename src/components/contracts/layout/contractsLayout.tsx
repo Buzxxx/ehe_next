@@ -10,6 +10,7 @@ import { defaultSelectedOptions } from "../features/contractsObject"
 import Step1 from "../features/step1"
 import Step2 from "../features/step2"
 import ResultsTab from "../features/resultsTab"
+import ContractsFooter from "../features/contractsFooter"
 
 const ContractsLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
@@ -46,7 +47,7 @@ const ContractsLayout = () => {
   ]
 
   return (
-    <div className={`bg-gray-100 overflow-hidden w-full relative overflow-auto`}>
+    <div className={`bg-gray-100 overflow-hidden w-full relative pb-12`}>
       <ContractsNavbar />
       <div className=" flex flex-col md:gap-12  min-h-screen overflow-hidden w-full ">
         <ContractsHeaderTab
@@ -55,6 +56,7 @@ const ContractsLayout = () => {
         />
         <div className="md:px-16 px-4 relative">{steps[activeTab]}</div>
       </div>
+      <ContractsFooter />
     </div>
   )
 }
