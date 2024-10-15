@@ -41,7 +41,7 @@ const ContractsNavbar = () => {
           }`}
         >
           <li className=" cursor-pointer">Home</li>
-          <li className=" cursor-pointer">About </li>
+          <li className=" cursor-pointer">Help </li>
           <li className=" cursor-pointer">Vendor List</li>
           <li className=" cursor-pointer">Register</li>
           <li className=" cursor-pointer">Login</li>

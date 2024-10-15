@@ -21,7 +21,7 @@ import SelectionDisplayBox from "./selectionDisplayBox"
 import Image from "next/image"
 
 import styles from "@/app/contracts/contract.module.css"
-import { toCamelCase } from "../features/contractsObject"
+import { getDisplayName, toCamelCase } from "../features/contractsObject"
 
 interface MultiSelectComboboxProps {
   title: string
@@ -128,7 +128,7 @@ export function MultiSelectCombobox({
           <PopoverContent className="md:w-[500px] ml-auto p-0">
             <Command>
               {choices.length > 5 && (
-                <CommandInput placeholder="Search framework..." />
+                <CommandInput placeholder="Search..." />
               )}
 
               <CommandList>
@@ -137,7 +137,7 @@ export function MultiSelectCombobox({
                   {choices.map((choice) => (
                     <CommandItem
                       key={choice.id}
-                      value={choice.id.toString()}
+                      value={getDisplayName(title, choice.id)}
                       onSelect={() => {
                         handleSelectItem(choice.id)
                       }}
