@@ -1,8 +1,7 @@
 "use client"
 
-import ContractLogoPlaceholder from "../ui/contractLogoPlaceholder"
 import { Input } from "@/components/ui/input"
-import { SearchIcon, Menu } from "lucide-react"
+import { Search, MenuIcon } from "@/components/ui/icons"
 
 import styles from "@/app/contracts/contract.module.css"
 import { Button } from "@/components/ui/button"
@@ -27,7 +26,7 @@ const ContractsNavbar = () => {
             placeholder="Search..."
             className={`border-gray-500 bg-transparent ${styles.navSearch}`}
           />
-          <SearchIcon className="absolute right-2 top-1/2 -translate-y-1/2" />
+          <Search className="absolute right-2 top-1/2 -translate-y-1/2" />
         </div>
         <ul className="md:flex gap-8 justify-between items-center hidden">
           <li className=" cursor-pointer">Home</li>
@@ -42,7 +41,7 @@ const ContractsNavbar = () => {
           }`}
         >
           <li className=" cursor-pointer">Home</li>
-          <li className=" cursor-pointer">About </li>
+          <li className=" cursor-pointer">Help </li>
           <li className=" cursor-pointer">Vendor List</li>
           <li className=" cursor-pointer">Register</li>
           <li className=" cursor-pointer">Login</li>
@@ -51,7 +50,7 @@ const ContractsNavbar = () => {
           className="bg-transparent md:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Menu color="black" />
+          <MenuIcon color="black" />
         </Button>
       </div>
     </div>

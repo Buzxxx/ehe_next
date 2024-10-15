@@ -1,7 +1,7 @@
 // /components/contracts/ui/selectionDisplayBox.tsx
 
 import { Badge } from "@/components/ui/badge"
-import { X } from "lucide-react"
+import { X } from "@/components/ui/icons"
 import { getDisplayName } from "../features/contractsObject"
 
 import styles from "@/app/contracts/contract.module.css"

@@ -14,7 +14,7 @@ import {
   Vendor,
 } from "../features/contractsObject"
 import { Button } from "@/components/ui/button"
-import { X } from "lucide-react"
+import {X} from '@/components/ui/icons'
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
 import { useToast } from "@/components/ui/use-toast"
 
@@ -79,7 +79,7 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
         title: "Please select an option!",
         variant: "destructive",
         description: " Select at least one option/filter to compare vendors.",
-        className: 'sm:top-0 top-0'
+        className: "sm:top-0 top-0",
       })
     } else {
       const data = calculateVendorMatchBreakdown(

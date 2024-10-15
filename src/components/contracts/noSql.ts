@@ -205,7 +205,7 @@ export const vendors = [
 export const regions = [
   { id: 1, name: "APAC" },
   { id: 2, name: "EMEA" },
-  { id: 3, name: "LatAm" },
+  { id: 3, name: "LATM " },
   { id: 4, name: "North America" },
 ]
 

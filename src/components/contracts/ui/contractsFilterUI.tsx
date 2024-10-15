@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, ChevronsUpDown } from "@/components/ui/icons"
 import { Label } from "@/components/ui/label"
 import styles from "@/app/contracts/contract.module.css"
 import { SelectedOptions, toCamelCase } from "../features/contractsObject"

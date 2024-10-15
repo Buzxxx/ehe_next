@@ -193,7 +193,8 @@ export function calculateVendorMatchBreakdown(
   // Calculate the match percentages for the filtered vendors only
   return filteredVendors.map((vendor) => {
     const breakdown = getPercentageBreakdown(selectedOptions, vendor)
-
+    const averageMatchPercentage = Math.floor(getAveragePercentage(breakdown))
+    vendor = { ...vendor, vendorMatchPercentage: averageMatchPercentage }
     return {
       ...vendor,
       breakdown,
