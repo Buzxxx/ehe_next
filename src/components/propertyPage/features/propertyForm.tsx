@@ -42,70 +42,87 @@ const PropertyForm = () => {
   }
 
   return (
-    <Form {...form}>
-      <h2 className="text-lg md:text-xl font-bold text-white mb-4">
-        Inquire Now
-      </h2>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-white">Name</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Your Name*"
-                  {...field}
-                  className="bg-white/80 border-none rounded-md"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-white">Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Your Email Address"
-                  {...field}
-                  className="bg-white/80 border-none rounded-md"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-white">Phone</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Your Phone Number"
-                  {...field}
-                  className="bg-white/80 border-none rounded-md"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button
-          type="submit"
-          className="block w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md"
+    <div className="mt-8 ">
+      <Form {...form}>
+        <h2 className="text-lg md:text-xl font-bold  mb-4">Inquire Now</h2>
+        <div
+          className="relative w-full bg-cover bg-center rounded-2xl shadow-xl border-slate-400"
+          style={{ backgroundImage: `url('/property/property1.webp')` }}
         >
-          Submit
-        </Button>
-      </form>
-    </Form>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className=" bg-white/20 backdrop-blur-md rounded-2xl p-6 md:p-8 xl:p-12 shadow-sm"
+          >
+            <div className="space-y-2">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-white font-medium">
+                      Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Your Name*"
+                        {...field}
+                        className="placeholder:text-xs bg-white/80 border  rounded-md shadow-sm"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-white font-medium">
+                      Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Your Email Address"
+                        {...field}
+                        className="placeholder:text-xs bg-white/80 border  rounded-md shadow-sm"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-white font-medium ">
+                      Phone
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Your Phone Number*"
+                        {...field}
+                        className="placeholder:text-xs bg-white/80 border rounded-md shadow-sm"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="mt-10 w-full bg-orange-600 hover:bg-orange-500 text-white py-2 rounded-md shadow-md shadow-orange-600/40 hover:shadow-orange-500/50 transition"
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </Form>
+    </div>
   )
 }
 

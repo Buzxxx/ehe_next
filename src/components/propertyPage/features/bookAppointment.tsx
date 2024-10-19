@@ -55,7 +55,7 @@ const BookAppointment = () => {
   }
 
   return (
-    <article className="p-4 border border-gray-300/75 rounded-lg">
+    <article className="p-4 border border-gray-300/75 rounded-lg shadow-md">
       {/* Property Info */}
       <hgroup>
         <h4 className="text-xl font-semibold">Microtek Greenburg</h4>

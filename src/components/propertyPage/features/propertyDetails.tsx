@@ -7,6 +7,9 @@ import {
   Paintbrush2Icon,
 } from "@/components/ui/icons"
 import BookAppointment from "./bookAppointment"
+import PropertyListerInfo from "../ui/propertyListerInfo"
+import PropertyFeatures from "../ui/propertyFeatures"
+import PropertyForm from "@/components/propertyPage/features/propertyForm"
 
 const PropertyDetails = () => {
   const features = [
@@ -24,8 +27,26 @@ const PropertyDetails = () => {
     { icon: <Bath size={20} />, text: "2 ", category: "Bathrooms" },
     { icon: <Bed size={20} />, text: "3", category: "Bedrooms" },
   ]
+
+  const featuresData = [
+    { name: "Area", value: "2500 sqft" },
+    { name: "Bedrooms", value: "3" },
+    { name: "Bathrooms", value: "2" },
+    { name: "Parking", value: "1 Garage" },
+    { name: "Year Built", value: "2015" },
+    { name: "Furnishing", value: "Semi-Furnished" },
+    { name: "Balconies", value: "2" },
+    { name: "Floor", value: "5th out of 10" },
+    { name: "Power Backup", value: "24/7" },
+    { name: "Gym", value: "Fully Equipped" },
+    { name: "Swimming Pool", value: "Yes" },
+    { name: "Security", value: "24/7 CCTV Surveillance" },
+    { name: "Clubhouse", value: "Included" },
+    { name: "Elevators", value: "3" },
+  ]
+
   return (
-    <section className="flex md:flex-row flex-col gap-4 md:px-20 px-4 py-4 pt-2">
+    <section className="flex md:flex-row flex-col gap-8 md:px-20 px-4">
       <div className="md:w-2/3 w-full">
         <PropertyStatsOverview features={features} />
         <h3 className="text-2xl font-semibold mt-10">About This Home</h3>
@@ -55,9 +76,12 @@ const PropertyDetails = () => {
           to 3005 sq. ft. configuration. World Class facilities include Quick
           Summary
         </p>
+        <PropertyListerInfo />
+        <PropertyFeatures features={featuresData} />
       </div>
       <div className="md:w-1/3 w-full">
         <BookAppointment />
+        <PropertyForm />
       </div>
     </section>
   )

@@ -18,23 +18,23 @@ const Hero = () => {
   ]
 
   return (
-    <section className="md:px-20 px-4 py-8 h-[80vh] flex gap-4">
+    <section className="md:px-20 px-4 py-4 h-[75vh] flex gap-4">
       <div className="w-2/3 relative h-full">
         <Image
           src="/property/property1.webp"
           alt="Property Image"
           height={600}
           width={960}
-          className="rounded-xl h-full object-cover"
+          className="rounded-xl h-full object-cover shadow-xl"
           quality={90}
           priority={true}
         />
         <div className="absolute bottom-4 right-4 flex justify-end gap-4 items-center">
-          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5">
+          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5 shadow-inner ">
             <Inquiry size={20} />
             Inquire
           </Button>
-          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5">
+          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5 shadow-inner ">
             <Call size={20} />
             Request a callback
           </Button>

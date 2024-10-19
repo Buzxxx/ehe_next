@@ -64,7 +64,7 @@ const Gallery = ({ images }: { images: string[] }) => {
           />
           <Button
             onClick={viewAllPhotos}
-            className="absolute bottom-2 right-2 w-fit rounded-lg bg-slate-800 hover:bg-slate-900 text-slate-200 text-xs h-fit py-3  drop-shadow-2xl flex gap-2"
+            className="absolute bottom-2 right-2 w-fit rounded-lg bg-slate-800 hover:bg-slate-900 text-slate-200 text-xs h-fit py-3 flex gap-2 shadow-inner border border-slate-400/70"
           >
             <Images size={16} />
             View All Photos

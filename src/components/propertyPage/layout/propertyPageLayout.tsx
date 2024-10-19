@@ -22,6 +22,7 @@ const PropertyPageLayout = () => {
       <Navbar logo="/property/icons/logo.svg" navLinks={navLinks} user={user} />
       <Hero />
       <PropertyDetails />
+      
     </>
   )
 }
