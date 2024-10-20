@@ -14,13 +14,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, ChevronsUpDown } from "@/components/ui/icons"
 import { Label } from "@/components/ui/label"
 import styles from "@/app/contracts/contract.module.css"
-import { SelectedOptions, toCamelCase } from "../features/contractsObject"
+import {
+  getDisplayName,
+  SelectedOptions,
+  toCamelCase,
+} from "../features/contractsObject"
 
 interface ContractsFilterUIProps {
-  stepInputFields: { title: string; choices: {id: number, name: string}[] }[]
+  stepInputFields: { title: string; choices: { id: number; name: string }[] }[]
   selectedChoices: SelectedOptions
   openPopover: { [key: string]: boolean }
   handleOpenChange: (stepTitle: string, isOpen: boolean) => void
@@ -93,7 +97,12 @@ const ContractsFilterUI: React.FC<ContractsFilterUIProps> = ({
                           {step.choices.map((choice) => (
                             <CommandItem
                               key={choice.id}
-                              value={choice.id.toString()}
+                              value={getDisplayName(
+                                toCamelCase(
+                                  step.title
+                                ) as keyof SelectedOptions,
+                                choice.id
+                              )}
                               onSelect={() =>
                                 handleCheckboxChange(
                                   toCamelCase(

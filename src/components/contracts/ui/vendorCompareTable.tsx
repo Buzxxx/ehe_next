@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import Image from "next/image"
 import {
   SelectedOptions,
   filterSelectedOptions,
@@ -6,9 +7,21 @@ import {
   Vendor,
   camelCaseToLowercase,
 } from "@/components/contracts/features/contractsObject"
-import { Check, X } from "lucide-react"
-import CircularProgress from "@/components/ui/icons/circularProgressBar"
-import ChevronDown from "@/components/ui/icons/chevronDown"
+import {
+  Download,
+  CircularProgress,
+  ChevronDown,
+  Check,
+  X,
+} from "@/components/ui/icons"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import {
   Table,
@@ -18,7 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import Image from "next/image"
+import styles from "@/app/contracts/contract.module.css"
 
 const VendorCompareTable = ({
   selectedOptions,
@@ -27,6 +40,7 @@ const VendorCompareTable = ({
   selectedOptions: SelectedOptions
   vendorComparisonData: any
 }) => {
+  console.log("vendorComparisonData", vendorComparisonData)
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
 
   const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
@@ -57,24 +71,42 @@ const VendorCompareTable = ({
     <Table className=" w-full  static overflow-hidden ">
       <TableHeader>
         <TableRow>
-          <TableHead className="w-1/3"></TableHead>
+          <TableHead className="w-1/3 h-fit">{/* Download button */}</TableHead>
           {vendorComparisonData.map((vendor: Vendor) => (
             <TableHead
               key={vendor.id}
               className="text-center font-bold text-xs"
               style={{ width: `${67 / vendorComparisonData.length}%` }}
             >
-              <div className="flex flex-col gap-2 items-center justify-start">
+              <div className="flex flex-col gap-2 items-center justify-start mb-2">
                 <Image
                   src={vendor.logo}
                   alt="vendor logo"
                   height={120}
                   width={120}
+                  className="h-12 w-12 object-cover"
                 />
                 {vendor.vendorName}
+                <CircularProgress percentage={vendor.vendorMatchPercentage} />
               </div>
             </TableHead>
           ))}
+
+          <TableHead align="center">
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className={`px-4 py-2 flex gap-2 items-center rounded-md  border`}
+              >
+                <Download size={16} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="mr-8 drop-shadow-xl">
+                <DropdownMenuLabel>Download As</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>PDF</DropdownMenuItem>
+                <DropdownMenuItem>JPG</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TableHead>
         </TableRow>
       </TableHeader>
 
