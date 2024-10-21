@@ -32,7 +32,7 @@ const PropertyFeatures = ({
       <h4 className="text-xl font-semibold">Property Features</h4>
       <div className="w-full flex md:flex-row flex-col mt-3 justify-between md:gap-20 md:max-h-72 max-h-64  overflow-y-auto md:px-0 md:pr-8 px-4">
         {/* Left Column */}
-        <div className="flex-1">
+        <div className="flex-1 snap-mandatory snap-always snap-end">
           {leftColumnFeatures.map((feature, index) => (
             <PropertyFeature
               key={index}
@@ -43,7 +43,7 @@ const PropertyFeatures = ({
         </div>
 
         {/* Right Column */}
-        <div className="flex-1">
+        <div className="flex-1 snap-mandatory snap-always snap-end">
           {rightColumnFeatures.map((feature, index) => (
             <PropertyFeature
               key={index + middleIndex} // Adjust key for the right column
