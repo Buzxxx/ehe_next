@@ -1,8 +1,8 @@
 const PropertyAbout = () => {
   return (
-    <>
+    <article>
       <h3 className="text-2xl font-semibold md:mt-8">About This Home</h3>
-      <p className="text-gray-700 text-sm md:mt-4 text-pretty">
+      <p className="text-gray-700 text-sm md:mt-4 mt-2 text-pretty">
         Microtek Greenburg, the name itself suggests that the whole place is
         surrounded with plenteous greenery so eco-friendly and healthy
         environment.
@@ -26,7 +26,7 @@ const PropertyAbout = () => {
         amenities. The spacious apartments range from 1480 sq. ft. to 3005 sq.
         ft. configuration. World Class facilities include Quick Summary
       </p>
-    </>
+    </article>
   )
 }
 

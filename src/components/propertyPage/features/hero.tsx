@@ -18,8 +18,8 @@ const Hero = () => {
   ]
 
   return (
-    <section className="md:px-20 px-4 md:py-4 py-2 md:h-[75dvh] h-[40svh] flex gap-2 flex-col md:flex-row">
-      <div className="md:w-2/3 w-full relative min-h-40 shadow-xl">
+    <section className="md:px-20 p-4 md:h-[75dvh] h-[60svh] flex gap-2 flex-col md:flex-row">
+      <div className="md:w-2/3 w-full relative min-h-56 shadow-xl">
         <Image
           src="/property/property1.webp"
           alt="Property Image"
