@@ -18,16 +18,16 @@ const Hero = () => {
   ]
 
   return (
-    <section className="md:px-20 px-4 py-4 h-[75vh] flex gap-4">
-      <div className="w-2/3 relative h-full">
+    <section className="md:px-20 px-4 md:py-4 py-2 md:h-[75dvh] h-[40svh] flex gap-2 flex-col md:flex-row">
+      <div className="md:w-2/3 w-full relative min-h-40 shadow-xl ">
         <Image
           src="/property/property1.webp"
           alt="Property Image"
-          height={600}
-          width={960}
-          className="rounded-xl h-full object-cover shadow-xl"
+          className="object-cover h-full"
           quality={90}
-          priority={true}
+          fill={true}
+          sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 33vw"
+          priority
         />
         <div className="absolute bottom-4 right-4 flex justify-end gap-4 items-center">
           <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5 shadow-inner ">
