@@ -19,22 +19,22 @@ const Hero = () => {
 
   return (
     <section className="md:px-20 px-4 md:py-4 py-2 md:h-[75dvh] h-[40svh] flex gap-2 flex-col md:flex-row">
-      <div className="md:w-2/3 w-full relative min-h-40 shadow-xl ">
+      <div className="md:w-2/3 w-full relative min-h-40 shadow-xl">
         <Image
           src="/property/property1.webp"
           alt="Property Image"
-          className="object-cover h-full"
+          className="object-cover h-full rounded-md"
           quality={90}
           fill={true}
           sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 33vw"
           priority
         />
         <div className="absolute bottom-4 right-4 flex justify-end gap-4 items-center">
-          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5 shadow-inner ">
+          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner ">
             <Inquiry size={20} />
             Inquire
           </Button>
-          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit text-sm text-slate-950 flex gap-1.5 shadow-inner ">
+          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner ">
             <Call size={20} />
             Request a callback
           </Button>
