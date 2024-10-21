@@ -7,29 +7,24 @@ import Avataar from "@/components/dashboard/ui/avataar"
 import NavMenu from "../ui/navMenu" // Importing the NavMenu component
 import { ChevronUp, MenuIcon } from "@/components/ui/icons"
 
-type NavLink = {
-  label: string
-  href: string
-}
-
-type User = {
-  isLoggedIn: boolean
-  avatarUrl?: string
-}
-
 interface NavbarProps {
-  logo: string // Logo URL
-  navLinks: NavLink[] // Array of nav links
-  user: User // User object for login state
   openFrom?: "left" | "right" | "top" // Prop to control from which side the menu opens
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  logo,
-  navLinks,
-  user,
-  openFrom = "top",
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ openFrom = "top" }) => {
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Properties", href: "/properties" },
+    { label: "Agents", href: "/agents" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
+  ]
+
+  const user = {
+    isLoggedIn: false,
+    avatarUrl: "",
+  }
   const [menuOpen, setMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -42,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({
         {/* Logo */}
         <Link href="/">
           <Image
-            src={logo}
+            src={'/property/icons/logo.svg'}
             alt="Property Logo"
             width={120}
             height={36}
