@@ -12,11 +12,11 @@ const PropertyStat = ({
   category: string
 }) => {
   return (
-    <div className="flex flex-col items-start space-y-1 ">
+    <div className="flex flex-col w-fit items-start space-y-1 ">
       <span className="text-gray-500 font-medium text-xs">{category}</span>
       <div className={`flex items-center space-x-1 justify-start`}>
         {icon}
-        <span className="text-sm">{text}</span>
+        <span className="text-sm font-medium">{text}</span>
       </div>
     </div>
   )
