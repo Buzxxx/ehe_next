@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button" // Assuming you have a button co
 import Image from "next/image"
 
 import { Bath, MapPin, Bed, SetSquare } from "@/components/ui/icons"
+import { shimmer, toBase64 } from "../features/properyPageObject"
 
 interface Property {
   title: string
@@ -21,10 +22,14 @@ const PropertyListingCard = ({ property }: { property: Property }) => {
       <div className="relative">
         <Image
           width={300}
-          height={300}
+          height={240}
           src={property.image}
           alt={property.title}
-          className="w-full md:h-60 h-48 object-cover"
+          className={`w-full md:h-60 h-48 object-cover `}
+          placeholder="blur" // Shimmer placeholder
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(
+            shimmer(300, 240)
+          )}`} // Shimmer effect
         />
         <div className="absolute top-3 left-3 bg-slate-800/80 hover:bg-slate-900 text-slate-200  text-sm font-medium px-3 py-1 rounded-lg backdrop-blur-md drop-shadow-xl">
           {property.status}
