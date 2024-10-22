@@ -16,6 +16,7 @@ const PropertyListerInfo = dynamic(() => import("../ui/propertyListerInfo"))
 const PropertyListingSection = dynamic(
   () => import("../features/propertyListingSection")
 )
+const Footer = dynamic(() => import("../features/footer"))
 
 const PropertyPageLayout = () => {
   return (
@@ -39,6 +40,7 @@ const PropertyPageLayout = () => {
       </section>
 
       <PropertyListingSection />
+      <Footer />
     </>
   )
 }
