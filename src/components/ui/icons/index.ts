@@ -12,7 +12,9 @@ import DotIcon from "./dotIcon"
 import FilterIcon from "./filterIcon"
 import GreenDot from "./greenDot"
 import Group from "./group"
+import Instagram from "./instagram"
 import Inquiry from "./inquiry"
+import Linkedin from './linkedin'
 import MenuIcon from "./menuIcon"
 import NotifIcon from "./notifIcon"
 import OpenEye from "./openEye"
@@ -20,6 +22,7 @@ import PersonIcon from "./personIcon"
 import Settings from "./settings"
 import SetSquare from "./setSquare"
 import Spinner from "./spinner"
+import Twitter from './twitter'
 import WhatsAppIcon from "./whatsAppIcon"
 import Work from "./work"
 
@@ -96,7 +99,9 @@ export {
   GreenDot,
   Group,
   Images,
+  Instagram,
   Inquiry,
+  Linkedin,
   List,
   LogOut,
   MapPin,
@@ -118,6 +123,7 @@ export {
   Share2,
   Spinner,
   Trash2,
+  Twitter,
   WhatsAppIcon,
   Work,
   X,

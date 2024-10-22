@@ -38,6 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ openFrom = "top" }) => {
         <Link href="/">
           <Image
             src={'/property/icons/logo.svg'}
+            priority
             alt="Property Logo"
             width={120}
             height={36}

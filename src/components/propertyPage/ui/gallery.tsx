@@ -5,11 +5,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 
 import { Images } from "@/components/ui/icons"
 
-const Gallery = ({ images }: { images: string[] }) => {
+const Gallery = ({ images }: { images: string | StaticImageData[] }) => {
   // Function to handle 'View All Photos' click
   const viewAllPhotos = () => {
     console.log("View All Photos clicked!")
@@ -20,6 +20,7 @@ const Gallery = ({ images }: { images: string[] }) => {
       {images[0] && (
         <div className="col-span-2 row-span-2">
           <Image
+            placeholder="blur"
             src={images[0]}
             alt="Gallery Image 1"
             width={400}
@@ -32,6 +33,7 @@ const Gallery = ({ images }: { images: string[] }) => {
       {images[1] && (
         <div className="md:col-span-1 col-span-2 md:row-span-2 row-span-1">
           <Image
+            placeholder="blur"
             src={images[1]}
             alt="Gallery Image 2"
             width={200}
@@ -44,6 +46,7 @@ const Gallery = ({ images }: { images: string[] }) => {
       {images[2] && (
         <div className="row-span-1">
           <Image
+            placeholder="blur"
             src={images[2]}
             alt="Gallery Image 3"
             width={200}
@@ -56,6 +59,7 @@ const Gallery = ({ images }: { images: string[] }) => {
       {images[3] && (
         <div className="relative">
           <Image
+            placeholder="blur"
             src={images[3]}
             alt="Gallery Image 4"
             width={200}

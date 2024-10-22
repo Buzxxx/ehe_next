@@ -8,20 +8,21 @@ import { Button } from "@/components/ui/button"
 import Inquiry from "@/components/ui/icons/inquiry"
 import Call from "@/components/ui/icons/call"
 
+import GalleryImg1 from "../../../../public/property/property1.webp"
+import GalleryImg2 from "../../../../public/property/property2.webp"
+import GalleryImg3 from "../../../../public/property/property3.webp"
+import GalleryImg4 from "../../../../public/property/property4.webp"
+
 // Array of images to pass to the Gallery
 const Hero = () => {
-  const galleryImages = [
-    "/property/property2.webp",
-    "/property/property3.webp",
-    "/property/property4.webp",
-    "/property/property1.webp",
-  ]
+  const galleryImages = [GalleryImg1, GalleryImg2, GalleryImg3, GalleryImg4]
 
   return (
     <section className="md:px-20 p-4 md:h-[75dvh] h-[60svh] flex gap-2 flex-col md:flex-row">
       <div className="md:w-2/3 w-full relative min-h-56 shadow-xl">
         <Image
-          src="/property/property1.webp"
+          src={GalleryImg1}
+          placeholder="blur"
           alt="Property Image"
           className="object-cover h-full rounded-md"
           quality={90}
