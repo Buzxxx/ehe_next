@@ -35,16 +35,12 @@ const VendorResultDisplayCard = ({
   vendorServices,
   vendorMatchPercentage,
   isVerified,
-  estYr
+  estYr,
 }: VendorResultDisplayCardProps) => {
   const router = useRouter()
 
   const openVendorModal = (vendorId: string) => {
     router.push(`/contracts/vendor/${vendorId}`)
-  }
-
-  const handleCheckboxClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    e.stopPropagation()
   }
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,37 +49,43 @@ const VendorResultDisplayCard = ({
 
   return (
     <div
-      onClick={() => openVendorModal(vendorId)}
       className={`flex md:p-6 px-2 py-4 gap-3 flex-col rounded-2xl drop-shadow-lg shadow-lg cursor-pointer ${styles.vendorResultDisplayCard}`}
     >
       <div className="flex items-center justify-between gap-4">
         <Input
           type="checkbox"
           className="bg-transparent border border-gray-300 h-4 w-4 self-start"
-          onClick={handleCheckboxClick}
           onChange={handleCheckboxChange}
           checked={isSelected}
         />
         <div className="flex justify-between items-stretch flex-1">
-          <div className="flex items-center gap-2 border-r border-slate-200 md:w-fit">
-            <span className="h-12 w-12 rounded-full border border-slate-200 bg-white p-1 flex items-center justify-center">
-              <Image
-                src={vendorLogo}
-                alt={`${vendorName} logo`}
-                width={160}
-                height={160}
-                className="rounded-full w-full"
-              />
-            </span>
-            <div>
-              <h4 className={`${styles.textPrimary} font-bold`}>
-                {vendorName}
-              </h4>
-              <p className={`${styles.textGray} text-xs`}>Estd. {estYr}</p>
+          <div
+            className="flex flex-col gap-2 w-[92%] "
+            onClick={() => openVendorModal(vendorId)}
+          >
+            <div className="flex items-center gap-2 border-r border-slate-200 md:w-fit">
+              <span className="h-12 w-12 rounded-full border border-slate-200 bg-white p-1 flex items-center justify-center">
+                <Image
+                  src={vendorLogo}
+                  alt={`${vendorName} logo`}
+                  width={160}
+                  height={160}
+                  className="rounded-full w-full"
+                />
+              </span>
+              <div>
+                <h4 className={`${styles.textPrimary} font-bold`}>
+                  {vendorName}
+                </h4>
+                <p className={`${styles.textGray} text-xs`}>Estd. {estYr}</p>
+              </div>
             </div>
+            <p className={`${styles.textGray} text-xs px-2 line-clamp-2`}>
+              {vendorDesc}
+            </p>
           </div>
 
-          <div className="flex flex-col gap-1 md:w-[12.5%] text-center">
+          <div className="flex flex-col gap-1 flex-1 md:w-[20%] text-center">
             <p className={`uppercase ${styles.textGray} text-xs text-center`}>
               Match %
             </p>
@@ -97,10 +99,6 @@ const VendorResultDisplayCard = ({
           </div>
         </div>
       </div>
-
-      <p className={`${styles.textGray} text-xs px-2 line-clamp-2`}>
-        {vendorDesc}
-      </p>
 
       <div className="flex rounded-lg bg-gray-400/10 md:p-4">
         <div className="flex justify-between w-full">
