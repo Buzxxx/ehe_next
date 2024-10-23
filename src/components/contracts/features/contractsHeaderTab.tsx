@@ -1,41 +1,83 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 import styles from "@/app/contracts/contract.module.css"
 
-const ContractsHeaderTab = ({
-  activeStep,
-  setActiveStep,
-}: {
+// Mock data for input fields in each step
+const inputFieldsForSteps: { [key: number]: string[] } = {
+  0: ["Capabilities", "Organizational Functions", "Contract Types"],
+  1: ["Vendor Details", "Pricing", "Support Requirements"],
+  2: ["Final Review", "Vendor Summary", "Contract Details"],
+}
+
+interface ContractsHeaderTabProps {
   activeStep: number
   setActiveStep: Dispatch<SetStateAction<number>>
+}
+
+const ContractsHeaderTab: React.FC<ContractsHeaderTabProps> = ({
+  activeStep,
+  setActiveStep,
 }) => {
   const ContractSteps = ["Step 1", "Step 2", "Results"]
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null)
 
   return (
-    <div
-      className={`flex justify-between items-center gap-1 md:w-3/4 mx-auto w-full max-sm:px-4 mt-12`}
-    >
+    <div className="flex justify-between items-center gap-4 md:w-3/4 mx-auto w-full px-4 mt-12 relative">
       {ContractSteps.map((step, index) => (
         <React.Fragment key={index}>
           <div
-            className={`cursor-pointer py-4 sm:p-2 text-center flex gap-1 items-center justify-center  flex-1 font-medium text-xs md:text-sm ${
-              activeStep === index ? styles.textSecondary : "text-gray-500"
+            className={`relative cursor-pointer py-4 sm:p-2 text-center flex gap-1 items-center justify-center flex-1 font-medium text-xs md:text-sm transition-all duration-300 ${
+              activeStep === index || activeStep > index
+                ? styles.textSecondary
+                : "text-gray-500"
             }`}
             onClick={() => setActiveStep(index)}
+            onMouseEnter={() => setHoveredStep(index)}
+            onMouseLeave={() => setHoveredStep(null)}
           >
+            {/* Progress Circle */}
             <span
-              className={`${
-                activeStep === index
-                  ? styles.bgSecondary + " " + styles.textWhitePrimary
-                  : styles.bgTertiary + " text-gray-300"
-              } 
-              } rounded-full sm:p-2 sm:h-5 sm:w-5 w-4 h-4 flex items-center justify-center  sm:text-xs text-[0.75rem] `}
+              className={`transition-all duration-300 ${
+                activeStep === index || activeStep > index
+                  ? `${styles.bgSecondary} text-white`
+                  : "bg-gray-200 text-gray-400"
+              } rounded-full p-3 md:p-4 w-8 h-8 flex items-center justify-center text-sm`}
             >
               {index + 1}
             </span>
-            {step}
+
+            {/* Tooltip on Hover */}
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>{step}</TooltipTrigger>
+                <TooltipContent side="bottom" sideOffset={12} align="start" className="text-left space-y-1">
+                  {inputFieldsForSteps[index]?.map((field, i) => (
+                    <p key={i} className="text-gray-600 " >
+                      {field}
+                    </p>
+                  ))}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
+
+          {/* Connecting Line */}
           {index !== ContractSteps.length - 1 && (
-            <div className="w-auto flex-1 h-px bg-gray-300"></div>
+            <div className="w-full h-1 flex-1 bg-gray-300 relative">
+              <div
+                className={`h-1 transition-all duration-300 ${
+                  activeStep > index ? styles.bgSecondary : "bg-gray-300"
+                }`}
+                style={{ width: activeStep > index ? "100%" : "0%" }}
+              />
+            </div>
           )}
         </React.Fragment>
       ))}

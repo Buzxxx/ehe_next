@@ -35,7 +35,6 @@ export interface Vendor {
   contractTypes: number[]
   licensingModels: number[]
   integrations: number[]
-  vendorLocation: string
   vendorServices: string
   vendorMatchPercentage: number
   isVerified: boolean
@@ -104,11 +103,68 @@ export function getInputFieldsForStep(step: number) {
   return stepInputFields.slice(step * 3, (step + 1) * 3)
 }
 
+// Helper function to determine if vendor's regions cover all available regions
+export const getVendorLocation = (vendorRegions: number[]): string => {
+  const allRegionIds = regions.map((region) => region.id)
+  const hasAllRegions = allRegionIds.every((regionId) =>
+    vendorRegions.includes(regionId)
+  )
+
+  if (hasAllRegions) {
+    return "Global"
+  }
+
+  // If not global, return the names of the matched regions, separated by commas
+  return vendorRegions
+    .map((regionId) => getDisplayName("regions", regionId))
+    .join(", ")
+}
+
+// Helper function to determine matched items except regions
+export const getMatchedFeatures = (
+  vendor: Vendor,
+  selectedOptions: SelectedOptions
+): string[] => {
+  const matchedFeatures: string[] = []
+
+  const categories = {
+    capabilities,
+    contractTypes,
+    organizationalFunctions,
+    licensingModels,
+    integrations,
+  }
+
+  // Loop through each category (except regions) and find matches
+  Object.keys(categories).forEach((category) => {
+    const categoryKey = category as keyof SelectedOptions
+    const selectedCategoryItems = selectedOptions[categoryKey]
+    const vendorCategoryItems = vendor[categoryKey]
+
+    const matchedItems = selectedCategoryItems.filter((item) =>
+      vendorCategoryItems.includes(item)
+    )
+
+    // Get the display names of the matched items
+    matchedItems.forEach((item) => {
+      matchedFeatures.push(getDisplayName(category, item))
+    })
+  })
+
+  return matchedFeatures
+}
+
 // Utility function to check if all selectedOptions are empty
 export function isSelectedOptionsEmpty(selectedOptions: SelectedOptions) {
   return Object.values(selectedOptions).every((options) => options.length === 0)
 }
 
+/**
+ * Converts a given string to camelCase.
+ *
+ * @param str The string to convert to camelCase
+ * @returns The string converted to camelCase
+ */
 export function toCamelCase(str: string) {
   // Split the string by spaces
   const words = str.split(" ")
@@ -126,13 +182,26 @@ export function toCamelCase(str: string) {
   return camelCased
 }
 
+/**
+ * Converts a camelCase string to lowercase with spaces between words.
+ * @param {string} str - The camelCase string to convert.
+ * @returns {string} The converted string.
+ * @example
+ * camelCaseToLowercase('helloWorld') // "hello world"
+ */
 export function camelCaseToLowercase(str: string): string {
   return str
     .replace(/([a-z])([A-Z])/g, "$1 $2") // Insert a space before each uppercase letter
     .toLowerCase() // Convert the entire string to lowercase
 }
 
-function calculateFeatureMatchPercentage(
+/**
+ * Calculate the percentage of selected values that match the vendor's values.
+ * @param {number[]} selectedValues - The values selected by the user.
+ * @param {number[]} vendorValues - The values supported by the vendor.
+ * @returns {{percentage: number, breakdown: Record<number, boolean>}} - An object containing the percentage and a breakdown of which values match.
+ */
+export function calculateFeatureMatchPercentage(
   selectedValues: number[],
   vendorValues: number[]
 ): { percentage: number; breakdown: Record<number, boolean> } {
