@@ -6,15 +6,19 @@ import React, { Dispatch, SetStateAction } from "react"
 import VendorResultDisplayCard from "../ui/vendorResultDisplayCard"
 import ContractsFilter from "./contractsFilter"
 import {
+  calculateFeatureMatchPercentage,
   calculateVendorAverageMatchPercentage,
   calculateVendorMatchBreakdown,
   defaultSelectedOptions,
+  getDisplayName,
+  getMatchedFeatures,
+  getVendorLocation,
   isSelectedOptionsEmpty,
   SelectedOptions,
   Vendor,
 } from "../features/contractsObject"
 import { Button } from "@/components/ui/button"
-import {X} from '@/components/ui/icons'
+import { X } from "@/components/ui/icons"
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
 import { useToast } from "@/components/ui/use-toast"
 
@@ -144,23 +148,28 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
           />
         </div>
 
-        <div className="flex-1 flex flex-col gap-4 md:w-3/4 ml-auto  max-md:mt-4">
-          {vendorsData.map((vendor) => (
-            <VendorResultDisplayCard
-              key={vendor.id}
-              vendorId={vendor.id}
-              isSelected={selectedVendors.includes(vendor.id)}
-              onSelectVendor={handleSelectVendor}
-              vendorName={vendor.vendorName}
-              vendorLogo={vendor.logo}
-              vendorDesc={vendor.description}
-              vendorLocation={vendor.vendorLocation}
-              vendorServices={vendor.vendorServices}
-              vendorMatchPercentage={vendor.vendorMatchPercentage}
-              isVerified={vendor.isVerified}
-              estYr={vendor.estYr}
-            />
-          ))}
+        <div className="flex-1 flex flex-col gap-4 md:w-3/4 ml-auto max-md:mt-4">
+          {vendorsData.map((vendor) => {
+            const vendorLocation = getVendorLocation(vendor.regions)
+            const vendorServices = getMatchedFeatures(vendor, selectedOptions)
+
+            return (
+              <VendorResultDisplayCard
+                key={vendor.id}
+                vendorId={vendor.id}
+                isSelected={selectedVendors.includes(vendor.id)}
+                onSelectVendor={handleSelectVendor}
+                vendorName={vendor.vendorName}
+                vendorLogo={vendor.logo}
+                vendorDesc={vendor.description}
+                vendorLocation={vendorLocation}
+                vendorServices={vendorServices}
+                vendorMatchPercentage={vendor.vendorMatchPercentage}
+                isVerified={vendor.isVerified}
+                estYr={vendor.estYr}
+              />
+            )
+          })}
         </div>
       </div>
 
