@@ -18,19 +18,19 @@ const Hero = () => {
   const galleryImages = [GalleryImg1, GalleryImg2, GalleryImg3, GalleryImg4]
 
   return (
-    <section className="md:px-20 p-4 md:h-[75dvh] h-[60svh] flex gap-2 flex-col md:flex-row">
-      <div className="md:w-2/3 w-full relative min-h-56 shadow-xl">
+    <section className="md:px-20 p-4 md:h-[75dvh]  flex gap-2 flex-col md:flex-row">
+      <div className="md:w-2/3 w-full relative shadow-xl flex-1 ">
         <Image
           src={GalleryImg1}
           placeholder="blur"
           alt="Property Image"
-          className="object-cover h-full rounded-md"
+          className="object-cover h-full w-full rounded-md"
           quality={90}
-          fill={true}
-          sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 33vw"
+          height={400}
+          width={800}
           priority
         />
-        <div className="absolute bottom-4 right-4 flex justify-end gap-4 items-center">
+        <div className="absolute bottom-4 md:right-8 right-4 flex justify-end md:gap-4 gap-2 items-center">
           <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner ">
             <Inquiry size={20} />
             Inquire

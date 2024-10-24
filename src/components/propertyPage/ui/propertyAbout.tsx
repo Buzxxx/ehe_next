@@ -2,7 +2,7 @@ const PropertyAbout = () => {
   return (
     <article>
       <h3 className="text-2xl font-semibold md:mt-8">About This Home</h3>
-      <p className="text-gray-700 text-sm md:mt-4 mt-2 text-pretty">
+      <p className="text-gray-700 text-sm md:mt-4 mt-2 text-pretty max-md:text-justify">
         Microtek Greenburg, the name itself suggests that the whole place is
         surrounded with plenteous greenery so eco-friendly and healthy
         environment.

@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ openFrom = "top" }) => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200/80 z-50 max-md:shadow-xl ">
-      <nav className="container mx-auto flex items-center justify-between md:py-4 py-3 md:px-20 px-4 ">
+      <nav className=" mx-auto flex items-center justify-between md:py-4 py-3 md:px-20 px-4 ">
         {/* Logo */}
         <Link href="/">
           <Image

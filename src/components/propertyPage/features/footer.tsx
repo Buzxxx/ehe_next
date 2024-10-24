@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 
 export default function Footer() {
   return (
-    <footer className="md:px-20 px-4 py-4 bg-slate-900 text-white flex flex-col justify-between items-stretch gap-4">
+    <footer className="md:px-20 px-2 py-4 bg-slate-900 text-white flex flex-col justify-between items-stretch gap-4">
       <div className="flex justify-between items-center py-4 border-b border-slate-700">
         <Link href={"/"}>
           <Image
