@@ -40,19 +40,11 @@ const VendorCompareTable = ({
   selectedOptions: SelectedOptions
   vendorComparisonData: any
 }) => {
-  console.log("vendorComparisonData", vendorComparisonData)
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
 
   const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
   const filteredSelectedOptionsKeys = Object.keys(filteredSelectedOptions)
 
-  console.log(
-    Object.values(
-      vendorComparisonData[1].breakdown[filteredSelectedOptionsKeys[0]]
-        .breakdown
-    )
-  )
-  console.log(filteredSelectedOptionsKeys)
 
   // Toggle accordion for categories
   const toggleAccordion = (category: string) => {

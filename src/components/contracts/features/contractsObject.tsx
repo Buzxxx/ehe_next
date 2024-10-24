@@ -120,38 +120,28 @@ export const getVendorLocation = (vendorRegions: number[]): string => {
     .join(", ")
 }
 
-// Helper function to determine matched items except regions
-export const getMatchedFeatures = (
-  vendor: Vendor,
-  selectedOptions: SelectedOptions
-): string[] => {
-  const matchedFeatures: string[] = []
+export const getVendorFeatures = (vendor: Vendor): string[] => {
+  const featureList: string[] = []
 
-  const categories = {
-    capabilities,
-    contractTypes,
-    organizationalFunctions,
-    licensingModels,
-    integrations,
+  // Retrieve names for each category
+  const getFeatureNames = (
+    featureArray: { id: number; name: string }[],
+    ids: number[]
+  ) => {
+    return featureArray
+      .filter((feature) => ids.includes(feature.id))
+      .map((feature) => feature.name)
   }
 
-  // Loop through each category (except regions) and find matches
-  Object.keys(categories).forEach((category) => {
-    const categoryKey = category as keyof SelectedOptions
-    const selectedCategoryItems = selectedOptions[categoryKey]
-    const vendorCategoryItems = vendor[categoryKey]
+  featureList.push(...getFeatureNames(capabilities, vendor.capabilities))
+  featureList.push(
+    ...getFeatureNames(organizationalFunctions, vendor.organizationalFunctions)
+  )
+  featureList.push(...getFeatureNames(contractTypes, vendor.contractTypes))
+  featureList.push(...getFeatureNames(licensingModels, vendor.licensingModels))
+  featureList.push(...getFeatureNames(integrations, vendor.integrations))
 
-    const matchedItems = selectedCategoryItems.filter((item) =>
-      vendorCategoryItems.includes(item)
-    )
-
-    // Get the display names of the matched items
-    matchedItems.forEach((item) => {
-      matchedFeatures.push(getDisplayName(category, item))
-    })
-  })
-
-  return matchedFeatures
+  return featureList
 }
 
 // Utility function to check if all selectedOptions are empty
@@ -212,6 +202,7 @@ export function calculateFeatureMatchPercentage(
   selectedValues.forEach((value) => {
     breakdown[value] = vendorValues.includes(value)
   })
+
   const matches = Object.values(breakdown).filter(Boolean).length
   const percentage = Math.round((matches / selectedValues.length) * 100)
 
@@ -226,16 +217,24 @@ function getPercentageBreakdown(
     string,
     { percentage: number; breakdown: Record<number, boolean> }
   > = {}
+
   const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
   const keys = Object.keys(filteredSelectedOptions) as (keyof SelectedOptions)[]
 
   for (const key of keys) {
-    results[key] = calculateFeatureMatchPercentage(
-      filteredSelectedOptions[key],
-      vendor[key]
-    )
+    const selectedValues = filteredSelectedOptions[key]
+    const vendorValues = vendor[key]
+
+    // Ensure both selected and vendor values exist before calling calculate
+    if (selectedValues.length > 0 && vendorValues.length > 0) {
+      results[key] = calculateFeatureMatchPercentage(
+        selectedValues,
+        vendorValues
+      )
+    } else {
+      results[key] = { percentage: 0, breakdown: {} }
+    }
   }
-  console.log(results)
   return results
 }
 
@@ -262,6 +261,7 @@ export function calculateVendorMatchBreakdown(
   // Calculate the match percentages for the filtered vendors only
   return filteredVendors.map((vendor) => {
     const breakdown = getPercentageBreakdown(selectedOptions, vendor)
+    console.log("bb", breakdown)
     const averageMatchPercentage = Math.floor(getAveragePercentage(breakdown))
     vendor = { ...vendor, vendorMatchPercentage: averageMatchPercentage }
     return {

@@ -1,15 +1,13 @@
-/**
- * @path src/components/contracts/ui/vendorResultDisplayCard.tsx
- */
-
-import { Badge } from "@/components/ui/badge"
-import { BadgeCheck, MapPin, ReceiptText } from "@/components/ui/icons"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 import styles from "@/app/contracts/contract.module.css"
+import PercentagePopover from "./percentagePopover"
+
 import CircularProgress from "@/components/ui/icons/circularProgressBar"
+import { BadgeCheck, MapPin, ReceiptText } from "@/components/ui/icons"
+import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import {
   Tooltip,
   TooltipContent,
@@ -29,6 +27,7 @@ interface VendorResultDisplayCardProps {
   vendorMatchPercentage: number
   isVerified: boolean
   estYr: number
+  selectedOptions: any // Add this to pass selectedOptions to PercentagePopover
 }
 
 const VendorResultDisplayCard = ({
@@ -43,9 +42,9 @@ const VendorResultDisplayCard = ({
   vendorMatchPercentage,
   isVerified,
   estYr,
+  selectedOptions, // This prop is added for PercentagePopover
 }: VendorResultDisplayCardProps) => {
   const router = useRouter()
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false)
 
   const openVendorModal = (vendorId: string) => {
     router.push(`/contracts/vendor/${vendorId}`)
@@ -55,9 +54,7 @@ const VendorResultDisplayCard = ({
     onSelectVendor(vendorId, e.target.checked)
   }
 
-  // Limit how many characters we display inline before adding "..."
   const MAX_CHARACTERS_INLINE = 30
-
   const displayFeaturesInline =
     vendorServices.join(", ").slice(0, MAX_CHARACTERS_INLINE) +
     (vendorServices.join(", ").length > MAX_CHARACTERS_INLINE ? "..." : "")
@@ -65,7 +62,6 @@ const VendorResultDisplayCard = ({
   return (
     <div
       className={`flex md:p-6 px-2 py-4 gap-3 flex-col rounded-2xl drop-shadow-lg shadow-lg cursor-pointer relative ${styles.vendorResultDisplayCard}`}
-      style={{ zIndex: isTooltipVisible ? 10 : 1 }}
     >
       <div className="flex items-center justify-between gap-4">
         <Input
@@ -76,7 +72,7 @@ const VendorResultDisplayCard = ({
         />
         <div className="flex justify-between items-stretch flex-1">
           <div
-            className="flex flex-col gap-2 w-[92%] "
+            className="flex flex-col gap-2 w-[92%]"
             onClick={() => openVendorModal(vendorId)}
           >
             <div className="flex items-center gap-2 border-r border-slate-200 md:w-fit">
@@ -101,16 +97,23 @@ const VendorResultDisplayCard = ({
             </p>
           </div>
 
+          {/* Popover Trigger around CircularProgress */}
           <div className="flex flex-col gap-1 flex-1 md:w-[20%] text-center">
             <p className={`uppercase ${styles.textGray} text-xs text-center`}>
               Match %
             </p>
             <div className="flex justify-center">
-              <CircularProgress
-                percentage={vendorMatchPercentage}
-                size={40}
-                strokeWidth={3}
-              />
+              {/* Wrap CircularProgress with PercentagePopover */}
+              <PercentagePopover
+                vendorId={vendorId}
+                selectedOptions={selectedOptions}
+              >
+                <CircularProgress
+                  percentage={vendorMatchPercentage}
+                  size={40}
+                  strokeWidth={3}
+                />
+              </PercentagePopover>
             </div>
           </div>
         </div>
@@ -119,38 +122,37 @@ const VendorResultDisplayCard = ({
       <div className="flex rounded-lg bg-gray-400/10 md:p-4">
         <div className="flex justify-between w-full">
           <div className="flex items-center md:gap-6 gap-2 md:text-sm text-xs font-semibold">
-            
             <div className="relative flex items-center gap-1">
               <MapPin className={`${styles.textGray} stroke-2`} size={20} />
               <p className={styles.textPrimary}>{vendorLocation}</p>
             </div>
-            {/* Matched Services with Tooltip */}
-            <div
-              className="relative flex items-center gap-1"
-              onMouseEnter={() => setIsTooltipVisible(true)}
-              onMouseLeave={() => setIsTooltipVisible(false)}
-            >
-              <ReceiptText
-                className={`${styles.textGray} stroke-2`}
-                size={20}
-              />
 
-              <p className={styles.textPrimary}>{displayFeaturesInline}</p>
-              {/* Show Tooltip if there are more features */}
-              {vendorServices.length > 1 && isTooltipVisible && (
-                <div
-                  className="absolute top-full left-0 mt-2 w-auto max-w-xs bg-gray-800 text-white p-2 rounded-md shadow-lg text-xs"
-                  style={{ zIndex: 100 }}
-                >
-                  {vendorServices.map((service) => (
-                    <p key={service} className="whitespace-pre-wrap">
-                      {service}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="relative flex items-center gap-1">
+                    <ReceiptText
+                      className={`${styles.textGray} stroke-2`}
+                      size={20}
+                    />
+
+                    <p className={styles.textPrimary}>
+                      {displayFeaturesInline}
                     </p>
-                  ))}
-                </div>
-              )}
-            </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="z-50  bg-gray-700 text-white">
+                  {vendorServices.length > 1 &&
+                    vendorServices.map((service) => (
+                      <p key={service} >
+                        {service}
+                      </p>
+                    ))}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
+
           <div className="flex items-center gap-2">
             {isVerified && (
               <Badge

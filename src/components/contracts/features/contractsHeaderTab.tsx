@@ -8,11 +8,11 @@ import {
 
 import styles from "@/app/contracts/contract.module.css"
 
-// Mock data for input fields in each step
+// Mock data: Names of the input fields by step
 const inputFieldsForSteps: { [key: number]: string[] } = {
-  0: ["Capabilities", "Organizational Functions", "Contract Types"],
-  1: ["Vendor Details", "Pricing", "Support Requirements"],
-  2: ["Final Review", "Vendor Summary", "Contract Details"],
+  0: ["Capabilities", "Organizational Functions", "Regions"],
+  1: ["Contract Types", "Licensing Models", "Integrations"],
+  2: ["See Results", "Compare Vendors "],
 }
 
 interface ContractsHeaderTabProps {
@@ -53,13 +53,17 @@ const ContractsHeaderTab: React.FC<ContractsHeaderTabProps> = ({
             </span>
 
             {/* Tooltip on Hover */}
-
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>{step}</TooltipTrigger>
-                <TooltipContent side="bottom" sideOffset={12} align="start" className="text-left space-y-1">
+                <TooltipContent
+                  side="bottom"
+                  sideOffset={12}
+                  align="start"
+                  className="text-left space-y-1"
+                >
                   {inputFieldsForSteps[index]?.map((field, i) => (
-                    <p key={i} className="text-gray-600 " >
+                    <p key={i} className="text-gray-600">
                       {field}
                     </p>
                   ))}

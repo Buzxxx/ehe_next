@@ -10,8 +10,7 @@ import {
   calculateVendorAverageMatchPercentage,
   calculateVendorMatchBreakdown,
   defaultSelectedOptions,
-  getDisplayName,
-  getMatchedFeatures,
+  getVendorFeatures,
   getVendorLocation,
   isSelectedOptionsEmpty,
   SelectedOptions,
@@ -151,8 +150,8 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
         <div className="flex-1 flex flex-col gap-4 md:w-3/4 ml-auto max-md:mt-4">
           {vendorsData.map((vendor) => {
             const vendorLocation = getVendorLocation(vendor.regions)
-            const vendorServices = getMatchedFeatures(vendor, selectedOptions)
-
+            const vendorFeatures = getVendorFeatures(vendor)
+           
             return (
               <VendorResultDisplayCard
                 key={vendor.id}
@@ -163,10 +162,11 @@ const ResultsTab: React.FC<ResultsTabProps> = ({
                 vendorLogo={vendor.logo}
                 vendorDesc={vendor.description}
                 vendorLocation={vendorLocation}
-                vendorServices={vendorServices}
+                vendorServices={vendorFeatures}
                 vendorMatchPercentage={vendor.vendorMatchPercentage}
                 isVerified={vendor.isVerified}
                 estYr={vendor.estYr}
+                selectedOptions={selectedOptions}
               />
             )
           })}
