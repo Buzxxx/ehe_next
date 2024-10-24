@@ -46,15 +46,18 @@ const PercentagePopover = ({
 
   return (
     <Popover>
-      <PopoverTrigger>{children}</PopoverTrigger>{" "}
-      {/* Use children as trigger */}
-      <PopoverContent
-        align="end"
-        className={`${
-          filterSelectedOptions.length > 0 ? "block" : "hidden p-0"
-        } `}
+      <PopoverTrigger
+        disabled={
+          !vendorData ||
+          vendorData.length === 0 ||
+          filteredSelectedOptionsKeys.length === 0
+        }
       >
-        <Accordion type="single" collapsible className="space-y-2">
+        {children}
+      </PopoverTrigger>{" "}
+      {/* Use children as trigger */}
+      <PopoverContent align="end">
+        <Accordion type="multiple" className="space-y-2">
           {/* Multiple accordions */}
           {filteredSelectedOptionsKeys.map((key) => {
             const categoryMatch = vendorData[0].breakdown[key]?.percentage || 0
@@ -69,12 +72,11 @@ const PercentagePopover = ({
                   <div className="w-fit flex-1">
                     <DynamicProgressBar
                       percentage={categoryMatch}
-                      animation={false}
                     />
                   </div>
                 </AccordionTrigger>
 
-                <AccordionContent className="drop-shadow-2xl shadow-2xl">
+                <AccordionContent className="shadow-2xl">
                   <Table className=" w-full  static overflow-hidden ">
                     <TableRow className="w-full py-0 ">
                       {/* Display sub-items */}
