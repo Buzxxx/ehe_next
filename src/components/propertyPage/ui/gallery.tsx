@@ -16,7 +16,7 @@ const Gallery = ({ images }: { images: string | StaticImageData[] }) => {
   }
 
   return (
-    <div className="md:w-1/3 grid md:grid-cols-2 grid-cols-4 grid-rows-4 gap-2 h-full">
+    <div className="md:w-1/3 grid md:grid-cols-2 grid-cols-4 md:grid-rows-4 gap-2 ">
       {images[0] && (
         <div className="col-span-2 row-span-2">
           <Image

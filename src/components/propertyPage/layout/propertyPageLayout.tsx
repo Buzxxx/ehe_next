@@ -12,7 +12,7 @@ const PropertyForm = dynamic(
 const PropertyFeaturesTable = dynamic(
   () => import("../features/propertyFeaturesTable")
 )
-const PropertyListerInfo = dynamic(() => import("../ui/propertyListerInfo"))
+const PropertyListerInfo = dynamic(() => import("../features/propertyListerInfo"))
 const PropertyListingSection = dynamic(
   () => import("../features/propertyListingSection")
 )
@@ -23,7 +23,7 @@ const PropertyPageLayout = () => {
     <>
       <Navbar />
       <Hero />
-      <section className="flex md:flex-row flex-col-reverse md:gap-2 gap-4 md:px-20 px-4 scroll-smooth">
+      <section className="flex md:flex-row flex-col-reverse md:gap-2 gap-4 md:px-20 px-2 scroll-smooth">
         <div className="flex flex-col md:gap-0 gap-4 md:w-2/3">
           <PropertyStatsOverview />
           <PropertyAbout />
@@ -31,12 +31,12 @@ const PropertyPageLayout = () => {
         <BookAppointment />
       </section>
 
-      <section className="flex md:flex-row flex-col gap-4 md:px-20 px-4 scroll-smooth">
+      <section className="flex md:flex-row flex-col gap-4 md:px-20 px-2 scroll-smooth">
         <div className="flex flex-col gap-4 md:w-2/3">
           <PropertyFeaturesTable />
           <PropertyListerInfo />
         </div>
-        <PropertyForm />
+        <PropertyForm bgClassName="relative w-full bg-center rounded-2xl shadow-xl border-slate-400 bg-fixed bg-[url('/property/property1.webp')] bg-cover text-white" title="Inquire Now"/>
       </section>
 
       <PropertyListingSection />
