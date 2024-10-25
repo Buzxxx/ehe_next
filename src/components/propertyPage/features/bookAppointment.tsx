@@ -1,27 +1,42 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { CircleAlert } from "@/components/ui/icons"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Form } from "@/components/ui/form"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useForm } from "react-hook-form"
-import { ChevronDown, ChevronUp } from "lucide-react" // Import icons for chevron
-import Link from "next/link"
+import { Form } from "@/components/ui/form"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
+
+import { useToast } from "@/components/ui/use-toast"
+
+import {
+  Heart,
+  Share2,
+  CircleAlert,
+  ChevronDown,
+  ChevronUp,
+} from "@/components/ui/icons"
+
+const ShareModal = dynamic(() => import("../ui/shareModal"))
 
 // Appointment validation schema
 const AppointmentSchema = z.object({
-  selectedSlot: z.string().nonempty("Please select a time slot"),
+  selectedSlot: z.string().min(1, "Please select a time slot"),
 })
 
 const BookAppointment = () => {
-  const [showMoreSlots, setShowMoreSlots] = useState(false)
+  const [showMoreSlots, setShowMoreSlots] = useState(false) // State to toggle slots in view
   const [selectedSlot, setSelectedSlot] = useState<string>("") // State to track selected slot
+  const [liked, setLiked] = useState(false) // New state for 'like'
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false) // State for share modal
 
+  const { toast } = useToast()
   // Mock initial slots
   const initialSlots = [
     "Tuesday April 21 at 11:00 AM",
@@ -56,15 +71,53 @@ const BookAppointment = () => {
     console.log("Selected slot:", data.selectedSlot)
   }
 
+  const toggleLike = () => {
+    setLiked((prev) => !prev)
+    toast({
+      title: liked ? "You unliked the property!" : "You liked the property!",
+      description: liked
+        ? "Property Removed from your Favourites"
+        : "Property Added to your Favourites",
+      className: liked
+        ? "w-full bg-slate-700 text-white"
+        : "w-full bg-red-500 text-white",
+    })
+  }
+
+  const toggleShareModal = () => {
+    setIsShareModalOpen(!isShareModalOpen)
+  }
+
   return (
     <article className="px-4 pb-4 border border-gray-300/75 rounded-lg shadow-md flex-1">
       {/* Property Info */}
-      <hgroup className="py-2">
-        <h4 className="text-3xl text-slate-800 font-bold leading-8">
-          Microtek Greenburg
-        </h4>
-        <span className="text-gray-500 text-sm">Gurugram, Haryana</span>
-      </hgroup>
+      <div className="flex justify-between items-start">
+        <hgroup className="py-2 flex-1">
+          <h4 className="text-2xl text-slate-800 font-bold leading-8">
+            Microtek Greenburg
+          </h4>
+          <span className="text-gray-500 text-sm">Gurugram, Haryana</span>
+        </hgroup>
+
+        <div className="flex gap-2 items-center mt-2">
+          <Button
+            className={`bg-transparent p-1 w-fit transition  hover:bg-transparent hover:scale-110 hover:text-pink-400 ${
+              liked ? "text-pink-500" : "text-slate-500"
+            }`}
+            onClick={toggleLike} // Toggle like
+          >
+            <Heart
+              className={`transition-colors ${liked ? "  fill-pink-500" : ""}`}
+            />
+          </Button>
+          <Button
+            className="bg-transparent text-slate-500 hover:bg-transparent hover:text-slate-700 p-1 w-fit"
+            onClick={toggleShareModal} // Toggle modal open
+          >
+            <Share2 />
+          </Button>
+        </div>
+      </div>
 
       <Separator />
 
@@ -80,7 +133,10 @@ const BookAppointment = () => {
       <Form {...form}>
         <h4 className="text-md font-medium mt-4">Book An Appointment</h4>
         <p className="text-xs text-slate-600">Book your appointment online</p>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4 px-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 py-4 px-6"
+        >
           {/* Time Slot Selection */}
           <div
             className="transition-all duration-500 overflow-hidden"
@@ -95,10 +151,7 @@ const BookAppointment = () => {
               onValueChange={(value) => setSelectedSlot(value)} // Track selected slot
             >
               {slotsToDisplay.map((slot, index) => (
-                <div
-                  key={index}
-                  className={`flex items-center transition `}
-                >
+                <div key={index} className={`flex items-center transition `}>
                   <RadioGroupItem
                     value={slot}
                     id={`slot-${index}`}
@@ -170,6 +223,8 @@ const BookAppointment = () => {
           )}
         </form>
       </Form>
+
+      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} />
     </article>
   )
 }
