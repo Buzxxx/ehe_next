@@ -22,8 +22,11 @@ import {
   ChevronDown,
   ChevronUp,
 } from "@/components/ui/icons"
+import { ToastAction } from "@/components/ui/toast"
+import ModalUI from "../ui/ModalUI"
+import PropertyForm from "./propertyForm"
 
-const ShareModal = dynamic(() => import("../ui/shareModal"))
+const ShareModal = dynamic(() => import("./shareModal"))
 
 // Appointment validation schema
 const AppointmentSchema = z.object({
@@ -35,6 +38,7 @@ const BookAppointment = () => {
   const [selectedSlot, setSelectedSlot] = useState<string>("") // State to track selected slot
   const [liked, setLiked] = useState(false) // New state for 'like'
   const [isShareModalOpen, setIsShareModalOpen] = useState(false) // State for share modal
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
 
   const { toast } = useToast()
   // Mock initial slots
@@ -68,7 +72,39 @@ const BookAppointment = () => {
   })
 
   const onSubmit = async (data: z.infer<typeof AppointmentSchema>) => {
-    console.log("Selected slot:", data.selectedSlot)
+    try {
+      // Simulate an async API call
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      // Show success toast
+      toast({
+        title:
+          "Congrats! You have been alloted a slot, kindly login to confirm",
+        description: `Date: ${data.selectedSlot}. `,
+        className: "bg-green-500 text-white",
+        action: (
+          <ToastAction
+            altText="Try again"
+            className="hover:text-green-600"
+            onClick={() => {
+              setIsLoginModalOpen(true)
+            }}
+          >
+            Login
+          </ToastAction>
+        ),
+      })
+      form.reset()
+    } catch (error) {
+      console.error("Submission failed:", error)
+
+      // Show failure toast
+      toast({
+        title: "Error",
+        description: "Failed to book the slot. Please try again.",
+        className: "bg-red-500 text-white",
+      })
+    }
   }
 
   const toggleLike = () => {
@@ -225,6 +261,18 @@ const BookAppointment = () => {
       </Form>
 
       <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} />
+
+      <ModalUI
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(!isLoginModalOpen)}
+        title="Login to book your slot."
+      >
+        <PropertyForm
+          wrapperClassName="md:mt-0"
+          formClassName="bg-none p-0 bg-transparent md:p-0 xl:py-0 xl:px-4 border-0 shadow-none"
+          onSuccess={() => setIsLoginModalOpen(!isLoginModalOpen)}
+        />
+      </ModalUI>
     </article>
   )
 }

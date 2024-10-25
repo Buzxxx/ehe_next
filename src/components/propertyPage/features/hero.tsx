@@ -2,6 +2,8 @@
  * @path src/components/propertyPage/features/Hero.tsx
  */
 
+"use client"
+
 import Image from "next/image"
 import Gallery from "../ui/gallery"
 import { Button } from "@/components/ui/button"
@@ -12,9 +14,13 @@ import GalleryImg1 from "../../../../public/property/property1.webp"
 import GalleryImg2 from "../../../../public/property/property2.webp"
 import GalleryImg3 from "../../../../public/property/property3.webp"
 import GalleryImg4 from "../../../../public/property/property4.webp"
+import ModalUI from "../ui/ModalUI"
+import PropertyForm from "./propertyForm"
+import { useState } from "react"
 
 // Array of images to pass to the Gallery
 const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const galleryImages = [GalleryImg1, GalleryImg2, GalleryImg3, GalleryImg4]
 
   return (
@@ -35,13 +41,29 @@ const Hero = () => {
             <Inquiry size={20} />
             Inquire
           </Button>
-          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner ">
+          <Button
+            className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner "
+            onClick={() => setIsModalOpen(!isModalOpen)}
+          >
             <Call size={20} />
             Request a callback
           </Button>
         </div>
       </div>
       <Gallery images={galleryImages} />
+
+      <ModalUI
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(!isModalOpen)}
+        title="Please provide your contact details, and our team will get back to you
+          soon."
+      >
+        <PropertyForm
+          wrapperClassName="md:mt-0"
+          formClassName="bg-none p-0 bg-transparent md:p-0 xl:py-0 xl:px-4 border-0 shadow-none"
+          onSuccess={() => setIsModalOpen(!isModalOpen)}
+        />
+      </ModalUI>
     </section>
   )
 }

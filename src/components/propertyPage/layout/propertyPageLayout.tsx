@@ -12,7 +12,7 @@ const PropertyForm = dynamic(
 const PropertyFeaturesTable = dynamic(
   () => import("../features/propertyFeaturesTable")
 )
-const PropertyListerInfo = dynamic(() => import("../ui/propertyListerInfo"))
+const PropertyListerInfo = dynamic(() => import("../features/propertyListerInfo"))
 const PropertyListingSection = dynamic(
   () => import("../features/propertyListingSection")
 )
@@ -36,7 +36,7 @@ const PropertyPageLayout = () => {
           <PropertyFeaturesTable />
           <PropertyListerInfo />
         </div>
-        <PropertyForm />
+        <PropertyForm bgClassName="relative w-full bg-center rounded-2xl shadow-xl border-slate-400 bg-fixed bg-[url('/property/property1.webp')] bg-cover text-white" title="Inquire Now"/>
       </section>
 
       <PropertyListingSection />
