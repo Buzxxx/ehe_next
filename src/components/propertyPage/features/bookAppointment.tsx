@@ -75,26 +75,9 @@ const BookAppointment = () => {
     try {
       // Simulate an async API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
+      setIsLoginModalOpen(true)
 
-      // Show success toast
-      toast({
-        title:
-          "Congrats! You have been alloted a slot, kindly login to confirm",
-        description: `Date: ${data.selectedSlot}. `,
-        className: "bg-green-500 text-white",
-        action: (
-          <ToastAction
-            altText="Try again"
-            className="hover:text-green-600"
-            onClick={() => {
-              setIsLoginModalOpen(true)
-            }}
-          >
-            Login
-          </ToastAction>
-        ),
-      })
-      form.reset()
+    
     } catch (error) {
       console.error("Submission failed:", error)
 
@@ -251,7 +234,7 @@ const BookAppointment = () => {
             >
               <Button
                 type="submit"
-                className="w-full bg-slate-800 text-white hover:bg-slate-900 transition-all duration-500"
+                className="w-full bg-green-600 text-white hover:bg-green-600 transition-all duration-500"
               >
                 Confirm Appointment
               </Button>
@@ -265,7 +248,7 @@ const BookAppointment = () => {
       <ModalUI
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(!isLoginModalOpen)}
-        title="Login to book your slot."
+        title="Plese fill in the details to book your slot."
       >
         <PropertyForm
           wrapperClassName="md:mt-0"

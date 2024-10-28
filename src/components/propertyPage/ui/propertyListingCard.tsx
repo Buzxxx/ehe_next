@@ -31,7 +31,7 @@ const PropertyListingCard = ({ property }: { property: Property }) => {
             shimmer(300, 240)
           )}`} // Shimmer effect
         />
-        <div className="absolute top-3 left-3 bg-slate-800/80 hover:bg-slate-900 text-slate-200  text-sm font-medium px-3 py-1 rounded-lg backdrop-blur-md drop-shadow-xl">
+        <div className="absolute top-3 left-3 bg-green-500/80 hover:bg-green-600 text-slate-200 cursor-pointer text-sm font-medium px-3 py-1 rounded-lg backdrop-blur-md drop-shadow-xl">
           {property.status}
         </div>
       </div>
@@ -57,7 +57,7 @@ const PropertyListingCard = ({ property }: { property: Property }) => {
             {property.size}
           </p>
         </div>
-        <Button className="mt-4 bg-slate-800 hover:bg-slate-900 text-white rounded px-4 py-2 w-full shadow-md shadow-slate-700/40 hover:shadow-slate-800/70 transition duration-300 ">
+        <Button className="mt-4 bg-green-600 hover:bg-green-700 text-white rounded px-4 py-2 w-full shadow-md shadow-slate-700/40 hover:shadow-slate-800/70 transition duration-300 ">
           View Details
         </Button>
       </div>

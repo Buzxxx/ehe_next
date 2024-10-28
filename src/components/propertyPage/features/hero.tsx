@@ -37,12 +37,15 @@ const Hero = () => {
           priority
         />
         <div className="absolute bottom-4 md:right-8 right-4 flex justify-end md:gap-4 gap-2 items-center">
-          <Button className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner ">
+          <Button
+            className="bg-white hover:bg-green-100 hover:text-green-500 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner "
+            onClick={() => setIsModalOpen(!isModalOpen)}
+          >
             <Inquiry size={20} />
             Inquire
           </Button>
           <Button
-            className="bg-white hover:bg-gray-200 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner "
+            className="bg-white hover:bg-green-100 hover:text-green-500 rounded-full py-2 h-fit md:text-sm text-xs text-slate-950 flex gap-1.5 shadow-inner "
             onClick={() => setIsModalOpen(!isModalOpen)}
           >
             <Call size={20} />

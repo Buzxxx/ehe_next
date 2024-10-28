@@ -92,7 +92,7 @@ const PropertyFormUI: React.FC<PropertyFormUIProps> = ({
 
         <Button
           type="submit"
-          className="mt-10 w-full bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-md shadow-md shadow-slate-600/40 hover:shadow-slate-500/50 transition duration-200"
+          className="mt-10 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md shadow-md shadow-green-600/40 hover:shadow-green-500/75 transition duration-200"
         >
           Submit
         </Button>

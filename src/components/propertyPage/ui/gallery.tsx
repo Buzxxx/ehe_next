@@ -46,14 +46,14 @@ const Gallery = ({ images }: { images: (string | StaticImageData)[] }) => {
             <>
               <Button
                 onClick={() => openModalWithImage(0)}
-                className="absolute bottom-2 right-2 w-fit rounded-lg bg-slate-800 hover:bg-slate-900 text-slate-200 text-xs h-fit py-3 gap-2 shadow-inner border border-slate-400/70 hidden md:flex"
+                className="absolute bottom-2 right-2 w-fit rounded-lg bg-green-600 hover:bg-green-700 text-green-200 text-xs h-fit py-3 gap-2 shadow-inner  hidden md:flex"
               >
                 <Images size={16} />
                 View All Photos
               </Button>
               <div
                 onClick={() => openModalWithImage(0)}
-                className="absolute w-full h-full top-0 left-0 rounded-lg bg-slate-800/75 hover:bg-slate-800/70 transition text-slate-200 text-lg font-semibold md:hidden flex items-center justify-center gap-1.5"
+                className="absolute w-full h-full top-0 left-0 rounded-lg bg-green-800/75 hover:bg-green-800/70 transition text-green-200 text-lg font-semibold md:hidden flex items-center justify-center gap-1.5"
               >
                 <Images size={16} />{" "}
                 <p className="flex">
