@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import styles from "@/app/contracts/contract.module.css"
 import PercentagePopover from "./percentagePopover"
-
 import CircularProgress from "@/components/ui/icons/circularProgressBar"
 import { BadgeCheck, MapPin, ReceiptText } from "@/components/ui/icons"
 import { Badge } from "@/components/ui/badge"
@@ -14,6 +13,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { VendorFeatures } from "../features/contractsObject"
+import VendorServicesModal from "./vendorServicesModal"
 
 interface VendorResultDisplayCardProps {
   vendorId: string
@@ -23,7 +24,7 @@ interface VendorResultDisplayCardProps {
   vendorLogo: string
   vendorDesc: string
   vendorLocation: string
-  vendorServices: string[]
+  vendorServices: VendorFeatures
   vendorMatchPercentage: number
   isVerified: boolean
   estYr: number
@@ -55,9 +56,10 @@ const VendorResultDisplayCard = ({
   }
 
   const MAX_CHARACTERS_INLINE = 30
+  const mergedArray = Object.values(vendorServices).flat()
   const displayFeaturesInline =
-    vendorServices.join(", ").slice(0, MAX_CHARACTERS_INLINE) +
-    (vendorServices.join(", ").length > MAX_CHARACTERS_INLINE ? "..." : "")
+    mergedArray.join(", ").slice(0, MAX_CHARACTERS_INLINE) +
+    (mergedArray.join(", ").length > MAX_CHARACTERS_INLINE ? "..." : "")
 
   return (
     <div
@@ -127,30 +129,15 @@ const VendorResultDisplayCard = ({
               <p className={styles.textPrimary}>{vendorLocation}</p>
             </div>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <div className="relative flex items-center gap-1">
-                    <ReceiptText
-                      className={`${styles.textGray} stroke-2`}
-                      size={20}
-                    />
-
-                    <p className={styles.textPrimary}>
-                      {displayFeaturesInline}
-                    </p>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="z-50  bg-gray-700 text-white">
-                  {vendorServices.length > 1 &&
-                    vendorServices.map((service) => (
-                      <p key={service} >
-                        {service}
-                      </p>
-                    ))}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <VendorServicesModal vendorServices={vendorServices}>
+              <div className="relative flex items-center gap-1">
+                <ReceiptText
+                  className={`${styles.textGray} stroke-2`}
+                  size={20}
+                />
+                <p className={styles.textPrimary}>{displayFeaturesInline}</p>
+              </div>
+            </VendorServicesModal>
           </div>
 
           <div className="flex items-center gap-2">

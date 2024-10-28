@@ -19,8 +19,16 @@ import {
 import { useEffect, useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import { Table, TableCell, TableRow } from "@/components/ui/table"
-import { Check, X } from "lucide-react"
+import { Check, Download, X } from "lucide-react"
 import DynamicProgressBar from "./dynamicProgressBar"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 const PercentagePopover = ({
   vendorId,
@@ -45,8 +53,8 @@ const PercentagePopover = ({
   const filteredSelectedOptionsKeys = Object.keys(filteredSelectedOptions)
 
   return (
-    <Popover>
-      <PopoverTrigger
+    <Dialog>
+      <DialogTrigger
         disabled={
           !vendorData ||
           vendorData.length === 0 ||
@@ -54,9 +62,12 @@ const PercentagePopover = ({
         }
       >
         {children}
-      </PopoverTrigger>{" "}
+      </DialogTrigger>{" "}
       {/* Use children as trigger */}
-      <PopoverContent align="end">
+      <DialogContent className="pr-10 pt-16">
+        <Button className="w-fit bg-transparent text-black border absolute top-2 right-10 p-2 h-fit ">
+          <Download size={16} />
+        </Button>
         <Accordion type="multiple" className="space-y-2">
           {/* Multiple accordions */}
           {filteredSelectedOptionsKeys.map((key) => {
@@ -70,9 +81,7 @@ const PercentagePopover = ({
                   </div>
                   {/* Progress Bar for category match */}
                   <div className="w-fit flex-1">
-                    <DynamicProgressBar
-                      percentage={categoryMatch}
-                    />
+                    <DynamicProgressBar percentage={categoryMatch} />
                   </div>
                 </AccordionTrigger>
 
@@ -120,8 +129,8 @@ const PercentagePopover = ({
             )
           })}
         </Accordion>
-      </PopoverContent>
-    </Popover>
+      </DialogContent>
+    </Dialog>
   )
 }
 
