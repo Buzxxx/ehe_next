@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ openFrom = "top" }) => {
         {/* Logo */}
         <Link href="/">
           <Image
-            src={'/property/icons/logo.svg'}
+            src={"/property/icons/logo.svg"}
             priority
             alt="Property Logo"
             width={120}
@@ -78,13 +78,13 @@ const Navbar: React.FC<NavbarProps> = ({ openFrom = "top" }) => {
             <>
               <Link
                 href="/login"
-                className="text-gray-600 hover:text-gray-900 transition-all hidden md:block"
+                className="text-gray-600 hover:text-green-500 transition-all hidden md:block"
               >
                 Log In
               </Link>
               <Link
                 href="/signup"
-                className="bg-slate-700 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-all hidden md:block"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all hidden md:block"
               >
                 Sign Up
               </Link>
@@ -92,14 +92,14 @@ const Navbar: React.FC<NavbarProps> = ({ openFrom = "top" }) => {
               {/* Show buttons on mobile */}
               <Link
                 href="/login"
-                className="text-gray-600 hover:text-gray-900 transition-all block md:hidden"
+                className="text-gray-600 hover:text-green-500 transition-all block md:hidden"
                 onClick={() => setMenuOpen(false)}
               >
                 Log In
               </Link>
               <Link
                 href="/signup"
-                className="bg-slate-700 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-all block md:hidden "
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all block md:hidden "
                 onClick={() => setMenuOpen(false)}
               >
                 Sign Up

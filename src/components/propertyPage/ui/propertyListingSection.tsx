@@ -1,5 +1,5 @@
-import { propertiesData } from "../noSql"
-import PropertyListingCard from "../ui/propertyListingCard"
+import { propertiesData } from "../noSql/allPropertiesData"
+import PropertyListingCard from "./propertyListingCard"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "@/components/ui/icons"
 

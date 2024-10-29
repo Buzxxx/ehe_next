@@ -21,6 +21,7 @@ export interface SelectedOptions {
   integrations: number[]
 }
 
+
 export interface Vendor {
   id: string
   vendorName: string
@@ -39,6 +40,14 @@ export interface Vendor {
   vendorMatchPercentage: number
   isVerified: boolean
 }
+
+export interface VendorFeatures {
+    capabilities: string[]
+    organizationalFunctions: string[]
+    contractTypes: string[]
+    licensingModels: string[]
+    integrations: string[]
+  }
 
 export const stepInputFields = [
   {
@@ -120,8 +129,15 @@ export const getVendorLocation = (vendorRegions: number[]): string => {
     .join(", ")
 }
 
-export const getVendorFeatures = (vendor: Vendor): string[] => {
-  const featureList: string[] = []
+export const getVendorFeatures = (vendor: Vendor) => {
+  // Initialize the features object with the required structure
+  const features: VendorFeatures  = {
+    capabilities: [],
+    organizationalFunctions: [],
+    contractTypes: [],
+    licensingModels: [],
+    integrations: [],
+  }
 
   // Retrieve names for each category
   const getFeatureNames = (
@@ -133,16 +149,26 @@ export const getVendorFeatures = (vendor: Vendor): string[] => {
       .map((feature) => feature.name)
   }
 
-  featureList.push(...getFeatureNames(capabilities, vendor.capabilities))
-  featureList.push(
+  // Populate the features object with the names
+  features.capabilities.push(
+    ...getFeatureNames(capabilities, vendor.capabilities)
+  )
+  features.organizationalFunctions.push(
     ...getFeatureNames(organizationalFunctions, vendor.organizationalFunctions)
   )
-  featureList.push(...getFeatureNames(contractTypes, vendor.contractTypes))
-  featureList.push(...getFeatureNames(licensingModels, vendor.licensingModels))
-  featureList.push(...getFeatureNames(integrations, vendor.integrations))
+  features.contractTypes.push(
+    ...getFeatureNames(contractTypes, vendor.contractTypes)
+  )
+  features.licensingModels.push(
+    ...getFeatureNames(licensingModels, vendor.licensingModels)
+  )
+  features.integrations.push(
+    ...getFeatureNames(integrations, vendor.integrations)
+  )
 
-  return featureList
+  return features
 }
+
 
 // Utility function to check if all selectedOptions are empty
 export function isSelectedOptionsEmpty(selectedOptions: SelectedOptions) {

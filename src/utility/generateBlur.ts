@@ -11,7 +11,6 @@ export const shimmer = (w: number, h: number) => `
     <animate attributeName="x" from="${-w}" to="${w}" dur="0.5s" repeatCount="indefinite" />
   </svg>`
 
-
 // Function to convert the SVG string to base64
 export const toBase64 = (str: string) =>
   typeof window === "undefined"

@@ -12,7 +12,7 @@ export const vendors = [
     vendorServices: "Procurement",
     vendorMatchPercentage: 85,
     isVerified: true,
-    regions: [1, 4],
+    regions: [1,2,3, 4],
     capabilities: [1, 2, 3],
     organizationalFunctions: [2, 4],
     contractTypes: [1, 5],

@@ -41,21 +41,23 @@ const ContractsHeaderTab: React.FC<ContractsHeaderTabProps> = ({
             onMouseEnter={() => setHoveredStep(index)}
             onMouseLeave={() => setHoveredStep(null)}
           >
-            {/* Progress Circle */}
-            <span
-              className={`transition-all duration-300 ${
-                activeStep === index || activeStep > index
-                  ? `${styles.bgSecondary} text-white`
-                  : "bg-gray-200 text-gray-400"
-              } rounded-full p-3 md:p-4 w-8 h-8 flex items-center justify-center text-sm`}
-            >
-              {index + 1}
-            </span>
-
             {/* Tooltip on Hover */}
-            <TooltipProvider>
+            <TooltipProvider delayDuration={0}>
               <Tooltip>
-                <TooltipTrigger>{step}</TooltipTrigger>
+                <TooltipTrigger className="flex items-center gap-2">
+                  {" "}
+                  {/* Progress Circle */}
+                  <span
+                    className={`transition-all duration-300 ${
+                      activeStep === index || activeStep > index
+                        ? `${styles.bgSecondary} text-white`
+                        : "bg-gray-200 text-gray-400"
+                    } rounded-full p-3 md:p-4 w-8 h-8 flex items-center justify-center text-sm`}
+                  >
+                    {index + 1}
+                  </span>
+                  {step}
+                </TooltipTrigger>
                 <TooltipContent
                   side="bottom"
                   sideOffset={12}
