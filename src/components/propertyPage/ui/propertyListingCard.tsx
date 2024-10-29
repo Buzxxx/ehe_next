@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button" // Assuming you have a button co
 import Image from "next/image"
 
 import { Bath, MapPin, Bed, SetSquare } from "@/components/ui/icons"
-import { shimmer, toBase64 } from "../features/properyPageObject"
+import { shimmer, toBase64 } from "@/utility/generateBlur"
 
 interface Property {
   title: string

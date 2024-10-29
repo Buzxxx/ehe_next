@@ -14,9 +14,9 @@ const PropertyFeaturesTable = dynamic(
 )
 const PropertyListerInfo = dynamic(() => import("../features/propertyListerInfo"))
 const PropertyListingSection = dynamic(
-  () => import("../features/propertyListingSection")
+  () => import("../ui/propertyListingSection")
 )
-const Footer = dynamic(() => import("../features/footer"))
+const Footer = dynamic(() => import("../ui/footer"))
 
 const PropertyPageLayout = () => {
   return (

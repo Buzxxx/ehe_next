@@ -1,9 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -13,20 +11,19 @@ import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { generateMockSlots } from "./propertyObject"
 
-const AppointmentSchema = z.object({
-  selectedSlot: z.string().optional(),
-  customDate: z.date().optional(),
-})
-
 const BookAppointmentForm = ({
   setIsLoginModalOpen,
+  form,
+  onSubmit,
 }: {
   setIsLoginModalOpen: (isOpen: boolean) => void
+  form: UseFormReturn<any>
+  onSubmit: (values: any) => void
 }) => {
-  const [showMoreSlots, setShowMoreSlots] = useState(false) // State to toggle slots in view
-  const [selectedSlot, setSelectedSlot] = useState<string>("") // State to track selected slot
+  const [showMoreSlots, setShowMoreSlots] = useState(false)
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
   const [showCalendar, setShowCalendar] = useState(false)
-  const [customDate, setCustomDate] = useState<Date | null>(null) // New state for custom date
+  const [customDate, setCustomDate] = useState<Date | null>(null)
   const [initialSlots, setInitialSlots] = useState<string[]>([])
   const [moreSlots, setMoreSlots] = useState<string[]>([])
 
@@ -48,25 +45,26 @@ const BookAppointmentForm = ({
     return (slotsToDisplay.length + 1) * slotHeight
   }, [slotsToDisplay.length])
 
-  const form = useForm<z.infer<typeof AppointmentSchema>>({
-    resolver: zodResolver(AppointmentSchema),
-  })
+const handleSelectCustomDate = () => {
+  setShowMoreSlots(false)
+  setShowCalendar(true)
+  setSelectedSlot(null) // Clear selected slot when switching to custom date
 
-  const onSubmit = async (data: z.infer<typeof AppointmentSchema>) => {
-    try {
-      // Simulate an async API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      setIsLoginModalOpen(true)
-    } catch (error) {
-      console.error("Submission failed:", error)
-    }
-  }
+  const today = new Date()
+  setCustomDate(today)
 
-  const handleSelectCustomDate = () => {
-    setShowMoreSlots(false)
-    setShowCalendar(true)
-    setSelectedSlot("") // Clear selected slot when selecting custom date
-		setCustomDate(new Date())
+  // Set today's date as default for customDate in the form
+  form.setValue("customDate", today)
+  form.setValue("selectedSlot", "") // Clear form state for selectedSlot
+}
+
+
+  const handleSlotSelection = (value: string) => {
+    setSelectedSlot(value)
+    setCustomDate(null) // Clear custom date when selecting a slot
+    setShowCalendar(false) // Close calendar if slot is selected
+    form.setValue("customDate", undefined) // Ensure form state is updated for customDate
+    form.setValue("selectedSlot", value) // Update form state for selectedSlot
   }
 
   return (
@@ -86,30 +84,23 @@ const BookAppointmentForm = ({
                 ? `calc(${maxHeight}px + 16px)`
                 : `${maxHeight}px`
             }`,
-          }} // Dynamic max-height
+          }}
         >
-          <RadioGroup
-            className="space-y-3"
-            onValueChange={(value) => {
-              setSelectedSlot(value)
-              setCustomDate(null) // Clear custom date when selecting a slot
-              form.setValue("customDate", undefined) // Ensure form state is updated
-            }} // Track selected slot
-          >
+          <RadioGroup className="space-y-3" onValueChange={handleSlotSelection}>
             {slotsToDisplay.map((slot, index) => (
-              <div key={index} className={`flex items-center transition `}>
+              <div key={index} className="flex items-center transition">
                 <RadioGroupItem
                   value={slot}
                   id={`slot-${index}`}
                   {...form.register("selectedSlot")}
-                  className="hidden" // Hide the actual radio button
+                  className="hidden"
                 />
                 <Label
                   htmlFor={`slot-${index}`}
                   className={`w-full cursor-pointer flex justify-center items-center py-3 text-sm text-slate-500 border rounded-md transition-colors duration-200 ${
                     selectedSlot === slot
-                      ? "border-slate-500 text-slate-700"
-                      : "border-slate-300 hover:border-slate-500"
+                      ? "border-green-500 text-green-700"
+                      : "border-slate-300 hover:border-green-300"
                   }`}
                 >
                   {slot}
@@ -131,6 +122,7 @@ const BookAppointmentForm = ({
               )}
             </Button>
 
+            {/* Date Picker for Custom Date */}
             {showCalendar && (
               <CustomFormField
                 control={form.control}
@@ -138,15 +130,14 @@ const BookAppointmentForm = ({
                 fieldType={FormFieldType.DATE_PICKER}
                 onChange={(value) => {
                   setCustomDate(value)
-                  setSelectedSlot("") // Clear selected slot when selecting a custom date
-                  form.setValue("selectedSlot", "") // Ensure form state is updated
+                  setSelectedSlot(null) // Clear selected slot when selecting a custom date
+                  form.setValue("selectedSlot", "") // Clear form state for selectedSlot
                 }}
               />
             )}
 
-            {/* Couldn't find the right slot message */}
             {!showCalendar && (
-              <p className="text-slate-600 text-xs font-medium text-balance">
+              <p className="text-slate-600 text-xs font-medium">
                 Couldn&apos;t find the right slot for you?
                 <span
                   className="text-blue-500 cursor-pointer font-semibold hover:underline"
@@ -158,15 +149,13 @@ const BookAppointmentForm = ({
               </p>
             )}
           </RadioGroup>
+
+          {/* Prompt to select custom date */}
         </div>
 
         {/* Confirm Appointment Button */}
         {(selectedSlot || customDate) && (
-          <div
-            className={`w-full flex justify-center animate-fade-in ${
-              selectedSlot || customDate ? "opacity-100" : "opacity-0"
-            }`}
-          >
+          <div className="w-full flex justify-center animate-fade-in">
             <Button
               type="submit"
               className="w-full bg-green-600 text-white hover:bg-green-600 transition-all duration-500"

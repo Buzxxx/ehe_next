@@ -9,15 +9,41 @@ import { Heart, Share2, CircleAlert } from "@/components/ui/icons"
 import ModalUI from "../ui/ModalUI"
 import PropertyForm from "./propertyForm"
 import BookAppointmentForm from "./bookAppointmentForm"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { formatDate } from "./propertyObject"
 
 const ShareModal = dynamic(() => import("./shareModal"))
 
+const AppointmentSchema = z.object({
+  selectedSlot: z.string().optional(),
+  customDate: z.date().optional(),
+})
+
 const BookAppointment = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | string | null>(null)
   const [liked, setLiked] = useState(false) // New state for 'like'
   const [isShareModalOpen, setIsShareModalOpen] = useState(false) // State for share modal
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
 
   const { toast } = useToast()
+
+  const form = useForm<z.infer<typeof AppointmentSchema>>({
+    resolver: zodResolver(AppointmentSchema),
+  })
+
+  const onSubmit = async (data: z.infer<typeof AppointmentSchema>) => {
+    try {
+      // Simulate an async API call
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      setSelectedDate(() => data.customDate || data.selectedSlot || "") // Set selected date
+      setIsLoginModalOpen(true)
+      console.log(selectedDate)
+    } catch (error) {
+      console.error("Submission failed:", error)
+    }
+  }
 
   const toggleLike = () => {
     setLiked((prev) => !prev)
@@ -27,8 +53,8 @@ const BookAppointment = () => {
         ? "Property Removed from your Favourites"
         : "Property Added to your Favourites",
       className: liked
-        ? "w-full bg-slate-700 text-white"
-        : "w-full bg-red-500 text-white",
+        ? "w-full bg-green-100 backdrop-blur-sm"
+        : "w-full bg-green-500 text-white",
     })
   }
 
@@ -49,17 +75,17 @@ const BookAppointment = () => {
 
         <div className="flex gap-2 items-center mt-2">
           <Button
-            className={`bg-transparent p-1 w-fit transition  hover:bg-transparent hover:scale-110 hover:text-pink-400 ${
-              liked ? "text-pink-500" : "text-slate-500"
+            className={`bg-transparent p-1 w-fit transition  hover:bg-transparent hover:scale-110 hover:text-green-400 ${
+              liked ? "text-green-500" : "text-slate-500"
             }`}
             onClick={toggleLike} // Toggle like
           >
             <Heart
-              className={`transition-colors ${liked ? "  fill-pink-500" : ""}`}
+              className={`transition-colors ${liked ? "  fill-green-500" : ""}`}
             />
           </Button>
           <Button
-            className="bg-transparent text-slate-500 hover:bg-transparent hover:text-slate-700 p-1 w-fit"
+            className="bg-transparent text-slate-500 hover:bg-transparent hover:text-green-600 p-1 w-fit"
             onClick={toggleShareModal} // Toggle modal open
           >
             <Share2 />
@@ -78,14 +104,18 @@ const BookAppointment = () => {
       </div>
 
       {/* Appointment Form */}
-      <BookAppointmentForm setIsLoginModalOpen={setIsLoginModalOpen} />
+      <BookAppointmentForm
+        setIsLoginModalOpen={setIsLoginModalOpen}
+        form={form}
+        onSubmit={onSubmit}
+      />
 
       <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} />
 
       <ModalUI
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(!isLoginModalOpen)}
-        title="Plese fill in the details to book your slot."
+        title={`Confirm your slot for ${selectedDate ? formatDate(selectedDate) : ""}`}
       >
         <PropertyForm
           wrapperClassName="md:mt-0"

@@ -19,6 +19,7 @@ const formSchema = z.object({
     .string()
     .min(10, { message: "Phone number must be at least 10 digits." })
     .max(13, "Phone number should not exceed 13 digits."),
+  question: z.string().optional(), // Make it optional
 })
 
 const PropertyForm = ({
@@ -26,13 +27,15 @@ const PropertyForm = ({
   wrapperClassName,
   title,
   formClassName,
-  onSuccess
+  onSuccess,
+  showQuestionField = false, // Add new prop here
 }: {
   bgClassName?: string
   wrapperClassName?: string
   title?: string
   formClassName?: string
   onSuccess?: () => void
+  showQuestionField?: boolean // New prop type
 }) => {
   const { toast } = useToast()
 
@@ -77,12 +80,12 @@ const PropertyForm = ({
       {title && (
         <h2 className="text-lg md:text-xl font-bold  mb-4"> {title}</h2>
       )}
-
       <PropertyFormUI
         form={form}
         onSubmit={onSubmit}
         bgClassName={bgClassName}
         formClassName={formClassName}
+        showQuestionField={showQuestionField} // Pass prop down to UI component
       />
     </div>
   )

@@ -1,27 +1,21 @@
 /**
- * @path src/components/propertyPage/ui/gallery.tsx
+ * @path src/components/propertyPage/ui/galleryUI.tsx
  */
 
 "use client"
 
 import { Button } from "@/components/ui/button"
 import Image, { StaticImageData } from "next/image"
-
 import { Images } from "@/components/ui/icons"
-import { useState } from "react"
-import ModalCarousel from "./modalCarousel"
 
-const Gallery = ({ images }: { images: (string | StaticImageData)[] }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [focusedImageIndex, setFocusedImageIndex] = useState(0)
+interface GalleryUIProps {
+  images: (string | StaticImageData)[]
+  openModalWithImage: (index: number) => void
+}
 
-  const openModalWithImage = (index: number) => {
-    setFocusedImageIndex(index)
-    setIsModalOpen(true)
-  }
-
+const GalleryUI = ({ images, openModalWithImage }: GalleryUIProps) => {
   return (
-    <div className="md:w-1/3 grid md:grid-cols-2 grid-cols-4 md:grid-rows-4 gap-2  ">
+    <div className="md:w-1/3 grid md:grid-cols-2 grid-cols-4 md:grid-rows-4 gap-2">
       {images.map((image, index) => (
         <div
           key={index}
@@ -46,7 +40,7 @@ const Gallery = ({ images }: { images: (string | StaticImageData)[] }) => {
             <>
               <Button
                 onClick={() => openModalWithImage(0)}
-                className="absolute bottom-2 right-2 w-fit rounded-lg bg-green-600 hover:bg-green-700 text-green-200 text-xs h-fit py-3 gap-2 shadow-inner  hidden md:flex"
+                className="absolute bottom-2 right-2 w-fit rounded-lg bg-green-600 hover:bg-green-700 text-green-200 text-xs h-fit py-3 gap-2 shadow-inner hidden md:flex"
               >
                 <Images size={16} />
                 View All Photos
@@ -64,16 +58,8 @@ const Gallery = ({ images }: { images: (string | StaticImageData)[] }) => {
           )}
         </div>
       ))}
-      {isModalOpen && (
-        <ModalCarousel
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          items={images}
-          initialIndex={focusedImageIndex}
-        />
-      )}
     </div>
   )
 }
 
-export default Gallery
+export default GalleryUI

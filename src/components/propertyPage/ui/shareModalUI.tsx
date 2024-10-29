@@ -37,7 +37,7 @@ const ShareModalUI: React.FC<ShareModalUIProps> = ({
           {socials.map((social) => (
             <Button
               key={social.name}
-              className="rounded-full bg-transparent p-2"
+              className="rounded-full bg-transparent p-0 w-fit h-fit hover:scale-105 transition-transform"
               onClick={() => window.open(social.url, "_blank")}
             >
               {social.icon}
@@ -46,7 +46,7 @@ const ShareModalUI: React.FC<ShareModalUIProps> = ({
         </div>
         {showCopyButton && (
           <Button
-            className="flex items-center gap-2 w-1/2 mx-auto hover:bg-slate-950"
+            className="flex items-center gap-2 w-1/2 mx-auto bg-green-500 hover:bg-green-600"
             onClick={onCopy}
           >
             <Copy />
