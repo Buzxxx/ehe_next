@@ -13,20 +13,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  camelCaseToLowercase,
-  getDisplayName,
-  Vendor,
-  VendorFeatures,
-} from "../features/contractsObject"
+import { VendorFeatures } from "../features/contractsObject"
 import { Table, TableCell, TableRow } from "@/components/ui/table"
+import Image from "next/image"
+import { DownloadDropDown } from "./downloadDropDown"
 
 interface VendorServicesModalProps {
+  vendorLogo: string
+  vendorName: string
   vendorServices: VendorFeatures // Removed vendor and isOpen props
   children: React.ReactNode
 }
 
 const VendorServicesModal = ({
+  vendorLogo,
+  vendorName,
   vendorServices,
   children,
 }: VendorServicesModalProps) => {
@@ -38,15 +39,21 @@ const VendorServicesModal = ({
     },
     { title: "Contract Types", items: vendorServices.contractTypes || [] },
     { title: "Licensing Models", items: vendorServices.licensingModels || [] },
-    { title: "Integrations", items: vendorServices.integrations || [] }
+    { title: "Integrations", items: vendorServices.integrations || [] },
   ]
 
   return (
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Vendor Services</DialogTitle>
+      <DialogContent className="pt-4">
+        <DialogHeader className="mb-2 flex flex-row justify-between items-start mr-8">
+          <DialogTitle className="flex gap-2 items-center justify-start">
+            <span>
+              <Image height={40} width={40} src={vendorLogo} alt="logo" />
+            </span>
+            {vendorName}
+          </DialogTitle>
+          <DownloadDropDown />
         </DialogHeader>
         <DialogDescription>
           <Accordion type="multiple" className="space-y-2">

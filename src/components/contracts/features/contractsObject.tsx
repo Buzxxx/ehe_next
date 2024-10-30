@@ -23,6 +23,7 @@ export interface SelectedOptions {
 
 
 export interface Vendor {
+  breakdown?: Record<string, { percentage: number; breakdown: Record<number, boolean> }>
   id: string
   vendorName: string
   logo: string

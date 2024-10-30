@@ -129,7 +129,7 @@ const VendorResultDisplayCard = ({
               <p className={styles.textPrimary}>{vendorLocation}</p>
             </div>
 
-            <VendorServicesModal vendorServices={vendorServices}>
+            <VendorServicesModal vendorServices={vendorServices} vendorLogo={vendorLogo} vendorName={vendorName}>
               <div className="relative flex items-center gap-1">
                 <ReceiptText
                   className={`${styles.textGray} stroke-2`}

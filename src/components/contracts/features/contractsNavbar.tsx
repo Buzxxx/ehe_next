@@ -6,7 +6,7 @@ import { Search, MenuIcon } from "@/components/ui/icons"
 import styles from "@/app/contracts/contract.module.css"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import Image from "next/image"
+import { ContractsLogo } from "../ui/contractsLogo"
 
 const ContractsNavbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,12 +14,7 @@ const ContractsNavbar = () => {
     <div
       className={`flex justify-between md:gap-2 gap-8 items-center md:px-16 px-4 py-3 bg-transparent ${styles.contractsNavbar} ${styles.bgPrimary} shadow-sm `}
     >
-      <Image
-        src={"/contracts/images/image (2).png"}
-        alt="logo"
-        width={80}
-        height={80}
-      />
+      <ContractsLogo />
       <div className="flex items-center justify-evenly md:gap-16 ">
         <div className="flex gap-2 max-md:flex-1 relative flex-1 md:w-80">
           <Input
