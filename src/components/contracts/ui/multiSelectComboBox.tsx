@@ -22,6 +22,8 @@ import Image from "next/image"
 
 import styles from "@/app/contracts/contract.module.css"
 import { getDisplayName, toCamelCase } from "../features/contractsObject"
+import { shimmer, toBase64 } from "@/utility/generateBlur"
+
 
 interface MultiSelectComboboxProps {
   title: string
@@ -89,6 +91,10 @@ export function MultiSelectCombobox({
           width={250}
           height={250}
           className="object-cover aspect-square rounded-l-lg max-md:w-20 max-md:h-20"
+          placeholder="blur" // Shimmer placeholder
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(
+            shimmer(250, 250)
+          )}`}
         />
         <div className="mb-3">
           <h1 className="md:text-xl text-lg font-medium capitalize">{title}</h1>
@@ -101,6 +107,8 @@ export function MultiSelectCombobox({
         width={250}
         height={250}
         className="object-cover aspect-square rounded-l-lg hidden md:block md:max-h-48"
+        placeholder="blur" // Shimmer placeholder
+        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(250, 250))}`}
       />
       <div className="flex-1 h-fit">
         <div className="mb-3 md:block hidden">
@@ -127,9 +135,7 @@ export function MultiSelectCombobox({
           </PopoverTrigger>
           <PopoverContent className="md:w-[500px] ml-auto p-0">
             <Command>
-              {choices.length > 5 && (
-                <CommandInput placeholder="Search..." />
-              )}
+              {choices.length > 5 && <CommandInput placeholder="Search..." />}
 
               <CommandList>
                 <CommandEmpty>Nothing found.</CommandEmpty>
@@ -160,9 +166,7 @@ export function MultiSelectCombobox({
         </Popover>
 
         <SelectionDisplayBox
-        category={
-          toCamelCase(title)
-        }
+          category={toCamelCase(title)}
           selectedItems={selectedItems}
           onRemoveItem={handleRemoveItem}
         />
