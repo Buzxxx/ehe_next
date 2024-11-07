@@ -4,6 +4,7 @@ import { encodeUrlParameters, get_access_token } from "./filterObject";
 import update_url from "@/utility/updateUrl";
 
 export interface Lead {
+  location?: string;
   id: number;
   name: string;
   created_dt: string;

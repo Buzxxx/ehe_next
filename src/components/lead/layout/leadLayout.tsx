@@ -1,34 +1,37 @@
-"use client";
+"use client"
 
-import React, { useEffect, useState } from "react";
-import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb";
-import TopBar from "../features/leadListing/topBar";
+import { useState } from "react"
+import TopBar from "../features/leadListing/topBar"
+import LeadList from "../features/leadListing/leadList"
+
 import {
   LeadsResponse,
   DefaultLeadsResponse,
-} from "@/components/lead/features/leadObject";
-import LeadList from "../features/leadListing/leadList";
+} from "@/components/lead/features/leadObject"
+import LeadSummarySection from "../features/leadListing/leadSummarySection"
 
 const LeadLayout = () => {
   const [leadsResponse, setLeadsResponse] =
-    useState<LeadsResponse>(DefaultLeadsResponse);
+    useState<LeadsResponse>(DefaultLeadsResponse) // State to store the response from the API call that fetches the list of leads.
+
+  const [viewMode, setViewMode] = useState<"card" | "row">("card") // State to determine how the leads are displayed in the LeadList component.
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl text-neutral-900 font-normal">
-          Lead
-          <span className="text-base ml-4 text-neutral-600">Control Panel</span>
-        </h1>
-        <DashboardBreadcrumb />
-      </div>
-      <TopBar LeadsResponse={leadsResponse} />
+      <LeadSummarySection leadsResponse={leadsResponse} />
+
+      <TopBar
+        LeadsResponse={leadsResponse}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+      />
       <LeadList
         leadsResponse={leadsResponse}
         setLeadsResponse={setLeadsResponse}
+        viewMode={viewMode}
       />
     </>
-  );
-};
+  )
+}
 
-export default LeadLayout;
+export default LeadLayout

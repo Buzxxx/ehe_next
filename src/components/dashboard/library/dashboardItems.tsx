@@ -10,7 +10,7 @@ const dashboardItems = [
   { title: "Dashboard", icon: <DashboardIcon />, subItems: [] },
   {
     title: "Lead",
-    icon: <PersonIcon />,
+    icon: <PersonIcon color="transparent" />,
     subItems: [
       { name: "All Leads", route: paths.AllLeads },
       { name: "Create Lead", route: paths.CreateLead },
@@ -18,7 +18,7 @@ const dashboardItems = [
     ],
   },
   { title: "Task", icon: <CheckListIcon />, subItems: [] },
-  { title: "Workplace", icon: <Work />, subItems: [] },
+  { title: "Workplace", icon: <Work color="transparent" />, subItems: [] },
   {
     title: "Workforce",
     icon: <Group />,

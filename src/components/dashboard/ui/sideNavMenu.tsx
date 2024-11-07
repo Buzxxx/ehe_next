@@ -1,22 +1,26 @@
 import React from "react"
-import SideNavItem from "./sideNavItem"
-import dashboardItems from "../library/dashboardItems"
+import SideNavItem, { SideNavItemProps } from "./sideNavItem"
+import { SidebarMenu } from "@/components/ui/sidebar"
 
-const SideNavMenu = ({ onMenuItemClick }: { onMenuItemClick: () => void }) => {
+const SideNavMenu = ({
+  items,
+  onMenuItemClick,
+}: {
+  items: Omit<SideNavItemProps, "onMenuItemClick">[]
+  onMenuItemClick: () => void
+}) => {
   return (
-    <div className="w-full text-nowrap  ">
-      <ul className="text-neutral-300 text-sm">
-        {dashboardItems.map((item) => (
-          <SideNavItem
-            key={item.title}
-            title={item.title}
-            subItems={item.subItems}
-            icon={item.icon}
-            onMenuItemClick={onMenuItemClick} // Pass the onMenuItemClick function
-          />
-        ))}
-      </ul>
-    </div>
+    <SidebarMenu className="text-slate-700 text-sm">
+      {items.map((item) => (
+        <SideNavItem
+          key={item.title}
+          title={item.title}
+          subItems={item.subItems}
+          icon={item.icon}
+          onMenuItemClick={onMenuItemClick} // Pass the onMenuItemClick function
+        />
+      ))}
+    </SidebarMenu>
   )
 }
 
