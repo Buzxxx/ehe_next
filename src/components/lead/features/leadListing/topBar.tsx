@@ -67,7 +67,7 @@ const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <>
-      <div className="mt-4 bg-white border-b border-slate-200 shadow-sm rounded-lg p-3 z-50 flex items-center justify-between ">
+      <div className="mt-4 relative bg-white border-b border-slate-200 shadow-sm rounded-lg p-3 z-50 flex items-center justify-between ">
         <div className="flex items-center justify-between gap-2">
           <Menubar>
             <MenubarMenu>
@@ -154,7 +154,9 @@ const TopBar: React.FC<TopBarProps> = ({
         </div>
 
         {/* Filter Form Modal */}
-        <FilterModal open={filterVisible} onClose={setFilterVisible} />
+        {filterVisible && (
+          <FilterModal open={filterVisible} onClose={setFilterVisible} />
+        )}
       </div>
 
       {/* Loading Modal */}

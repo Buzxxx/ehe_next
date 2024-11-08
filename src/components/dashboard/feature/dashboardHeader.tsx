@@ -20,7 +20,7 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({
   img,
 }) => {
   return (
-    <nav className="flex bg-transparent justify-between w-full items-center z-50 fixed top-0 border">
+    <nav className="flex bg-white justify-between w-full items-center z-50 fixed top-0 border py-1">
       <div className=" min-w-64 h-full py-3 hidden md:block border-r ">
         <h4 className="text-center mx-auto">CRM</h4>
       </div>

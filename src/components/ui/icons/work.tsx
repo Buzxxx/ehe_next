@@ -1,11 +1,11 @@
-const Work = ({ height = 20, width = 20, color = "currentColor" }) => {
+const Work = ({ size = 24, color = "currentColor" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill={color}
-      height={height}
-      width={width}
+      height={size}
+      width={size}
       strokeWidth="1"
       stroke="currentColor"
     >

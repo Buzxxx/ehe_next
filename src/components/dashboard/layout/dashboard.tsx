@@ -68,7 +68,7 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div className="min-h-screen w-full  relative">
+    <div className="min-h-screen w-full  relative bg-gray-100/75">
       <SidebarProvider defaultOpen={toggled}>
         <DashboardHeader
           toggled={toggled}
@@ -83,7 +83,7 @@ const Dashboard = ({ children }: { children: ReactNode }) => {
           onMenuClick={handleMenuClick}
         />
         <section
-          className={` bg-gradient-to-b from-sky-100/50 to-white rounded-lg min-h-96 mt-16 p-4 ml-auto flex-0 w-full shadow-sm relative overflow-x-hidden`}
+          className={`  rounded-lg min-h-96 mt-12 py-4 px-2 mx-2 flex-0 w-full shadow-sm`}
         >
           {children}
         </section>

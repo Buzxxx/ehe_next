@@ -34,8 +34,8 @@ const FilterModal = ({
 
   return (
     <aside
-      className={`absolute top-60 mt-2 p-4 overflow-y-auto min-h-fit border right-4 z-50  md:w-96  bg-white rounded-md transition-all ease-in-out duration-75 ${
-        open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 hidden"
+      className={`absolute top-16 mt-2 p-4 overflow-y-auto min-h-fit border right-2 z-50  md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg ${
+        open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 "
       } `}
     >
       <div>

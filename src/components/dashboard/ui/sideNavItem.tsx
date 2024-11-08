@@ -56,16 +56,17 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
     >
       {subItems.length ? (
         <div>
-          <SidebarMenuButton className="relative">
-            <span className="min-w-5">{icon}</span>
-            {title}
-            <Badge className="absolute right-4 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-200 p-1 text-xs rounded-sm bg-sky-600">
+          <SidebarMenuButton className="relative flex items-center hover:bg-sky-500/10">
+            <span className="w-6">{icon}</span>
+            <p className="flex-1">{title}</p>
+
+            <Badge className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-100 p-0 px-1 text-xs rounded-sm bg-sky-600 hover:bg-sky-500">
               {subItems.length}
             </Badge>
           </SidebarMenuButton>
 
           <SidebarMenuSub
-          className="overflow-hidden"
+            className="overflow-hidden"
             style={{
               height: openMenu ? `${subItems.length * 2.25}rem` : "0",
               transition: "height 0.3s ease",
@@ -74,7 +75,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
             {subItems.map((subItem, index) => (
               <SidebarMenuSubItem key={index}>
                 <SidebarMenuSubButton
-                  className="cursor-pointer"
+                  className="cursor-pointer hover:bg-sky-400/10"
                   onClick={() => handleSubItemClick(subItem)}
                 >
                   {subItem.name}
@@ -84,7 +85,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
           </SidebarMenuSub>
         </div>
       ) : (
-        <SidebarMenuButton>
+        <SidebarMenuButton className="hover:bg-sky-500/10">
           <Link
             href={`/${title.toLowerCase().replace(/\s+/g, "")}`}
             className="flex gap-3 w-full justify-between items-center"
