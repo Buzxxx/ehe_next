@@ -57,7 +57,7 @@ const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds })=> {
 
           <Button
             type="submit"
-            className=" text-white border border-dashboard-primary  bg-dashboard-primary hover:bg-dashboard-secondary"
+            className=" text-white border border-sky-600  bg-sky-600 hover:bg-sky-500"
           >
             Confirm
           </Button>

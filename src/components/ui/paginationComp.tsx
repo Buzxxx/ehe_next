@@ -101,40 +101,6 @@ const PaginationComp = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* 
-        <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
-          <DropdownMenuTrigger className="p-0 text-gray-500">
-            <PaginationItem>
-              <PaginationLink
-                href="#"
-                isActive
-                className="bg-charcoal-foreground h-fit"
-              >
-                {activePage}
-                {isDropdownOpen ? (
-                  <ChevronUp className="ml-1 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                )}
-              </PaginationLink>
-            </PaginationItem>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="max-h-96 w-fit overflow-y-auto p-1">
-            {otherPages.map((page) => (
-              <DropdownMenuItem
-                className="w-fit px-2 py-1"
-                key={page}
-                onSelect={() => handlePageChange(page)}
-              >
-                <PaginationLink href="#" className="w-fit text-center">
-                  {page}
-                </PaginationLink>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
         <PaginationItem>
           <PaginationPrevious
             href="#"

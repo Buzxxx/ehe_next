@@ -9,7 +9,7 @@ import {
 export const WorkCard = () => (
   <Card className="rounded-none">
     <CardHeader className="pb-0">
-      <CardTitle className="text-dashboard-primary text-xl font-normal">Card Title</CardTitle>
+      <CardTitle className="text-sky-600 text-xl font-normal">Card Title</CardTitle>
       <CardDescription className="text-xs">June 2, 2024, 5 p.m.</CardDescription>
     </CardHeader>
     <CardContent className="text-sm">

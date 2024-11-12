@@ -5,11 +5,20 @@ import CreateWorkerForm from "@/components/workforce/ui/createUserForm"
 import React, { useState } from "react"
 import { sampleData } from "@/components/workforce/lib/sampleData"
 import { Workforce } from "@/components/workforce/feature/workforce"
+import { WorkforceUser } from "@/components/workforce/ui/tableColumns"
 
-const Page = ({ params }: { params: { id: string } }) => {
+interface WorkforcePageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+const Page = ({ params }: WorkforcePageProps) => {
   const [isLoading, setIsLoading] = useState(false)
-  const id = params.id
-  const user = Workforce.getUserbyId(id!, sampleData)
+  let user: WorkforceUser | undefined 
+  params.then(({ slug }) => {
+    user = Workforce.getUserbyId(slug!, sampleData)
+  })
 
   return (
     <>
@@ -35,4 +44,3 @@ const Page = ({ params }: { params: { id: string } }) => {
 }
 
 export default Page
-

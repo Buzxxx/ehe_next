@@ -1,6 +1,5 @@
-import { Payment, columns } from "../features/employeesTable/columns"
-import { DataTable } from "../ui/table"
-import AnalyticsSummaryCard from "../ui/analyticsSummaryCard"
+
+import AnalyticsSummaryCard from "../../home/ui/analyticsSummaryCard"
 import { BarChartCard } from "../ui/barChart"
 import { PieChartCard } from "../ui/pieChart"
 import { RadialChart } from "../ui/radialChart"

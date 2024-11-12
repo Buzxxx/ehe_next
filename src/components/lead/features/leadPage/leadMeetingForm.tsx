@@ -35,7 +35,6 @@ const LeadMeetingForm = ({ id }: { id: string }) => {
         setIsLoading(false);
         toast({
           title: `Meeting Set for ${formatDate(data.date.toISOString())} hrs`,
-          variant: "dashboard",
         });
       }, 1000);
     }
@@ -110,7 +109,7 @@ const LeadMeetingForm = ({ id }: { id: string }) => {
 
             <Button
               type="submit"
-              className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+              className=" bg-sky-600 border border-sky-600 text-white hover:bg-sky-500"
             >
               Set a follow up
             </Button>

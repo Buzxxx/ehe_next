@@ -1,4 +1,8 @@
-import Work from "@/components/workplace/feature/work";
+/**
+ * @path src/app/(dashboard)/workplace/page.tsx
+ */
+
+import Work from "@/components/workplace/layout/work";
 
 
 export default function Workplace() {

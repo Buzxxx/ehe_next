@@ -42,7 +42,7 @@ const EmailTemplateViewer: React.FC<EmailTemplateViewerProps> = ({
           key={index}
           className={`border h-fit transition-all text-xs cursor-pointer p-1 ${
             getTemplateName(selectedTemplate) === name
-              ? "border-dashboard-primary"
+              ? "border-sky-600"
               : "border-gray-200"
           }`}
           onClick={() => handleTemplateSelect(<TemplateComponent />, name)}

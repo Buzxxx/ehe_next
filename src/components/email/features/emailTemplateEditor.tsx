@@ -59,7 +59,7 @@ const EmailTemplateEditor = () => {
             <div className=" flex items-center justify-between gap-4  w-full mt-8">
               <div>
                 <Button
-                  className="bg-dashboard-primary hover:bg-dashboard-secondary"
+                  className="bg-sky-600 hover:bg-sky-500"
                   onClick={exportHtml}
                 >
                   Preview HTML

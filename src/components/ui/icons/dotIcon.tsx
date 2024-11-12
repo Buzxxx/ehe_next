@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function DotIcon({ size = 24, color = "currentColor" }) {
+export default function DotIcon({ size = 24, color = "currentColor", className='string' }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +9,7 @@ export default function DotIcon({ size = 24, color = "currentColor" }) {
       version="1.1"
       viewBox="0 0 31.955 31.955"
       xmlSpace="preserve"
+      className={className}
     >
       <g fill={color}>
         <path d="M27.25 4.655c-6.254-6.226-16.37-6.201-22.594.051-6.227 6.254-6.204 16.37.049 22.594 6.256 6.226 16.374 6.203 22.597-.051 6.224-6.254 6.203-16.371-.052-22.594z"></path>

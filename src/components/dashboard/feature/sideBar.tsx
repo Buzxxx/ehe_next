@@ -1,3 +1,5 @@
+"use client"
+
 import SideNavMenu from "../ui/sideNavMenu"
 import OnlineTag from "../ui/onlineTag"
 import ProfileTab from "../ui/profileTab"
@@ -16,37 +18,20 @@ import {
 } from "@/components/ui/sidebar"
 
 const DashboardSideMenu = ({
-  toggled,
-  onMenuClick,
+  name,
+  img,
 }: {
-  toggled: boolean
-  name: string
-  img: string
-  onMenuClick: () => void
+  name?: string | undefined
+  img?: string
 }) => {
-  const [name, setName] = useState<string>("Loading...")
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const userData = await get_user_data_as_cookie()
-        setName(userData.name)
-      } catch (error) {
-        console.error("Error fetching user data:", error)
-        setName("Unknown User")
-      }
-    }
-
-    fetchUserData()
-  }, [])
-
-  const img = "/base/profile.webp"
   return (
-    <Sidebar variant="floating" 
+    <Sidebar
+      variant="floating"
       className={` fixed z-10 top-0 pt-16 left-0  flex flex-col items-center transition-all text-nowrap border-0 `}
     >
       <SidebarHeader className="text-slate-800 text-left flex flex-col border-b">
         <ProfileTab
-          name={name}
+          name={name ?? "Unknown User"}
           img={img}
           avatarClass="h-11 w-11"
           className=" font-semibold text-sm"
@@ -61,16 +46,12 @@ const DashboardSideMenu = ({
           <SidebarGroupContent>
             <SideNavMenu
               items={dashboardItems.slice(0, dashboardItems.length - 1)}
-              onMenuItemClick={onMenuClick}
             />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SideNavMenu
-          items={[dashboardItems[dashboardItems.length - 1]]}
-          onMenuItemClick={onMenuClick}
-        />{" "}
+        <SideNavMenu items={[dashboardItems[dashboardItems.length - 1]]} />{" "}
       </SidebarFooter>
     </Sidebar>
   )
