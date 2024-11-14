@@ -57,7 +57,6 @@ const WorkforceTabs = () => {
     handleCloseModal() // Close the modal
     toast({
       title: `User ${userId} is now ${newStatus}`,
-      variant: "dashboard",
     })
   }
 
@@ -67,9 +66,9 @@ const WorkforceTabs = () => {
         {tabList.map((item) => (
           <Button
             key={item}
-            className={`rounded-none text-xs px-2 h-8 hover:text-dashboard-primary hover:bg-dashboard-primary hover:text-white py-5 rounded-t-md ${
+            className={`rounded-none text-xs px-2 h-8 hover:text-sky-600 hover:bg-sky-600  py-5 rounded-t-md ${
               activeTab === item
-                ? "bg-charcoal-foreground text-dashboard-primary border border-b-0 border-gray-300"
+                ? "bg-gray-400 text-sky-600 border border-b-0 border-gray-300"
                 : "bg-gray-200 text-gray-800"
             }`}
             onClick={() => setActiveTab(item)}

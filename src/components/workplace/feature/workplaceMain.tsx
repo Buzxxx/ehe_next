@@ -1,5 +1,5 @@
 import React from "react"
-import { WorkCard } from "./workCard"
+import { WorkCard } from "../ui/workCard"
 
 const WorkplaceMain = () => {
   const array = Array.from({ length: 5 }, (_, index) => index + 1)

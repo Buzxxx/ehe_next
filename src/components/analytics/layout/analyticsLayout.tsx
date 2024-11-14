@@ -1,29 +1,35 @@
-import { Payment, columns } from "../features/employeesTable/columns"
-import { DataTable } from "../ui/table"
-import AnalyticsSummaryCard from "../ui/analyticsSummaryCard"
+import AnalyticsSummaryCard from "../../home/ui/analyticsSummaryCard"
 import { BarChartCard } from "../ui/barChart"
-import { PieChartCard } from "../ui/pieChart"
-import { RadialChart } from "../ui/radialChart"
 import EmployeeTable from "../features/employeesTable/employeeTable"
 
 export default async function AnalyticsLayout() {
   return (
-    <>
-      <div className="flex justify-between w-full gap-2">
-        <AnalyticsSummaryCard />
-        <AnalyticsSummaryCard />
+    <div className="grid grid-cols-3 gap-2 place-items-stretch items-stretch">
+      <div className="col-span-1 row-span-1 h-fit">
         <AnalyticsSummaryCard />
       </div>
-      <div className="grid gap-2 grid-cols-3 grid-rows-2 mt-2">
-        <div className="col-span-2 row-span-2">
-          <BarChartCard />
-        </div>
-        <div className="row-span-1">
-          <PieChartCard />
-        </div>
-        <RadialChart />
+      <div className="col-span-1 row-span-1 h-fit">
+        <AnalyticsSummaryCard />
       </div>
-      <EmployeeTable />
-    </>
+      <div className="col-span-1 row-span-1 h-fit">
+        <AnalyticsSummaryCard />
+      </div>
+      <div className="col-span-2 row-span-3 h-fit">
+        <BarChartCard />
+      </div>
+      <div className="col-span-1 row-span-1 ">
+        <AnalyticsSummaryCard />
+      </div>
+      <div className="col-span-1 row-span-1 ">
+        <AnalyticsSummaryCard />
+      </div>
+      <div className="col-span-1 row-span-1 ">
+        <AnalyticsSummaryCard />
+      </div>
+
+      <div className="col-span-3">
+        <EmployeeTable />
+      </div>
+    </div>
   )
 }

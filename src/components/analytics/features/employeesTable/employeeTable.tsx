@@ -18,7 +18,7 @@ export default async function EmployeeTable() {
   const data = await getData()
 
   return (
-    <div className="container mx-auto py-10">
+    <div className=" md:mx-auto md:py-10 py-4">
       <DataTable columns={columns} data={data} />
     </div>
   )

@@ -11,7 +11,7 @@ const config = {
   prefix: "",
   theme: {
   	container: {
-  		center: 'true',
+  		center: true,
   		padding: '2rem',
   		screens: {
   			'2xl': '1400px'
@@ -34,17 +34,6 @@ const config = {
   			},
   			tertiary: {
   				DEFAULT: 'hsl(var(--tertiary))'
-  			},
-  			dashboard: {
-  				primary: 'hsl(var(--dashboard-primary))',
-  				secondary: 'hsl(var(--dashboard-secondary))'
-  			},
-  			charcoal: {
-  				'700': 'hsl(var(--charcoal-700))',
-  				'800': 'hsl(var(--charcoal-800))',
-  				'900': 'hsl(var(--charcoal-900))',
-  				foreground: 'hsl(var(--charcoal-foreground))',
-  				foregroundAccent: 'hsl(var(--charcoal-foreground-accent))'
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',

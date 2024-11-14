@@ -1,6 +1,6 @@
 import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
 import DashboardTopBar from "../../dashboard/ui/dashboardTopbar"
-import WorkplaceMain from "../ui/workplaceMain"
+import WorkplaceMain from "../feature/workplaceMain"
 
 const Work = () => {
   return (

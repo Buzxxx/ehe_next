@@ -31,8 +31,8 @@ const DragNdrop: React.FC<DragNdropProps> = ({
     if (selectedFiles && selectedFiles.length > 0) {
       const newFiles = Array.from(selectedFiles)
       setFiles((prevFiles) => [...prevFiles, ...newFiles])
-        const parsedFile = await parseFile(newFiles[0])
-        setCsvData(parsedFile)
+      const parsedFile = await parseFile(newFiles[0])
+      setCsvData(parsedFile)
     }
   }
 
@@ -60,9 +60,9 @@ const DragNdrop: React.FC<DragNdropProps> = ({
         className={`bg-charcoal-foregroundAccent rounded-md ${className}`}
       >
         <div
-          className={`document-uploader border-2 border-dashed border-dashboard-primary rounded-lg p-4 flex items-center justify-evenly flex-col relative cursor-pointer min-h-64 ${
+          className={`document-uploader border-2 border-dashed border-sky-600 rounded-lg p-4 flex items-center justify-evenly flex-col relative cursor-pointer min-h-64 ${
             files.length > 0
-              ? "upload-box border-dashboard-secondary"
+              ? "upload-box border-sky-500"
               : "upload-box"
           }`}
           onDrop={handleDrop}
@@ -87,10 +87,7 @@ const DragNdrop: React.FC<DragNdropProps> = ({
               accept={supportedFileTypes}
               multiple
             />
-            <Button
-              type="button"
-              className="bg-dashboard-primary hover:bg-dashboard-secondary"
-            >
+            <Button type="button" className="bg-sky-600 hover:bg-sky-500">
               <Label htmlFor="browse" className="browse-btn border">
                 Browse files
               </Label>
