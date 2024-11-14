@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import Notifs from "../ui/notifs";
 import MenuIcon from "@/components/ui/icons/menuIcon";
 import ProfilePopover from "../ui/profilePopover";
@@ -6,15 +5,12 @@ import ProfileTab from "../ui/profileTab";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
 interface DashboardNavProps {
-  toggled: boolean;
-  setToggled?: Dispatch<SetStateAction<boolean>>;
-  onNext: () => void;
-  name: string;
-  img: string;
+  onNext?: () => void;
+  name?: string;
+  img?: string;
 }
 
 const DashboardHeader: React.FC<DashboardNavProps> = ({
-  toggled,
   onNext,
   name,
   img,
@@ -36,7 +32,7 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({
           <ProfilePopover
             trigger={
               <ProfileTab
-                name={name}
+                name={name ?? "Loading..."}
                 img={img}
                 avatarClass="h-8 w-8"
                 className="text-sm px-3"

@@ -94,7 +94,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
 
             <button
               onClick={onToggle}
-              className="text-dashboard-primary visible"
+              className="text-sky-600 visible"
             >
               <Filter
                 color="grey"

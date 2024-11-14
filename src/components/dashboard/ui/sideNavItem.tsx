@@ -11,6 +11,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { useSidebar } from "@/components/ui/sidebar"
 
 interface SubItem {
   name: string
@@ -21,7 +22,7 @@ export interface SideNavItemProps {
   title: string
   subItems: SubItem[]
   icon: React.ReactNode
-  onMenuItemClick: () => void // Add the prop type for the function
+  onMenuItemClick?: () => void // Add the prop type for the function
 }
 
 const SideNavItem: React.FC<SideNavItemProps> = ({
@@ -30,6 +31,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
   icon,
   onMenuItemClick, // Receive the onMenuItemClick function
 }) => {
+  const {setOpenMobile} = useSidebar()
   const [openMenu, setOpenMenu] = useState<boolean>(false)
   const router = useRouter()
 
@@ -38,7 +40,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
   }
 
   const handleSubItemClick = async (subItem: SubItem) => {
-    onMenuItemClick() // Call the onMenuItemClick to close the sidebar
+    setOpenMobile(false)
     if (subItem.name === "Logout") {
       const path = await logout()
       if (path) {
@@ -60,7 +62,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
             <span className="w-6">{icon}</span>
             <p className="flex-1">{title}</p>
 
-            <Badge className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-100 p-0 px-1 text-xs rounded-sm bg-sky-600 hover:bg-sky-500">
+            <Badge className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-sku-600 text-neutral-100 p-0 px-1 text-xs rounded-sm bg-sky-600 hover:bg-sky-500">
               {subItems.length}
             </Badge>
           </SidebarMenuButton>
@@ -91,8 +93,9 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
             className="flex gap-3 w-full justify-between items-center"
             onClick={onMenuItemClick} // Call the onMenuItemClick when a ubIn menu item is clicked
           >
-            <div className="flex gap-3 justify-between">
-              {icon} {title}
+            <div className="flex gap-2 justify-start w-full">
+              <span className="w-6">{icon}</span>
+              <p className="">{title}</p>
             </div>
             <ChevronLeft size={16} />
           </Link>
