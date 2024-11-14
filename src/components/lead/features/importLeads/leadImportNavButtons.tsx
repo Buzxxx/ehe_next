@@ -22,7 +22,7 @@ const LeadImportNavButtons: React.FC<{ buttons: LeadImportButtonProps[] }> = ({
           onClick={btn.btnFn}
           className={`flex gap-1 items-center ${
             btn.variant === "affirmative"
-              ? "bg-dashboard-primary hover:bg-dashboard-secondary flex-row-reverse"
+              ? "bg-sky-600 hover:bg-sky-500 flex-row-reverse"
               : "text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
           }`}
         >

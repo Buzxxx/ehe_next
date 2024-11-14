@@ -155,7 +155,11 @@ const TopBar: React.FC<TopBarProps> = ({
 
         {/* Filter Form Modal */}
         {filterVisible && (
-          <FilterModal open={filterVisible} onClose={setFilterVisible} />
+          <FilterModal
+            className={
+              filterVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+            }
+          />
         )}
       </div>
 

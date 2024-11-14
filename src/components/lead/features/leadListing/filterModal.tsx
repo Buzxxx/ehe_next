@@ -9,13 +9,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { MultiSelectCombobox } from "../../ui/multiSelectCombobox"
+import { cn } from "@/lib/utils"
 
 const FilterModal = ({
-  open,
-  onClose,
+  className,
 }: {
-  open?: boolean
-  onClose: React.Dispatch<SetStateAction<boolean>>
+  className: string
 }) => {
   const [selectedNames, setSelectedNames] = useState<string[]>([])
 
@@ -34,9 +33,10 @@ const FilterModal = ({
 
   return (
     <aside
-      className={`absolute top-16 mt-2 p-4 overflow-y-auto min-h-fit border right-2 z-50  md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg ${
-        open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 "
-      } `}
+      className={cn(
+        "absolute top-16 mt-2 p-4 overflow-y-auto min-h-fit border right-2 z-50  md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg",
+        className
+      )}
     >
       <div>
         <h3 className="text-lg font-semibold flex items-center">Filter</h3>

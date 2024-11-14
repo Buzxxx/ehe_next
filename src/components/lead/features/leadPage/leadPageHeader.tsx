@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import ProfileTab from "@/components/lead/ui/leadPage/profile";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import BackIcon from "@/components/ui/icons/back";
-import { useRouter } from "next/navigation";
-import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon";
-import { Phone, Share2 } from "@/components/ui/icons";
+import ProfileTab from "@/components/lead/ui/leadPage/profile"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import BackIcon from "@/components/ui/icons/back"
+import { useRouter } from "next/navigation"
+import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
+import { Phone, Share2 } from "@/components/ui/icons"
 
-const navItems = ["Timeline", "Profile", "Call back", "Meeting"];
+const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
 
 const LeadPageHeader = ({
   id,
@@ -18,14 +18,14 @@ const LeadPageHeader = ({
   status = "Closed",
   assignedTo = "Avinash Jha",
 }: {
-  id: string;
-  setActiveTab: any;
-  activeTab: any;
-  type?: "Cold" | string;
-  status?: "Closed" | string;
-  assignedTo?: "Avinash Jha" | string;
+  id: string
+  setActiveTab: any
+  activeTab: any
+  type?: "Cold" | string
+  status?: "Closed" | string
+  assignedTo?: "Avinash Jha" | string
 }) => {
-  const router = useRouter(); // Initialize useRouter hook
+  const router = useRouter() // Initialize useRouter hook
 
   return (
     <>
@@ -69,9 +69,9 @@ const LeadPageHeader = ({
           {navItems.map((item) => (
             <Button
               key={item}
-              className={`text-xs px-2 h-8 hover:text-dashboard-primary hover:bg-dashboard-primary hover:text-white ${
+              className={`text-xs px-2 h-8 hover:text-sky-600 hover:bg-sky-600  ${
                 activeTab === item
-                  ? "bg-dashboard-primary text-white"
+                  ? "bg-sky-600 text-white"
                   : "bg-gray-200 text-gray-800"
               }`}
               onClick={() => setActiveTab(item)}
@@ -82,7 +82,7 @@ const LeadPageHeader = ({
         </nav>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default LeadPageHeader;
+export default LeadPageHeader
