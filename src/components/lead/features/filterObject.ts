@@ -8,15 +8,15 @@ export const FilterSelect = {
     name: "assigned_to",
     label: "Assigned to",
     placeholder: "Select User",
-    options: {},
+    options: [],
   },
   status: {
     name: "status",
     label: "Status",
     placeholder: "Select Status",
-    options: {},
+    options: [],
   },
-};
+}
 //getfilter
 
 export async function get_filter_object() {

@@ -1,4 +1,3 @@
-// "MultiSelectCombobox" component
 import * as React from "react"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -11,24 +10,22 @@ import {
   CommandList,
 } from "@/components/ui/command"
 
+interface MultiSelectComboboxProps {
+  items: { value: string; label: string }[]
+  selectedValues: string[]
+  onSelectionChange: (selected: string[]) => void
+}
+
 export function MultiSelectCombobox({
   items,
+  selectedValues,
   onSelectionChange,
-}: {
-  items: { value: string; label: string }[]
-  onSelectionChange: (selected: string[]) => void
-}) {
-  const [selectedValues, setSelectedValues] = React.useState<string[]>([])
-
+}: MultiSelectComboboxProps) {
   const handleSelect = (value: string) => {
-    setSelectedValues((prevSelected) => {
-      const isSelected = prevSelected.includes(value)
-      const newSelected = isSelected
-        ? prevSelected.filter((item) => item !== value)
-        : [...prevSelected, value]
-      onSelectionChange(newSelected) // Update parent with selected values
-      return newSelected
-    })
+    const newSelected = selectedValues.includes(value)
+      ? selectedValues.filter((item) => item !== value)
+      : [...selectedValues, value]
+    onSelectionChange(newSelected) // Update parent with selected values
   }
 
   return (
