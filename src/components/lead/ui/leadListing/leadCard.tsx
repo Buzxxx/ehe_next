@@ -7,13 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import Avataar from "../leadPage/avataar"
 
 import {
   Phone,
-  ExternalLink,
-  MapPin,
   WhatsAppOutline,
   Bookmark,
   PersonIcon,

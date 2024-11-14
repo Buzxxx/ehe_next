@@ -15,10 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { handleToggle } from "@/utility/toggle";
 import PaginationComp from "@/components/ui/paginationComp";
 import { Dashboard } from "../feature/dashboard";
-
-const FilterForm = lazy(
-  () => import("@/components/dashboard/layout/filterForm")
-);
+import FilterModal from "@/components/lead/features/leadListing/filterModal";
 
 type DashboardTopBarProps = {
   onSelectAll?: () => void;
@@ -109,7 +106,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
 
       {page === "lead" && filterVisible && (
         <Suspense fallback={<> </>}>
-          <FilterForm
+          <FilterModal
             className={`${
               filterVisible
                 ? "filter-form translate-x-0"

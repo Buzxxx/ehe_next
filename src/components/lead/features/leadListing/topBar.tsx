@@ -33,8 +33,6 @@ import dynamic from "next/dynamic"
 import { Input } from "@/components/ui/input"
 import FilterModal from "./filterModal"
 
-const FilterForm = dynamic(() => import("./filterForm"))
-
 interface TopBarProps {
   LeadsResponse: LeadsResponse
   viewMode: "card" | "row" // View mode prop
