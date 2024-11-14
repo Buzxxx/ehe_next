@@ -37,7 +37,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({
   isSelected,
   onToggle,
 }) => (
-  <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] xl:w-[33.2%] ">
+  <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] ">
     <CardHeader className="flex flex-row items-start justify-between p-4 gap-3 space-y-0">
       {/* <Checkbox
         className="rounded-sm transition-all data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"

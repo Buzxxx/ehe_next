@@ -32,6 +32,7 @@ import LoadingSpinner from "@/components/contracts/ui/loadingSpinner"
 import dynamic from "next/dynamic"
 import { Input } from "@/components/ui/input"
 import FilterModal from "./filterModal"
+import FilterForm from "./filterForm"
 
 interface TopBarProps {
   LeadsResponse: LeadsResponse
@@ -65,7 +66,7 @@ const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <>
-      <div className="mt-4 relative bg-white border-b border-slate-200 shadow-sm rounded-lg p-3 z-50 flex items-center justify-between ">
+      <div className="mt-4 relative bg-white border-b border-slate-200 shadow-sm rounded-lg p-3 z-40 flex items-center justify-between ">
         <div className="flex items-center justify-between gap-2">
           <Menubar>
             <MenubarMenu>
@@ -153,7 +154,7 @@ const TopBar: React.FC<TopBarProps> = ({
 
         {/* Filter Form Modal */}
         {filterVisible && (
-          <FilterModal
+          <FilterForm
             className={
               filterVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
             }

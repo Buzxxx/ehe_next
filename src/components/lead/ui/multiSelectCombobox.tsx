@@ -18,14 +18,20 @@ interface MultiSelectComboboxProps {
 
 export function MultiSelectCombobox({
   items,
-  selectedValues,
+  selectedValues = [],
   onSelectionChange,
 }: MultiSelectComboboxProps) {
   const handleSelect = (value: string) => {
-    const newSelected = selectedValues.includes(value)
-      ? selectedValues.filter((item) => item !== value)
-      : [...selectedValues, value]
-    onSelectionChange(newSelected) // Update parent with selected values
+    console.log(selectedValues)
+    // Toggle the item in selectedValues
+    const updatedSelectedValues = selectedValues.includes(value)
+      ? selectedValues.filter((v) => v !== value) // Remove if already selected
+      : [...selectedValues, value] // Add if not selected
+
+    console.log(updatedSelectedValues)
+
+    // Call the parent function with the updated selection
+    onSelectionChange(updatedSelectedValues)
   }
 
   return (

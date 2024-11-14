@@ -81,7 +81,7 @@ const LeadList: React.FC<LeadListProps> = ({
   return (
     <div className="w-full relative">
       {isLoading ? (
-        <div className="absolute mt-4 inset-0 flex justify-center items-center bg-gray-300 bg-opacity-50 z-50 min-h-96">
+        <div className="absolute mt-4 inset-0 flex justify-center items-center bg-gray-300 bg-opacity-30 z-40 min-h-96">
           <Spinner className="animate-spin h-10 w-10" />
         </div>
       ) : (
