@@ -7,8 +7,9 @@ import {
   Work,
 } from "@/components/ui/icons"
 import { paths } from "@/app/(dashboard)/lead/urls"
+import Home from "@/components/ui/icons/home"
 
-const dashboardItems = [
+const dashboardItems = [{ title: "Home", icon: <Home size={20} />, subItems: [] },
   { title: "Analytics", icon: <ChartNoAxesCombined size={20} />, subItems: [] },
   {
     title: "Lead",

@@ -7,7 +7,7 @@ interface ProfileTabProps {
   children?: ReactElement | null;
   profileNameTag?: string;
   name: string;
-  img: string;
+  img?: string;
 }
 
 const ProfileTab: React.FC<ProfileTabProps> = ({

@@ -1,13 +1,15 @@
-import React from "react"
+/**
+ * @path src/components/dashboard/ui/sideNavMenu.tsx
+ */
+
 import SideNavItem, { SideNavItemProps } from "./sideNavItem"
 import { SidebarMenu } from "@/components/ui/sidebar"
 
 const SideNavMenu = ({
   items,
-  onMenuItemClick,
 }: {
   items: Omit<SideNavItemProps, "onMenuItemClick">[]
-  onMenuItemClick: () => void
+  onMenuItemClick?: () => void
 }) => {
   return (
     <SidebarMenu className="text-slate-700 text-sm">
@@ -17,7 +19,6 @@ const SideNavMenu = ({
           title={item.title}
           subItems={item.subItems}
           icon={item.icon}
-          onMenuItemClick={onMenuItemClick} // Pass the onMenuItemClick function
         />
       ))}
     </SidebarMenu>
