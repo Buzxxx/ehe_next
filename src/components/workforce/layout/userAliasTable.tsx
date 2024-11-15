@@ -81,7 +81,7 @@ const UserAliasTable: React.FC<UserAliasTableProps> = ({
           </TableCell>
           <TableCell className="text-right">
             <button onClick={handleAddClick}>
-              <Plus size={16} className="hover:stroke-dashboard-primary" />
+              <Plus size={16} className="hover:stroke-sky-600" />
             </button>
           </TableCell>
         </TableRow>

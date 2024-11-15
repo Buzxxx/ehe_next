@@ -15,7 +15,7 @@ interface CookieOptions {
 
 export const getCookie = async (name: string) => {
   const cookieStore = cookies();
-  return cookieStore.get(name)?.value || null;
+  return (await cookieStore).get(name)?.value || null;
 };
 
 export const setCookie = async (
@@ -24,7 +24,7 @@ export const setCookie = async (
   options: CookieOptions = {}
 ) => {
   const cookieStore = cookies();
-  cookieStore.set(name, value, {
+  (await cookieStore).set(name, value, {
     path: "/",
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -34,17 +34,17 @@ export const setCookie = async (
 
 export const deleteCookie = async (name: string) => {
   const cookieStore = cookies();
-  cookieStore.set(name, "", {
+  (await cookieStore).set(name, "", {
     path: "/",
     expires: new Date(0),
   });
 };
 
-export const updateCookie = (
+export const updateCookie =  async (
   name: string,
   value: string,
   options: CookieOptions = {}
-): void => {
+): Promise<void> => {
   setCookie(name, value, options);
 };
 

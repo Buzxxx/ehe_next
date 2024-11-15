@@ -140,7 +140,7 @@ const DussehraEmailTemplate = ({ message }: { message?: string }) => {
         <tr>
           <td align="center" style={{ padding: "20px 1px" }}>
             <a
-              className="text-xs bg-dashboard-primary text-white px-4 py-2 rounded-sm"
+              className="text-xs bg-sky-600 text-white px-4 py-2 rounded-sm"
               href="#"
             >
               Celebrate with Us

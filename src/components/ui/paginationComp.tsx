@@ -65,16 +65,18 @@ const PaginationComp = ({
   }, [initialPage])
 
   return (
-    <Pagination className={`items-center m-0 w-0 md:w-fit px-4 hidden md:flex ${className}`}>
-      <h2 className="text-sm mr-3 text-gray-500">Per Page:</h2>
+    <Pagination
+      className={` items-center m-0 w-0 md:w-fit z-20 bg-white hidden md:flex ${className}`}
+    >
+      <h2 className="text-sm mr-3 text-gray-600">Per Page:</h2>
       <PaginationContent>
         <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
-          <DropdownMenuTrigger className="p-0 text-gray-500">
+          <DropdownMenuTrigger className="p-0 text-sky-600">
             <PaginationItem>
               <PaginationLink
                 href="#"
                 isActive
-                className="bg-charcoal-foreground h-fit"
+                className="bg-sky-100/70 h-fit px-2 justify-center gap-0 w-fit"
               >
                 {itemsPerPage}
                 {isDropdownOpen ? (
@@ -99,45 +101,11 @@ const PaginationComp = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-{/* 
-        <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
-          <DropdownMenuTrigger className="p-0 text-gray-500">
-            <PaginationItem>
-              <PaginationLink
-                href="#"
-                isActive
-                className="bg-charcoal-foreground h-fit"
-              >
-                {activePage}
-                {isDropdownOpen ? (
-                  <ChevronUp className="ml-1 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                )}
-              </PaginationLink>
-            </PaginationItem>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="max-h-96 w-fit overflow-y-auto p-1">
-            {otherPages.map((page) => (
-              <DropdownMenuItem
-                className="w-fit px-2 py-1"
-                key={page}
-                onSelect={() => handlePageChange(page)}
-              >
-                <PaginationLink href="#" className="w-fit text-center">
-                  {page}
-                </PaginationLink>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
         <PaginationItem>
           <PaginationPrevious
             href="#"
             onClick={() => handlePageChange(Math.max(activePage - 1, 1))}
-            className="h-fit py-1 text-gray-500"
+            className="h-fit py-1 text-gray-700 hover:text-sky-600 hover:bg-sky-100/50"
           />
         </PaginationItem>
 
@@ -147,7 +115,7 @@ const PaginationComp = ({
             onClick={() =>
               handlePageChange(Math.min(activePage + 1, totalPages))
             }
-            className="h-fit py-1 text-gray-500"
+            className="h-fit py-1 text-gray-700 hover:text-sky-600 hover:bg-sky-100/50"
           />
         </PaginationItem>
       </PaginationContent>

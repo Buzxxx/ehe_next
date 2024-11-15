@@ -30,13 +30,18 @@ import Twitter from "./twitter"
 import TwitterColored from "./twitterColored"
 import WhatsappColored from "./whatsappColored"
 import WhatsAppIcon from "./whatsAppIcon"
+import WhatsAppOutline from "./whatsappOutline"
 import Work from "./work"
 
 // Lucide-react Icons
 import {
+  ArrowUp,
   BadgeCheck,
   Bath,
+  BetweenHorizontalEnd,
+  Bookmark,
   CalendarIcon,
+  ChartNoAxesCombined,
   Check,
   CheckCircle,
   ChevronDown,
@@ -52,6 +57,7 @@ import {
   Download,
   Edit,
   Ellipsis,
+  EllipsisVertical,
   ExternalLink,
   Facebook,
   Filter,
@@ -59,6 +65,7 @@ import {
   Images,
   List,
   LogOut,
+  Mail,
   MapPin,
   MoreHorizontal,
   MoveLeft,
@@ -75,13 +82,17 @@ import {
 } from "lucide-react"
 
 export {
+  ArrowUp,
   BackIcon,
   BadgeCheck,
   Bath,
   Bed,
+  BetweenHorizontalEnd,
+  Bookmark,
   CalendarIcon,
   Call,
   Chat,
+  ChartNoAxesCombined,
   Check,
   CheckCircle,
   CheckIcon,
@@ -103,6 +114,7 @@ export {
   Download,
   Edit,
   Ellipsis,
+  EllipsisVertical,
   ExternalLink,
   Facebook,
   FacebookColored,
@@ -111,14 +123,15 @@ export {
   FilterIcon,
   GreenDot,
   Group,
-  Images,
   Heart,
+  Images,
   Instagram,
   InstagramColored,
   Inquiry,
   Linkedin,
   List,
   LogOut,
+  Mail,
   MapPin,
   MenuIcon,
   MoreHorizontal,
@@ -143,6 +156,7 @@ export {
   TwitterColored,
   WhatsappColored,
   WhatsAppIcon,
+  WhatsAppOutline,
   Work,
   X,
 }

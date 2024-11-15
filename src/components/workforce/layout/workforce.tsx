@@ -1,22 +1,22 @@
-import DashboardBreadcrumb from "@/components/dashboard/ui/breadcrumb"
-import DashboardTopBar from "@/components/dashboard/ui/dashboardTopbar"
-import WorkforceTabs from "../ui/workforceTabs"
+import DashboardBreadcrumb from "../../dashboard/ui/breadcrumb"
+import WorkplaceMain from "../feature/workforceMain"
+import WorkforceTopbar from "../feature/workforceTopbar"
 
 const Work = () => {
   return (
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-neutral-600 font-normal">
-          Workforce
+          Workplace
           <span className="text-base font-medium ml-4">Control Panel</span>
         </h1>
         <DashboardBreadcrumb />
       </div>
 
-      <DashboardTopBar page="workforce"/>
+      <WorkforceTopbar />
 
-      <div className="visitor-panel relative w-full">
-        <WorkforceTabs />
+      <div className="visitor-panel position-relative w-full">
+        <WorkplaceMain />
       </div>
     </>
   )

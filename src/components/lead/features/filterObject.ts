@@ -3,20 +3,28 @@ import { apiPaths } from "../urls";
 import apiClient from "@/apiServices/apiClient";
 import { getCookie } from "@/cookies/cookiesService";
 
-export const FilterSelect = {
+type FilterOption = {
+  name: string
+  label: string
+  placeholder: string
+  options: { [key: string]: string }
+}
+
+export const FilterSelect: { [key: string]: FilterOption } = {
   assigned_to: {
     name: "assigned_to",
     label: "Assigned to",
     placeholder: "Select User",
-    options: {},
+    options: {}, // Type is now inferred correctly
   },
   status: {
     name: "status",
     label: "Status",
     placeholder: "Select Status",
-    options: {},
+    options: {}, // Type is now inferred correctly
   },
-};
+}
+
 //getfilter
 
 export async function get_filter_object() {
@@ -47,7 +55,7 @@ async function get_filter_obj_from_server() {
 
 // Reads URL OBJ and return filterby Obj from the URL
 export function get_default_filterBy_obj(params: URLSearchParams): {
-  [key: string]: string[];
+  [key: string]: number[];
 } {
   if (params.has("filter_by")) {
     const filterByString = params.get("filter_by");

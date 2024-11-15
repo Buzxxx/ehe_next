@@ -95,7 +95,7 @@ const WorkforceTableRow: React.FC<WorkforceTableRowProps> = ({
             <Pencil
               color="grey"
               size={16}
-              className="hover:stroke-dashboard-primary"
+              className="hover:stroke-sky-600"
             />
           )}
         </button>

@@ -1,15 +1,13 @@
-const Settings = ({ height = 20, width = 20 }) => {
-
-
+const Settings = ({ size = 24, color = "currentColor" }) => {
   return (
     <g className={`relative`}>
       {/* Larger SVG */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="currentColor"
-        height={height}
-        width={width }
+        fill={color}
+        height={size}
+        width={size}
       >
         <path
           fillRule="evenodd"
@@ -23,8 +21,8 @@ const Settings = ({ height = 20, width = 20 }) => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
-        height={height * 0.5}
-        width={width * 0.5}
+        height={size * 0.5}
+        width={size * 0.5}
         className="absolute bottom-0 -right-1"
       >
         <path
@@ -34,7 +32,7 @@ const Settings = ({ height = 20, width = 20 }) => {
         />
       </svg>
     </g>
-  );
-};
+  )
+}
 
-export default Settings;
+export default Settings

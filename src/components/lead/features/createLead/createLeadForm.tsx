@@ -45,7 +45,6 @@ const CreateLeadForm = () => {
         console.log("Lead created successfully:", result)
         toast({
           title: "Lead created successfully",
-          variant: "dashboard",
           description: `LeadId: ${result.lead}`,
         })
       } else {
@@ -169,7 +168,7 @@ const CreateLeadForm = () => {
 
         <Button
           type="submit"
-          className="mx-auto block bg-dashboard-primary border border-dashboard-primary text-white hover:text-dashboard-primary"
+          className="mx-auto block bg-sky-600 border border-sky-600 text-white hover:text-sky-600"
         >
           Create
         </Button>
