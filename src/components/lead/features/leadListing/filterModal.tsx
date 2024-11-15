@@ -1,3 +1,8 @@
+/**
+ * @path src/components/lead/features/leadListing/filterModal.tsx
+ * @description FilterModal component for the lead listing page
+ */
+
 import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
@@ -13,7 +18,7 @@ import {
 
 const FilterModal = ({ className }: { className: string }) => {
   const [selectedValues, setSelectedValues] = useState<{
-    [key: string]: string[]
+    [key: string]: number[]
   }>({
     assigned_to: [],
     status: [],
@@ -44,56 +49,54 @@ const FilterModal = ({ className }: { className: string }) => {
 
     const params = new URLSearchParams(window.location.search)
 
-    setSelectedValues(get_default_filterBy_obj(params)) // Set default filter values based on URL params
+    setSelectedValues(() => get_default_filterBy_obj(params)) // Set default filter values based on URL params
   }, [searchParams])
 
   // Handle multi-select changes
-   const handleMultiSelectChange = (filterName: string, selected: string[]) => {
-     const params = new URLSearchParams(window.location.search)
-     const newSelectedValues = {
-       ...selectedValues,
-       [filterName]: selected,
-     }
-     setSelectedValues(newSelectedValues)
-     console.log('seke=', selectedValues)
-     // updates URLs according to input by user
-     filter_multiselect_change_controller(params, newSelectedValues)
-   }
-
+  const handleMultiSelectChange = (filterName: string, selected: number[]) => {
+    const params = new URLSearchParams(window.location.search)
+    const newSelectedValues = {
+      ...selectedValues,
+      [filterName]: selected,
+    }
+    setSelectedValues(newSelectedValues)
+    // updates URLs according to input by user
+    filter_multiselect_change_controller(params, newSelectedValues)
+  }
 
   return (
     <aside
       className={cn(
-        "absolute top-16 mt-2 p-4 overflow-y-auto min-h-fit border right-2 z-40 md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg",
+        "absolute top-16 mt-2 p-4 overflow-y-auto min-h-96 border right-0 z-40 md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg",
         className
       )}
     >
       <div>
-        <h3 className="text-lg font-semibold flex items-center">Filter</h3>
+        <h3 className="text-lg font-semibold flex items-center mb-0 border-b py-2">
+          Filters
+        </h3>
         <Tabs
           defaultValue="assigned_to"
-          className="flex items-start w-full justify-between gap-4 "
+          className="flex items-start w-full justify-between gap-8 "
         >
-          <div className="w-1/3 h-full ">
-            <TabsList className="flex justify-start flex-col w-full h-full bg-transparent">
-              <TabsTrigger
-                value="assigned_to"
-                className="w-full text-sm px-4 data-[state=active]:bg-sky-100/70"
-              >
-                Assigned To
-              </TabsTrigger>
-              <TabsTrigger
-                value="status"
-                className="w-full data-[state=active]:bg-sky-100/50"
-              >
-                Status
-              </TabsTrigger>
-            </TabsList>
-          </div>
+          <TabsList className="flex flex-col pr-4 justify-start w-1/3 h-full border-r bg-transparent min-h-96 pl-0 py-2">
+            <TabsTrigger
+              value="assigned_to"
+              className="w-fit mr-auto text-sm data-[state=active]:bg-sky-100/70 justify-start"
+            >
+              Assigned To
+            </TabsTrigger>
+            <TabsTrigger
+              value="status"
+              className="w-fit mr-auto text-sm data-[state=active]:bg-sky-100/50 justify-start"
+            >
+              Status
+            </TabsTrigger>
+          </TabsList>
 
           <div className="w-2/3 ">
             <TabsContent value="assigned_to">
-              <h2 className="text-base font-medium mb-4">Select Assignees</h2>
+              <h2 className="text-base font-medium mb-1">Select Assignees</h2>
               <MultiSelectCombobox
                 items={Object.entries(filterSelect.assigned_to.options).map(
                   ([value, label]) => ({ value, label: label as string })
@@ -120,7 +123,7 @@ const FilterModal = ({ className }: { className: string }) => {
             </TabsContent>
 
             <TabsContent value="status">
-              <h2 className="text-lg font-semibold mb-4">Status Settings</h2>
+              <h2 className="text-base font-medium mb-1">Status Settings</h2>
               <MultiSelectCombobox
                 items={Object.entries(filterSelect.status.options).map(
                   ([value, label]) => ({ value, label: label as string })

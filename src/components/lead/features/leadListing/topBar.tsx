@@ -32,7 +32,6 @@ import LoadingSpinner from "@/components/contracts/ui/loadingSpinner"
 import dynamic from "next/dynamic"
 import { Input } from "@/components/ui/input"
 import FilterModal from "./filterModal"
-import FilterForm from "./filterForm"
 
 interface TopBarProps {
   LeadsResponse: LeadsResponse
@@ -65,8 +64,8 @@ const TopBar: React.FC<TopBarProps> = ({
   }
 
   return (
-    <>
-      <div className="mt-4 relative bg-white border-b border-slate-200 shadow-sm rounded-lg p-3 z-40 flex items-center justify-between ">
+    <div className="topbar-wrapper overflow-x-clip">
+      <div className="mt-4 relative bg-white border-b border-slate-200 shadow-sm rounded-lg md:p-3 p-2 z-40 flex items-center justify-between ">
         <div className="flex items-center justify-between gap-2">
           <Menubar>
             <MenubarMenu>
@@ -96,9 +95,9 @@ const TopBar: React.FC<TopBarProps> = ({
         {/* Action Dropdown */}
 
         {/* View Toggle, Badge, Pagination, and Filter */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center md:gap-4 gap-2 ml-2">
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-gray-200 rounded-full p-1 shadow-inner">
+          <div className=" items-center bg-gray-200 rounded-full p-1 shadow-inner hidden md:flex">
             <Button
               className={`rounded-full p-2 py-1 h-fit w-fit transition ${
                 viewMode === "card"
@@ -125,7 +124,7 @@ const TopBar: React.FC<TopBarProps> = ({
           {(selectedCount > 0 || totalLeads > 0) && (
             <Badge
               variant={"default"}
-              className="bg-sky-100 text-sky-700 rounded-lg px-3 py-1 text-sm"
+              className="bg-sky-100 text-sky-700 rounded-lg px-3 py-1 md:text-sm text-xs"
             >
               {selectedCount > 0
                 ? `${selectedCount} Selected`
@@ -143,7 +142,7 @@ const TopBar: React.FC<TopBarProps> = ({
           {/* Filter Button */}
           <button
             onClick={() => setFilterVisible((prev) => !prev)}
-            className={`flex items-center gap-1 mr-4 rounded-lg shadow-sm transition bg-none bg-transparent h-fit w-fit `}
+            className={`flex items-center gap-1 md:mr-4 rounded-lg shadow-sm transition bg-none bg-transparent h-fit w-fit `}
           >
             <Filter
               color="grey"
@@ -153,13 +152,14 @@ const TopBar: React.FC<TopBarProps> = ({
         </div>
 
         {/* Filter Form Modal */}
-        {filterVisible && (
-          <FilterForm
-            className={
-              filterVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-            }
-          />
-        )}
+
+        <FilterModal
+          className={
+            filterVisible
+              ? "translate-x-0 opacity-100"
+              : "translate-x-full opacity-0"
+          }
+        />
       </div>
 
       {/* Loading Modal */}
@@ -168,7 +168,7 @@ const TopBar: React.FC<TopBarProps> = ({
           <LoadingSpinner />
         </div>
       )}
-    </>
+    </div>
   )
 }
 

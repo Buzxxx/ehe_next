@@ -12,8 +12,8 @@ import {
 
 interface MultiSelectComboboxProps {
   items: { value: string; label: string }[]
-  selectedValues: string[]
-  onSelectionChange: (selected: string[]) => void
+  selectedValues: number[]
+  onSelectionChange: (selected: number[]) => void
 }
 
 export function MultiSelectCombobox({
@@ -22,13 +22,9 @@ export function MultiSelectCombobox({
   onSelectionChange,
 }: MultiSelectComboboxProps) {
   const handleSelect = (value: string) => {
-    console.log(selectedValues)
-    // Toggle the item in selectedValues
-    const updatedSelectedValues = selectedValues.includes(value)
-      ? selectedValues.filter((v) => v !== value) // Remove if already selected
-      : [...selectedValues, value] // Add if not selected
-
-    console.log(updatedSelectedValues)
+    const updatedSelectedValues = selectedValues.includes(parseInt(value))
+      ? selectedValues.filter((v) => v !== parseInt(value)) // Remove if already selected
+      : [...selectedValues, parseInt(value)] // Add if not selected
 
     // Call the parent function with the updated selection
     onSelectionChange(updatedSelectedValues)
@@ -49,7 +45,7 @@ export function MultiSelectCombobox({
               <Check
                 className={cn(
                   "mr-2 h-4 w-4",
-                  selectedValues.includes(item.value)
+                  selectedValues.includes(parseInt(item.value))
                     ? "opacity-100"
                     : "opacity-0"
                 )}

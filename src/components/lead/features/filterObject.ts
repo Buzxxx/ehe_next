@@ -55,7 +55,7 @@ async function get_filter_obj_from_server() {
 
 // Reads URL OBJ and return filterby Obj from the URL
 export function get_default_filterBy_obj(params: URLSearchParams): {
-  [key: string]: string[];
+  [key: string]: number[];
 } {
   if (params.has("filter_by")) {
     const filterByString = params.get("filter_by");

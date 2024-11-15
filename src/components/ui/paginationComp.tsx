@@ -66,7 +66,7 @@ const PaginationComp = ({
 
   return (
     <Pagination
-      className={` items-center m-0 w-0 md:w-fit  hidden md:flex ${className}`}
+      className={` items-center m-0 w-0 md:w-fit z-20 bg-white hidden md:flex ${className}`}
     >
       <h2 className="text-sm mr-3 text-gray-600">Per Page:</h2>
       <PaginationContent>
