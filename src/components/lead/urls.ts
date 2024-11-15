@@ -4,5 +4,6 @@ export const paths = {
 
 export const apiPaths = {
   leadPage: "lead/api/leads",
+  getlead: "lead/api/lead",
   getfilter: "lead/api/getfilter",
 };
