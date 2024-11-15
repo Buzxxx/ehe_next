@@ -74,13 +74,13 @@ export function DataTable({ columns, data, onOpenModal }: DataTableProps) {
         >
           <Button
             variant="outline"
-            className="ml-auto text-xs hover:border-dashboard-primary flex items-center border border-slate-300 active:border-dashboard-primary"
+            className="ml-auto text-xs hover:border-sky-600 flex items-center border border-slate-300 active:border-sky-600"
           >
             Columns
             <ChevronDown />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-charcoal-foreground">
+        <DropdownMenuContent align="end" className="bg-gray-400">
           {table
             .getAllColumns()
             .filter((column) => column.getCanHide())

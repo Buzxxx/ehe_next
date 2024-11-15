@@ -56,7 +56,6 @@ const CreateWorkerForm = ({
     try {
       toast({
         title: page === "create" ? "User Created" : "User Edited",
-        variant: "dashboard",
       })
       form.reset()
       setIsLoading(false)
@@ -173,7 +172,7 @@ const CreateWorkerForm = ({
 
           <Button
             type="submit"
-            className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+            className=" bg-sky-600 border border-sky-600 text-white hover:bg-sky-500"
           >
             Update & Close
           </Button>

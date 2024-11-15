@@ -20,7 +20,7 @@ const FileUploader = ({
   return (
     <>
       <LeadImportNavButtons buttons={buttons} />
-      <div className="min-h-40 w-full rounded-md border border-dashed border-dashboard-primary mt-4 p-4 flex flex-col items-center justify-center">
+      <div className="min-h-40 w-full rounded-md border border-dashed border-sky-600 mt-4 p-4 flex flex-col items-center justify-center">
         {uploadProgress !== 100 ? (
           <>
             <p className="flex gap-2">Upload {files[0].name}</p>
@@ -46,7 +46,7 @@ const FileUploader = ({
         {isUploading && (
           <div className="relative w-full bg-gray-200 mt-4 h-4 rounded">
             <div
-              className="absolute top-0 left-0 h-4 bg-blue-500 rounded"
+              className="absolute top-0 left-0 h-4 bg-sky-500 rounded"
               style={{ width: `${uploadProgress}%` }}
             />
           </div>

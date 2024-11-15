@@ -1,27 +1,30 @@
-import Work from "@/components/ui/icons/work";
-import CheckListIcon from "@/components/ui/icons/checklistIcon";
-import DashboardIcon from "@/components/ui/icons/dashboardIcon";
-import PersonIcon from "@/components/ui/icons/personIcon";
-import Settings from "@/components/ui/icons/settings";
-import { Group } from "@/components/ui/icons";
-import { paths } from "@/app/(dashboard)/lead/urls";
+import {
+  ChartNoAxesCombined,
+  Group,
+  Settings,
+  PersonIcon,
+  CheckListIcon,
+  Work,
+} from "@/components/ui/icons"
+import { paths } from "@/app/(dashboard)/lead/urls"
+import Home from "@/components/ui/icons/home"
 
-const dashboardItems = [
-  { title: "Dashboard", icon: <DashboardIcon />, subItems: [] },
+const dashboardItems = [{ title: "Home", icon: <Home size={20} />, subItems: [] },
+  { title: "Analytics", icon: <ChartNoAxesCombined size={20} />, subItems: [] },
   {
     title: "Lead",
-    icon: <PersonIcon />,
+    icon: <PersonIcon size={20} color="transparent" />,
     subItems: [
       { name: "All Leads", route: paths.AllLeads },
       { name: "Create Lead", route: paths.CreateLead },
-      {name: 'Import Lead', route: paths.ImportLead}
+      { name: "Import Lead", route: paths.ImportLead },
     ],
   },
-  { title: "Task", icon: <CheckListIcon />, subItems: [] },
-  { title: "Workplace", icon: <Work />, subItems: [] },
+  { title: "Task", icon: <CheckListIcon size={20} />, subItems: [] },
+  { title: "Workplace", icon: <Work size={20} color="transparent" />, subItems: [] },
   {
     title: "Workforce",
-    icon: <Group />,
+    icon: <Group size={20} />,
     subItems: [
       { name: "All Users", route: "/workforce" },
       { name: "Create User", route: "/workforce/create" },
@@ -29,7 +32,7 @@ const dashboardItems = [
   },
   {
     title: "Settings",
-    icon: <Settings />,
+    icon: <Settings size={20} />,
     subItems: [
       { name: "Change Password", route: "/auth/resetPassword" },
       { name: "Logout", route: "/auth/login" },
@@ -37,4 +40,4 @@ const dashboardItems = [
   },
 ]
 
-export default dashboardItems;
+export default dashboardItems

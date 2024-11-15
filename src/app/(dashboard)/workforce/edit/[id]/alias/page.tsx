@@ -6,12 +6,17 @@ import React, { useState } from "react"
 import { useParams } from "next/navigation"
 import { Alias, Workforce } from "@/components/workforce/feature/workforce"
 import { sampleData, aliases } from "@/components/workforce/lib/sampleData"
+import { WorkforceUser } from "@/components/workforce/ui/tableColumns"
 
 const EditAlias = () => {
-  const { id } = useParams() 
+  const { id } = useParams()
+  let initialUserAliases: Alias[] = []
+  let user: WorkforceUser | undefined
+  if (id) {
+    user = Workforce.getUserbyId(id.toString(), sampleData)
+    initialUserAliases = Workforce.getAliasesById(id.toString(), aliases)
+  }
 
-  const user = Workforce.getUserbyId(id.toString(), sampleData)
-  const initialUserAliases = Workforce.getAliasesById(id.toString(), aliases)
   const [userAliases, setUserAliases] = useState<Alias[]>(initialUserAliases)
 
   const deleteAlias = (aliasToDelete: Alias) => {

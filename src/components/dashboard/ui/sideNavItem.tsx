@@ -4,17 +4,25 @@ import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
 import { ChevronLeft } from "@/components/ui/icons"
 import { logout } from "@/components/authentication/features/UserObject"
+import {
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+} from "@/components/ui/sidebar"
+import { useSidebar } from "@/components/ui/sidebar"
 
 interface SubItem {
   name: string
   route: string
 }
 
-interface SideNavItemProps {
+export interface SideNavItemProps {
   title: string
   subItems: SubItem[]
   icon: React.ReactNode
-  onMenuItemClick: () => void // Add the prop type for the function
+  onMenuItemClick?: () => void // Add the prop type for the function
 }
 
 const SideNavItem: React.FC<SideNavItemProps> = ({
@@ -23,6 +31,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
   icon,
   onMenuItemClick, // Receive the onMenuItemClick function
 }) => {
+  const {setOpenMobile} = useSidebar()
   const [openMenu, setOpenMenu] = useState<boolean>(false)
   const router = useRouter()
 
@@ -31,7 +40,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
   }
 
   const handleSubItemClick = async (subItem: SubItem) => {
-    onMenuItemClick() // Call the onMenuItemClick to close the sidebar
+    setOpenMobile(false)
     if (subItem.name === "Logout") {
       const path = await logout()
       if (path) {
@@ -43,59 +52,56 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
   }
 
   return (
-    <li
-      className={`flex items-center hover:bg-charcoal-900 transition-all cursor-pointer text-neutral-300 hover:text-neutral-200  ${
-        subItems.length ? "relative" : ""
-      }`}
+    <SidebarMenuItem
       onClick={handleItemClick}
+      className={subItems.length ? "relative" : ""}
     >
       {subItems.length ? (
-        <div className="relative w-full">
-          <span
-            className={`border-l-4 border-l-transparent hover:border-l-dashboard-primary p-3 flex gap-3 relative w-full items-center hover:text-neutral-200 ${
-              openMenu
-                ? "border-l-dashboard-primary bg-charcoal-900"
-                : "border-0"
-            }`}
-          >
-            <span className="min-w-5">{icon}</span>
-            {title}
-            <Badge className="absolute right-4 top-1/2 -translate-y-1/2 bg-dashboard-primary text-neutral-200 p-1 text-xs rounded-sm">
+        <div>
+          <SidebarMenuButton className="relative flex items-center hover:bg-sky-500/10">
+            <span className="w-6">{icon}</span>
+            <p className="flex-1">{title}</p>
+
+            <Badge className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-sku-600 text-neutral-100 p-0 px-1 text-xs rounded-sm bg-sky-600 hover:bg-sky-500">
               {subItems.length}
             </Badge>
-          </span>
+          </SidebarMenuButton>
 
-          <ul
+          <SidebarMenuSub
+            className="overflow-hidden"
             style={{
               height: openMenu ? `${subItems.length * 2.25}rem` : "0",
               transition: "height 0.3s ease",
             }}
-            className="bg-charcoal-800 pl-8 overflow-hidden"
           >
             {subItems.map((subItem, index) => (
-              <li
-                key={index}
-                className="px-4 py-2 hover:text-neutral-200 cursor-pointer"
-                onClick={() => handleSubItemClick(subItem)}
-              >
-                {subItem.name}
-              </li>
+              <SidebarMenuSubItem key={index}>
+                <SidebarMenuSubButton
+                  className="cursor-pointer hover:bg-sky-400/10"
+                  onClick={() => handleSubItemClick(subItem)}
+                >
+                  {subItem.name}
+                </SidebarMenuSubButton>
+              </SidebarMenuSubItem>
             ))}
-          </ul>
+          </SidebarMenuSub>
         </div>
       ) : (
-        <Link
-          href={`/${title.toLowerCase().replace(/\s+/g, "")}`}
-          className="border-l-4 border-l-transparent hover:border-l-dashboard-primary p-3 flex gap-3 w-full justify-between items-center"
-          onClick={onMenuItemClick} // Call the onMenuItemClick when a main menu item is clicked
-        >
-          <div className="flex gap-3 justify-between">
-            {icon} {title}
-          </div>
-          <ChevronLeft size={16} />
-        </Link>
+        <SidebarMenuButton className="hover:bg-sky-500/10">
+          <Link
+            href={`/${title.toLowerCase().replace(/\s+/g, "")}`}
+            className="flex gap-3 w-full justify-between items-center"
+            onClick={onMenuItemClick} // Call the onMenuItemClick when a ubIn menu item is clicked
+          >
+            <div className="flex gap-2 justify-start w-full">
+              <span className="w-6">{icon}</span>
+              <p className="">{title}</p>
+            </div>
+            <ChevronLeft size={16} />
+          </Link>
+        </SidebarMenuButton>
       )}
-    </li>
+    </SidebarMenuItem>
   )
 }
 

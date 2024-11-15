@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({
           <Button variant="outline" className="border border-gray-500 hover:border-gray-800 text-gray-800 hover:text-gray-950" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="bg-dashboard-primary hover:bg-dashboard-secondary" onClick={onConfirm}>
+          <Button className="bg-sky-600 hover:bg-sky-500" onClick={onConfirm}>
             Confirm
           </Button>
         </div>

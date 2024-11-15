@@ -18,6 +18,7 @@ export const defaultIndividualLead: individualLead = {
 };
 
 export interface Lead {
+  location?: string;
   id: number;
   name: string;
   created_dt: string;

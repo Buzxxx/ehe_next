@@ -46,7 +46,6 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
         setIsLoading(false)
         toast({
           title: `Lead Profile Updated Successfully!`,
-          variant: "dashboard",
         })
       }, 1000)
     }
@@ -214,7 +213,7 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
 
             <Button
               type="submit"
-              className=" bg-dashboard-primary border border-dashboard-primary text-white hover:bg-dashboard-secondary"
+              className=" bg-sky-600 border border-sky-600 text-white hover:bg-sky-500"
             >
               Update & Close
             </Button>

@@ -1,12 +1,17 @@
-
-const PersonIcon = ({width=20, height=20}) => {
-	return (
+const PersonIcon = ({
+  size = 20,
+  color = "currentColor",
+  stroke = "currentColor",
+}) => {
+  return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="currentColor"
-      height={height}
-      width={width}
+      fill={color}
+      height={size}
+      width={size}
+      stroke={stroke}
+      strokeWidth={1.5}
     >
       <path
         fillRule="evenodd"
@@ -14,7 +19,7 @@ const PersonIcon = ({width=20, height=20}) => {
         clipRule="evenodd"
       />
     </svg>
-  );
+  )
 }
 
 export default PersonIcon

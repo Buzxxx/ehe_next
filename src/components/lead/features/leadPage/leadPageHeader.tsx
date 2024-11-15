@@ -25,25 +25,11 @@ const LeadPageHeader = ({
   id: string;
   setActiveTab: any;
   activeTab: any;
-  leadResponse?: individualLead;
-  setLeadResponse: (response: individualLead) => void;
+  type?: "Cold" | string;
+  status?: "Closed" | string;
+  assignedTo?: "Avinash Jha" | string;
 }) => {
   const router = useRouter(); // Initialize useRouter hook
-
-  useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-        const leadDetails = await get_lead_details_controller(id);
-        if (leadDetails) {
-          setLeadResponse(leadDetails.leadDetails);
-        }
-      } catch (error) {
-        console.error("Failed to fetch leads:", error);
-      }
-    };
-
-    fetchLeads();
-  }, [setLeadResponse]);
 
   return (
     <>
@@ -87,9 +73,9 @@ const LeadPageHeader = ({
           {navItems.map((item) => (
             <Button
               key={item}
-              className={`text-xs px-2 h-8 hover:text-dashboard-primary hover:bg-dashboard-primary hover:text-white ${
+              className={`text-xs px-2 h-8 hover:text-sky-600 hover:bg-sky-600  ${
                 activeTab === item
-                  ? "bg-dashboard-primary text-white"
+                  ? "bg-sky-600 text-white"
                   : "bg-gray-200 text-gray-800"
               }`}
               onClick={() => setActiveTab(item)}
