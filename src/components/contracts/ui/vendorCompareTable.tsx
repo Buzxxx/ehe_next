@@ -32,6 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import styles from "@/app/contracts/contract.module.css"
+import { DownloadDropDown } from "./downloadDropDown"
 
 const VendorCompareTable = ({
   selectedOptions,
@@ -40,19 +41,10 @@ const VendorCompareTable = ({
   selectedOptions: SelectedOptions
   vendorComparisonData: any
 }) => {
-  console.log("vendorComparisonData", vendorComparisonData)
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
 
   const filteredSelectedOptions = filterSelectedOptions(selectedOptions)
   const filteredSelectedOptionsKeys = Object.keys(filteredSelectedOptions)
-
-  console.log(
-    Object.values(
-      vendorComparisonData[1].breakdown[filteredSelectedOptionsKeys[0]]
-        .breakdown
-    )
-  )
-  console.log(filteredSelectedOptionsKeys)
 
   // Toggle accordion for categories
   const toggleAccordion = (category: string) => {
@@ -93,19 +85,7 @@ const VendorCompareTable = ({
           ))}
 
           <TableHead align="center">
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                className={`px-4 py-2 flex gap-2 items-center rounded-md  border`}
-              >
-                <Download size={16} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-8 drop-shadow-xl">
-                <DropdownMenuLabel>Download As</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>PDF</DropdownMenuItem>
-                <DropdownMenuItem>JPG</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <DownloadDropDown />
           </TableHead>
         </TableRow>
       </TableHeader>

@@ -113,11 +113,15 @@ const RenderField = ({ field, props }: { field: any; props: customProps }) => {
               placeholderText={
                 placeholder ? placeholder : "Click to select a date"
               }
-              onChange={(date) => field.onChange(date)}
+              onChange={(date) => {
+                field.onChange(date)
+                if (onChange) onChange(date)
+              }}
               dateFormat={dateFormat ?? "dd/MM/yyyy"}
               showTimeSelect={showTimeSelect ?? false}
               timeInputLabel="Time:"
-              wrapperClassName="date-picker text-sm py-2 px-3 w-full h-10 rounded-md"
+              wrapperClassName="date-picker text-sm py-2 px-3 w-full h-10 rounded-md cursor-pointer"
+              className="cursor-pointer"
             />
           </FormControl>
         </div>

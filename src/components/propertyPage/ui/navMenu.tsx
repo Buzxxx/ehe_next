@@ -61,7 +61,7 @@ const NavMenu: React.FC<NavMenuProps> = ({
         <li key={index}>
           <Link
             href={link.href}
-            className="text-gray-600 hover:text-gray-900 transition-all text-sm block py-2 md:inline"
+            className="text-gray-600 hover:text-green-500 transition-all text-sm block py-2 md:inline"
             onClick={onClose} // Close menu on link click
           >
             {link.label}
