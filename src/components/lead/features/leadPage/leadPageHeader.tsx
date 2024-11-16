@@ -29,7 +29,18 @@ const LeadPageHeader = ({
   setLeadResponse: (response: individualLead) => void;
 }) => {
   const router = useRouter(); // Initialize useRouter hook
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        const leadDetails = await get_lead_details_controller(id);
+        setLeadResponse(leadDetails.leadDetails);
+      } catch (error) {
+        console.error("Failed to fetch leads:", error);
+      }
+    };
 
+    fetchLeads();
+  }, []);
   return (
     <>
       <section className="md:w-4/5 mx-auto md:shadow-xl">

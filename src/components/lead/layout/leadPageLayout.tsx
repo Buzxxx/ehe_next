@@ -26,16 +26,6 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
   const urlParams = {
     filter_by: { id: leadId },
   };
-  useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-      } catch (error) {
-        console.error("Failed to fetch leads:", error);
-      }
-    };
-
-    fetchLeads();
-  }, []);
 
   const renderActiveTabContent = () => {
     switch (activeTab) {
@@ -62,9 +52,6 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
       />
       <section className="mt-4 md:px-8 md:w-4/5 mx-auto md:shadow-xl min-h-80 min-w-80 flex gap-2">
         <div className="md:w-3/4">{renderActiveTabContent()}</div>
-        <div className="md:w-1/4 relative">
-          <FilterModal className="z-20 top-24 mt-0" />
-        </div>
       </section>
     </>
   );
