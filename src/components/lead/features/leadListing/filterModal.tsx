@@ -67,7 +67,7 @@ const FilterModal = ({ className }: { className: string }) => {
   return (
     <aside
       className={cn(
-        "absolute top-16 mt-2 p-4 overflow-y-auto min-h-96 border right-0 z-40 md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg",
+        "absolute top-16 mt-2 p-4 pt-1 overflow-y-auto min-h-96 border right-0 z-40 md:w-96  bg-white rounded-md transition-all ease-in-out duration-100 shadow-lg",
         className
       )}
     >
@@ -114,7 +114,10 @@ const FilterModal = ({ className }: { className: string }) => {
                 <div className="flex flex-wrap gap-2 mt-2 border min-h-20 p-2 w-full rounded-md">
                   {selectedValues.assigned_to?.length > 0 &&
                     selectedValues.assigned_to.map((value) => (
-                      <Badge key={value} className="h-fit">
+                      <Badge
+                        key={value}
+                        className="h-fit  bg-sky-600/80 hover:bg-sky-600"
+                      >
                         {filterSelect.assigned_to.options[value]}
                       </Badge>
                     ))}
@@ -138,7 +141,10 @@ const FilterModal = ({ className }: { className: string }) => {
                 <div className="flex flex-wrap gap-2 mt-2 border min-h-20 p-2 w-full rounded-md">
                   {selectedValues.status?.length > 0 &&
                     selectedValues.status.map((value) => (
-                      <Badge key={value} className="h-fit">
+                      <Badge
+                        key={value}
+                        className="h-fit bg-sky-600/50 hover:bg-sky-600"
+                      >
                         {filterSelect.status.options[value]}
                       </Badge>
                     ))}
