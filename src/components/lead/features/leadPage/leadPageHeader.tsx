@@ -25,9 +25,8 @@ const LeadPageHeader = ({
   id: string;
   setActiveTab: any;
   activeTab: any;
-  type?: "Cold" | string;
-  status?: "Closed" | string;
-  assignedTo?: "Avinash Jha" | string;
+  leadResponse: individualLead;
+  setLeadResponse: (response: individualLead) => void;
 }) => {
   const router = useRouter(); // Initialize useRouter hook
 

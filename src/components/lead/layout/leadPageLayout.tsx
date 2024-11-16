@@ -9,6 +9,7 @@ import {
   individualLead,
   defaultIndividualLead,
 } from "@/components/lead/features/leadObject";
+import FilterModal from "../features/leadListing/filterModal";
 
 type LeadPageLayoutProps = {
   leadId: string;
