@@ -1,3 +1,9 @@
+/**
+ * @path src/components/dashboard/ui/sideNavItem.tsx
+ */
+
+'use client'
+
 import { useState } from "react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"

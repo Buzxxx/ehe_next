@@ -22,7 +22,7 @@ const LeadSummaryCard = ({
         <p className=" text-base font-medium sm:font-semibold sm:text-3xl">
           {value}
         </p>
-        <Badge className="p-1 py-0 sm:p-2 ">
+        <Badge className="p-1 py-0 sm:p-2 sm:text-xl   bg-sky-600/80 hover:bg-sky-600 ">
           <ArrowUp />
           20%
         </Badge>
