@@ -1,10 +1,10 @@
-"use client"
+/**
+ * @path src/components/dashboard/feature/sideBar.tsx
+ */
 
 import SideNavMenu from "../ui/sideNavMenu"
 import OnlineTag from "../ui/onlineTag"
 import ProfileTab from "../ui/profileTab"
-import { useState, useEffect } from "react"
-import { get_user_data_as_cookie } from "@/components/authentication/features/UserObject"
 import dashboardItems from "../library/dashboardItems"
 
 import {
