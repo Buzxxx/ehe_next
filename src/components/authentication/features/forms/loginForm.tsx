@@ -10,6 +10,7 @@ import { Form } from "@/components/ui/form";
 import InputField from "@/components/authentication/ui/inputField";
 import { paths } from "@/components/authentication/urls";
 import { login } from "../../features/UserObject";
+import { DEFAULT_LOGIN_REDIRECT } from "@/settings/settings";
 
 // Defined is the schema for the form
 const loginFormSchema = z.object({
@@ -28,7 +29,7 @@ interface LoginFormProps {
 const LoginForm = ({ setLoading }: LoginFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectPath = searchParams.get("redirect") || paths.loginRedirect; // Default redirect path if not set
+  const redirectPath = searchParams.get("redirect") || DEFAULT_LOGIN_REDIRECT; // Default redirect path if not set
   const [message, setMessage] = useState({ status: "", message: "" });
 
   const Loginform = useForm<z.infer<typeof loginFormSchema>>({
