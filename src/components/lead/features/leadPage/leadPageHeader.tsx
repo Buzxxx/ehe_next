@@ -1,32 +1,46 @@
-"use client"
+"use client";
 
-import ProfileTab from "@/components/lead/ui/leadPage/profile"
-import React from "react"
-import { Button } from "@/components/ui/button"
-import BackIcon from "@/components/ui/icons/back"
-import { useRouter } from "next/navigation"
-import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon"
-import { Phone, Share2 } from "@/components/ui/icons"
+import ProfileTab from "@/components/lead/ui/leadPage/profile";
+import React, { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import BackIcon from "@/components/ui/icons/back";
+import { useRouter } from "next/navigation";
+import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon";
+import { Phone, Share2 } from "@/components/ui/icons";
+import {
+  individualLead,
+  defaultIndividualLead,
+} from "@/components/lead/features/leadObject";
+import { get_lead_details_controller } from "@/components/lead/features/leadObject";
 
-const navItems = ["Timeline", "Profile", "Call back", "Meeting"]
+const navItems = ["Timeline", "Profile", "Call back", "Meeting"];
 
 const LeadPageHeader = ({
   id,
   activeTab,
   setActiveTab,
-  type = "Cold",
-  status = "Closed",
-  assignedTo = "Avinash Jha",
+  leadResponse = defaultIndividualLead,
+  setLeadResponse,
 }: {
-  id: string
-  setActiveTab: any
-  activeTab: any
-  type?: "Cold" | string
-  status?: "Closed" | string
-  assignedTo?: "Avinash Jha" | string
+  id: string;
+  setActiveTab: any;
+  activeTab: any;
+  leadResponse: individualLead;
+  setLeadResponse: (response: individualLead) => void;
 }) => {
-  const router = useRouter() // Initialize useRouter hook
+  const router = useRouter(); // Initialize useRouter hook
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        const leadDetails = await get_lead_details_controller(id);
+        setLeadResponse(leadDetails.leadDetails);
+      } catch (error) {
+        console.error("Failed to fetch leads:", error);
+      }
+    };
 
+    fetchLeads();
+  }, []);
   return (
     <>
       <section className="md:w-4/5 mx-auto md:shadow-xl">
@@ -52,7 +66,7 @@ const LeadPageHeader = ({
         </header>
 
         <ProfileTab
-          name="Avinash"
+          name={leadResponse.name}
           img="/base/profile.webp"
           className="justify-start md:ml-4 font-bold text-xl"
           avatarClass="rounded-full border border-sky-800 p-1 pb-0"
@@ -60,9 +74,9 @@ const LeadPageHeader = ({
         <div className="flex gap-2 mt-2 text-center md:px-4 text-xs">
           <p>
             <span className="w-2 h-2 bg-green-500 inline-block mr-1"></span>
-            {type}
+            {leadResponse.priority}
           </p>
-          |<p>{status}</p> |<p>Assigned to {assignedTo}</p>
+          |<p>New</p> |<p>Assigned to Avinash</p>
         </div>
 
         <nav className="py-2 md:px-4 mt-8 flex items-center justify-start gap-4 bg-white w-full max-md:pl-4">
@@ -82,7 +96,7 @@ const LeadPageHeader = ({
         </nav>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default LeadPageHeader
+export default LeadPageHeader;
