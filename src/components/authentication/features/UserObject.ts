@@ -7,8 +7,9 @@ import {
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import apiClient from "@/apiServices/apiClient";
-import { paths, apiPaths } from "@/components/authentication/urls";
+import { apiPaths } from "@/components/authentication/urls";
 import { setCookie, deleteCookie, getCookie } from "@/cookies/cookiesService";
+import { DEFAULT_LOGOUT_REDIRECT } from "@/settings/settings";
 
 interface User {
   username: string;
@@ -35,13 +36,13 @@ export async function authenticate_user(
       return redirect_to_login(request);
     }
   }
-  if (request.nextUrl.pathname === paths.logoutRedirect) {
+  if (request.nextUrl.pathname === DEFAULT_LOGOUT_REDIRECT) {
     return NextResponse.next();
   }
 }
 
 export function redirect_to_login(request: NextRequest) {
-  const loginUrl = new URL(paths.logoutRedirect, request.url);
+  const loginUrl = new URL(DEFAULT_LOGOUT_REDIRECT, request.url);
   loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
   return NextResponse.redirect(loginUrl);
 }
@@ -116,7 +117,7 @@ export async function login(values: UserLogin) {
 }
 
 export async function logout(logoutRedirectPath?: string) {
-  const defaultRedirectPath = paths.logoutRedirect || logoutRedirectPath;
+  const defaultRedirectPath = DEFAULT_LOGOUT_REDIRECT || logoutRedirectPath;
   try {
     await delete_user_data_as_cookie();
     await delete_tokens_from_cookies();
