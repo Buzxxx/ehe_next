@@ -74,51 +74,72 @@ const LeadPageHeader = ({
           </Button>
         </div>
       </header>
-
-      <div className="flex items-center gap-4">
-        <Avataar
-          src={localLeadResponse.img ?? "/base/profile.webp"}
-          className="h-16 w-16 rounded-full border border-sky-800 p-1"
-        />
-        <div className="flex flex-col gap-1 ">
-          <EditableField
-            value={localLeadResponse.name}
-            onSave={(value) => saveField("name", value)}
-            placeholder="Enter name"
-            textSize="xl"
-            fontWeight="semibold"
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Avataar
+            src={localLeadResponse.img ?? "/base/profile.webp"}
+            className="h-16 w-16 rounded-full border border-sky-800 p-1"
           />
-          <div className="flex gap-2 items-center text-gray-500 text-sm">
-            <Mail size={16} />
+          <div className="flex flex-col gap-1 ">
             <EditableField
-              value={localLeadResponse.email}
-              onSave={(value) => saveField("email", value)}
-              placeholder="Enter email"
-              textSize="sm"
+              value={localLeadResponse.name}
+              onSave={(value) => saveField("name", value)}
+              placeholder="Enter name"
+              textSize="xl"
+              fontWeight="semibold"
             />
+            <div className="flex gap-2 items-center text-gray-500 text-sm">
+              <Mail size={16} />
+              <EditableField
+                value={localLeadResponse.email}
+                onSave={(value) => saveField("email", value)}
+                placeholder="Enter email"
+                textSize="sm"
+              />
+            </div>
+
+            <div className="flex gap-2 items-center text-gray-500 text-sm">
+              <div className="flex gap-2 items-center">
+                <Phone size={16} />
+                <EditableField
+                  value={localLeadResponse.phone}
+                  onSave={(value) => saveField("phone", value)}
+                  placeholder="Enter phone"
+                  textSize="sm"
+                />
+              </div>
+              <span className="text-gray-300 h-4 overflow-hidden my-auto">
+                |
+              </span>
+              <div className="flex gap-2 items-center">
+                <BriefCase size={16} />
+                <EditableField
+                  value={localLeadResponse.company}
+                  onSave={(value) => saveField("company", value)}
+                  placeholder="Enter company"
+                  textSize="sm"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="flex gap-2 items-center text-gray-500 text-sm">
-            <div className="flex gap-2 items-center">
-              <Phone size={16} />
-              <EditableField
-                value={localLeadResponse.phone}
-                onSave={(value) => saveField("phone", value)}
-                placeholder="Enter phone"
-                textSize="sm"
-              />
-            </div>
-            <span className="text-gray-300 h-4 overflow-hidden my-auto">|</span>
-            <div className="flex gap-2 items-center">
-              <BriefCase size={16} />
-              <EditableField
-                value={localLeadResponse.company}
-                onSave={(value) => saveField("company", value)}
-                placeholder="Enter company"
-                textSize="sm"
-              />
-            </div>
-          </div>
+ 
+        </div>
+        <div className="flex gap-3 mt-4 md:mt-0">
+          <Button
+            variant="outline"
+            className="border border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700 rounded-md"
+          >
+            <Mail size={16} />
+            Send Mail
+          </Button>
+          <Button
+            variant="outline"
+            className="border border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700 rounded-md"
+          >
+            <Phone size={16} />
+            Call
+          </Button>
         </div>
       </div>
     </section>
