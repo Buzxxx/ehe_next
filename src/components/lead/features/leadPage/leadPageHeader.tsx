@@ -11,6 +11,8 @@ import {
   Phone,
   BriefCase,
   Share2,
+  Dot,
+  DotIcon,
 } from "@/components/ui/icons"
 import EditableField from "@/components/ui/editableField"
 import Avataar from "@/components/dashboard/ui/avataar"
@@ -19,13 +21,20 @@ import {
   defaultIndividualLead,
 } from "@/components/lead/features/leadObject"
 import { useState } from "react"
+import LeadDetail from "../../ui/leadDetail"
 
 const LeadPageHeader = ({
   id,
   leadResponse = defaultIndividualLead,
+  navItems,
+  activeTab,
+  setActiveTab,
 }: {
   id: number
   leadResponse: individualLead
+  navItems: { name: string; component: React.ReactNode }[]
+  activeTab: number
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const router = useRouter()
   const [localLeadResponse, setLocalLeadResponse] = useState(leadResponse)
@@ -44,7 +53,7 @@ const LeadPageHeader = ({
   }
 
   return (
-    <section className="p-4 pt-2 bg-white shadow-sm rounded-lg">
+    <section className="p-4 pt-2 pb-0 bg-white shadow-sm rounded-lg">
       <header className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
           <BackIcon
@@ -122,8 +131,6 @@ const LeadPageHeader = ({
               </div>
             </div>
           </div>
-
- 
         </div>
         <div className="flex gap-3 mt-4 md:mt-0">
           <Button
@@ -142,6 +149,49 @@ const LeadPageHeader = ({
           </Button>
         </div>
       </div>
+
+      <div className="grid md:grid-cols-4 gap-6 mt-4 py-2">
+        <LeadDetail
+          title="Priority"
+          value={
+            <div className="flex gap-2 items-center">
+              <DotIcon color="red" className="w-3" size={8} /> High
+            </div>
+          }
+        />
+        <LeadDetail title="Date" value="Jan 03, 2024" />
+        <LeadDetail title="Approx Budget" value="₹ 1,00,000" />
+        <LeadDetail
+          title="Agent"
+          value={
+            <div className="flex items-center gap-2">
+              <Avataar src="/base/profile.webp" className="size-4" /> John Doe
+            </div>
+          }
+        />
+      </div>
+
+      <nav className="pt-2 mt-4 flex items-center justify-start bg-white w-full max-md:pl-4">
+        {navItems.map((item, index) => (
+          <button
+            key={item.name}
+            className={`relative text-sm text-gray-700 border-b-2 transition-all  px-4 py-2 ${
+              activeTab === index
+                ? "border-b-sky-600 text-sky-600 "
+                : "border-transparent"
+            } ${index === 0 ? "rounded-tl-lg" : ""} ${
+              index === navItems.length - 1 ? "rounded-tr-lg" : ""
+            }`}
+            onClick={() => setActiveTab(index)}
+          >
+            {item.name}
+
+            {index !== navItems.length - 1 && (
+              <span className="absolute right-0 top-1/2 -translate-y-1/2 h-6 w-px bg-gray-200"></span>
+            )}
+          </button>
+        ))}
+      </nav>
     </section>
   )
 }

@@ -43,7 +43,7 @@ const EditableField = ({
           ref={inputRef}
           type={type}
           defaultValue={value}
-          className="border-b border-gray-300 focus:outline-none text-sm"
+          className={`border-b border-gray-300 focus:outline-none text-${textSize ?? 'sm'} font-${fontWeight ?? 'normal'}`}
           onBlur={handleSave}
           autoFocus
           placeholder={placeholder}
