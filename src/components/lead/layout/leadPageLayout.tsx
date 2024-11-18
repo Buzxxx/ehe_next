@@ -1,60 +1,52 @@
-"use client";
-import LeadPageHeader from "../features/leadPage/leadPageHeader";
-import React, { useState, useEffect } from "react";
-import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline";
-import LeadProfileUpdateForm from "@/components/lead/features/leadPage/leadProfileUpdateForm";
-import LeadCallbackForm from "@/components/lead/features/leadPage/leadCallbackForm";
-import LeadMeetingForm from "@/components/lead/features/leadPage/leadMeetingForm";
+/**
+ * @path src/components/lead/layout/leadPageLayout.tsx
+ */
+
+"use client"
+
+import React, { useState } from "react"
+import LeadPageHeader from "../features/leadPage/leadPageHeader"
+import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline"
+import LeadProfileUpdateForm from "@/components/lead/features/leadPage/leadProfileUpdateForm"
+import LeadCallbackForm from "@/components/lead/features/leadPage/leadCallbackForm"
+import LeadMeetingForm from "@/components/lead/features/leadPage/leadMeetingForm"
+
 import {
   individualLead,
   defaultIndividualLead,
-} from "@/components/lead/features/leadObject";
-import FilterModal from "../features/leadListing/filterModal";
+} from "@/components/lead/features/leadObject"
+import LeadBody from "../features/leadPage/leadBody"
+import { set } from "date-fns"
 
 type LeadPageLayoutProps = {
-  leadId: string;
-};
-
-const NAVITEMS = ["Timeline", "Profile", "Call back", "Meeting"];
+  leadId: string
+}
 
 const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
-  const [activeTab, setActiveTab] = useState(NAVITEMS[0]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = React.useState(0)
   const [leadResponse, setLeadResponse] = useState<individualLead>(
     defaultIndividualLead
-  );
-  const urlParams = {
-    filter_by: { id: leadId },
-  };
+  )
 
-  const renderActiveTabContent = () => {
-    switch (activeTab) {
-      case "Timeline":
-        return <LeadTimeLine id={leadId} />;
-      case "Profile":
-        return <LeadProfileUpdateForm id={leadId} />;
-      case "Call back":
-        return <LeadCallbackForm id={leadId} />;
-      case "Meeting":
-        return <LeadMeetingForm id={leadId} />;
-      default:
-        return null;
-    }
-  };
+  const navItems = [
+    { name: "Timeline", component: <LeadTimeLine id={leadId} /> },
+    { name: "Profile", component: <LeadProfileUpdateForm id={leadId} /> },
+    { name: "Call back", component: <LeadCallbackForm id={leadId} /> },
+    { name: "Meeting", component: <LeadMeetingForm id={leadId} /> },
+  ]
+
   return (
     <>
       <LeadPageHeader
-        id={leadId}
+        leadResponse={leadResponse}
+        id={parseInt(leadId)}
+        navItems={navItems}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        leadResponse={leadResponse}
-        setLeadResponse={setLeadResponse}
       />
-      <section className="mt-4 md:px-8 md:w-4/5 mx-auto md:shadow-xl min-h-80 min-w-80 flex gap-2">
-        <div className="md:w-3/4">{renderActiveTabContent()}</div>
-      </section>
+      <LeadBody leadId={leadId} navItems={navItems} activeTab={activeTab} />
     </>
-  );
-};
+  )
+}
 
-export default LeadPageLayout;
+export default LeadPageLayout

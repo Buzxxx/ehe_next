@@ -1,6 +1,7 @@
 // Custom Icons
 import BackIcon from "./back"
 import Bed from "./bed"
+import BriefCase from "./briefcase"
 import Call from "./call"
 import Chat from "./chat"
 import CheckIcon from "./checkIcon"
@@ -39,6 +40,7 @@ import {
   BadgeCheck,
   Bath,
   BetweenHorizontalEnd,
+  Blocks,
   Bookmark,
   CalendarIcon,
   ChartNoAxesCombined,
@@ -75,6 +77,7 @@ import {
   Phone,
   Plus,
   ReceiptText,
+  Settings2,
   Search,
   Share2,
   Trash2,
@@ -88,7 +91,9 @@ export {
   Bath,
   Bed,
   BetweenHorizontalEnd,
+  Blocks,
   Bookmark,
+  BriefCase,
   CalendarIcon,
   Call,
   Chat,
@@ -147,6 +152,7 @@ export {
   ReceiptText,
   Search,
   Settings,
+  Settings2,
   SetSquare,
   Share2,
   Spinner,

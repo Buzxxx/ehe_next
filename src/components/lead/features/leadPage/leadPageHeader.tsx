@@ -1,102 +1,199 @@
-"use client";
+"use client"
 
-import ProfileTab from "@/components/lead/ui/leadPage/profile";
-import React, { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import BackIcon from "@/components/ui/icons/back";
-import { useRouter } from "next/navigation";
-import WhatsAppIcon from "@/components/ui/icons/whatsAppIcon";
-import { Phone, Share2 } from "@/components/ui/icons";
+import { Button } from "@/components/ui/button"
+import BackIcon from "@/components/ui/icons/back"
+import { useRouter } from "next/navigation"
+import {
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Mail,
+  Phone,
+  BriefCase,
+  Share2,
+  Dot,
+  DotIcon,
+} from "@/components/ui/icons"
+import EditableField from "@/components/ui/editableField"
+import Avataar from "@/components/dashboard/ui/avataar"
 import {
   individualLead,
   defaultIndividualLead,
-} from "@/components/lead/features/leadObject";
-import { get_lead_details_controller } from "@/components/lead/features/leadObject";
-
-const navItems = ["Timeline", "Profile", "Call back", "Meeting"];
+} from "@/components/lead/features/leadObject"
+import { useState } from "react"
+import LeadDetail from "../../ui/leadDetail"
 
 const LeadPageHeader = ({
   id,
+  leadResponse = defaultIndividualLead,
+  navItems,
   activeTab,
   setActiveTab,
-  leadResponse = defaultIndividualLead,
-  setLeadResponse,
 }: {
-  id: string;
-  setActiveTab: any;
-  activeTab: any;
-  leadResponse: individualLead;
-  setLeadResponse: (response: individualLead) => void;
+  id: number
+  leadResponse: individualLead
+  navItems: { name: string; component: React.ReactNode }[]
+  activeTab: number
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>
 }) => {
-  const router = useRouter(); // Initialize useRouter hook
-  useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-        const leadDetails = await get_lead_details_controller(id);
-        setLeadResponse(leadDetails.leadDetails);
-      } catch (error) {
-        console.error("Failed to fetch leads:", error);
-      }
-    };
+  const router = useRouter()
+  const [localLeadResponse, setLocalLeadResponse] = useState(leadResponse)
 
-    fetchLeads();
-  }, []);
+  // Function to handle navigation
+  const handleNavigation = (direction: "prev" | "next") => {
+    const newId = direction === "prev" ? id - 1 : id + 1
+    if (newId > 0) {
+      router.push(`/lead/${newId}`)
+    }
+  }
+
+  // Generic save function
+  const saveField = (field: keyof individualLead, value: string) => {
+    setLocalLeadResponse({ ...localLeadResponse, [field]: value })
+  }
+
   return (
-    <>
-      <section className="md:w-4/5 mx-auto md:shadow-xl">
-        <header className="flex py-4 justify-between items-center md:pr-4">
+    <section className="p-4 pt-2 pb-0 bg-white shadow-sm rounded-lg">
+      <header className="flex justify-between items-center mb-4">
+        <div className="flex items-center gap-2">
           <BackIcon
-            className="p-0 pl-0 w-6 h-6 md:ml-4 font-extrabold"
-            onClick={router.back}
+            onClick={() => router.back()}
+            className="p-1 cursor-pointer hover:bg-gray-200 rounded-full"
           />
-
-          <div className="flex items-center gap-4">
-            <Button className=" w-fit h-fit p-0 bg-inherit fill-sky-500">
-              <WhatsAppIcon color="sky-500" />
-            </Button>
-
-            <Button className=" w-fit h-fit p-0 bg-inherit text-sky-500">
-              <Phone size={18} />
-            </Button>
-
-            <Button className=" w-fit h-fit p-0 bg-inherit text-sky-500">
-              <Share2 size={18} />
-            </Button>
-          </div>
-        </header>
-
-        <ProfileTab
-          name={leadResponse.name}
-          img="/base/profile.webp"
-          className="justify-start md:ml-4 font-bold text-xl"
-          avatarClass="rounded-full border border-sky-800 p-1 pb-0"
-        />
-        <div className="flex gap-2 mt-2 text-center md:px-4 text-xs">
-          <p>
-            <span className="w-2 h-2 bg-green-500 inline-block mr-1"></span>
-            {leadResponse.priority}
-          </p>
-          |<p>New</p> |<p>Assigned to Avinash</p>
+          <h1 className="text-lg font-semibold text-gray-800">Lead Details</h1>
         </div>
+        <div className="flex items-center gap-2">
+          <Button
+            className="p-1 bg-transparent text-gray-600 hover:bg-gray-200 rounded-md h-fit"
+            onClick={() => handleNavigation("prev")} // Navigate to previous ID
+          >
+            <ChevronLeft size={20} />
+          </Button>
+          <Button
+            className="p-1 bg-transparent text-gray-600 hover:bg-gray-200 rounded-md h-fit"
+            onClick={() => handleNavigation("next")} // Navigate to next ID
+          >
+            <ChevronRight size={20} />
+          </Button>
+          <Button className="p-1 bg-transparent text-blue-600 hover:bg-blue-100 rounded-md h-fit">
+            <Share2 size={20} />
+          </Button>
+          <Button className="p-1 bg-transparent text-yellow-600 hover:bg-yellow-100 rounded-md h-fit">
+            <Bookmark size={20} />
+          </Button>
+        </div>
+      </header>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Avataar
+            src={localLeadResponse.img ?? "/base/profile.webp"}
+            className="h-16 w-16 rounded-full border border-sky-800 p-1"
+          />
+          <div className="flex flex-col gap-1 ">
+            <EditableField
+              value={localLeadResponse.name}
+              onSave={(value) => saveField("name", value)}
+              placeholder="Enter name"
+              textSize="xl"
+              fontWeight="semibold"
+            />
+            <div className="flex gap-2 items-center text-gray-500 text-sm">
+              <Mail size={16} />
+              <EditableField
+                value={localLeadResponse.email}
+                onSave={(value) => saveField("email", value)}
+                placeholder="Enter email"
+                textSize="sm"
+              />
+            </div>
 
-        <nav className="py-2 md:px-4 mt-8 flex items-center justify-start gap-4 bg-white w-full max-md:pl-4">
-          {navItems.map((item) => (
-            <Button
-              key={item}
-              className={`text-xs px-2 h-8 hover:text-sky-600 hover:bg-sky-600  ${
-                activeTab === item
-                  ? "bg-sky-600 text-white"
-                  : "bg-gray-200 text-gray-800"
-              }`}
-              onClick={() => setActiveTab(item)}
-            >
-              {item}
-            </Button>
-          ))}
-        </nav>
-      </section>
-    </>
-  );
-};
+            <div className="flex gap-2 items-center text-gray-500 text-sm">
+              <div className="flex gap-2 items-center">
+                <Phone size={16} />
+                <EditableField
+                  value={localLeadResponse.phone}
+                  onSave={(value) => saveField("phone", value)}
+                  placeholder="Enter phone"
+                  textSize="sm"
+                />
+              </div>
+              <span className="text-gray-300 h-4 overflow-hidden my-auto">
+                |
+              </span>
+              <div className="flex gap-2 items-center">
+                <BriefCase size={16} />
+                <EditableField
+                  value={localLeadResponse.company}
+                  onSave={(value) => saveField("company", value)}
+                  placeholder="Enter company"
+                  textSize="sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-3 mt-4 md:mt-0">
+          <Button
+            variant="outline"
+            className="border border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700 rounded-md"
+          >
+            <Mail size={16} />
+            Send Mail
+          </Button>
+          <Button
+            variant="outline"
+            className="border border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700 rounded-md"
+          >
+            <Phone size={16} />
+            Call
+          </Button>
+        </div>
+      </div>
 
-export default LeadPageHeader;
+      <div className="grid md:grid-cols-4 gap-6 mt-4 py-2">
+        <LeadDetail
+          title="Priority"
+          value={
+            <div className="flex gap-2 items-center">
+              <DotIcon color="red" className="w-3" size={8} /> High
+            </div>
+          }
+        />
+        <LeadDetail title="Date" value="Jan 03, 2024" />
+        <LeadDetail title="Approx Budget" value="₹ 1,00,000" />
+        <LeadDetail
+          title="Agent"
+          value={
+            <div className="flex items-center gap-2">
+              <Avataar src="/base/profile.webp" className="size-4" /> John Doe
+            </div>
+          }
+        />
+      </div>
+
+      <nav className="pt-2 mt-4 flex items-center justify-start bg-white w-full max-md:pl-4">
+        {navItems.map((item, index) => (
+          <button
+            key={item.name}
+            className={`relative text-sm text-gray-700 border-b-2 transition-all  px-4 py-2 ${
+              activeTab === index
+                ? "border-b-sky-600 text-sky-600 "
+                : "border-transparent"
+            } ${index === 0 ? "rounded-tl-lg" : ""} ${
+              index === navItems.length - 1 ? "rounded-tr-lg" : ""
+            }`}
+            onClick={() => setActiveTab(index)}
+          >
+            {item.name}
+
+            {index !== navItems.length - 1 && (
+              <span className="absolute right-0 top-1/2 -translate-y-1/2 h-6 w-px bg-gray-200"></span>
+            )}
+          </button>
+        ))}
+      </nav>
+    </section>
+  )
+}
+
+export default LeadPageHeader
