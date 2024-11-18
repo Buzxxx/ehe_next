@@ -1,6 +1,7 @@
 // Custom Icons
 import BackIcon from "./back"
 import Bed from "./bed"
+import BriefCase from "./briefcase"
 import Call from "./call"
 import Chat from "./chat"
 import CheckIcon from "./checkIcon"
@@ -89,6 +90,7 @@ export {
   Bed,
   BetweenHorizontalEnd,
   Bookmark,
+  BriefCase,
   CalendarIcon,
   Call,
   Chat,
