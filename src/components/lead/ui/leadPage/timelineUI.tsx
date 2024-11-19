@@ -25,7 +25,7 @@ const TimelineUI = ({
   formatDate: (date: string) => string
 }) => {
   return (
-    <div className="max-h-96  overflow-scroll timeline-wrapper relative px-4">
+    <div className="max-h-96 overflow-scroll timeline-wrapper relative px-4">
       {/* Floating Month/Year Marker */}
       {activeMonth && (
         <div className="fixed top-0 left-0 w-full bg-white z-10 shadow-md py-2 px-4">
@@ -36,7 +36,7 @@ const TimelineUI = ({
       {/* Vertical Timeline Line */}
       <div
         ref={timelineLineRef as LegacyRef<HTMLDivElement>}
-        className="absolute right-0 md:left-20 transform -translate-x-1/2 w-[2px] bg-gray-300"
+        className="absolute md:right-0 md:left-20 left-4 -translate-x-1/2 w-[2px] bg-gray-300"
       ></div>
 
       <div className="relative">
@@ -51,8 +51,8 @@ const TimelineUI = ({
               }}
             >
               {/* Month/Year Header */}
-              <div className="sticky top-0 w-full z-10">
-                <h3 className="text-xs font-medium bg-white shadow-sm py-1 px-4 rounded-md text-center w-fit relative left-1/2 text-gray-700">
+              <div className="sticky top-0 md:w-full z-10 mb-2 w-fit mx-auto">
+                <h3 className="text-xs font-medium bg-white shadow-sm py-1 px-4 rounded-md text-center w-fit md:relative md:left-1/2 text-gray-700">
                   {monthYear}
                 </h3>
               </div>
@@ -72,7 +72,7 @@ const TimelineUI = ({
                 >
                   {/* Icon Marker */}
                   <div
-                    className={`absolute max-md:-top-[10%] left-[3%] md:left-16  -translate-x-1/2 p-1 rounded-sm flex gap-2 items-center justify-center ${
+                    className={`absolute max-md:-top-[12%] left-0 md:left-16 -translate-x-1/2 p-1 rounded-sm flex gap-2 items-center justify-center ${
                       event.category === "created"
                         ? "bg-blue-500"
                         : event.category === "qualified"
@@ -94,9 +94,9 @@ const TimelineUI = ({
                   </div>
 
                   {/* Event Card */}
-                  <div className={`flex flex-col gap-2 w-full ml-16 `}>
+                  <div className={`flex flex-col gap-2 w-full md:ml-16 `}>
                     {/* Date on the Left */}
-                    <div className="max-md:absolute max-md:left-0 max-md:-top-[10%] text-right flex justify-between items-center w-full">
+                    <div className="max-md:absolute max-md:left-0 max-md:-top-[10%] max-md:px-6 text-right flex justify-between items-center w-full">
                       <p className="text-sm text-gray-500 capitalize">
                         {event.eventname}
                       </p>

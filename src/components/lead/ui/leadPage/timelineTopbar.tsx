@@ -3,7 +3,14 @@
  */
 
 import { Button } from "@/components/ui/button"
-import { Blocks, Plus, Mail, Chat, Settings2 } from "@/components/ui/icons"
+import {
+  Blocks,
+  Plus,
+  Mail,
+  Chat,
+  Settings2,
+  Ellipsis,
+} from "@/components/ui/icons"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +46,7 @@ const TimelineTopbar = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="hidden items-center justify-between md:flex">
         <Button className="bg-transparent hover:bg-sky-50 text-black">
           <Blocks /> Integrate
         </Button>
@@ -50,6 +57,23 @@ const TimelineTopbar = ({
           <Settings2 />
         </Button>
       </div>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger className="bg-transparent hover:bg-sky-100 py-2 px-4 text-gray-800 hover:text-gray-950 flex items-center gap-1 text-sm transition-colors rounded-md md:hidden">
+          <Ellipsis size={16} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="md:hidden">
+          <DropdownMenuItem className="flex items-center gap-2 ">
+            <Blocks strokeWidth={1.5} size={16} /> Integrate
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-2 ">
+            <Chat size={16}  /> Comment
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-2 ">
+            <Settings2 strokeWidth={1.5} size={16} /> Settings
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   )
 }

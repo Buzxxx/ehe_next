@@ -26,7 +26,7 @@ const Dashboard = async ({ children }: { children: React.ReactNode }) => {
         <DashboardHeader name={name} img={img ?? "/base/profile.webp"} />
         <DashboardSideMenu name={name} img={img ?? "/base/profile.webp"} />
         <section
-          className={`  rounded-lg min-h-96 mt-12 py-4 px-2 mx-2 flex-0 w-full shadow-sm`}
+          className={`rounded-lg min-h-96 md:mt-12 py-4 md:px-2 md:mx-2 flex-0 w-full shadow-sm`}
         >
           {children}
         </section>

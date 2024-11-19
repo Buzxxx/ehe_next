@@ -53,8 +53,8 @@ const LeadPageHeader = ({
   }
 
   return (
-    <section className="p-4 pt-2 pb-0 bg-white shadow-sm rounded-lg">
-      <header className="flex justify-between items-center mb-4">
+    <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-white shadow-sm rounded-lg">
+      <header className="flex justify-between items-center md:mb-4">
         <div className="flex items-center gap-2">
           <BackIcon
             onClick={() => router.back()}
@@ -90,44 +90,25 @@ const LeadPageHeader = ({
             className="h-16 w-16 rounded-full border border-sky-800 p-1"
           />
           <div className="flex flex-col gap-1 ">
-            <EditableField
-              value={localLeadResponse.name}
-              onSave={(value) => saveField("name", value)}
-              placeholder="Enter name"
-              textSize="xl"
-              fontWeight="semibold"
-            />
+            <h4 className="font-semibold text-xl">
+              {leadResponse.name ?? "Unknown"}
+            </h4>
             <div className="flex gap-2 items-center text-gray-500 text-sm">
               <Mail size={16} />
-              <EditableField
-                value={localLeadResponse.email}
-                onSave={(value) => saveField("email", value)}
-                placeholder="Enter email"
-                textSize="sm"
-              />
+              <p>{localLeadResponse.email}</p>
             </div>
 
             <div className="flex gap-2 items-center text-gray-500 text-sm">
               <div className="flex gap-2 items-center">
                 <Phone size={16} />
-                <EditableField
-                  value={localLeadResponse.phone}
-                  onSave={(value) => saveField("phone", value)}
-                  placeholder="Enter phone"
-                  textSize="sm"
-                />
+                <p>{localLeadResponse.phone}</p>
               </div>
               <span className="text-gray-300 h-4 overflow-hidden my-auto">
                 |
               </span>
               <div className="flex gap-2 items-center">
                 <BriefCase size={16} />
-                <EditableField
-                  value={localLeadResponse.company}
-                  onSave={(value) => saveField("company", value)}
-                  placeholder="Enter company"
-                  textSize="sm"
-                />
+                <p>{localLeadResponse.company}</p>
               </div>
             </div>
           </div>
@@ -150,7 +131,7 @@ const LeadPageHeader = ({
         </div>
       </div>
 
-      <div className="grid md:grid-cols-4 gap-6 mt-4 py-2">
+      <div className="grid md:grid-cols-4 grid-cols-2 gap-2 md:gap-6 md:mt-4 mt-2 py-2">
         <LeadDetail
           title="Priority"
           value={
@@ -171,7 +152,7 @@ const LeadPageHeader = ({
         />
       </div>
 
-      <nav className="pt-2 mt-4 flex items-center justify-start bg-white w-full max-md:pl-4">
+      <nav className="md:pt-2 md:mt-4 flex items-center justify-start bg-white w-full ">
         {navItems.map((item, index) => (
           <button
             key={item.name}

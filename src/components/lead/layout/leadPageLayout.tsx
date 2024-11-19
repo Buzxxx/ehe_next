@@ -16,7 +16,6 @@ import {
   defaultIndividualLead,
 } from "@/components/lead/features/leadObject"
 import LeadBody from "../features/leadPage/leadBody"
-import { set } from "date-fns"
 import Modal from "../ui/modal"
 
 type LeadPageLayoutProps = {
