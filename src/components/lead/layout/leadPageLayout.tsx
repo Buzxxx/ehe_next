@@ -17,6 +17,7 @@ import {
 } from "@/components/lead/features/leadObject"
 import LeadBody from "../features/leadPage/leadBody"
 import { set } from "date-fns"
+import Modal from "../ui/modal"
 
 type LeadPageLayoutProps = {
   leadId: string
@@ -27,12 +28,21 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
   const [leadResponse, setLeadResponse] = useState<individualLead>(
     defaultIndividualLead
   )
+  const [showCallbackForm, setShowCallbackForm] = useState(false)
+  const [showMeetingForm, setShowMeetingForm] = useState(false)
 
   const navItems = [
-    { name: "Timeline", component: <LeadTimeLine id={leadId} /> },
+    {
+      name: "Timeline",
+      component: (
+        <LeadTimeLine
+          setShowCallback={setShowCallbackForm}
+          setShowMeeting={setShowMeetingForm}
+          id={leadId}
+        />
+      ),
+    },
     { name: "Profile", component: <LeadProfileUpdateForm id={leadId} /> },
-    { name: "Call back", component: <LeadCallbackForm id={leadId} /> },
-    { name: "Meeting", component: <LeadMeetingForm id={leadId} /> },
   ]
 
   return (
@@ -45,6 +55,20 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
         setActiveTab={setActiveTab}
       />
       <LeadBody leadId={leadId} navItems={navItems} activeTab={activeTab} />
+      <Modal
+        open={showCallbackForm}
+        title="Call back"
+        setOpen={setShowCallbackForm}
+      >
+        {<LeadCallbackForm id={leadId} />}
+      </Modal>
+      <Modal
+        open={showMeetingForm}
+        title="Meeting"
+        setOpen={setShowMeetingForm}
+      >
+        {<LeadMeetingForm id={leadId} />}
+      </Modal>
     </>
   )
 }

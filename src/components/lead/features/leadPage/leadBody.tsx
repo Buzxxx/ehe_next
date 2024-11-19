@@ -1,21 +1,19 @@
-import React from "react"
-import { Button } from "@/components/ui/button"
-
+/**
+ * @path src/components/lead/features/leadPage/leadBody.tsx
+ */
 
 const LeadBody = ({
   leadId,
   navItems,
-	activeTab
+  activeTab,
 }: {
   leadId: string
   navItems: { name: string; component: React.ReactNode }[]
-	activeTab: number
+  activeTab: number
 }) => {
- 
-
   return (
     <>
-      <section className="mt-4 min-h-80 min-w-80 flex gap-2">
+      <section className=" min-h-80 min-w-80 flex gap-2">
         {navItems[activeTab].component}
       </section>
     </>

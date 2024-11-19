@@ -1,0 +1,126 @@
+/**
+ * @path src/components/lead/ui/leadPage/timelineUI.tsx
+ */
+
+"use client"
+
+import { Plus, Mail, Check } from "@/components/ui/icons"
+import { LegacyRef } from "react"
+
+const TimelineUI = ({
+  groupedEvents,
+  activeMonth,
+  monthRefs,
+  timelineLineRef,
+  firstEventRef,
+  lastEventRef,
+  formatDate,
+}: {
+  groupedEvents: { [key: string]: any[] }
+  activeMonth: string
+  monthRefs: React.MutableRefObject<Record<string, HTMLElement>>
+  timelineLineRef: React.RefObject<HTMLElement>
+  firstEventRef: React.RefObject<HTMLElement>
+  lastEventRef: React.RefObject<HTMLElement>
+  formatDate: (date: string) => string
+}) => {
+  return (
+    <div className="max-h-96  overflow-scroll timeline-wrapper relative px-4">
+      {/* Floating Month/Year Marker */}
+      {activeMonth && (
+        <div className="fixed top-0 left-0 w-full bg-white z-10 shadow-md py-2 px-4">
+          <h3 className="text-lg font-semibold text-gray-700">{activeMonth}</h3>
+        </div>
+      )}
+
+      {/* Vertical Timeline Line */}
+      <div
+        ref={timelineLineRef as LegacyRef<HTMLDivElement>}
+        className="absolute right-0 md:left-20 transform -translate-x-1/2 w-[2px] bg-gray-300"
+      ></div>
+
+      <div className="relative">
+        {Object.entries(groupedEvents).map(
+          ([monthYear, events], groupIndex) => (
+            <div
+              key={groupIndex}
+              ref={(el) => {
+                if (el) {
+                  monthRefs.current[monthYear] = el
+                }
+              }}
+            >
+              {/* Month/Year Header */}
+              <div className="sticky top-0 w-full z-10">
+                <h3 className="text-xs font-medium bg-white shadow-sm py-1 px-4 rounded-md text-center w-fit relative left-1/2 text-gray-700">
+                  {monthYear}
+                </h3>
+              </div>
+
+              {events.map((event, index) => (
+                <div
+                  key={index}
+                  ref={
+                    index === 0 && groupIndex === 0
+                      ? (firstEventRef as React.RefObject<HTMLDivElement>)
+                      : index === events.length - 1 &&
+                        groupIndex === Object.keys(groupedEvents).length - 1
+                      ? (lastEventRef as React.RefObject<HTMLDivElement>)
+                      : null
+                  }
+                  className="relative mb-16 flex justify-start w-full px-6"
+                >
+                  {/* Icon Marker */}
+                  <div
+                    className={`absolute max-md:-top-[10%] left-[3%] md:left-16  -translate-x-1/2 p-1 rounded-sm flex gap-2 items-center justify-center ${
+                      event.category === "created"
+                        ? "bg-blue-500"
+                        : event.category === "qualified"
+                        ? "bg-green-500"
+                        : "bg-yellow-500"
+                    } ${
+                      index === events.length - 1 &&
+                      groupIndex === Object.keys(groupedEvents).length - 1 &&
+                      "self-start"
+                    }`}
+                  >
+                    {event.category === "created" ? (
+                      <Plus size={16} className="text-white" />
+                    ) : event.category === "qualified" ? (
+                      <Check size={16} className="text-white" />
+                    ) : (
+                      <Mail size={16} className="text-white" />
+                    )}
+                  </div>
+
+                  {/* Event Card */}
+                  <div className={`flex flex-col gap-2 w-full ml-16 `}>
+                    {/* Date on the Left */}
+                    <div className="max-md:absolute max-md:left-0 max-md:-top-[10%] text-right flex justify-between items-center w-full">
+                      <p className="text-sm text-gray-500 capitalize">
+                        {event.eventname}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {formatDate(event.date)}
+                      </p>
+                    </div>
+                    <div className="p-4 max-md:mt-4 pt-2 bg-white border border-gray-300 rounded-lg shadow-md w-full md:w-5/6 mx-auto">
+                      <h4 className="text-md font-semibold">
+                        {event.description}
+                      </h4>
+                      <p className="text-xs text-gray-600">
+                        By: {event.username}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default TimelineUI
