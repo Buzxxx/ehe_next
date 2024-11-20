@@ -15,7 +15,13 @@ import { useToast } from "@/components/ui/use-toast"
 import OverlayLoading from "@/components/ui/overlayLoading"
 import { Spinner } from "@/components/ui/icons"
 
-const LeadProfileUpdateForm = ({ id }: { id: string }) => {
+const LeadProfileUpdateForm = ({
+  id,
+  isEditing,
+}: {
+  id: string
+  isEditing: boolean
+}) => {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const form = useForm<z.infer<typeof LeadProfileFormSchema>>({
@@ -61,6 +67,13 @@ const LeadProfileUpdateForm = ({ id }: { id: string }) => {
   )
 
   const leadTypeOptions = ["A", "B", "C", "D", "E", "F"]
+
+  const renderFieldView = (label: string, value: string | number) => (
+    <div className="mb-4">
+      <h3 className="text-sm text-gray-500">{label}</h3>
+      <p className="text-lg text-gray-900">{value || "N/A"}</p>
+    </div>
+  )
 
   return (
     <div className="form-wrapper py-2">

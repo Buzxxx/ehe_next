@@ -1,14 +1,14 @@
-import EmployeeActivityItem from "../ui/employeeActivityItem"
+import LeadActivityItem from "../../ui/leadPage/leadActivityItem"
 import { Copy, Filter } from "@/components/ui/icons"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
-const EmployeeActivityList = () => {
+const LeadActivityList = () => {
   return (
     <Card className="mt-4">
       <CardHeader className="border-b justify-between flex-row items-center">
         <CardTitle className="text-lg font-semibold">
-          Lead Activity
+          Employee Activity
         </CardTitle>
         <div className="flex gap-2 items-center">
           <Button className="bg-transparent text-gray-700 hover:text-gray-800 border border-gray-400">
@@ -21,19 +21,19 @@ const EmployeeActivityList = () => {
       </CardHeader>
       <CardContent>
         <ul>
-          <EmployeeActivityItem
+          <LeadActivityItem
             title="Checkout"
             icon={<Copy size={20} />}
             description="Checkout on 12 August 2024"
             date="12:30 AM"
           />
-          <EmployeeActivityItem
+          <LeadActivityItem
             title="Checkout"
             icon={<Copy size={20} />}
             description="Checkout on 12 August 2024"
             date="12:30 AM"
           />
-          <EmployeeActivityItem
+          <LeadActivityItem
             title="Checkout"
             icon={<Copy size={20} />}
             description="Checkout on 12 August 2024"
@@ -45,4 +45,4 @@ const EmployeeActivityList = () => {
   )
 }
 
-export default EmployeeActivityList
+export default LeadActivityList
