@@ -71,7 +71,7 @@ const LeadPageHeader = ({
 
   return (
     <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-white shadow-sm rounded-lg">
-      <header className="flex justify-between items-center md:mb-4">
+      <header className="flex justify-between items-center md:mb-4 mt-8 md:mt-0">
         <div className="flex items-center gap-2">
           <BackIcon
             onClick={() => router.back()}
