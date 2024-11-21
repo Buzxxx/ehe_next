@@ -63,20 +63,7 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
       <section className=" min-h-80 min-w-80 flex gap-2">
         {navItems[activeTab].component}
       </section>
-      <Modal
-        open={showCallbackForm}
-        title="Call back"
-        setOpen={setShowCallbackForm}
-      >
-        {<LeadCallbackForm id={leadId} />}
-      </Modal>
-      <Modal
-        open={showMeetingForm}
-        title="Meeting"
-        setOpen={setShowMeetingForm}
-      >
-        {<LeadMeetingForm id={leadId} />}
-      </Modal>
+      
     </LeadProfileProvider>
   )
 }

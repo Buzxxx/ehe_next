@@ -104,7 +104,7 @@ const TimelineUI = ({
                         {formatDate(event.date)}
                       </p>
                     </div>
-                    <div className="p-4 max-md:mt-4 pt-2 bg-white border border-gray-300 rounded-lg shadow-md w-full md:w-5/6 mx-auto">
+                    <div className="p-4 max-md:mt-4 pt-2 bg-white border border-gray-300 rounded-lg  w-full md:w-5/6 mx-auto">
                       <h4 className="text-md font-semibold">
                         {event.description}
                       </h4>
