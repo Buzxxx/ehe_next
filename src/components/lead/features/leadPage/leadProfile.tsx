@@ -14,7 +14,7 @@ const LeadProfile = ({
   return (
     <div className="w-full">
       <Card className="px-2 py-4 w-full rounded-md border mt-4 bg-white shadow-sm">
-        <CardHeader className="py-4 border-b flex-row justify-between pt-0">
+        <CardHeader className="pt-0 max-md:px-2 py-4 border-b flex-row justify-between  ">
           <div className="flex gap-2 items-center">
             <h4 className="text-lg font-medium">Additonional Details</h4>
             <Badge
@@ -31,7 +31,7 @@ const LeadProfile = ({
             </button>
           </h6>
         </CardHeader>
-        <CardContent className="grid grid-cols-3 gap-4 mt-4">
+        <CardContent className="max-md:px-2 grid md:grid-cols-3 gap-4 mt-4">
           <LeadEditableDetail2
             isEditMode={isEditMode}
             fieldKey="lead_type"

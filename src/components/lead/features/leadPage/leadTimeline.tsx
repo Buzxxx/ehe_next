@@ -42,12 +42,12 @@ const LeadTimeLine = ({
   return (
     <div className="w-full h-full mt-4">
       <div className="relative w-full md:flex justify-between gap-4 ">
-        <div className="md:w-1/3 hidden md:block bg-white p-4 rounded-md shadow-sm border">
+        <div className="md:w-1/3 hidden md:block bg-transparent p-4 rounded-md shadow-sm border">
           <LeadStatusUpdateForm id={id} />
         </div>
 
-        <div className="md:w-fit w-screen overflow-x-hidden h-full flex-1 border rounded-t-md bg-white rounded-md shadow-sm mx-2">
-          <TimelineTopbar setShowCallback={setShowCallback} setShowMeeting={setShowMeeting} />
+        <div className="md:w-fit w-screen overflow-x-hidden h-full flex-1 border rounded-t-md bg-transparent rounded-md shadow-sm mx-2">
+          <TimelineTopbar leadId={id} />
           <TimelineContainer events={timelineEvents} />
         </div>
       </div>
