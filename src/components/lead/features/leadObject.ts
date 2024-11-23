@@ -32,8 +32,8 @@ export interface Lead {
   created_dt: string
   status: number
   isSelected: boolean
-  assigned_to?: 4
-  brokerage?: 4
+  assigned_to?: number
+  brokerage?: number
   contact?: string
   email?: string
   follow_up_current_status?: string
@@ -86,7 +86,7 @@ export const DefaultLead: Lead = {
   isSelected: false,
   img: "/base/profile.webp",
   location: "Unknown",
-  assigned_to: undefined,
+  assigned_to:4,
   brokerage: undefined,
   follow_up_current_status: "Not Started",
   golden: "No",
