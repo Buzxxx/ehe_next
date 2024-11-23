@@ -1,27 +1,33 @@
-import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import filterCategories from "@/components/dashboard/library/filterCategories";
-import CustomFormField from "@/components/dashboard/ui/customFormField";
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
-import { SelectItem } from "@/components/ui/select";
-import OverlayLoading from "@/components/ui/overlayLoading";
-import { Spinner } from "@/components/ui/icons";
-import { useToast } from "@/components/ui/use-toast";
+import React, { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Form } from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
+import filterCategories from "@/components/dashboard/library/filterCategories"
+import CustomFormField from "@/components/dashboard/ui/customFormField"
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
+import { SelectItem } from "@/components/ui/select"
+import OverlayLoading from "@/components/ui/overlayLoading"
+import { Spinner } from "@/components/ui/icons"
+import { useToast } from "@/components/ui/use-toast"
 
 export const LeadStatusUpdateFormSchema = z.object({
   id: z.string(),
   status: z.string(),
   priority: z.string(),
   description: z.string().optional(),
-});
+})
 
-const LeadStatusUpdateForm = ({ id }: { id: string }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
+const LeadStatusUpdateForm = ({
+  id,
+  setOpen,
+}: {
+  id: string
+  setOpen?: (arg0: boolean) => void
+}) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof LeadStatusUpdateFormSchema>>({
     resolver: zodResolver(LeadStatusUpdateFormSchema),
@@ -31,23 +37,25 @@ const LeadStatusUpdateForm = ({ id }: { id: string }) => {
       priority: "cold",
       description: "",
     },
-  });
+  })
 
   const onSubmit = async (data: z.infer<typeof LeadStatusUpdateFormSchema>) => {
-    setIsLoading(true);
-    console.log({ ...data, id });
+    setIsLoading(true)
+    console.log({ ...data, id })
     setTimeout(() => {
-      setIsLoading(false);
+      setIsLoading(false)
+      setOpen && setOpen(false)
+
       toast({
         title: `Timeline updated!`,
-      });
-    }, 1000);
-  };
+      })
+    }, 1000)
+  }
 
   // Filter to get only the status field
   const statusCategory = filterCategories.find(
     (category) => category.name === "status"
-  );
+  )
 
   return (
     <>
@@ -120,7 +128,7 @@ const LeadStatusUpdateForm = ({ id }: { id: string }) => {
         </form>
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default LeadStatusUpdateForm;
+export default LeadStatusUpdateForm

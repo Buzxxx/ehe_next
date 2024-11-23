@@ -22,6 +22,7 @@ import LeadCallbackForm from "../../features/leadPage/leadCallbackForm"
 import LeadMeetingForm from "../../features/leadPage/leadMeetingForm"
 import React from "react"
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
+import LeadStatusUpdateForm from "../../features/leadPage/leadStatusUpdateForm"
 
 const TimelineTopbar = ({ leadId }: { leadId: string }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false)
@@ -69,6 +70,21 @@ const TimelineTopbar = ({ leadId }: { leadId: string }) => {
               }
             }}
           >
+            <DialogItem
+              triggerChildren="Update Status"
+              onSelect={handleDialogItemSelect}
+              onOpenChange={handleDialogItemOpenChange}
+              className="md:hidden"
+            >
+              <DialogTitle className="DialogTitle">
+                Update Status
+              </DialogTitle>
+              <DialogDescription className="DialogDescription"></DialogDescription>
+              <LeadStatusUpdateForm
+                id={leadId}
+                setOpen={handleDialogItemOpenChange}
+              />
+            </DialogItem>
             <DialogItem
               triggerChildren="Callback"
               onSelect={handleDialogItemSelect}
