@@ -1,16 +1,18 @@
 import { useState } from "react"
 import { useLeadProfile } from "../lead/context/leadProfileContext"
 import { Lead } from "../lead/features/leadObject"
+import { cn } from "@/lib/utils"
 
 interface EditableFieldProps {
   title?: string
-  value?: string | undefined
+  value?: string | number | undefined
   fieldKey: keyof Lead
   placeholder?: string
   type?: "text" | "email" | "tel"
   textSize: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl"
   fontWeight?: "light" | "medium" | "normal" | "semibold" | "bold"
   textAlign?: "left" | "center" | "right"
+  className?: string
 }
 
 const EditableField = ({
@@ -22,8 +24,9 @@ const EditableField = ({
   type = "text",
   fontWeight = "normal",
   textAlign = "left",
+  className
 }: EditableFieldProps) => {
-  const { leadProfile, setLeadProfile, isEditing } = useLeadProfile()
+  const {  setLeadProfile, isEditing } = useLeadProfile()
 
   const [isFieldEditing, setIsFieldEditing] = useState(false)
   const [tempValue, setTempValue] = useState(value)
@@ -35,7 +38,7 @@ const EditableField = ({
 
   return (
     <div
-      className="relative group flex items-center gap-2"
+      className={cn("relative group flex items-center gap-2", className)}
       onMouseEnter={() => setIsFieldEditing(true)}
       onBlur={handleSave}
       autoFocus
