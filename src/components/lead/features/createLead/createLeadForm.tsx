@@ -1,20 +1,34 @@
 // /components/lead/feature/CreateLeadForm.tsx
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { CreateLeadFormSchema } from "@/lib/validation"
-import { SelectItem } from "@/components/ui/select"
-import { createLead } from "@/components/lead/features/leadApiClient"
-import { useToast } from "@/components/ui/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
+import { SelectItem } from "@/components/ui/select";
+import { create_lead_controller } from "@/components/lead/features/leadObject";
+import { useToast } from "@/components/ui/use-toast";
+
+export const CreateLeadFormSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  contact: z.string().min(10, "Phone number must be at least 10 digits"),
+  lead_type: z.enum(["A", "B", "C", "D", "E", "F"]),
+  query: z.string().optional(),
+  interested_in: z.string().optional(),
+  assigned_to: z.string().min(1, "Assigned To is required"), // Assuming this is required
+  product_code: z.string().optional(),
+  product_type: z.enum(["A", "B", "C", "D", "E", "F"]),
+  status: z.number().optional().default(1), // Default value if not provided
+  source: z.string().optional().default("4"), // Default value if not provided
+  priority: z.enum(["cold", "hot", "C", "D", "E", "F"]),
+});
 
 const CreateLeadForm = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof CreateLeadFormSchema>>({
     resolver: zodResolver(CreateLeadFormSchema),
     defaultValues: {
@@ -30,38 +44,38 @@ const CreateLeadForm = () => {
       priority: "cold",
       status: 1,
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof CreateLeadFormSchema>) {
     const leadData = {
       ...values,
       status: values.status ?? 1,
       source: values.source ?? "4",
-    }
+    };
 
     try {
-      const result = await createLead(leadData)
+      const result = await create_lead_controller(leadData);
       if (result.lead) {
-        console.log("Lead created successfully:", result)
+        console.log("Lead created successfully:", result);
         toast({
           title: "Lead created successfully",
           description: `LeadId: ${result.lead}`,
-        })
+        });
       } else {
         toast({
           title: "Something went wrong",
           variant: "destructive",
           description: `Please try again later or contact the administrator`,
-        })
+        });
       }
     } catch (error) {
-      console.error("Error creating lead:", error)
+      console.error("Error creating lead:", error);
     } finally {
-      form.reset()
+      form.reset();
     }
   }
 
-  const leadTypeOptions = ["A", "B", "C", "D", "E", "F"]
+  const leadTypeOptions = ["A", "B", "C", "D", "E", "F"];
 
   return (
     <Form {...form}>
@@ -174,7 +188,7 @@ const CreateLeadForm = () => {
         </Button>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default CreateLeadForm
+export default CreateLeadForm;
