@@ -2,52 +2,58 @@
  * @path src/components/lead/context/leadProfileContext.tsx
  */
 
-import { createContext, useContext, useState } from "react"
-
-export interface LeadProfileForm {
-  id: string
-  name: string
-  email: string
-  contact: string
-  lead_type: string
-  query?: string
-  interested_in?: string
-  budget?: string
-  assigned_to: string
-  product_code?: string
-  received_date?: Date
-  product_type: string
-  status: string
-  source?: string
-  address?: string
-}
+import {
+  createContext,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
+import {
+  DefaultLead,
+  get_lead_details_controller,
+  Lead,
+} from "../features/leadObject"
 
 // Context to store lead profile state
 const LeadProfileContext = createContext<{
-  leadProfile: LeadProfileForm
-  setLeadProfile: React.Dispatch<React.SetStateAction<LeadProfileForm>>
+  leadProfile: Lead
+  setLeadProfile: React.Dispatch<React.SetStateAction<Lead>>
+  isEditing: boolean
+  setIsEditing: React.Dispatch<SetStateAction<boolean>>
 } | null>(null)
 
 // Context provider
 export const LeadProfileProvider = ({
   children,
+  leadId,
 }: {
   children: React.ReactNode
+  leadId: string
 }) => {
-  const [leadProfile, setLeadProfile] = useState<LeadProfileForm>({
-    id: "123", // Example default values
-    name: "",
-    email: "",
-    contact: "",
-    lead_type: "A",
-    assigned_to: "",
-    product_type: "A",
-    status: "Active",
-    address: "",
-  })
+  const [isEditing, setIsEditing] = useState(false)
+  const [leadProfile, setLeadProfile] = useState<Lead>(DefaultLead)
+
+  // Fetch lead details when the component mounts or the `leadId` changes
+  useEffect(() => {
+    const fetchLeadDetails = async () => {
+      try {
+        // const fetchedLeadDetails: Lead | false =
+        //   await get_lead_details_controller(leadId)
+        setLeadProfile(DefaultLead)
+      } catch (error) {
+        console.error("Error fetching lead details:", error)
+        setLeadProfile(DefaultLead)
+      }
+    }
+
+    fetchLeadDetails()
+  }, [leadId, setLeadProfile])
 
   return (
-    <LeadProfileContext.Provider value={{ leadProfile, setLeadProfile }}>
+    <LeadProfileContext.Provider
+      value={{ leadProfile, setLeadProfile, isEditing, setIsEditing }}
+    >
       {children}
     </LeadProfileContext.Provider>
   )
