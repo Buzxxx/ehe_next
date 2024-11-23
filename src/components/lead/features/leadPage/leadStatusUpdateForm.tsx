@@ -1,4 +1,3 @@
-// LeadStatusUpdateForm.tsx
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -8,11 +7,17 @@ import { Button } from "@/components/ui/button";
 import filterCategories from "@/components/dashboard/library/filterCategories";
 import CustomFormField from "@/components/dashboard/ui/customFormField";
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
-import { LeadStatusUpdateFormSchema } from "@/lib/validation";
 import { SelectItem } from "@/components/ui/select";
 import OverlayLoading from "@/components/ui/overlayLoading";
 import { Spinner } from "@/components/ui/icons";
 import { useToast } from "@/components/ui/use-toast";
+
+export const LeadStatusUpdateFormSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+  priority: z.string(),
+  description: z.string().optional(),
+});
 
 const LeadStatusUpdateForm = ({ id }: { id: string }) => {
   const [isLoading, setIsLoading] = useState(false);

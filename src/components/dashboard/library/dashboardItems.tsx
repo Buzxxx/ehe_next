@@ -5,23 +5,27 @@ import {
   PersonIcon,
   CheckListIcon,
   Work,
-} from "@/components/ui/icons"
-import { paths } from "@/app/(dashboard)/lead/urls"
-import Home from "@/components/ui/icons/home"
+} from "@/components/ui/icons";
+import Home from "@/components/ui/icons/home";
 
-const dashboardItems = [{ title: "Home", icon: <Home size={20} />, subItems: [] },
+const dashboardItems = [
+  { title: "Home", icon: <Home size={20} />, subItems: [] },
   { title: "Analytics", icon: <ChartNoAxesCombined size={20} />, subItems: [] },
   {
     title: "Lead",
     icon: <PersonIcon size={20} color="transparent" />,
     subItems: [
-      { name: "All Leads", route: paths.AllLeads },
-      { name: "Create Lead", route: paths.CreateLead },
-      { name: "Import Lead", route: paths.ImportLead },
+      { name: "All Leads", route: "/lead" },
+      { name: "Create Lead", route: "/lead/create" },
+      { name: "Import Lead", route: "/lead/import" },
     ],
   },
   { title: "Task", icon: <CheckListIcon size={20} />, subItems: [] },
-  { title: "Workplace", icon: <Work size={20} color="transparent" />, subItems: [] },
+  {
+    title: "Workplace",
+    icon: <Work size={20} color="transparent" />,
+    subItems: [],
+  },
   {
     title: "Workforce",
     icon: <Group size={20} />,
@@ -38,6 +42,6 @@ const dashboardItems = [{ title: "Home", icon: <Home size={20} />, subItems: [] 
       { name: "Logout", route: "/auth/login" },
     ],
   },
-]
+];
 
-export default dashboardItems
+export default dashboardItems;
