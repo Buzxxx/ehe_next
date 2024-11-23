@@ -46,23 +46,25 @@ export const LeadCard: React.FC<LeadCardProps> = ({
           width={16}
           alt="Company placeholder logo"
         />
-        <span className="text-xs font-medium opac">99 Acres</span>
+        <span className="text-xs font-medium opac">
+          {lead.source ?? "Unknown source"}
+        </span>
       </div>
 
-      <Badge className="bg-slate-300/75 text-slate-800 hover:bg-slate-400/50 font-medium">
-        Low
+      <Badge className="bg-slate-300/75 text-slate-800 hover:bg-slate-400/50 font-medium capitalize">
+        {lead.priority ?? "Cold"}
       </Badge>
     </CardHeader>
 
     <CardContent className=" pb-6 px-4 text-sm flex-1">
       <CardTitle className="  text-indigo-950/80 mb-2 font-normal text-sm">
-        Property Visit - Booked
+       {lead.follow_up_current_status ? lead.follow_up_current_status : 'In Progress '}
       </CardTitle>
       <Link href={paths.leadPage + lead.id} className="flex items-center gap-1">
         <PersonIcon size={20} color="transparent" stroke="gray" />
         <Badge className="bg-indigo-300/25 text-slate-700 justify-between pr-6 pl-2 items-center hover:bg-slate-400/50 gap-1">
           <Avataar className="h-4 w-4 rounded-full border border-slate-400" />
-          <p className="text-sm">{lead.name ?? "Lead Name"}</p>
+          <p className="text-sm">{lead.name ?? "Unknown Name"}</p>
         </Badge>
       </Link>
     </CardContent>
@@ -78,7 +80,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({
         <Button
           variant="ghost"
           className="p-0  text-blue-600 hover:fill-blue-500/30 rounded-full h-fit"
-        >
+        > <Link href={`tel:${lead.contact}`} />
           <Phone size={16} />
         </Button>
         <Button

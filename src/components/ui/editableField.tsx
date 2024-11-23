@@ -1,64 +1,64 @@
-import { useRef, useState } from "react"
-import { Edit } from "@/components/ui/icons"
+import { useState } from "react"
+import { useLeadProfile } from "../lead/context/leadProfileContext"
+import { Lead } from "../lead/features/leadObject"
 
 interface EditableFieldProps {
-  value?: string
-  onSave: (newValue: string) => void
-  iconSize?: number
+  title?: string
+  value?: string | undefined
+  fieldKey: keyof Lead
   placeholder?: string
   type?: "text" | "email" | "tel"
   textSize: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl"
   fontWeight?: "light" | "medium" | "normal" | "semibold" | "bold"
+  textAlign?: "left" | "center" | "right"
 }
 
 const EditableField = ({
+  title,
   value,
+  fieldKey,
   textSize,
-  onSave,
-  iconSize = 16,
   placeholder = "",
   type = "text",
-	fontWeight = "normal",
+  fontWeight = "normal",
+  textAlign = "left",
 }: EditableFieldProps) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const { leadProfile, setLeadProfile, isEditing } = useLeadProfile()
+
+  const [isFieldEditing, setIsFieldEditing] = useState(false)
+  const [tempValue, setTempValue] = useState(value)
 
   const handleSave = () => {
-    if (inputRef.current) {
-      const newValue = inputRef.current.value
-      if (newValue !== value) {
-        onSave(newValue)
-      }
-    }
-    setIsEditing(false)
+    setLeadProfile((prev) => ({ ...prev, [fieldKey]: tempValue })) // Update specific field
+    setIsFieldEditing(false)
   }
 
   return (
     <div
-      className="relative group flex items-center gap-1"
-      onMouseLeave={handleSave}
+      className="relative group flex items-center gap-2"
+      onMouseEnter={() => setIsFieldEditing(true)}
+      onBlur={handleSave}
+      autoFocus
     >
-      {isEditing ? (
+      {title && (
+        <p className="text-gray-600 text-sm font-light flex-1">{title}</p>
+      )}
+
+      {isEditing && isFieldEditing ? (
         <input
-          ref={inputRef}
           type={type}
-          defaultValue={value}
-          className={`border-b border-gray-300 focus:outline-none text-${textSize ?? 'sm'} font-${fontWeight ?? 'normal'}`}
+          value={tempValue}
+          onChange={(e) => setTempValue(e.target.value)}
+          className={`border-b border-gray-300 focus:outline-none text-${
+            textSize ?? "sm"
+          } font-${fontWeight ?? "normal"} text-${textAlign} `}
           onBlur={handleSave}
-          autoFocus
           placeholder={placeholder}
+          autoFocus
         />
       ) : (
-        <p
-          className={` cursor-pointer text-${textSize} font-${fontWeight}`}
-          onMouseEnter={() => setIsEditing(false)}
-        >
-          {value || placeholder}
-          <Edit
-            size={iconSize}
-            className="hidden group-hover:inline-block ml-2 text-gray-500 cursor-pointer"
-            onClick={() => setIsEditing(true)}
-          />
+        <p className={` cursor-pointer text-${textSize} font-${fontWeight}`}>
+          {tempValue || placeholder}
         </p>
       )}
     </div>

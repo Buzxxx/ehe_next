@@ -25,12 +25,34 @@ export const defaultIndividualLead: individualLead = {
 };
 
 export interface Lead {
-  location?: string;
-  id: number;
-  name: string;
-  created_dt: string;
-  status: number;
-  isSelected: boolean;
+  img?: string
+  location?: string
+  id: number
+  name: string
+  created_dt: string
+  status: number
+  isSelected: boolean
+  assigned_to?: 4
+  brokerage?: 4
+  contact?: string
+  email?: string
+  follow_up_current_status?: string
+  golden?: string
+  hash_key?: string
+  interested_in?: string
+  last_updated_dt?: string
+  lead_type?: string
+  priority?: string
+  product_code?: string
+  product_type?: string
+  query?: string
+  recieved_date?: string
+  revenue?: number
+  sess_id?: number
+  source?: string
+  source_assigned?: string
+  address?: string
+  company?: string
 }
 
 export interface LeadsResponse {
@@ -56,10 +78,33 @@ export const DefaultLeadsResponse: LeadsResponse = {
 export const DefaultLead: Lead = {
   id: 0,
   name: "Default",
-  created_dt: "",
+  email: "example@gmail.com",
+  contact: "+91 9876543210",
+  company: "Google",
+  created_dt: "1970-01-01T00:00:00Z",
   status: 0,
   isSelected: false,
-};
+  img: "/base/profile.webp",
+  location: "Unknown",
+  assigned_to: undefined,
+  brokerage: undefined,
+  follow_up_current_status: "Not Started",
+  golden: "No",
+  hash_key: "",
+  interested_in: "Unknown",
+  last_updated_dt: "1970-01-01T00:00:00Z",
+  lead_type: "General",
+  priority: "Low",
+  product_code: "0000",
+  product_type: "None",
+  query: "No query",
+  recieved_date: "1970-01-01",
+  revenue: 0,
+  sess_id: undefined,
+  source: "Unknown",
+  source_assigned: "None",
+  address: "Not Provided",
+}
 
 const DEFAULTURL = "?page=2&per_page=20";
 
