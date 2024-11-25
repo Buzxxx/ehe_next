@@ -2,22 +2,22 @@
  * @path src/components/lead/layout/leadPageLayout.tsx
  */
 
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import LeadPageHeader from "../features/leadPage/leadPageHeader"
-import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline"
-import { LeadProfileProvider } from "@/components/lead/context/leadProfileContext"
-import LeadProfile from "../features/leadPage/leadProfile"
+import React, { useState } from "react";
+import LeadPageHeader from "../features/leadPage/leadPageHeader";
+import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline";
+import { LeadProfileProvider } from "@/components/lead/features/context/leadProfileContext";
+import LeadProfile from "../features/leadPage/leadProfile";
 
 type LeadPageLayoutProps = {
-  leadId: string
-}
+  leadId: string;
+};
 
 const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
-  const [activeTab, setActiveTab] = React.useState(0)
-  const [showCallbackForm, setShowCallbackForm] = useState(false)
-  const [showMeetingForm, setShowMeetingForm] = useState(false)
+  const [activeTab, setActiveTab] = React.useState(0);
+  const [showCallbackForm, setShowCallbackForm] = useState(false);
+  const [showMeetingForm, setShowMeetingForm] = useState(false);
 
   const navItems = [
     {
@@ -34,7 +34,7 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
       name: "Profile",
       component: <LeadProfile />,
     },
-  ]
+  ];
 
   return (
     <LeadProfileProvider leadId={leadId}>
@@ -48,7 +48,7 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
         {navItems[activeTab].component}
       </section>
     </LeadProfileProvider>
-  )
-}
+  );
+};
 
-export default LeadPageLayout
+export default LeadPageLayout;

@@ -2,9 +2,9 @@
  * @path src/components/lead/features/leadPage/leadTimeline.tsx
  */
 
-import LeadStatusUpdateForm from "@/components/lead/features/leadPage/leadStatusUpdateForm"
-import TimelineContainer from "./timelineContainer"
-import TimelineTopbar from "../../ui/leadPage/timelineTopbar"
+import LeadStatusUpdateForm from "@/components/lead/features/leadPage/leadStatusUpdateForm";
+import TimelineContainer from "./timelineContainer";
+import TimelineTopbar from "../../ui/leadPage/timelineTopbar";
 
 const timelineEvents = [
   {
@@ -28,16 +28,23 @@ const timelineEvents = [
     username: "admin",
     category: "qualified",
   },
-].reverse()
+  {
+    eventname: "client closed",
+    date: "2025-12-20T09:30:00",
+    description: "Lead closed by Y",
+    username: "admin",
+    category: "qualified",
+  },
+].reverse();
 
 const LeadTimeLine = ({
   id,
   setShowCallback,
   setShowMeeting,
 }: {
-  id: string
-  setShowCallback: React.Dispatch<React.SetStateAction<boolean>>
-  setShowMeeting: React.Dispatch<React.SetStateAction<boolean>>
+  id: string;
+  setShowCallback: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowMeeting: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     <div className="w-full h-full mt-4">
@@ -52,7 +59,7 @@ const LeadTimeLine = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LeadTimeLine
+export default LeadTimeLine;

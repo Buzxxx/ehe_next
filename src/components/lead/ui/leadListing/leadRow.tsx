@@ -1,16 +1,16 @@
-import React from "react"
-import { Checkbox } from "@/components/ui/checkbox"
-import { TableCell, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons"
-import { formatDate } from "@/utility/formatDate"
-import { Lead } from "@/components/lead/features/leadObject"
-import Avataar from "../leadPage/avataar"
+import React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons";
+import { formatDate } from "@/utility/formatDate";
+import { Lead } from "@/components/lead/features/leadObject";
+import Avataar from "../leadPage/avataar";
 
 interface LeadRowProps {
-  lead: Lead
-  isSelected: boolean
-  onToggle: () => void
+  lead: Lead;
+  isSelected: boolean;
+  onToggle: () => void;
 }
 
 const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
@@ -41,7 +41,7 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
 
       {/* Status */}
       <TableCell className="p-2 text-right text-sm font-medium text-gray-600">
-        {lead.status || "Closed"}
+        {lead.status.status || "Closed"}
       </TableCell>
 
       {/* Actions */}
@@ -68,7 +68,7 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
         </div>
       </TableCell>
     </TableRow>
-  )
-}
+  );
+};
 
-export default LeadRow
+export default LeadRow;
