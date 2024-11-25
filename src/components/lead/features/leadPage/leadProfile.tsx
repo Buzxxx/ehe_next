@@ -1,19 +1,19 @@
-import { Copy } from "@/components/ui/icons"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import EditableField from "../../../ui/editableField"
-import { useLeadProfile } from "../../context/leadProfileContext"
+import { Copy } from "@/components/ui/icons";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import EditableField from "../../../ui/editableField";
+import { useLeadProfile } from "../context/leadProfileContext";
 
 const LeadProfile = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile()
+  const { leadProfile, setLeadProfile } = useLeadProfile();
 
   // Update specific field in leadProfile
   const handleFieldSave = (fieldName: string, newValue: string) => {
     setLeadProfile((prev) => ({
       ...prev,
       [fieldName]: newValue, // Update the specific field
-    }))
-  }
+    }));
+  };
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -27,7 +27,7 @@ const LeadProfile = () => {
                 variant="secondary"
                 className="text-xs bg-green-600 font-normal text-gray-100"
               >
-                {leadProfile.status ?? "Active"}
+                {leadProfile.status.status ?? "Active"}
               </Badge>
             </div>
             <h6 className="font-semibold flex items-center">
@@ -40,39 +40,61 @@ const LeadProfile = () => {
           </CardHeader>
           <CardContent className="max-md:px-2 grid md:grid-cols-1 gap-4 mt-4">
             <EditableField
+              fieldKey="assigned_to"
+              value={leadProfile.assigned_to.name}
+              textSize="sm"
+              title="Assigned To"
+              textAlign="right"
+              isEditable={false}
+            />
+            <EditableField
+              fieldKey="source_assigned"
+              value={leadProfile.source_assigned}
+              textSize="sm"
+              title="Source Assigned to"
+              textAlign="right"
+              isEditable={false}
+            />
+            <EditableField
               fieldKey="priority"
               value={leadProfile.priority}
               textSize="sm"
               title="Priority"
               textAlign="right"
+              isEditable={false}
             />
             <EditableField
               fieldKey="status"
-              value={leadProfile.status}
+              value={leadProfile.status.status}
               textSize="sm"
               title="Status"
               textAlign="right"
+              isEditable={false}
+            />
+
+            <EditableField
+              fieldKey="source"
+              value={leadProfile.source}
+              textSize="sm"
+              title="Source"
+              textAlign="right"
+              isEditable={false}
             />
             <EditableField
-              fieldKey="interested_in"
-              value={leadProfile.interested_in}
+              fieldKey="created_dt"
+              value={new Date(leadProfile.created_dt).toLocaleString()}
               textSize="sm"
-              title="Interested In"
+              title="Created at"
               textAlign="right"
+              isEditable={false}
             />
             <EditableField
-              fieldKey="lead_type"
-              value={leadProfile.lead_type}
+              fieldKey="last_updated_dt"
+              value={new Date(leadProfile.last_updated_dt).toLocaleString()}
               textSize="sm"
-              title="Lead Type"
+              title="Last updated at"
               textAlign="right"
-            />
-            <EditableField
-              fieldKey="assigned_to"
-              value={leadProfile.assigned_to}
-              textSize="sm"
-              title="Assigned To"
-              textAlign="right"
+              isEditable={false}
             />
           </CardContent>
         </Card>
@@ -86,10 +108,38 @@ const LeadProfile = () => {
           </CardHeader>
           <CardContent className="max-md:px-2 grid md:grid-cols-1 gap-4 mt-4">
             <EditableField
+              fieldKey="lead_type"
+              value={leadProfile.lead_type}
+              textSize="sm"
+              title="Lead Type"
+              textAlign="right"
+            />
+            <EditableField
+              fieldKey="budget"
+              value={leadProfile.budget}
+              textSize="sm"
+              title="Budget"
+              textAlign="right"
+            />
+            <EditableField
+              fieldKey="follow_up_current_status"
+              value={leadProfile.follow_up_current_status}
+              textSize="sm"
+              title="Follow up current status"
+              textAlign="right"
+            />
+            <EditableField
+              fieldKey="interested_in"
+              value={leadProfile.interested_in}
+              textSize="sm"
+              title="Interested In"
+              textAlign="right"
+            />
+            <EditableField
               fieldKey="product_code"
               value={leadProfile.product_code}
               textSize="sm"
-              title="Product Code"
+              title="Product code"
               textAlign="right"
             />
             <EditableField
@@ -100,24 +150,17 @@ const LeadProfile = () => {
               textAlign="right"
             />
             <EditableField
+              fieldKey="recieved_date"
+              value={leadProfile.recieved_date}
+              textSize="sm"
+              title="Recieved date"
+              textAlign="right"
+            />
+            <EditableField
               fieldKey="query"
               value={leadProfile.query}
               textSize="sm"
               title="Query"
-              textAlign="right"
-            />
-            <EditableField
-              fieldKey="source"
-              value={leadProfile.source}
-              textSize="sm"
-              title="Source"
-              textAlign="right"
-            />
-            <EditableField
-              fieldKey="address"
-              value={leadProfile.address}
-              textSize="sm"
-              title="Address"
               textAlign="right"
             />
           </CardContent>
@@ -160,7 +203,7 @@ const LeadProfile = () => {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default LeadProfile
+export default LeadProfile;

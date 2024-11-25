@@ -1,69 +1,93 @@
-import React, { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import filterCategories from "@/components/dashboard/library/filterCategories"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { SelectItem } from "@/components/ui/select"
-import OverlayLoading from "@/components/ui/overlayLoading"
-import { Spinner } from "@/components/ui/icons"
-import { useToast } from "@/components/ui/use-toast"
+import React, { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
+import { SelectItem } from "@/components/ui/select";
+import OverlayLoading from "@/components/ui/overlayLoading";
+import { Spinner } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/use-toast";
+import { useLeadProfile } from "../context/leadProfileContext";
+import {
+  LeadStatus,
+  DefaultLeadStatus,
+  get_lead_status_controller,
+} from "../statusObject";
 
 export const LeadStatusUpdateFormSchema = z.object({
   id: z.string(),
   status: z.string(),
   priority: z.string(),
   description: z.string().optional(),
-})
+});
 
 const LeadStatusUpdateForm = ({
   id,
   setOpen,
 }: {
-  id: string
-  setOpen?: (arg0: boolean) => void
+  id: string;
+  setOpen?: (arg0: boolean) => void;
 }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+  const { leadProfile } = useLeadProfile();
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const [statusList, setStatusList] = useState<LeadStatus[]>([
+    DefaultLeadStatus,
+  ]);
 
+  useEffect(() => {
+    const fetchStatusList = async () => {
+      try {
+        setIsLoading(true);
+        const statusList = await get_lead_status_controller();
+        setStatusList(statusList.statusList);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStatusList();
+  }, []);
+
+  // Use `useForm` with dynamic default values
   const form = useForm<z.infer<typeof LeadStatusUpdateFormSchema>>({
     resolver: zodResolver(LeadStatusUpdateFormSchema),
     defaultValues: {
       id: id,
-      status: "",
+      status: leadProfile?.status?.status || DefaultLeadStatus.status,
       priority: "cold",
       description: "",
     },
-  })
+  });
+
+  // Update `status` default value if `leadProfile` updates
+  useEffect(() => {
+    if (leadProfile?.status?.status) {
+      form.reset({
+        ...form.getValues(),
+        status: leadProfile.status.id.toString(),
+      });
+    }
+  }, [leadProfile, form]);
 
   const onSubmit = async (data: z.infer<typeof LeadStatusUpdateFormSchema>) => {
-    setIsLoading(true)
-    console.log({ ...data, id })
+    setIsLoading(true);
+    console.log({ ...data, id });
     setTimeout(() => {
-      setIsLoading(false)
-      setOpen && setOpen(false)
+      setIsLoading(false);
+      setOpen && setOpen(false);
 
       toast({
         title: `Timeline updated!`,
-      })
-    }, 1000)
-  }
-
-  // Filter to get only the status field
-  const statusCategory = filterCategories.find(
-    (category) => category.name === "status"
-  )
+      });
+    }, 1000);
+  };
 
   return (
     <>
-      {isLoading ? (
-        <OverlayLoading>
-          <Spinner className="w-8 h-8 md:w-14 md:h-16 "></Spinner>
-        </OverlayLoading>
-      ) : null}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -131,7 +155,7 @@ const LeadStatusUpdateForm = ({
         </form>
       </Form>
     </>
-  )
-}
+  );
+};
 
-export default LeadStatusUpdateForm
+export default LeadStatusUpdateForm;

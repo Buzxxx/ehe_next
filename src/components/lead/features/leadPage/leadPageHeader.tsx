@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import BackIcon from "@/components/ui/icons/back"
-import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button";
+import BackIcon from "@/components/ui/icons/back";
+import { useRouter } from "next/navigation";
 import {
   Bookmark,
   ChevronLeft,
@@ -12,11 +12,11 @@ import {
   Edit,
   Chat,
   WhatsAppOutline,
-} from "@/components/ui/icons"
-import EditableField from "@/components/ui/editableField"
-import Avataar from "@/components/dashboard/ui/avataar"
-import { useState } from "react"
-import { useLeadProfile } from "../../context/leadProfileContext"
+} from "@/components/ui/icons";
+import EditableField from "@/components/ui/editableField";
+import Avataar from "@/components/dashboard/ui/avataar";
+import { useState } from "react";
+import { useLeadProfile } from "../context/leadProfileContext";
 import DropDownMenu from "@/components/dashboard/ui/dropDown"
 import {
   DropdownMenu,
@@ -33,43 +33,44 @@ const LeadPageHeader = ({
   activeTab,
   setActiveTab,
 }: {
-  id: number
-  navItems: { name: string; component: React.ReactNode }[]
-  activeTab: number
-  setActiveTab: React.Dispatch<React.SetStateAction<number>>
+  id: number;
+  navItems: { name: string; component: React.ReactNode }[];
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const router = useRouter()
   const { leadProfile, setLeadProfile, isEditing, setIsEditing } =
-    useLeadProfile()
-  const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile)
+    useLeadProfile();
+  const router = useRouter();
+
+  const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile);
 
   // Handle field update for EditableField
   const handleFieldSave = (fieldKey: string, newValue: string) => {
     setLocalLeadProfile((prev) => ({
       ...prev,
       [fieldKey]: newValue,
-    }))
-  }
+    }));
+  };
 
   // Save changes and disable editing
   const handleSave = () => {
-    setLeadProfile(localLeadProfile) // Commit changes to global state
-    setIsEditing(false) // Exit editing mode
-  }
+    setLeadProfile(localLeadProfile); // Commit changes to global state
+    setIsEditing(false); // Exit editing mode
+  };
 
   // Cancel editing and revert changes
   const handleCancel = () => {
-    setLocalLeadProfile(leadProfile) // Revert to original values
-    setIsEditing(false) // Exit editing mode
-  }
+    setLocalLeadProfile(leadProfile); // Revert to original values
+    setIsEditing(false); // Exit editing mode
+  };
 
   // Function to handle navigation
   const handleNavigation = (direction: "prev" | "next") => {
-    const newId = direction === "prev" ? id - 1 : id + 1
+    const newId = direction === "prev" ? id - 1 : id + 1;
     if (newId > 0) {
-      router.push(`/lead/${newId}`)
+      router.push(`/lead/${newId}`);
     }
-  }
+  };
 
   return (
     <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-gray-50 shadow-sm rounded-lg">
@@ -109,7 +110,7 @@ const LeadPageHeader = ({
           />
           <div className="flex flex-col 1">
             <EditableField
-              value={localLeadProfile.name}
+              value={leadProfile.name}
               fieldKey="name"
               textSize="xl"
               fontWeight="semibold"
@@ -118,7 +119,7 @@ const LeadPageHeader = ({
               <div className="flex gap-1 items-center text-gray-500 text-sm">
                 <Mail size={16} />
                 <EditableField
-                  value={localLeadProfile.email}
+                  value={leadProfile.email || "Email not provided"}
                   fieldKey="email"
                   textSize="sm"
                 />
@@ -126,7 +127,7 @@ const LeadPageHeader = ({
               <div className="flex gap-1 items-center text-gray-500 text-sm">
                 <Phone size={16} />
                 <EditableField
-                  value={localLeadProfile.contact}
+                  value={leadProfile.contact}
                   fieldKey="contact"
                   textSize="sm"
                 />
@@ -134,11 +135,7 @@ const LeadPageHeader = ({
                   |
                 </span>
                 <BriefCase size={16} />
-                <EditableField
-                  value={localLeadProfile.company}
-                  fieldKey="company"
-                  textSize="sm"
-                />
+                <p>{leadProfile.priority}</p>
               </div>
             </div>
           </div>
@@ -298,7 +295,7 @@ const LeadPageHeader = ({
         )}
       </nav>
     </section>
-  )
-}
+  );
+};
 
-export default LeadPageHeader
+export default LeadPageHeader;
