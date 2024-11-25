@@ -25,34 +25,33 @@ export const defaultIndividualLead: individualLead = {
 };
 
 export interface Lead {
-  img?: string
-  location?: string
-  id: number
-  name: string
-  created_dt: string
-  status: number
-  isSelected: boolean
-  assigned_to?: number
-  brokerage?: number
-  contact?: string
-  email?: string
-  follow_up_current_status?: string
-  golden?: string
-  hash_key?: string
-  interested_in?: string
-  last_updated_dt?: string
-  lead_type?: string
-  priority?: string
-  product_code?: string
-  product_type?: string
-  query?: string
-  recieved_date?: string
-  revenue?: number
-  sess_id?: number
-  source?: string
-  source_assigned?: string
-  address?: string
-  company?: string
+  img?: string;
+  location?: string;
+  id: number;
+  name: string;
+  created_dt: string;
+  status: { id: number; status: string };
+  isSelected: boolean;
+  assigned_to: { id: number; name: string };
+  brokerage?: number;
+  contact?: string;
+  email?: string;
+  follow_up_current_status?: string;
+  golden?: string;
+  hash_key?: string;
+  interested_in?: string;
+  last_updated_dt: string;
+  lead_type?: string;
+  priority?: string;
+  product_code?: string;
+  product_type?: string;
+  query?: string;
+  recieved_date?: string;
+  revenue?: number;
+  sess_id?: number;
+  source?: string;
+  source_assigned?: string;
+  budget?: string;
 }
 
 export interface LeadsResponse {
@@ -80,13 +79,13 @@ export const DefaultLead: Lead = {
   name: "Default",
   email: "example@gmail.com",
   contact: "+91 9876543210",
-  company: "Google",
+  budget: "00",
   created_dt: "1970-01-01T00:00:00Z",
-  status: 0,
+  status: { id: 0, status: "None" },
   isSelected: false,
   img: "/base/profile.webp",
   location: "Unknown",
-  assigned_to:4,
+  assigned_to: { id: 0, name: "Unassigned" },
   brokerage: undefined,
   follow_up_current_status: "Not Started",
   golden: "No",
@@ -103,10 +102,9 @@ export const DefaultLead: Lead = {
   sess_id: undefined,
   source: "Unknown",
   source_assigned: "None",
-  address: "Not Provided",
-}
+};
 
-const DEFAULTURL = "?page=2&per_page=20";
+const DEFAULTURL = "?page=1&per_page=20";
 
 export async function lead_listing_controller(params: URLSearchParams) {
   if (params.keys().next().value) {
@@ -126,6 +124,10 @@ export async function get_lead_details_controller(leadId: string) {
 
 export async function create_lead_controller(leadData: any) {
   return await push_create_lead_to_server(leadData);
+}
+
+export async function create_lead_bulk_controller(leadList: any) {
+  return await push_create_bulk_lead_to_server(leadList);
 }
 
 export function get_total_leads(LeadsResponse: LeadsResponse) {
@@ -189,14 +191,27 @@ async function push_create_lead_to_server(data: any) {
       },
       body: JSON.stringify(data),
     });
-
-    if (!response.ok) {
-      throw new Error(`Failed to create lead: ${response.statusText}`);
-    }
-
-    return await response.json();
+    return response;
   } catch (error) {
-    console.error("Error during API request:", error);
+    throw new Error(`Failed to create lead: ${(error as Error).message}`);
+  }
+}
+
+async function push_create_bulk_lead_to_server(data: any) {
+  try {
+    const response = await apiClient(
+      apiPaths.createLeadBulk,
+      "ProdBackendServer",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return response;
+  } catch (error) {
     throw new Error(`Failed to create lead: ${(error as Error).message}`);
   }
 }

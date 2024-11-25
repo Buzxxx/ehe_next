@@ -1,53 +1,45 @@
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
   SelectItem,
-} from "@/components/ui/select"
-import { useState } from "react"
-import LeadImportNavButtons, { LeadImportButtonProps } from "./importLeads/leadImportNavButtons"
+} from "@/components/ui/select";
+import LeadImportNavButtons, {
+  LeadImportButtonProps,
+} from "./importLeads/leadImportNavButtons";
 
 interface HeaderMappingProps {
-  headers: string[]
-  onHeaderSelect: (mapping: { [key: string]: string }) => void
-  buttons: LeadImportButtonProps[]
+  headers: string[];
+  setSelectedMapping: React.Dispatch<
+    React.SetStateAction<{ [key: string]: string }>
+  >;
+  selectedMapping: { [key: string]: string };
+  database_cols: string[];
+  buttons: LeadImportButtonProps[];
 }
 
 export const HeaderMapping = ({
   headers,
-  onHeaderSelect,
-  buttons
+  setSelectedMapping,
+  selectedMapping,
+  database_cols,
+  buttons,
 }: HeaderMappingProps) => {
-  const [selectedMapping, setSelectedMapping] = useState<{
-    [key: string]: string
-  }>({})
-
-  // Available options for mapping
-  const allOptions = ["Name", "Email", "Phone", "Null"] // Adjust based on actual column names or your use case
-
   const handleHeaderChange = (header: string, column: string) => {
-    setSelectedMapping((prev) => ({
+    setSelectedMapping((prev: { [key: string]: string }) => ({
       ...prev,
       [header]: column,
-    }))
-  }
-
-  const handleSubmit = () => {
-    onHeaderSelect(selectedMapping)
-  }
+    }));
+  };
 
   return (
     <>
-    <LeadImportNavButtons buttons={buttons}/>
+      <LeadImportNavButtons buttons={buttons} />
       <div className="mt-6 grid md:grid-cols-2 gap-4">
-        {headers.map((header) => (
+        {database_cols.map((header) => (
           <div key={header} className="flex items-center justify-between">
-            {/* Left Column: CSV Header */}
             <span className="text-sm font-medium">{header}</span>
-
-            {/* Right Column: Select Dropdown */}
             <Select
               onValueChange={(value) => handleHeaderChange(header, value)}
             >
@@ -55,7 +47,7 @@ export const HeaderMapping = ({
                 <SelectValue placeholder="Select a column" />
               </SelectTrigger>
               <SelectContent>
-                {allOptions.map((option) => (
+                {headers.map((option) => (
                   <SelectItem key={option} value={option}>
                     {option}
                   </SelectItem>
@@ -66,5 +58,5 @@ export const HeaderMapping = ({
         ))}
       </div>
     </>
-  )
-}
+  );
+};

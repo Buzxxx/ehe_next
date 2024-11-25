@@ -21,17 +21,25 @@ const apiClient = async (
       },
     });
 
+    // Check if the response is not OK (status code not in the range 200-299)
     if (!response.ok) {
-      // Throw an error with the status text if the response is not OK
-      throw new Error(`Network response was not ok: ${response.statusText}`);
+      throw new Error(
+        `Request failed with status ${response.status}: ${response.statusText}`
+      );
     }
 
-    // Assuming the API returns JSON
-    return await response.json();
+    // Try parsing the response body as JSON
+    try {
+      return await response.json();
+    } catch {
+      // If parsing fails (e.g., empty response), return the raw response
+      return response;
+    }
   } catch (error: any) {
-    // Check if error is an instance of Error
-    console.error("api client error :", error);
-    return false;
+    console.error("API Client error:", error);
+
+    // Re-throw the error to let the calling function handle it
+    throw new Error(error.message || "An unknown error occurred");
   }
 };
 
