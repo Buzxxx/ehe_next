@@ -65,8 +65,11 @@ const LeadStatusUpdateForm = ({
         </OverlayLoading>
       ) : null}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="flex  gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 w-full bg-gray-50 h-fit my-auto border p-4 rounded-md"
+        >
+          <div className="flex gap-4 ">
             {statusCategory && (
               <CustomFormField
                 key={statusCategory.name}

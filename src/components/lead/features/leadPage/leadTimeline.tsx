@@ -40,19 +40,20 @@ const LeadTimeLine = ({
   setShowMeeting: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   return (
-    <div className="w-full h-full mt-4">
-      <div className="relative w-full md:flex justify-between gap-4 ">
-        <div className="md:w-1/3 hidden md:block bg-transparent p-4 rounded-md shadow-sm border">
-          <LeadStatusUpdateForm id={id} />
-        </div>
+    <div className="relative w-full md:flex items-stretch md:h-full max-h-screen justify-between gap-4 my-4">
+      {/* Lead Status Form Wrapper */}
+      <div className="md:w-1/3 hidden md:flex flex-col bg-gray-100  rounded-md shadow-sm border h-full p-4 items-center justify-center">
+        <LeadStatusUpdateForm id={id} />
+      </div>
 
-        <div className="md:w-fit w-screen overflow-x-hidden h-full flex-1 border rounded-t-md bg-transparent rounded-md shadow-sm mx-2">
-          <TimelineTopbar leadId={id} />
-          <TimelineContainer events={timelineEvents} />
-        </div>
+      {/* Timeline Wrapper */}
+      <div className="md:w-fit overflow-x-hidden h-full flex-1 border rounded-t-md bg-gray-100 rounded-md shadow-sm mx-2">
+        <TimelineTopbar leadId={id} />
+        <TimelineContainer events={timelineEvents} />
       </div>
     </div>
   )
 }
+
 
 export default LeadTimeLine

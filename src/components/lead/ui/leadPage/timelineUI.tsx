@@ -25,7 +25,7 @@ const TimelineUI = ({
   formatDate: (date: string) => string
 }) => {
   return (
-    <div className="max-h-96 overflow-scroll timeline-wrapper relative px-4">
+    <div className=" overflow-scroll h-fit timeline-wrapper relative px-4">
       {/* Floating Month/Year Marker */}
       {activeMonth && (
         <div className="fixed top-0 left-0 w-full bg-white z-10 shadow-md py-2 px-4">

@@ -10,11 +10,22 @@ import {
   BriefCase,
   Share2,
   Edit,
+  Chat,
+  WhatsAppOutline,
 } from "@/components/ui/icons"
 import EditableField from "@/components/ui/editableField"
 import Avataar from "@/components/dashboard/ui/avataar"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useLeadProfile } from "../../context/leadProfileContext"
+import DropDownMenu from "@/components/dashboard/ui/dropDown"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { MailIcon } from "lucide-react"
+import Link from "next/link"
 
 const LeadPageHeader = ({
   id,
@@ -61,7 +72,7 @@ const LeadPageHeader = ({
   }
 
   return (
-    <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-white shadow-sm rounded-lg">
+    <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-gray-50 shadow-sm rounded-lg">
       <header className="flex justify-between items-center mt-10 md:mb-1 md:mt-0">
         <div className="flex items-center gap-2">
           <BackIcon
@@ -100,7 +111,7 @@ const LeadPageHeader = ({
             <EditableField
               value={localLeadProfile.name}
               fieldKey="name"
-              textSize="2xl"
+              textSize="xl"
               fontWeight="semibold"
             />
             <div>
@@ -133,7 +144,7 @@ const LeadPageHeader = ({
           </div>
         </div>
 
-        {activeTab === 1 && (
+        {activeTab === 1 ? (
           <div className="hidden md:flex items-center gap-2 ">
             {isEditing ? (
               <>
@@ -159,6 +170,47 @@ const LeadPageHeader = ({
               </Button>
             )}
           </div>
+        ) : (
+          <div className="hidden md:flex items-center gap-2 ">
+            <Button
+              onClick={handleSave}
+              className="h-fit bg-transparent border text-sky-600 hover:text-sky-700 py-1 border-sky-600 hover:border-sky-700 hover:bg-transparent"
+            >
+              <Phone /> Call
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  onClick={handleCancel}
+                  className="h-fit bg-transparent border text-gray-500 hover:text-gray-700 py-1 border-gray-500 hover:border-gray-700 hover:bg-transparent"
+                >
+                  <Chat /> Message
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Link
+                    href={`https://wa.me/${leadProfile.contact}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-1 items-center"
+                  >
+                    <WhatsAppOutline size={16} /> WhatsApp
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link
+                    href={`mailto:${localLeadProfile.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-1 items-center"
+                  >
+                    <MailIcon size={16} /> Email
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         )}
       </div>
       <nav className="md:pt-2 mt-2 flex items-center justify-start bg-white w-full">
@@ -176,7 +228,7 @@ const LeadPageHeader = ({
           </button>
         ))}
 
-        {activeTab === 1 && (
+        {activeTab === 1 ? (
           <div className="md:hidden flex items-center gap-2 self-center ml-auto">
             {isEditing ? (
               <>
@@ -201,6 +253,47 @@ const LeadPageHeader = ({
                 <Edit /> Edit
               </Button>
             )}
+          </div>
+        ) : (
+          <div className="md:hidden flex items-center gap-2 self-center ml-auto">
+            <Button
+              onClick={handleSave}
+              className="h-fit bg-transparent border text-sky-600 hover:text-sky-700 py-1 border-sky-600 hover:border-sky-700 hover:bg-transparent"
+            >
+              <Phone /> Call
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  onClick={handleCancel}
+                  className="h-fit bg-transparent border text-gray-500 hover:text-gray-700 py-1 border-gray-500 hover:border-gray-700 hover:bg-transparent"
+                >
+                  <Chat /> Message
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Link
+                    href={`https://wa.me/${leadProfile.contact}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-1 items-center"
+                  >
+                    <WhatsAppOutline size={16} /> WhatsApp
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link
+                    href={`mailto:${localLeadProfile.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-1 items-center"
+                  >
+                    <MailIcon size={16} /> Email
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
       </nav>

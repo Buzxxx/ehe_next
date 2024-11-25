@@ -44,9 +44,8 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <section className="  flex gap-2">
+    
         {navItems[activeTab].component}
-      </section>
     </LeadProfileProvider>
   )
 }
