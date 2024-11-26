@@ -110,7 +110,7 @@ const BookAppointment = () => {
         onSubmit={onSubmit}
       />
 
-      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} />
+      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} title={'Share this Property'} />
 
       <ModalUI
         isOpen={isLoginModalOpen}

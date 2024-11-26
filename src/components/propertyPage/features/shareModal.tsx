@@ -15,6 +15,7 @@ interface ShareModalProps {
   isOpen: boolean
   onClose: () => void
   showCopyButton?: boolean
+  title?:string
   platforms?: Array<
     "facebook" | "twitter" | "whatsapp" | "telegram" | "instagram" | "messenger"
   >
@@ -24,6 +25,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   isOpen,
   onClose,
   showCopyButton = true,
+  title,
   platforms = [
     "facebook",
     "twitter",
@@ -98,6 +100,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
       socials={socials}
       showCopyButton={showCopyButton}
       onCopy={handleCopy}
+      title={title}
     />
   )
 }

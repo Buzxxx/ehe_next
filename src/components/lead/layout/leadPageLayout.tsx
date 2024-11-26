@@ -38,15 +38,16 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
 
   return (
     <LeadProfileProvider leadId={leadId}>
+      <div className="flex h-screen flex-col">
       <LeadPageHeader
         id={parseInt(leadId)}
         navItems={navItems}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <section className="  flex gap-2">
+    
         {navItems[activeTab].component}
-      </section>
+    </div>
     </LeadProfileProvider>
   );
 };

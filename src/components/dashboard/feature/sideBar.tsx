@@ -29,7 +29,7 @@ const DashboardSideMenu = ({
       variant="floating"
       className={` fixed z-10 top-0 pt-16 left-0  flex flex-col items-center transition-all text-nowrap border-0 `}
     >
-      <SidebarHeader className="text-slate-800 text-left flex flex-col border-b">
+      <SidebarHeader className="text-slate-800 text-left flex flex-col border-b bg-gray-50">
         <ProfileTab
           name={name ?? "Unknown User"}
           img={img}
@@ -40,7 +40,7 @@ const DashboardSideMenu = ({
         </ProfileTab>
       </SidebarHeader>
 
-      <SidebarContent className="bg-transparent w-full text-slate-700 text-xs">
+      <SidebarContent className="bg-transparent w-full text-slate-700 text-xs bg-gray-50">
         <SidebarGroup>
           <SidebarGroupLabel>MAIN NAVIGATION</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -50,7 +50,7 @@ const DashboardSideMenu = ({
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="bg-gray-50">
         <SideNavMenu items={[dashboardItems[dashboardItems.length - 1]]} />{" "}
       </SidebarFooter>
     </Sidebar>
