@@ -10,21 +10,21 @@ const timelineEvents = [
   {
     eventname: "client added",
     date: "2020-11-12T23:21:00",
-    description: "Initial lead created by X",
+    description: "Initial lead created",
     username: "admin",
     category: "created",
   },
   {
     eventname: "client visited",
     date: "2020-12-15T14:45:00",
-    description: "Lead visited by X",
+    description: "Lead visited",
     username: "admin",
     category: "contacted",
   },
   {
     eventname: "client closed",
     date: "2020-12-20T09:30:00",
-    description: "Lead closed by Y",
+    description: "Lead closed",
     username: "admin",
     category: "qualified",
   },
@@ -47,16 +47,18 @@ const LeadTimeLine = ({
   setShowMeeting: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
-    <div className="relative w-full md:flex items-stretch  overflow-auto justify-between gap-4 mt-4">
+    <div className="relative w-full h-[calc(100vh-4rem)] md:flex items-stretch overflow-auto justify-between gap-4 mt-4">
       {/* Lead Status Form Wrapper */}
-      <div className="md:w-1/3 hidden md:flex flex-col bg-gray-100  rounded-md shadow-sm border p-4 items-center justify-center h-96">
+      <div className="md:w-1/3 hidden md:flex flex-col bg-gray-100 rounded-md shadow-sm border p-4 h-full">
         <LeadStatusUpdateForm id={id} />
       </div>
 
       {/* Timeline Wrapper */}
-      <div className="md:w-fit overflow-x-hidden h-full flex-1 border rounded-t-md bg-gray-100 rounded-md shadow-sm mx-2 max-h-96">
+      <div className="md:w-fit overflow-hidden max-h-full flex-1 border rounded-t-md bg-gray-100 rounded-md shadow-sm mx-2 flex flex-col">
         <TimelineTopbar leadId={id} />
-        <TimelineContainer events={timelineEvents} />
+        <div className="flex-1 overflow-y-auto">
+          <TimelineContainer events={timelineEvents} />
+        </div>
       </div>
     </div>
   )

@@ -217,7 +217,9 @@ const LeadPageHeader = ({
               onClick={handleSave}
               className="h-fit bg-transparent border text-sky-600 hover:text-sky-700 py-1 border-sky-600 hover:border-sky-700 hover:bg-transparent"
             >
+              <Link href={`tel:${leadProfile.contact}`} target="_blank" className="flex gap-2 items-center">
               <Phone /> Call
+              </Link>
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

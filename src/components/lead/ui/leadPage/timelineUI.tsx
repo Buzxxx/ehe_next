@@ -6,6 +6,7 @@
 
 import { Plus, Mail, Check } from "@/components/ui/icons"
 import { LegacyRef } from "react"
+import Avataar from "./avataar"
 
 const TimelineUI = ({
   groupedEvents,
@@ -96,21 +97,20 @@ const TimelineUI = ({
                   {/* Event Card */}
                   <div className={`flex flex-col gap-2 w-full md:ml-16 `}>
                     {/* Date on the Left */}
-                    <div className="max-md:absolute max-md:left-0 max-md:-top-[10%] max-md:px-6 text-right flex justify-between items-center w-full">
-                      <p className="text-sm text-gray-500 capitalize">
-                        {event.eventname}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {formatDate(event.date)}
-                      </p>
+                    <div className="max-md:absolute max-md:left-0 max-md:-top-[10%] max-md:px-6 text-right flex justify-between items-center w-full text-sm text-gray-500">
+                      <p className=" capitalize">{event.eventname}</p>
+                      <p className="">{formatDate(event.date)}</p>
                     </div>
                     <div className="p-4 max-md:mt-4 pt-2 bg-white border border-gray-300 rounded-lg  w-full md:w-5/6 mx-auto">
-                      <h4 className="text-md font-semibold">
-                        {event.description}
-                      </h4>
-                      <p className="text-xs text-gray-600">
-                        By: {event.username}
-                      </p>
+                      <div className="text-sm font-semibold capitalize  flex items-start gap-2">
+                        <Avataar className="size-5 border-2" />
+                        <p className="flex flex-col">
+                          <span className="">{event.username}</span>
+                          <span className="text-sm font-normal text-center text-gray-500">
+                            {event.description}
+                          </span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
