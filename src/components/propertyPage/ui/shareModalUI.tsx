@@ -35,13 +35,13 @@ const ShareModalUI: React.FC<ShareModalUIProps> = ({
       <DialogDescription className="flex flex-col md:gap-8 gap-4">
         <div className="flex justify-around mt-4">
           {socials.map((social) => (
-            <Button
+            <button
               key={social.name}
               className="rounded-full bg-transparent p-0 w-fit h-fit hover:scale-105 transition-transform"
               onClick={() => window.open(social.url, "_blank")}
             >
               {social.icon}
-            </Button>
+            </button>
           ))}
         </div>
         {showCopyButton && (

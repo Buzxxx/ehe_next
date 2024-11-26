@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import BackIcon from "@/components/ui/icons/back";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button"
+import BackIcon from "@/components/ui/icons/back"
+import { useRouter } from "next/navigation"
 import {
   Bookmark,
   ChevronLeft,
@@ -12,20 +12,24 @@ import {
   Edit,
   Chat,
   WhatsAppOutline,
-} from "@/components/ui/icons";
-import EditableField from "@/components/ui/editableField";
-import Avataar from "@/components/dashboard/ui/avataar";
-import { useState } from "react";
-import { useLeadProfile } from "../context/leadProfileContext";
-import DropDownMenu from "@/components/dashboard/ui/dropDown"
+} from "@/components/ui/icons"
+import EditableField from "@/components/ui/editableField"
+import Avataar from "@/components/dashboard/ui/avataar"
+import { useEffect, useState } from "react"
+import { useLeadProfile } from "../context/leadProfileContext"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MailIcon } from "lucide-react"
+import { CheckCircle, MailIcon } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/components/ui/use-toast"
+import dynamic from "next/dynamic"
+const ShareModal = dynamic(
+  () => import("@/components/propertyPage/features/shareModal")
+)
 
 const LeadPageHeader = ({
   id,
@@ -33,44 +37,74 @@ const LeadPageHeader = ({
   activeTab,
   setActiveTab,
 }: {
-  id: number;
-  navItems: { name: string; component: React.ReactNode }[];
-  activeTab: number;
-  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+  id: number
+  navItems: { name: string; component: React.ReactNode }[]
+  activeTab: number
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const { leadProfile, setLeadProfile, isEditing, setIsEditing } =
-    useLeadProfile();
-  const router = useRouter();
+    useLeadProfile()
+  const router = useRouter()
+  const { toast } = useToast()
+  const [isSaved, setIsSaved] = useState(false)
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false) // State for share modal
 
-  const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile);
+  const toggleShareModal = () => {
+    setIsShareModalOpen(!isShareModalOpen)
+  }
 
-  // Handle field update for EditableField
-  const handleFieldSave = (fieldKey: string, newValue: string) => {
-    setLocalLeadProfile((prev) => ({
-      ...prev,
-      [fieldKey]: newValue,
-    }));
-  };
+  // Initialize isSaved state based on localStorage
+  useEffect(() => {
+    const savedLeads = JSON.parse(localStorage.getItem("savedLeads") || "[]")
+    setIsSaved(savedLeads.some((lead: any) => lead.id === id))
+  }, [id])
 
+  const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile)
+
+  // Save the lead to localStorage
+  // Handle toggle save/unsave
+  const handleSaveToggle = () => {
+    const savedLeads = JSON.parse(localStorage.getItem("savedLeads") || "[]")
+
+    if (isSaved) {
+      // Unsave the lead
+      const updatedLeads = savedLeads.filter((lead: any) => lead.id !== id)
+      localStorage.setItem("savedLeads", JSON.stringify(updatedLeads))
+      setIsSaved(false)
+      toast({
+        variant: "default",
+        title: "Lead Unsaved",
+      })
+    } else {
+      // Save the lead
+      const updatedLeads = [...savedLeads, { ...leadProfile, id }]
+      localStorage.setItem("savedLeads", JSON.stringify(updatedLeads))
+      setIsSaved(true)
+      toast({
+        title: "Lead Unsaved",
+        className: "bg-green-400 text-white ",
+      })
+    }
+  }
   // Save changes and disable editing
   const handleSave = () => {
-    setLeadProfile(localLeadProfile); // Commit changes to global state
-    setIsEditing(false); // Exit editing mode
-  };
+    setLeadProfile(localLeadProfile) // Commit changes to global state
+    setIsEditing(false) // Exit editing mode
+  }
 
   // Cancel editing and revert changes
   const handleCancel = () => {
-    setLocalLeadProfile(leadProfile); // Revert to original values
-    setIsEditing(false); // Exit editing mode
-  };
+    setLocalLeadProfile(leadProfile) // Revert to original values
+    setIsEditing(false) // Exit editing mode
+  }
 
   // Function to handle navigation
   const handleNavigation = (direction: "prev" | "next") => {
-    const newId = direction === "prev" ? id - 1 : id + 1;
+    const newId = direction === "prev" ? id - 1 : id + 1
     if (newId > 0) {
-      router.push(`/lead/${newId}`);
+      router.push(`/lead/${newId}`)
     }
-  };
+  }
 
   return (
     <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-gray-50 shadow-sm rounded-lg">
@@ -94,11 +128,21 @@ const LeadPageHeader = ({
           >
             <ChevronRight size={20} />
           </Button>
-          <Button className="p-1 bg-transparent text-blue-600 hover:bg-blue-100 rounded-md h-fit">
+          <Button
+            className="p-1 bg-transparent text-blue-600 hover:bg-blue-100 rounded-md h-fit"
+            onClick={toggleShareModal}
+          >
             <Share2 size={20} />
           </Button>
-          <Button className="p-1 bg-transparent text-yellow-600 hover:bg-yellow-100 rounded-md h-fit">
-            <Bookmark size={20} />
+          <Button
+            onClick={handleSaveToggle}
+            className={`p-1 rounded-md h-fit  ${
+              isSaved
+                ? "bg-green-100 text-green-600 hover:bg-green-50"
+                : "bg-transparent text-yellow-600 hover:bg-yellow-100"
+            }`}
+          >
+            {isSaved ? <CheckCircle size={20} /> : <Bookmark size={20} />}
           </Button>
         </div>
       </header>
@@ -294,8 +338,9 @@ const LeadPageHeader = ({
           </div>
         )}
       </nav>
+      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} />
     </section>
-  );
-};
+  )
+}
 
-export default LeadPageHeader;
+export default LeadPageHeader

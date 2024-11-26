@@ -49,7 +49,7 @@ const LeadTimeLine = ({
   return (
     <div className="relative w-full md:flex items-stretch  overflow-auto justify-between gap-4 mt-4">
       {/* Lead Status Form Wrapper */}
-      <div className="md:w-1/3 hidden md:flex flex-col bg-gray-100  rounded-md shadow-sm border h-full p-4 items-center justify-center h-96">
+      <div className="md:w-1/3 hidden md:flex flex-col bg-gray-100  rounded-md shadow-sm border p-4 items-center justify-center h-96">
         <LeadStatusUpdateForm id={id} />
       </div>
 

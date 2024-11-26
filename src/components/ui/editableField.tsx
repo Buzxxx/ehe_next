@@ -60,21 +60,19 @@ const EditableField = ({
   // Editable field rendering
   return (
     <div
-      className={cn("relative group flex items-center gap-2", className)}
+      className={cn("relative group flex items-center gap-4", className)}
       onMouseEnter={() => setIsFieldEditing(true)}
       onBlur={handleSave}
       autoFocus
     >
-      {title && (
-        <p className="text-gray-600 text-sm font-light flex-1">{title}</p>
-      )}
+      {title && <p className="text-gray-600 text-sm font-light ">{title}</p>}
 
       {isEditing && isFieldEditing ? (
         <input
           type={type}
           value={tempValue || ""} // Ensure value is never null
           onChange={(e) => setTempValue(e.target.value)}
-          className={`border-b border-gray-300 focus:outline-none text-${
+          className={`border-b flex-1 w-fit border-gray-300 focus:outline-none text-${
             textSize ?? "sm"
           } font-${fontWeight ?? "normal"} text-${textAlign}`}
           onBlur={handleSave}
@@ -82,12 +80,14 @@ const EditableField = ({
           autoFocus
         />
       ) : (
-        <p className={`cursor-pointer text-${textSize} font-${fontWeight}`}>
+        <p
+          className={`cursor-pointer flex-1  text-${textSize} border-b border-transparent font-${fontWeight} text-${textAlign}`}
+        >
           {tempValue || placeholder}
         </p>
       )}
     </div>
-  );
+  )
 };
 
 export default EditableField;
