@@ -1,19 +1,22 @@
-import React from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons";
-import { formatDate } from "@/utility/formatDate";
-import { Lead } from "@/components/lead/features/leadObject";
-import Avataar from "../leadPage/avataar";
+import React from "react"
+import { Checkbox } from "@/components/ui/checkbox"
+import { TableCell, TableRow } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons"
+import { formatDate } from "@/utility/formatDate"
+import { Lead } from "@/components/lead/features/leadObject"
+import Avataar from "../leadPage/avataar"
+import Link from "next/link"
+import { useLeadSave } from "../../hooks/useLeadSave"
 
 interface LeadRowProps {
-  lead: Lead;
-  isSelected: boolean;
-  onToggle: () => void;
+  lead: Lead
+  isSelected: boolean
+  onToggle: () => void
 }
 
 const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
+  const { isSaved, toggleSave } = useLeadSave(lead.id)
   return (
     <TableRow className="hover:bg-gray-50 transition-colors">
       {/* Selection Checkbox */}
@@ -23,13 +26,15 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
 
       {/* Lead Name */}
       <TableCell className="flex items-center gap-3 p-2">
-        <Avataar />
+        <Link href={`/lead/${lead.id}`}>
+          <Avataar />
+        </Link>
         <div>
-          <p className="font-medium text-gray-800">
+          <Link href={`/lead/${lead.id}`} className="font-medium text-gray-800">
             {lead.name || "Lead Name"}
-          </p>
+          </Link>
           <p className="text-xs text-gray-500">
-            {lead.location || "Unknown Location"}
+            {lead.interested_in || "Unknown Location"}
           </p>
         </div>
       </TableCell>
@@ -51,24 +56,37 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
             variant="ghost"
             className="p-2 bg-green-500/20 text-green-600 hover:bg-green-500/30 rounded-full h-fit"
           >
-            <WhatsAppOutline size={20} />
+            <Link
+              href={`https://wa.me/${lead.contact}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <WhatsAppOutline size={20} />
+            </Link>
           </Button>
           <Button
             variant="ghost"
             className="p-2 bg-blue-500/20 text-blue-600 hover:bg-blue-500/30 rounded-full h-fit"
           >
-            <Phone size={16} />
+            <Link
+              href={`tel:${lead.contact}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Phone size={16} />
+            </Link>
           </Button>
           <Button
             variant="ghost"
-            className="p-2 bg-yellow-500/20 text-yellow-600 hover:bg-yellow-500/30 rounded-full h-fit"
+            className="p-2 bg-yellow-500/20 text-yellow-600 hover:bg-yellow-500/30 hover:text-yellow-400 rounded-full h-fit"
+            onClick={toggleSave}
           >
-            <Bookmark size={16} />
+            <Bookmark size={16} className={isSaved ? "fill-yellow-600" : ""} />
           </Button>
         </div>
       </TableCell>
     </TableRow>
-  );
-};
+  )
+}
 
-export default LeadRow;
+export default LeadRow

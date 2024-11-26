@@ -29,7 +29,7 @@ const DragNDropLayout: React.FC<DragNDropLayoutProps> = ({
     <>
       {files.length > 0 && <LeadImportNavButtons buttons={buttons} />}
 
-      <div>
+      <div className="overflow-x-auto">
         {csvData.length === 0 ? (
           <DragNdrop
             supportedFileTypes={supportedFileTypes}
