@@ -15,6 +15,7 @@ interface ShareModalProps {
   isOpen: boolean
   onClose: () => void
   showCopyButton?: boolean
+  title?:string
   platforms?: Array<
     "facebook" | "twitter" | "whatsapp" | "telegram" | "instagram" | "messenger"
   >

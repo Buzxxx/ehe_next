@@ -18,6 +18,7 @@ interface ShareModalUIProps {
   socials: { name: string; icon: JSX.Element; url: string }[]
   showCopyButton?: boolean
   onCopy?: () => void
+  title?: string
 }
 
 const ShareModalUI: React.FC<ShareModalUIProps> = ({
@@ -26,11 +27,12 @@ const ShareModalUI: React.FC<ShareModalUIProps> = ({
   socials,
   showCopyButton = true,
   onCopy,
+  title
 }) => (
   <Dialog open={isOpen} onOpenChange={onClose}>
     <DialogContent className="min-w-fit">
       <DialogHeader>
-        <DialogTitle>Share this property</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
       </DialogHeader>
       <DialogDescription className="flex flex-col md:gap-8 gap-4">
         <div className="flex justify-around mt-4">

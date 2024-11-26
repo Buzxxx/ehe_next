@@ -338,7 +338,7 @@ const LeadPageHeader = ({
           </div>
         )}
       </nav>
-      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} />
+      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} title={'Share this Lead'}/>
     </section>
   )
 }
