@@ -1,10 +1,15 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react"
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  SetStateAction,
+} from "react"
 import { useSearchParams } from "next/navigation"
 import { Spinner } from "@/components/ui/icons"
 import { LeadCard } from "@/components/lead/ui/leadListing/leadCard"
 import LeadRow from "@/components/lead/ui/leadListing/leadRow"
 import {
-  lead_listing_controller,
   LeadsResponse,
   DefaultLeadsResponse,
 } from "@/components/lead/features/leadObject"
@@ -25,11 +30,12 @@ interface LeadListProps {
   leadsResponse: LeadsResponse
   setLeadsResponse: (response: LeadsResponse) => void
   viewMode: "card" | "row"
+  isLoading: boolean
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>
 }
 
 const LeadList: React.FC<LeadListProps> = React.memo(
-  ({ leadsResponse = DefaultLeadsResponse, setLeadsResponse, viewMode }) => {
-    const [isLoading, setIsLoading] = useState(true)
+  ({ leadsResponse = DefaultLeadsResponse, setLeadsResponse, viewMode, isLoading, setIsLoading }) => {
     const [selectAll, setSelectAll] = useState(false)
     const [queryParams, setQueryParams] = useState("")
     const URLParams = useSearchParams()
@@ -72,7 +78,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
       <div className="w-full relative">
         {isLoading || isFetching ? (
           <div className="absolute mt-2 inset-0 flex justify-center items-center bg-gray-300 bg-opacity-30 z-30 min-h-96 rounded-xl">
-            <Spinner className="animate-spin h-10 w-10" />
+            <Spinner className="animate-spin h-10 w-10 text-gray-400 " />
           </div>
         ) : (
           <div className="pt-2">

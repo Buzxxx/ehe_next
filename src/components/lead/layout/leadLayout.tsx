@@ -1,3 +1,8 @@
+/**
+ * @path src/components/lead/layout/leadLayout.tsx
+ * @description LeadLayout component for the lead listing page
+ */
+
 "use client"
 
 import { useState } from "react"
@@ -11,6 +16,7 @@ import {
 import LeadSummarySection from "../features/leadListing/leadSummarySection"
 
 const LeadLayout = () => {
+  const [isLoading, setIsLoading] = useState(true)
   const [leadsResponse, setLeadsResponse] =
     useState<LeadsResponse>(DefaultLeadsResponse) // State to store the response from the API call that fetches the list of leads.
 
@@ -18,7 +24,7 @@ const LeadLayout = () => {
 
   return (
     <>
-      <LeadSummarySection leadsResponse={leadsResponse} />
+      <LeadSummarySection leadsResponse={leadsResponse} setIsLoading={setIsLoading} />
 
       <TopBar
         LeadsResponse={leadsResponse}
@@ -29,6 +35,8 @@ const LeadLayout = () => {
         leadsResponse={leadsResponse}
         setLeadsResponse={setLeadsResponse}
         viewMode={viewMode}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )
