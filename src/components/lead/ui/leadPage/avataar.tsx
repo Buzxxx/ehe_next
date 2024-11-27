@@ -6,6 +6,6 @@ const Avataar = ({ className, src }: { className?: string; src?: string }) => {
       <AvatarImage src={src ? src : "/base/profile.webp"} />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
-  );
+  )
 };
 export default Avataar;

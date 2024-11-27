@@ -1,5 +1,5 @@
+import Avataar from "@/components/lead/ui/leadPage/avataar";
 import { ReactElement } from "react";
-import Avataar from "./avataar";
 
 interface ProfileTabProps {
   avatarClass?: string;

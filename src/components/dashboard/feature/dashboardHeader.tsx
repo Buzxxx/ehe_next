@@ -39,8 +39,9 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({
                 profileNameTag="md:flex hidden"
               />
             }
-            src={"./base/profile.webp"}
+            src={img ?? "/base/profile.webp"}
             className="p-0 rounded-none mr-4"
+            username={name}
           />
         </div>
       </div>

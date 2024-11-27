@@ -27,6 +27,7 @@ import { CheckCircle, MailIcon } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/components/ui/use-toast"
 import dynamic from "next/dynamic"
+import { useLeadSave } from "../../hooks/useLeadSave"
 const ShareModal = dynamic(
   () => import("@/components/propertyPage/features/shareModal")
 )
@@ -45,47 +46,15 @@ const LeadPageHeader = ({
   const { leadProfile, setLeadProfile, isEditing, setIsEditing } =
     useLeadProfile()
   const router = useRouter()
-  const { toast } = useToast()
-  const [isSaved, setIsSaved] = useState(false)
+  const { isSaved, toggleSave } = useLeadSave(id)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false) // State for share modal
 
   const toggleShareModal = () => {
     setIsShareModalOpen(!isShareModalOpen)
   }
 
-  // Initialize isSaved state based on localStorage
-  useEffect(() => {
-    const savedLeads = JSON.parse(localStorage.getItem("savedLeads") || "[]")
-    setIsSaved(savedLeads.some((lead: any) => lead.id === id))
-  }, [id])
-
   const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile)
 
-  // Save the lead to localStorage
-  // Handle toggle save/unsave
-  const handleSaveToggle = () => {
-    const savedLeads = JSON.parse(localStorage.getItem("savedLeads") || "[]")
-
-    if (isSaved) {
-      // Unsave the lead
-      const updatedLeads = savedLeads.filter((lead: any) => lead.id !== id)
-      localStorage.setItem("savedLeads", JSON.stringify(updatedLeads))
-      setIsSaved(false)
-      toast({
-        variant: "default",
-        title: "Lead Unsaved",
-      })
-    } else {
-      // Save the lead
-      const updatedLeads = [...savedLeads, { ...leadProfile, id }]
-      localStorage.setItem("savedLeads", JSON.stringify(updatedLeads))
-      setIsSaved(true)
-      toast({
-        title: "Lead Unsaved",
-        className: "bg-green-400 text-white ",
-      })
-    }
-  }
   // Save changes and disable editing
   const handleSave = () => {
     setLeadProfile(localLeadProfile) // Commit changes to global state
@@ -135,14 +104,10 @@ const LeadPageHeader = ({
             <Share2 size={20} />
           </Button>
           <Button
-            onClick={handleSaveToggle}
-            className={`p-1 rounded-md h-fit  ${
-              isSaved
-                ? "bg-green-100 text-green-600 hover:bg-green-50"
-                : "bg-transparent text-yellow-600 hover:bg-yellow-100"
-            }`}
+            onClick={toggleSave}
+            className={`p-1 rounded-md h-fit bg-transparent text-yellow-600 hover:bg-yellow-100`}
           >
-            {isSaved ? <CheckCircle size={20} /> : <Bookmark size={20} />}
+            <Bookmark size={20} className={isSaved ? "fill-yellow-600" : ""} />
           </Button>
         </div>
       </header>
@@ -217,8 +182,12 @@ const LeadPageHeader = ({
               onClick={handleSave}
               className="h-fit bg-transparent border text-sky-600 hover:text-sky-700 py-1 border-sky-600 hover:border-sky-700 hover:bg-transparent"
             >
-              <Link href={`tel:${leadProfile.contact}`} target="_blank" className="flex gap-2 items-center">
-              <Phone /> Call
+              <Link
+                href={`tel:${leadProfile.contact}`}
+                target="_blank"
+                className="flex gap-2 items-center"
+              >
+                <Phone /> Call
               </Link>
             </Button>
             <DropdownMenu>
@@ -340,7 +309,11 @@ const LeadPageHeader = ({
           </div>
         )}
       </nav>
-      <ShareModal isOpen={isShareModalOpen} onClose={toggleShareModal} title={'Share this Lead'}/>
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={toggleShareModal}
+        title={"Share this Lead"}
+      />
     </section>
   )
 }

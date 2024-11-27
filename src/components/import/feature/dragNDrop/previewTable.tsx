@@ -44,7 +44,7 @@ const PreviewTable: React.FC<PreviewTableProps> = ({ data }) => {
           Showing {startIndex}-{endIndex} of {data.length} entries
         </p>
       </div>
-      <Table className=" md:shadow-md md:max-w-[96%] mx-auto  md:text-sm text-xs">
+      <Table className=" table-auto md:shadow-md md:max-w-[96%] mx-auto  md:text-sm text-xs">
         <TableCaption>A preview of the imported leads data.</TableCaption>
         <TableHeader>
           <TableRow>
