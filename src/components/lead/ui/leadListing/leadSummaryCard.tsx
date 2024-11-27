@@ -27,7 +27,7 @@ const LeadSummaryCard = ({
           ? "border-blue-500 bg-blue-50 shadow-md"
           : "border-gray-200 bg-white"
       )}
-      onClick={onClick} // Handle card click
+      onClick={onClick}
     >
       <CardHeader className="sm:p-6 p-2 md:pb-0">
         <CardTitle className="flex justify-between font-medium text-sm sm:text-lg ">

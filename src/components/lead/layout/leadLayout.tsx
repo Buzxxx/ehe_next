@@ -24,7 +24,7 @@ const LeadLayout = () => {
 
   return (
     <>
-      <LeadSummarySection leadsResponse={leadsResponse} setIsLoading={setIsLoading} />
+      <LeadSummarySection setIsLoading={setIsLoading} />
 
       <TopBar
         LeadsResponse={leadsResponse}

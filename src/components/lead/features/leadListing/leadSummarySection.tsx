@@ -4,9 +4,12 @@
  */
 
 import LeadSummaryCard from "../../ui/leadListing/leadSummaryCard"
-import { get_total_leads, LeadsResponse } from "../leadObject"
+import {
+  get_default_filterBy_obj,
+  filter_multiselect_change_controller,
+} from "../filterObject"
 import { useSearchParams, useRouter } from "next/navigation"
-import React, { SetStateAction, useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 
 const statuses = [
   { title: "New Leads", value: 20, key: 1 },
@@ -15,55 +18,49 @@ const statuses = [
   { title: "Archived", value: 5, key: 4 },
 ]
 
-const parseSelectedStatuses = (filterBy: string | null): string[] => {
-  if (filterBy?.startsWith("status:")) {
-    const statusString = filterBy.replace("status:", "").replace(/[\[\]]/g, "") // Remove 'status:' and brackets
-    return statusString.split(",").filter(Boolean) // Split into array
-  }
-  return []
-}
-
 const LeadSummarySection = ({
-  leadsResponse,
   setIsLoading,
 }: {
-  leadsResponse: LeadsResponse
-  setIsLoading: React.Dispatch<SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(() =>
-    parseSelectedStatuses(searchParams.get("filter_by"))
-  )
+  // Extract the initial statuses from the URL
+  const [selectedStatuses, setSelectedStatuses] = useState<number[]>(() => {
+    const filterByObj = get_default_filterBy_obj(
+      new URLSearchParams(searchParams.toString())
+    )
+    return filterByObj["status"] || []
+  })
 
-  // Sync selectedStatuses with the URL on mount and when searchParams change
+  // Sync selectedStatuses with the URL on searchParams change
   useEffect(() => {
-    const filterBy = searchParams.get("filter_by")
-    const statusesFromUrl = parseSelectedStatuses(filterBy)
-    setSelectedStatuses(statusesFromUrl)
+    const filterByObj = get_default_filterBy_obj(
+      new URLSearchParams(searchParams.toString())
+    )
+    setSelectedStatuses(filterByObj["status"] || [])
   }, [searchParams])
 
   // Handle card clicks with instant UI update
-  const handleCardClick = (status: string) => {
+  const handleCardClick = (status: number) => {
     setIsLoading(true)
+
+    // Add or remove the selected status
     const newStatuses = selectedStatuses.includes(status)
       ? selectedStatuses.filter((s) => s !== status) // Remove if already selected
       : [...selectedStatuses, status] // Add if not selected
 
     setSelectedStatuses(newStatuses) // Update state
 
-    // Construct the filter_by query value
-    const filterByValue = `status:[${newStatuses.join(",")}]`
+    // Update the URL
+    const filterByObj = { status: newStatuses }
+    const newParams = new URLSearchParams(searchParams.toString()) // Create a mutable copy of the params
+    filter_multiselect_change_controller(newParams, filterByObj)
 
-    const params = new URLSearchParams(searchParams.toString())
-    params.set("filter_by", filterByValue) // Set updated filter_by value
-    params.set("page", "1") // Reset to page 1 on filter change
-
-    router.push(`?${params.toString()}`) // Update the URL
+    // Use router to push updated URL
+    router.push(`?${newParams.toString()}`)
   }
-
-  const totalLeads = get_total_leads(leadsResponse)
 
   return (
     <div className="flex flex-wrap justify-between gap-4 w-full">
@@ -72,8 +69,8 @@ const LeadSummarySection = ({
           key={key}
           title={title}
           value={value}
-          isSelected={selectedStatuses.includes(key.toString())}
-          onClick={() => handleCardClick(key.toString())}
+          isSelected={selectedStatuses.includes(key)}
+          onClick={() => handleCardClick(key)}
         />
       ))}
     </div>

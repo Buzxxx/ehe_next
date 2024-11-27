@@ -44,7 +44,6 @@ const LeadList: React.FC<LeadListProps> = React.memo(
 
     // Custom hook to fetch leads with caching
     const { leads, fetchLeads, isFetching } = useFetchLeads()
-    console.log(leads)
 
     // Fetch leads whenever URLParams or debouncedQueryParams change
     useEffect(() => {
