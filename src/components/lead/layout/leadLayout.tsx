@@ -23,7 +23,7 @@ const LeadLayout = () => {
   const [viewMode, setViewMode] = useState<"card" | "row">("card") // State to determine how the leads are displayed in the LeadList component.
 
   return (
-    <>
+    <div className="px-1 md:px-0">
       <LeadSummarySection setIsLoading={setIsLoading} />
 
       <TopBar
@@ -38,7 +38,7 @@ const LeadLayout = () => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
-    </>
+    </div>
   )
 }
 
