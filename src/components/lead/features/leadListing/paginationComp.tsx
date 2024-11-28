@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from "react"
+/**
+ * @path src/components/lead/features/leadListing/paginationComp.tsx
+ */
+
+import React, { useState, useEffect, SetStateAction } from "react"
 import {
   Pagination,
   PaginationContent,
@@ -14,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown, ChevronUp } from "@/components/ui/icons"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 type PaginationCompProps = {
   className?: string
@@ -22,6 +26,7 @@ type PaginationCompProps = {
   initialPage?: number
   perPage: number
   onPageChange?: (page: number) => void
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>
 }
 
 const PaginationComp = ({
@@ -30,43 +35,42 @@ const PaginationComp = ({
   initialPage = 1,
   perPage,
   onPageChange,
+  setIsLoading,
 }: PaginationCompProps) => {
-  const [activePage, setActivePage] = useState(initialPage)
-  const [itemsPerPage, setItemsPerPage] = useState(perPage) // State for items per page
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const perPageOptions = [10, 20, 50, 100, 200]
 
-  const handlePageChange = (page: number) => {
-    setActivePage(page)
-    updateUrlParams(page, itemsPerPage)
-    if (onPageChange) onPageChange(page)
-  }
-
-  const handlePerPageChange = (perPage: number) => {
-    setItemsPerPage(perPage)
-    updateUrlParams(activePage, perPage)
-  }
+  // Get initial values from URL or use defaults
+  const activePage = parseInt(searchParams.get("page") || `${initialPage}`, 10)
+  const itemsPerPage = parseInt(
+    searchParams.get("per_page") || `${perPage}`,
+    10
+  )
 
   const updateUrlParams = (page: number, perPage: number) => {
-    const params = new URLSearchParams(window.location.search)
+    const params = new URLSearchParams(searchParams.toString())
     params.set("page", page.toString())
     params.set("per_page", perPage.toString())
     router.push(`?${params.toString()}`)
   }
 
-  const otherPages = Array.from({ length: totalPages }, (_, i) => i + 1).filter(
-    (page) => page !== activePage
-  )
+  const handlePageChange = (page: number) => {
+    setIsLoading(true)
+    updateUrlParams(page, itemsPerPage)
+    if (onPageChange) onPageChange(page)
+  }
 
-  useEffect(() => {
-    setActivePage(initialPage)
-  }, [initialPage])
+  const handlePerPageChange = (perPage: number) => {
+    setIsLoading(true)
+    updateUrlParams(1, perPage) // Reset to page 1 when changing items per page
+  }
 
   return (
     <Pagination
-      className={` items-center m-0 w-0 md:w-fit z-20 bg-white hidden md:flex ${className}`}
+      className={`items-center m-0 w-0 md:w-fit z-20 px-2 py-1 border mr-2 rounded-3xl bg-white hidden md:flex ${className}`}
     >
       <h2 className="text-sm mr-3 text-gray-600">Per Page:</h2>
       <PaginationContent>
@@ -107,6 +111,12 @@ const PaginationComp = ({
             onClick={() => handlePageChange(Math.max(activePage - 1, 1))}
             className="h-fit py-1 text-gray-700 hover:text-sky-600 hover:bg-sky-100/50"
           />
+        </PaginationItem>
+
+        <PaginationItem className="w-28 mx-auto">
+          <span className="mx-2 text-gray-700 text-sm">
+            Page {activePage} of {totalPages}
+          </span>
         </PaginationItem>
 
         <PaginationItem>

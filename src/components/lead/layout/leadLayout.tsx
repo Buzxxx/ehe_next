@@ -34,6 +34,7 @@ const LeadLayout = () => {
         viewMode={viewMode}
         setViewMode={setViewMode}
         setShowReassignModal={setShowReassignModal}
+        setIsLoading={setIsLoading}
       />
       <LeadList
         leadsResponse={leadsResponse}
