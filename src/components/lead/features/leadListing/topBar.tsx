@@ -3,7 +3,7 @@
  * @description TopBar component for the lead listing page
  */
 
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
   Menubar,
@@ -36,12 +36,14 @@ interface TopBarProps {
   LeadsResponse: LeadsResponse
   viewMode: "card" | "row" // View mode prop
   setViewMode: React.Dispatch<React.SetStateAction<"card" | "row">> // Setter for view mode
+  setShowReassignModal: React.Dispatch<SetStateAction<boolean>>
 }
 
 const TopBar: React.FC<TopBarProps> = ({
   LeadsResponse,
   viewMode,
   setViewMode,
+  setShowReassignModal,
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false)
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
@@ -52,15 +54,8 @@ const TopBar: React.FC<TopBarProps> = ({
   const selectedCount = get_selected_leads_count(LeadsResponse)
 
   const handleReassign = () => {
-    setModalLoading(true)
-    try {
-      const selectedLeadIds = selectedLeads.join(",")
-      router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setModalLoading(false)
-    }
+    console.log(selectedLeads)
+    setShowReassignModal(() => true)
   }
 
   return (
@@ -180,7 +175,7 @@ const TopBar: React.FC<TopBarProps> = ({
               onClick={() => setSearchModalVisible(false)}
               className="text-gray-500 hover:text-gray-800"
             >
-              <X/>
+              <X />
             </button>
           </div>
           <Input placeholder="Type to search..." autoFocus />

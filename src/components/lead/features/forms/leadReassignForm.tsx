@@ -1,4 +1,6 @@
-"use client"
+/**
+ * @path src/components/lead/features/forms/leadReassignForm.tsx
+ */
 
 import CustomFormField from "@/components/dashboard/ui/customFormField"
 import { LeadReassignFormSchema } from "@/lib/validation"
@@ -10,21 +12,25 @@ import { Form } from "@/components/ui/form"
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
 import { Button } from "@/components/ui/button"
 import { SelectItem } from "@/components/ui/select"
-import { useRouter } from "next/navigation"
+import { useToast } from "@/components/ui/use-toast"
 
 interface LeadReassignFormProps {
   leadIds: number[]
+  setShowLeadReassignModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds })=> {
-  const router = useRouter()
+const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds, setShowLeadReassignModal })=> {
   const form = useForm<z.infer<typeof LeadReassignFormSchema>>({
     resolver: zodResolver(LeadReassignFormSchema),
   })
-
-
+  const {toast} = useToast()
 
   const onSubmit = async (data: z.infer<typeof LeadReassignFormSchema>) => {
     console.log(data, leadIds)
+    setShowLeadReassignModal(() => false)
+    toast({
+      title: `Lead: ${leadIds} reassigned to ${data.assignTo}`,
+      className: 'bg-green-400 text-white'
+    })
   }
 
   const users = Array.from({ length: 5 }, (_, i) => `User ${i + 1}`)
@@ -49,7 +55,7 @@ const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds })=> {
         <div className="flex gap-2 justify-end">
           <Button
             type="reset"
-            onClick={() => router.back()}
+            onClick={() => setShowLeadReassignModal(() => false)}
             className="bg-slate-50 border border-slate-300 hover:border-slate-400 text-slate-700 hover:text-slate-900 "
           >
             Cancel
