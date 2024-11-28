@@ -17,7 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import DialogItem from "../modal"
+import DialogItem from "../dropDownModal"
 import LeadCallbackForm from "../../features/leadPage/leadCallbackForm"
 import LeadMeetingForm from "../../features/leadPage/leadMeetingForm"
 import React from "react"

@@ -3,7 +3,7 @@
  * @description TopBar component for the lead listing page
  */
 
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
   Menubar,
@@ -20,8 +20,8 @@ import {
   List,
   BetweenHorizontalEnd,
   Search,
+  X,
 } from "@/components/ui/icons"
-import { handleToggle } from "@/utility/toggle"
 import {
   LeadsResponse,
   get_total_leads,
@@ -29,7 +29,6 @@ import {
 } from "@/components/lead/features/leadObject"
 import { Button } from "@/components/ui/button"
 import LoadingSpinner from "@/components/contracts/ui/loadingSpinner"
-import dynamic from "next/dynamic"
 import { Input } from "@/components/ui/input"
 import FilterModal from "./filterModal"
 
@@ -37,35 +36,31 @@ interface TopBarProps {
   LeadsResponse: LeadsResponse
   viewMode: "card" | "row" // View mode prop
   setViewMode: React.Dispatch<React.SetStateAction<"card" | "row">> // Setter for view mode
+  setShowReassignModal: React.Dispatch<SetStateAction<boolean>>
 }
 
 const TopBar: React.FC<TopBarProps> = ({
   LeadsResponse,
   viewMode,
   setViewMode,
+  setShowReassignModal,
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false)
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
   const [modalLoading, setModalLoading] = useState(false)
+  const [searchModalVisible, setSearchModalVisible] = useState(false)
   const router = useRouter()
   const totalLeads = get_total_leads(LeadsResponse)
   const selectedCount = get_selected_leads_count(LeadsResponse)
 
   const handleReassign = () => {
-    setModalLoading(true)
-    try {
-      const selectedLeadIds = selectedLeads.join(",")
-      router.push(`/lead/leadReassignModal/?leads=${selectedLeadIds}`)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setModalLoading(false)
-    }
+    console.log(selectedLeads)
+    setShowReassignModal(() => true)
   }
 
   return (
     <div className="topbar-wrapper overflow-x-clip">
-      <div className="mt-4 relative bg-white border border-slate-200 shadow-sm rounded-lg md:p-3 p-2 z-40 flex items-center justify-between ">
+      <div className="mt-4 relative bg-white border border-slate-200 shadow-sm rounded-lg md:p-3 p-2 z-40 flex items-center justify-between">
         <div className="flex items-center justify-between gap-2">
           <Menubar>
             <MenubarMenu>
@@ -84,7 +79,18 @@ const TopBar: React.FC<TopBarProps> = ({
             </MenubarMenu>
           </Menubar>
 
-          <div className="relative">
+          {/* Mobile Search Button */}
+          <div className="relative md:hidden">
+            <button
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg shadow-sm text-gray-700 hover:bg-gray-200 transition"
+              onClick={() => setSearchModalVisible(true)}
+            >
+              <Search size={20} color="gray" />
+            </button>
+          </div>
+
+          {/* Desktop Search Input */}
+          <div className="relative hidden md:block">
             <Input placeholder="Search" />
             <Search
               color="gray"
@@ -92,12 +98,9 @@ const TopBar: React.FC<TopBarProps> = ({
             />
           </div>
         </div>
-        {/* Action Dropdown */}
 
-        {/* View Toggle, Badge, Pagination, and Filter */}
         <div className="flex items-center md:gap-4 gap-2 ml-2">
-          {/* View Mode Toggle */}
-          <div className=" items-center bg-gray-200 rounded-full p-1 shadow-inner hidden md:flex">
+          <div className="items-center bg-gray-200 rounded-full p-1 shadow-inner hidden md:flex">
             <Button
               className={`rounded-full p-2 py-1 h-fit w-fit transition ${
                 viewMode === "card"
@@ -120,11 +123,10 @@ const TopBar: React.FC<TopBarProps> = ({
             </Button>
           </div>
 
-          {/* Leads Badge */}
           {(selectedCount > 0 || totalLeads > 0) && (
             <Badge
               variant={"default"}
-              className="bg-sky-100 text-sky-700 rounded-lg px-3 py-1 md:text-sm text-xs"
+              className="bg-sky-100 text-sky-700 rounded-lg px-3 py-1 md:text-sm hidden md:flex"
             >
               {selectedCount > 0
                 ? `${selectedCount} Selected`
@@ -132,14 +134,12 @@ const TopBar: React.FC<TopBarProps> = ({
             </Badge>
           )}
 
-          {/* Pagination */}
           <PaginationComp
             perPage={20}
             totalPages={50}
             className="flex-shrink-0 fixed bottom-4 right-4"
           />
 
-          {/* Filter Button */}
           <button
             onClick={() => setFilterVisible((prev) => !prev)}
             className={`flex items-center gap-1 md:mr-4 rounded-lg shadow-sm transition bg-none bg-transparent h-fit w-fit `}
@@ -151,8 +151,6 @@ const TopBar: React.FC<TopBarProps> = ({
           </button>
         </div>
 
-        {/* Filter Form Modal */}
-
         <FilterModal
           className={
             filterVisible
@@ -162,10 +160,25 @@ const TopBar: React.FC<TopBarProps> = ({
         />
       </div>
 
-      {/* Loading Modal */}
       {modalLoading && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-50">
           <LoadingSpinner />
+        </div>
+      )}
+
+      {/* Full-Page Search Modal */}
+      {searchModalVisible && (
+        <div className="fixed inset-0 z-50 bg-white flex flex-col p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold">Search</h3>
+            <button
+              onClick={() => setSearchModalVisible(false)}
+              className="text-gray-500 hover:text-gray-800"
+            >
+              <X />
+            </button>
+          </div>
+          <Input placeholder="Type to search..." autoFocus />
         </div>
       )}
     </div>

@@ -1,9 +1,14 @@
+/**
+ * @path src/components/lead/features/leadListing/leadList.tsx
+ */
+
+
 import React, {
   useEffect,
   useState,
-  useCallback,
   useMemo,
   SetStateAction,
+  useCallback,
 } from "react"
 import { useSearchParams } from "next/navigation"
 import { Spinner } from "@/components/ui/icons"
@@ -21,7 +26,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import useDebounce from "@/hooks/useDebounce" // Custom debounce hook
 import useFetchLeads from "@/components/lead/hooks/useFetchLeads" // Custom hook for fetching leads
@@ -32,11 +36,20 @@ interface LeadListProps {
   viewMode: "card" | "row"
   isLoading: boolean
   setIsLoading: React.Dispatch<SetStateAction<boolean>>
+  setSelectedLeads: React.Dispatch<SetStateAction<number[]>>
+  selectedLeads: number[]
 }
 
 const LeadList: React.FC<LeadListProps> = React.memo(
-  ({ leadsResponse = DefaultLeadsResponse, setLeadsResponse, viewMode, isLoading, setIsLoading }) => {
-    const [selectAll, setSelectAll] = useState(false)
+  ({
+    leadsResponse = DefaultLeadsResponse,
+    setLeadsResponse,
+    viewMode,
+    isLoading,
+    setIsLoading,
+    setSelectedLeads,
+    selectedLeads,
+  }) => {
     const [queryParams, setQueryParams] = useState("")
     const URLParams = useSearchParams()
     const debouncedQueryParams = useDebounce(queryParams, 300) // Debounce query params
@@ -65,11 +78,33 @@ const LeadList: React.FC<LeadListProps> = React.memo(
       }
 
       loadLeads()
-    }, [debouncedQueryParams, URLParams, fetchLeads, setLeadsResponse, toast])
+    }, [debouncedQueryParams, URLParams, fetchLeads, setLeadsResponse, toast, setIsLoading])
 
-    const handleToggleLeadSelection = useCallback((index: number) => {
-      console.log(index)
-    }, [])
+    const handleToggleLeadSelection = useCallback((id: number) => {
+      setSelectedLeads((prevSelected) =>
+        prevSelected.includes(id)
+          ? prevSelected.filter((leadId) => leadId !== id)
+          : [...prevSelected, id]
+      )
+    }, [setSelectedLeads])
+
+    const handleSelectAll = (checked: boolean) => {
+      if (checked) {
+        // Select all lead IDs
+        const allLeadIds = leads.map((lead) => lead.id)
+        setSelectedLeads(allLeadIds)
+      } else {
+        // Deselect all leads
+        setSelectedLeads([])
+      }
+    }
+
+    const selectAll = useMemo(() => {
+      return (
+        leads.length > 0 &&
+        leads.every((lead) => selectedLeads.includes(lead.id))
+      )
+    }, [leads, selectedLeads])
 
     const hasLeads = useMemo(() => leads?.length > 0, [leads])
 
@@ -90,7 +125,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                       idx={index}
                       lead={lead}
                       isSelected={lead.isSelected}
-                      onToggle={() => handleToggleLeadSelection(index)}
+                      onToggle={() => handleToggleLeadSelection(lead.id)}
                     />
                   ))
                 ) : (
@@ -105,11 +140,11 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[50px] p-2">
-                        <Checkbox
+                        <input
+                          type="checkbox"
+                          className="peer h-4 w-4 shrink-0 rounded-md border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text- checked:bg-primary"
                           checked={selectAll}
-                          onChange={(e) =>
-                            setSelectAll((e.target as HTMLInputElement).checked)
-                          }
+                          onChange={(e) => handleSelectAll(e.target.checked)}
                         />
                       </TableHead>
                       <TableHead>Lead</TableHead>
@@ -120,12 +155,12 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                   </TableHeader>
                   <TableBody>
                     {hasLeads ? (
-                      leads.map((lead, index) => (
+                      leads.map((lead) => (
                         <LeadRow
                           key={lead.id}
                           lead={lead}
-                          isSelected={lead.isSelected}
-                          onToggle={() => handleToggleLeadSelection(index)}
+                          isSelected={selectedLeads.includes(lead.id)}
+                          onToggle={handleToggleLeadSelection}
                         />
                       ))
                     ) : (

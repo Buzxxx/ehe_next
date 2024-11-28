@@ -1,3 +1,7 @@
+/**
+ * @path src/components/lead/ui/leadListing/leadRow.tsx
+ */
+
 import React from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { TableCell, TableRow } from "@/components/ui/table"
@@ -12,7 +16,7 @@ import { useLeadSave } from "../../hooks/useLeadSave"
 interface LeadRowProps {
   lead: Lead
   isSelected: boolean
-  onToggle: () => void
+  onToggle: (id: number) => void
 }
 
 const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
@@ -21,7 +25,12 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
     <TableRow className="hover:bg-gray-50 transition-colors">
       {/* Selection Checkbox */}
       <TableCell className="w-[50px] p-2">
-        <Checkbox checked={isSelected} onChange={onToggle} />
+        <Checkbox
+          checked={isSelected}
+          onClick={() => {
+            onToggle(lead.id)
+          }}
+        />
       </TableCell>
 
       {/* Lead Name */}

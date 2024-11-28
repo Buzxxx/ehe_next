@@ -3,13 +3,19 @@
  * @description LeadSummarySection component for the lead listing page
  */
 
+import React, { useState, useEffect } from "react"
 import LeadSummaryCard from "../../ui/leadListing/leadSummaryCard"
 import {
   get_default_filterBy_obj,
   filter_multiselect_change_controller,
 } from "../filterObject"
 import { useSearchParams, useRouter } from "next/navigation"
-import React, { useState, useEffect } from "react"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const statuses = [
   { title: "New Leads", value: 20, key: 1 },
@@ -63,17 +69,35 @@ const LeadSummarySection = ({
   }
 
   return (
-    <div className="flex flex-wrap justify-between gap-4 w-full">
-      {statuses.map(({ title, value, key }) => (
-        <LeadSummaryCard
-          key={key}
-          title={title}
-          value={value}
-          isSelected={selectedStatuses.includes(key)}
-          onClick={() => handleCardClick(key)}
-        />
-      ))}
-    </div>
+    <>
+      <Accordion type="single" collapsible className="md:hidden">
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="pt-0">Leads Summary</AccordionTrigger>
+          <AccordionContent className="flex gap-1 w-full md:hidden">
+            {statuses.map(({ title, value, key }) => (
+              <LeadSummaryCard
+                key={key}
+                title={title}
+                value={value}
+                isSelected={selectedStatuses.includes(key)}
+                onClick={() => handleCardClick(key)}
+              />
+            ))}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      <div className="md:flex hidden flex-wrap justify-between gap-2 w-full">
+        {statuses.map(({ title, value, key }) => (
+          <LeadSummaryCard
+            key={key}
+            title={title}
+            value={value}
+            isSelected={selectedStatuses.includes(key)}
+            onClick={() => handleCardClick(key)}
+          />
+        ))}
+      </div>
+    </>
   )
 }
 
