@@ -3,9 +3,10 @@
  */
 
 import Avataar from "@/components/dashboard/ui/avataar"
-import EntityCard from "../ui/entityCard"
+import EntityCard, { EntityCardSkeleton } from "../ui/entityCard"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
+import { Suspense } from "react"
 
 export default function AccountLayout() {
   const businesses = [
@@ -43,7 +44,9 @@ export default function AccountLayout() {
             <h2 className="md:text-2xl text-xl font-semibold text-gray-800 leading-6">
               Ehe_Industries
             </h2>
-            <p className="text-gray-500 text-sm md:text-base">Welcome to the admin console.</p>
+            <p className="text-gray-500 text-sm md:text-base">
+              Welcome to the admin console.
+            </p>
           </div>
         </div>
         <Button className="bg-sky-500 hover:bg-sky-600">
@@ -53,13 +56,15 @@ export default function AccountLayout() {
       </div>
       <div className="grid md:grid-cols-3 px-2 gap-2">
         {businesses.map((business) => (
-          <EntityCard
-            key={business.id}
-            name={business.name}
-            description={business.description}
-            totalEmployees={business.totalEmployees}
-            activeEmployees={business.activeEmployees}
-          />
+          <Suspense key={business.id} fallback={<EntityCardSkeleton />}>
+            <EntityCard
+              key={business.id}
+              name={business.name}
+              description={business.description}
+              totalEmployees={business.totalEmployees}
+              activeEmployees={business.activeEmployees}
+            />
+          </Suspense>
         ))}
       </div>
     </>

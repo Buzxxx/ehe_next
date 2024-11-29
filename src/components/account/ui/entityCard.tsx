@@ -1,3 +1,8 @@
+/**
+ * @path src/components/account/ui/entityCard.tsx
+ */
+
+import React from "react"
 import {
   Card,
   CardContent,
@@ -6,7 +11,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link"
-import React from "react"
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 const EntityCard = ({
   name,
@@ -78,3 +84,45 @@ const EntityCard = ({
 }
 
 export default EntityCard
+
+
+
+export const EntityCardSkeleton = () => {
+  return (
+    <Card className="backdrop-blur-xl bg-gray-50">
+      {/* Header */}
+      <CardHeader className="flex-row justify-between items-start mb-2">
+        <div className="flex flex-col text-balance flex-1">
+          <Skeleton className="h-6 md:h-8 w-3/4 mb-2" />
+          <Skeleton className="h-4 md:h-5 w-2/3" />
+        </div>
+        <Skeleton className="h-6 md:h-8 w-16" />
+      </CardHeader>
+
+      {/* Content */}
+      <CardContent className="flex justify-between divide-x divide-gray-200 gap-2">
+        <div className="flex flex-col items-center justify-center flex-1 ">
+          <Skeleton className="h-4 md:h-5 w-12 mb-1" />
+          <Skeleton className="h-6 md:h-8 w-8" />
+        </div>
+        <div className="flex flex-col items-center justify-center flex-1 ">
+          <Skeleton className="h-4 md:h-5 w-12 mb-1" />
+          <Skeleton className="h-6 md:h-8 w-8" />
+        </div>
+        <div className="flex flex-col items-center justify-center flex-1 ">
+          <Skeleton className="h-4 md:h-5 w-12 mb-1" />
+          <Skeleton className="h-6 md:h-8 w-8" />
+        </div>
+      </CardContent>
+
+      {/* Footer */}
+      <CardFooter className="pt-4 flex-col items-start gap-4">
+        <Skeleton className="h-5 md:h-6 w-1/3" />
+        <Skeleton className="h-5 md:h-6 w-1/3" />
+        <Skeleton className="h-5 md:h-6 w-1/3" />
+      </CardFooter>
+    </Card>
+  )
+}
+
+

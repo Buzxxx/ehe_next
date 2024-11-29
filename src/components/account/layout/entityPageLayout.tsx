@@ -3,9 +3,7 @@
  */
 
 import Avataar from "@/components/dashboard/ui/avataar"
-import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/dataTable"
-import { Plus } from "lucide-react"
 import { Employee, columns } from "../feature/employeeColumn"
 
 export default function EntityPageLayout({entity} : {entity:string}) {
