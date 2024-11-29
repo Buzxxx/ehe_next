@@ -4,7 +4,6 @@
  */
 
 import { SetStateAction, useState } from "react"
-import { useRouter } from "next/navigation"
 import {
   Menubar,
   MenubarContent,
@@ -14,7 +13,7 @@ import {
 } from "@/components/ui/menubar"
 import ChevronDown from "@/components/ui/icons/chevronDown"
 import { Badge } from "@/components/ui/badge"
-import PaginationComp from "@/components/ui/paginationComp"
+import PaginationComp from "@/components/lead/features/leadListing/paginationComp"
 import {
   Filter,
   List,
@@ -28,7 +27,6 @@ import {
   get_selected_leads_count,
 } from "@/components/lead/features/leadObject"
 import { Button } from "@/components/ui/button"
-import LoadingSpinner from "@/components/contracts/ui/loadingSpinner"
 import { Input } from "@/components/ui/input"
 import FilterModal from "./filterModal"
 
@@ -37,6 +35,7 @@ interface TopBarProps {
   viewMode: "card" | "row" // View mode prop
   setViewMode: React.Dispatch<React.SetStateAction<"card" | "row">> // Setter for view mode
   setShowReassignModal: React.Dispatch<SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -44,17 +43,14 @@ const TopBar: React.FC<TopBarProps> = ({
   viewMode,
   setViewMode,
   setShowReassignModal,
+  setIsLoading
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false)
-  const [selectedLeads, setSelectedLeads] = useState<number[]>([])
-  const [modalLoading, setModalLoading] = useState(false)
   const [searchModalVisible, setSearchModalVisible] = useState(false)
-  const router = useRouter()
   const totalLeads = get_total_leads(LeadsResponse)
   const selectedCount = get_selected_leads_count(LeadsResponse)
 
   const handleReassign = () => {
-    console.log(selectedLeads)
     setShowReassignModal(() => true)
   }
 
@@ -138,6 +134,7 @@ const TopBar: React.FC<TopBarProps> = ({
             perPage={20}
             totalPages={50}
             className="flex-shrink-0 fixed bottom-4 right-4"
+            setIsLoading={setIsLoading}
           />
 
           <button
@@ -159,12 +156,6 @@ const TopBar: React.FC<TopBarProps> = ({
           }
         />
       </div>
-
-      {modalLoading && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-50">
-          <LoadingSpinner />
-        </div>
-      )}
 
       {/* Full-Page Search Modal */}
       {searchModalVisible && (
