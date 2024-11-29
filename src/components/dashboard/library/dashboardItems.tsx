@@ -27,7 +27,7 @@ const dashboardItems = [
     subItems: [],
   },
   {
-    title: "Workforce",
+    title: "Teams",
     icon: <Group size={20} />,
     subItems: [
       { name: "All Users", route: "/workforce" },
@@ -38,6 +38,7 @@ const dashboardItems = [
     title: "Settings",
     icon: <Settings size={20} />,
     subItems: [
+      {name: "Account", route: "/account"},
       { name: "Change Password", route: "/auth/resetPassword" },
       { name: "Logout", route: "/auth/login" },
     ],

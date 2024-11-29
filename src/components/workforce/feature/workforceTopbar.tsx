@@ -8,7 +8,7 @@ import { Filter, Plus } from "@/components/ui/icons"
 
 const WorkplaceTopbar = () => {
   return (
-    <div className="flex justify-between items-center  pb-4 pt-2 px-2 md:px-0">
+    <div className="flex justify-between items-center pb-4 pt-2 px-2 md:px-0 border-b">
       <div className="flex gap-2 items-center md:flex-row flex-col">
         <h4 className="text-xl font-medium">Teams </h4>
         <Badge className="bg-orange-600/70 hover:bg-orange-500/70">
