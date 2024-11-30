@@ -20,7 +20,7 @@ export const WorkCard = ({
   <TableRow className="border-0 py-0 h-fit whitespace-nowrap">
     <TableCell className="min-w-[200px]">
       <Link
-        href={`/workforce/${1}`}
+        href={`/teams/${1}`}
         className="flex gap-2 items-center flex-nowrap truncate"
       >
         <Input type="checkbox" className="h-fit w-fit shrink-0" />

@@ -1,3 +1,7 @@
+// src/components/DataTable.tsx
+
+'use client'
+
 import * as React from "react"
 import {
   ColumnDef,
@@ -23,18 +27,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./button"
-import ActionCell from "../workforce/ui/actionCell"
-import { WorkforceUser } from "../workforce/ui/tableColumns"
 import ChevronDown from "./icons/chevronDown"
 import { Separator } from "./separator"
 
-interface DataTableProps {
-  columns: ColumnDef<WorkforceUser>[]
-  data: WorkforceUser[]
-  onOpenModal: (worker: WorkforceUser) => void
+// Generic Props
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData>[]
+  data: TData[]
+  onOpenModal?: (row: TData) => void // Optional modal handler
 }
 
-export function DataTable({ columns, data, onOpenModal }: DataTableProps) {
+export function DataTable<TData>({
+  columns,
+  data,
+  onOpenModal,
+}: DataTableProps<TData>) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
@@ -129,12 +136,13 @@ export function DataTable({ columns, data, onOpenModal }: DataTableProps) {
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {cell.column.id === "actions" ? (
-                      <ActionCell
-                        workerStatus={row.original.status}
-                        userId={row.original.userId}
-                        onOpenModal={() => onOpenModal(row.original)}
-                      />
+                    {cell.column.id === "actions" && onOpenModal ? (
+                      <button
+                        onClick={() => onOpenModal(row.original)}
+                        className="text-blue-600 underline"
+                      >
+                        Action
+                      </button>
                     ) : (
                       flexRender(cell.column.columnDef.cell, cell.getContext())
                     )}
