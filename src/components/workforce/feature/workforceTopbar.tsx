@@ -23,10 +23,7 @@ const WorkplaceTopbar = () => {
           <Filter strokeWidth="1.5" />
           <p className="hidden md:block">Filters</p>
         </Button>
-        <Button className="bg-sky-600 hover:bg-sky-500">
-          <Plus />
-          Create Employee
-        </Button>
+       
       </div>
     </div>
   )

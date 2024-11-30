@@ -5,8 +5,8 @@ import {
   PersonIcon,
   CheckListIcon,
   Work,
-} from "@/components/ui/icons";
-import Home from "@/components/ui/icons/home";
+} from "@/components/ui/icons"
+import Home from "@/components/ui/icons/home"
 
 const dashboardItems = [
   { title: "Home", icon: <Home size={20} />, subItems: [] },
@@ -29,20 +29,17 @@ const dashboardItems = [
   {
     title: "Teams",
     icon: <Group size={20} />,
-    subItems: [
-      { name: "All Users", route: "/workforce" },
-      { name: "Create User", route: "/workforce/create" },
-    ],
+    subItems: [],
   },
   {
     title: "Settings",
     icon: <Settings size={20} />,
     subItems: [
-      {name: "Account", route: "/account"},
+      { name: "Account", route: "/account" },
       { name: "Change Password", route: "/auth/resetPassword" },
       { name: "Logout", route: "/auth/login" },
     ],
   },
-];
+]
 
-export default dashboardItems;
+export default dashboardItems
