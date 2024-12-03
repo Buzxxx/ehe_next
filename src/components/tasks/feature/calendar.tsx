@@ -1,5 +1,9 @@
-// components/Calendar.js
+/**
+ * @path src/components/tasks/feature/calendar.tsx
+ */
+
 "use client"
+
 import React, { useState } from "react"
 import { format, addMonths, subMonths, addWeeks, subWeeks } from "date-fns"
 import MonthView from "../ui/monthView"
@@ -12,13 +16,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 export default function Calendar() {
-  const [view, setView] = useState("month")
+  const [view, setView] = useState("week")
   const [currentDate, setCurrentDate] = useState(new Date())
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [events, setEvents] = useState(initialEvents)
@@ -55,6 +58,7 @@ export default function Calendar() {
 
   // Opens the modal with default date/time from clicked slot
   const handleSlotClick = (dateTime: Date) => {
+    console.log('first')
     setSelectedDateTime(dateTime)
     setIsModalOpen(true)
   }
@@ -119,7 +123,7 @@ export default function Calendar() {
           >
             Week
           </Button>
-          <Button
+          {/* <Button
             onClick={() => setView("month")}
             className={`px-3 py-1 rounded-3xl ${
               view === "month"
@@ -128,7 +132,7 @@ export default function Calendar() {
             }`}
           >
             Month
-          </Button>
+          </Button> */}
         </div>
 
         <DropdownMenu>
@@ -150,13 +154,13 @@ export default function Calendar() {
         </DropdownMenu>
       </header>
       <main>
-        {view === "month" && (
+        {/* {view === "month" && (
           <MonthView
             currentDate={currentDate}
             events={events}
             onSlotClick={handleSlotClick} // Pass the slot click handler
           />
-        )}
+        )} */}
         {view === "week" && (
           <WeekView
             currentDate={currentDate}
@@ -172,13 +176,7 @@ export default function Calendar() {
           />
         )}
       </main>
-      {/* Event Modal */}
-      <EventModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSaveEvent} // Save event to events array
-        defaultDateTime={selectedDateTime} // Pass selected date as default
-      />
+    
     </>
   )
 }
