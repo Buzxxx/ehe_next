@@ -2,7 +2,6 @@
  * @path src/components/tasks/ui/createEventModal.tsx
  */
 
-
 "use client"
 import React, { useEffect, useState } from "react"
 import {
@@ -33,14 +32,14 @@ const eventSchema = z
     title: z.string().min(2, "Title is too short").max(50, "Title is too long"),
     description: z.string().optional(),
     date: z.string().nonempty("Date is required"),
-    startTime: z.string().nonempty("Start time is required"),
-    endTime: z.string().nonempty("End time is required"),
+    start: z.string().nonempty("Start time is required"),
+    end: z.string().nonempty("End time is required"),
     teamMembers: z.array(z.string()).optional(),
   })
   .refine(
     (data) =>
-      new Date(`${data.date}T${data.endTime}`) >
-      new Date(`${data.date}T${data.startTime}`),
+      new Date(`${data.date}T${data.end}`) >
+      new Date(`${data.date}T${data.start}`),
     {
       message: "End time must be after start time",
       path: ["endTime"],
@@ -77,28 +76,25 @@ export default function EventModal({
   const [teamSearch, setTeamSearch] = useState("")
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
 
-const form = useForm<z.infer<typeof eventSchema>>({
-  resolver: zodResolver(eventSchema),
-  defaultValues: {
-    title: defaultEvent?.title || "",
-    description: defaultEvent?.description || "",
-    teamMembers: defaultEvent?.teamMembers || [],
-    date: defaultEvent
-      ? defaultEvent.start.toISOString().split("T")[0]
-      : new Date().toISOString().split("T")[0],
-    startTime: defaultEvent
-      ? defaultEvent.start.toTimeString().slice(0, 5)
-      : "08:00",
-    endTime: defaultEvent
-      ? defaultEvent.end.toTimeString().slice(0, 5)
-      : "09:00",
-  },
-})
-
+  const form = useForm<z.infer<typeof eventSchema>>({
+    resolver: zodResolver(eventSchema),
+    defaultValues: {
+      title: defaultEvent?.title || "",
+      description: defaultEvent?.description || "",
+      teamMembers: defaultEvent?.teamMembers || [],
+      date: defaultEvent
+        ? defaultEvent.start.toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
+      start: defaultEvent
+        ? defaultEvent.start.toTimeString().slice(0, 5)
+        : "08:00",
+      end: defaultEvent ? defaultEvent.end.toTimeString().slice(0, 5) : "09:00",
+    },
+  })
 
   const handleSave = form.handleSubmit((values) => {
-    const startDateTime = new Date(`${values.date}T${values.startTime}`)
-    const endDateTime = new Date(`${values.date}T${values.endTime}`)
+    const startDateTime = new Date(`${values.date}T${values.start}`)
+    const endDateTime = new Date(`${values.date}T${values.end}`)
 
     onSave({
       ...values,
@@ -132,7 +128,24 @@ const form = useForm<z.infer<typeof eventSchema>>({
           <form onSubmit={handleSave} className="space-y-4">
             <DialogHeader>
               <DialogTitle className="text-2xl font-semibold text-gray-800">
-                {isEditing ? defaultEvent?.title : "Create New Event"}
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormControl>
+                        <Input
+                          type="text"
+                          {...field}
+                          defaultValue={defaultEvent?.title}
+                          placeholder="Title"
+                          className="text-2xl border-0 focus-visible:ring-0 focus-visible:border-0 focus-visible:ring-offset-0 px-0 "
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </DialogTitle>
             </DialogHeader>
 
@@ -153,7 +166,7 @@ const form = useForm<z.infer<typeof eventSchema>>({
               />
               <FormField
                 control={form.control}
-                name="startTime"
+                name="start"
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>Start Time</FormLabel>
@@ -166,7 +179,7 @@ const form = useForm<z.infer<typeof eventSchema>>({
               />
               <FormField
                 control={form.control}
-                name="endTime"
+                name="end"
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>End Time</FormLabel>

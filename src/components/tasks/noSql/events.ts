@@ -2,6 +2,17 @@
  * @path src/components/tasks/noSql/events.ts
  */
 
+export interface Event {
+  id: string
+  title: string
+  description?: string
+  date?: Date
+  start: Date
+  end: Date
+  teamMembers?: string[]
+  color?: string
+}
+
 export const initialEvents = [
   {
     id: "1",

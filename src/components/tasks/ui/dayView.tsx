@@ -2,60 +2,27 @@
  * @path src/components/tasks/ui/dayView.tsx
  */
 
+import React from "react"
 import { Card } from "@/components/ui/card"
-import React, { useState } from "react"
 import { generateDayHours } from "../utils/dateUtils"
 import { format, isSameHour } from "date-fns"
-import EventModal from "./createEventModal"
+import { Event } from "../noSql/events"
 
 interface DayViewProps {
   currentDate: Date
-  events: Array<{
-    title: string
-    start: Date
-    end: Date
-    description?: string
-    teamMembers?: string[]
-  }>
+  events: Event[]
   onSlotClick: (dateTime: Date) => void
+  handleEventClick: (event: Event) => void
 }
 
 const DayView: React.FC<DayViewProps> = ({
   currentDate,
   events,
   onSlotClick,
+  handleEventClick,
 }) => {
   const hours = generateDayHours(currentDate)
   const SLOT_HEIGHT_REM = 4 // Each hour is represented by 4rem in height
-
-  const [selectedEvent, setSelectedEvent] = useState<
-    DayViewProps["events"][number] | null
-  >(null)
-  const [newEventTime, setNewEventTime] = useState<Date | null>(null)
-
-  const handleSlotClick = (hour: Date) => {
-    if (!selectedEvent) {
-      // Open modal for new event creation
-      setNewEventTime(hour)
-      onSlotClick(hour)
-    }
-  }
-
-  const handleEventClick = (event: DayViewProps["events"][number]) => {
-    // Open modal for editing an event
-    setNewEventTime(null)
-    setSelectedEvent(event)
-  }
-
-  const handleSave = (event: {
-    title: string
-    start: Date
-    end: Date
-    description?: string
-  }) => {
-    setSelectedEvent(null)
-    setNewEventTime(null)
-  }
 
   return (
     <>
@@ -65,7 +32,7 @@ const DayView: React.FC<DayViewProps> = ({
             return (
               <div
                 key={hour.toISOString()}
-                onClick={() => handleSlotClick(hour)}
+                onClick={() => onSlotClick(hour)}
                 className="time-slot-container relative h-16" // Each time slot's height is 4rem (16px x 4)
               >
                 <div className="time-slot relative border-t border-gray-300 w-full h-full">
@@ -129,30 +96,6 @@ const DayView: React.FC<DayViewProps> = ({
           })}
         </div>
       </Card>
-
-      {/* Event Modal */}
-      {(selectedEvent || newEventTime) && (
-        <EventModal
-          isOpen={!!(selectedEvent || newEventTime)} // Modal is open if either case is true
-          onClose={() => {
-            setSelectedEvent(null)
-            setNewEventTime(null)
-          }}
-          onSave={handleSave}
-          isEditing={!!selectedEvent} // Pass true if editing mode
-          defaultEvent={
-            selectedEvent
-              ? selectedEvent
-              : {
-                  title: "",
-                  description: "",
-                  start: newEventTime!,
-                  end: new Date(newEventTime!.getTime() + 60 * 60 * 1000), // Default 1-hour duration
-                  teamMembers: [],
-                }
-          }
-        />
-      )}
     </>
   )
 }

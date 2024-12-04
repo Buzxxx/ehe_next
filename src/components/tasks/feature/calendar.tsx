@@ -6,10 +6,9 @@
 
 import React, { useState } from "react"
 import { format, addMonths, subMonths, addWeeks, subWeeks } from "date-fns"
-import MonthView from "../ui/monthView"
 import WeekView from "../ui/weekView"
 import DayView from "../ui/dayView"
-import { initialEvents } from "../noSql/events"
+import { initialEvents, Event } from "../noSql/events"
 import EventModal from "../ui/createEventModal"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,49 +23,61 @@ export default function Calendar() {
   const [view, setView] = useState("week")
   const [currentDate, setCurrentDate] = useState(new Date())
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [events, setEvents] = useState(initialEvents)
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date())
+  const [events, setEvents] = useState<Event[]>(initialEvents)
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
+  const [newEventTime, setNewEventTime] = useState<Date | null>(null)
 
   const handleNext = () => {
-    setCurrentDate((prevDate) => {
-      let newDate
-      if (view === "month") {
-        newDate = addMonths(prevDate, 1)
-      } else if (view === "week") {
-        newDate = addWeeks(prevDate, 1)
-      } else {
-        newDate = new Date(prevDate)
-        newDate.setDate(prevDate.getDate() + 1)
-      }
-
-      // Fix for skipping days
-      if (newDate.getDate() !== prevDate.getDate() + 1) {
-        newDate.setHours(0, 0, 0, 0)
-      }
-
-      return newDate
-    })
+    setCurrentDate((prevDate) =>
+      view === "month"
+        ? addMonths(prevDate, 1)
+        : view === "week"
+        ? addWeeks(prevDate, 1)
+        : new Date(prevDate.setDate(prevDate.getDate() + 1))
+    )
   }
 
   const handlePrevious = () => {
-    setCurrentDate((prevDate) => {
-      if (view === "month") return subMonths(prevDate, 1)
-      if (view === "week") return subWeeks(prevDate, 1)
-      return new Date(prevDate.setDate(prevDate.getDate() - 1))
-    })
+    setCurrentDate((prevDate) =>
+      view === "month"
+        ? subMonths(prevDate, 1)
+        : view === "week"
+        ? subWeeks(prevDate, 1)
+        : new Date(prevDate.setDate(prevDate.getDate() - 1))
+    )
   }
 
-  // Opens the modal with default date/time from clicked slot
-  const handleSlotClick = (dateTime: Date) => {
-    console.log('first')
-    setSelectedDateTime(dateTime)
+  const handleSlotClick = (hour: Date) => {
+    setSelectedEvent(null)
+    setNewEventTime(hour)
     setIsModalOpen(true)
   }
 
-  // Adds the new event to events array
-  const handleSaveEvent = (newEvent: any) => {
-    setEvents((prevEvents) => [...prevEvents, newEvent])
-    setIsModalOpen(false) // Close modal after saving
+  const handleEventClick = (event: Event) => {
+    setSelectedEvent(event)
+    setNewEventTime(null)
+    setIsModalOpen(true)
+  }
+
+  const handleSaveEvent = (newEvent: Partial<Event>) => {
+    const eventWithId = {
+      ...newEvent,
+      id: newEvent.start?.toISOString() || "",
+    } as Event
+
+    setEvents((prevEvents) => {
+      if (selectedEvent) {
+        // Update existing event
+        return prevEvents.map((event) =>
+          event.id === selectedEvent.id ? eventWithId : event
+        )
+      }
+      // Add new event
+      return [...prevEvents, eventWithId]
+    })
+    setSelectedEvent(null)
+    setNewEventTime(null)
+    setIsModalOpen(false) // Close the modal
   }
 
   return (
@@ -75,17 +86,17 @@ export default function Calendar() {
         <div className="flex gap-2 items-center md:w-1/3 ">
           <Button
             onClick={handlePrevious}
-            variant={"outline"}
-            className="h-fit w-fit p-2  "
+            variant="outline"
+            className="h-fit w-fit p-2"
           >
             &lt; <span className="hidden md:inline">Prev</span>
           </Button>
           <Button
-            variant={"outline"}
             onClick={handleNext}
-            className="h-fit w-fit p-2  "
+            variant="outline"
+            className="h-fit w-fit p-2"
           >
-            <span className="hidden md:inline"> Next</span> &gt;
+            <span className="hidden md:inline">Next</span> &gt;
           </Button>
         </div>
 
@@ -94,7 +105,7 @@ export default function Calendar() {
             {format(currentDate, "MMMM yyyy")}
           </h2>
         ) : (
-          <div className="flex flex-col  md:w-1/3">
+          <div className="flex flex-col md:w-1/3">
             <h2 className="md:text-2xl text-lg font-semibold text-gray-800 text-center">
               {format(currentDate, "MMMM yyyy")}
             </h2>
@@ -102,7 +113,7 @@ export default function Calendar() {
           </div>
         )}
 
-        <div className=" space-x-2 md:w-1/3 justify-end hidden md:flex">
+        <div className="space-x-2 md:w-1/3 justify-end hidden md:flex">
           <Button
             onClick={() => setView("day")}
             className={`px-3 py-1 rounded-3xl ${
@@ -123,16 +134,6 @@ export default function Calendar() {
           >
             Week
           </Button>
-          {/* <Button
-            onClick={() => setView("month")}
-            className={`px-3 py-1 rounded-3xl ${
-              view === "month"
-                ? "bg-sky-600 text-white"
-                : "bg-gray-300/75 hover:bg-gray-300"
-            }`}
-          >
-            Month
-          </Button> */}
         </div>
 
         <DropdownMenu>
@@ -154,29 +155,46 @@ export default function Calendar() {
         </DropdownMenu>
       </header>
       <main>
-        {/* {view === "month" && (
-          <MonthView
-            currentDate={currentDate}
-            events={events}
-            onSlotClick={handleSlotClick} // Pass the slot click handler
-          />
-        )} */}
         {view === "week" && (
           <WeekView
             currentDate={currentDate}
             events={events}
-            onSlotClick={handleSlotClick} // Pass the slot click handler
+            onSlotClick={handleSlotClick}
+            handleEventClick={handleEventClick}
           />
         )}
         {view === "day" && (
           <DayView
+            handleEventClick={handleEventClick}
             currentDate={currentDate}
             events={events}
-            onSlotClick={handleSlotClick} // Pass the slot click handler
+            onSlotClick={handleSlotClick}
           />
         )}
       </main>
-    
+
+      {/* Event Modal */}
+      {isModalOpen && (
+        <EventModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false)
+            setSelectedEvent(null)
+            setNewEventTime(null)
+          }}
+          onSave={handleSaveEvent}
+          isEditing={!!selectedEvent}
+          defaultEvent={
+            selectedEvent || {
+              title: "",
+              description: "",
+              start: newEventTime!,
+              end: new Date(newEventTime!.getTime() + 60 * 60 * 1000), // Default 1-hour duration
+              teamMembers: [],
+            }
+          }
+        />
+      )}
     </>
   )
 }
