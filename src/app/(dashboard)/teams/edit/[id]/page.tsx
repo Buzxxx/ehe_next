@@ -1,11 +1,11 @@
 "use client"
 import OverlayLoading from "@/components/ui/overlayLoading"
 import { Spinner } from "@/components/ui/icons"
-import CreateWorkerForm from "@/components/workforce/ui/createUserForm"
+import CreateWorkerForm from "@/components/teams/ui/createUserForm"
 import React, { useState } from "react"
-import { sampleData } from "@/components/workforce/lib/sampleData"
-import { Workforce } from "@/components/workforce/feature/workforce"
-import { WorkforceUser } from "@/components/workforce/ui/tableColumns"
+import { sampleData } from "@/components/teams/lib/sampleData"
+import { Workforce } from "@/components/teams/feature/workforce"
+import { WorkforceUser } from "@/components/teams/ui/tableColumns"
 
 interface WorkforcePageProps {
   params: Promise<{

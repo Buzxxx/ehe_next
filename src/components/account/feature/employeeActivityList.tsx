@@ -8,7 +8,7 @@ const EmployeeActivityList = () => {
     <Card className="mt-4">
       <CardHeader className="border-b justify-between flex-row items-center">
         <CardTitle className="text-lg font-semibold">
-          Lead Activity
+          Employee Activity
         </CardTitle>
         <div className="flex gap-2 items-center">
           <Button className="bg-transparent text-gray-700 hover:text-gray-800 border border-gray-400">
