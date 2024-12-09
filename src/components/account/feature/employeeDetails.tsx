@@ -2,8 +2,16 @@ import EmployeeDetail from "../ui/employeeDetail"
 import { Copy } from "@/components/ui/icons"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Employee } from "./employeeColumn"
+import { SetStateAction } from "react"
 
-const EmployeeDetails = () => {
+const EmployeeDetails = ({
+  isEditing,
+  setIsEditing,
+}: {
+  isEditing: boolean
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   return (
     <Card className="p-4 rounded-md border mt-4 bg-white shadow-sm">
       <CardHeader className="py-4 border-b flex-row justify-between">

@@ -5,9 +5,7 @@ import WorkforceTopbar from "../feature/workforceTopbar"
 const Work = () => {
   return (
     <>
-      <WorkforceTopbar />
-
-      <div className="visitor-panel position-relative w-full rounded-md">
+      <div className="visitor-panel h-full position-relative w-full rounded-md">
         <WorkplaceMain />
       </div>
     </>

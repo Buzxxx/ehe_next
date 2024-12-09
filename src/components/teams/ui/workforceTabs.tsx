@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/dataTable"
 import React, { useState, useEffect } from "react"
 import { columns, WorkforceUser } from "./tableColumns"
-import Modal from "@/components/workforce/ui/workforceModal" // Import Modal Component
+import Modal from "@/components/teams/ui/workforceModal" // Import Modal Component
 import { Workforce } from "../feature/workforce" // Import Workforce Class
 import { sampleData } from "../lib/sampleData"
 import { useToast } from "@/components/ui/use-toast"

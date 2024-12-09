@@ -1,4 +1,4 @@
-import Workforce from '@/components/workforce/layout/workforce'
+import Workforce from '@/components/teams/layout/teamsLayout'
 import React from 'react'
 
 const Page = () => {

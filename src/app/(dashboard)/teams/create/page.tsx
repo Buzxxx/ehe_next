@@ -2,7 +2,7 @@
 'use client'
 import OverlayLoading from "@/components/ui/overlayLoading"
 import { Spinner } from "@/components/ui/icons"
-import CreateWorkerForm from "@/components/workforce/ui/createUserForm"
+import CreateWorkerForm from "@/components/teams/ui/createUserForm"
 import React, { useState } from "react"
 
 const Page = () => {
