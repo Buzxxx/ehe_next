@@ -4,8 +4,16 @@
 
 import EmpolyeeProfileLayout from "@/components/account/layout/empolyeeProfileLayout"
 
-const EmployeeProfile = ({ params }: { params: { employeeId: string } }) => {
-  return <EmpolyeeProfileLayout employeeId={params.employeeId} />
+interface EmployeePageProps {
+  params: Promise<{
+    employeeId: string
+  }>
+}
+
+const EmployeeProfile = async ({ params }: EmployeePageProps) => {
+  const resolvedParams = await params
+
+  return <EmpolyeeProfileLayout employeeId={resolvedParams.employeeId} />
 }
 
 export default EmployeeProfile
