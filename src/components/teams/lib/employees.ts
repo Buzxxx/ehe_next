@@ -47,3 +47,51 @@ export const employeeData: Employee[] = [
     role: "Software Developer",
   },
 ]
+
+export const additionalEmployeesData: Employee[] = [
+  {
+    id: 6,
+    name: "Eve Williams",
+    email: "eve.williams@example.com",
+    phone: "678-901-2345",
+    status: "active" as const,
+    teamId: 2,
+    role: "UI/UX Designer",
+  },
+  {
+    id: 7,
+    name: "Frank Harris",
+    email: "frank.harris@example.com",
+    phone: "789-012-3456",
+    status: "inactive" as const,
+    teamId: 2,
+    role: "Project Manager",
+  },
+  {
+    id: 8,
+    name: "Grace Lee",
+    email: "grace.lee@example.com",
+    phone: "890-123-4567",
+    status: "active" as const,
+    teamId: 3,
+    role: "Quality Assurance",
+  },
+  {
+    id: 9,
+    name: "Henry Walker",
+    email: "henry.walker@example.com",
+    phone: "901-234-5678",
+    status: "inactive" as const,
+    teamId: 3,
+    role: "DevOps Engineer",
+  },
+  {
+    id: 10,
+    name: "Isabella Young",
+    email: "isabella.young@example.com",
+    phone: "012-345-6789",
+    status: "active" as const,
+    teamId: 4,
+    role: "Product Owner",
+  },
+]
