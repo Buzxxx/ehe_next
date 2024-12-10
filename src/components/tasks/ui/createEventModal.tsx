@@ -137,7 +137,7 @@ export default function EventModal({
                         <Input
                           type="text"
                           {...field}
-                          defaultValue={defaultEvent?.title}
+                       
                           placeholder="Title"
                           className="text-2xl border-0 focus-visible:ring-0 focus-visible:border-0 focus-visible:ring-offset-0 px-0 "
                         />

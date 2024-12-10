@@ -81,6 +81,7 @@ import {
   Search,
   Share2,
   Trash2,
+  Video,
   X,
 } from "lucide-react"
 
@@ -160,6 +161,7 @@ export {
   Trash2,
   Twitter,
   TwitterColored,
+  Video,
   WhatsappColored,
   WhatsAppIcon,
   WhatsAppOutline,

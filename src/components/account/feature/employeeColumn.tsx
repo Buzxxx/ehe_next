@@ -1,29 +1,39 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import Image from "next/image"
+import Link from "next/link"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Employee = {
+export interface Employee {
   id: number
   name: string
-  status: "active" | "inactive"
   email: string
   phone: string
+  status: string
+  img?: string 
+  teamId: number
+  role?: string
 }
 
 export const columns: ColumnDef<Employee>[] = [
   {
-    accessorKey: "id",
-    header: "Id",
-  },
-  {
     accessorKey: "name",
     header: "Name",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
+    cell: ({ row }) => {
+      const employee = row.original
+      return (
+        <Link href={`/account/${employee.teamId}/employees/${employee.id}`} className="flex items-center gap-2 cursor-pointer hover:text-black text-gray-600 transition-colors">
+          <Image
+            height={20}
+            width={20}
+            src={employee.img ?? "/base/profile.webp"}
+            alt={employee.name}
+            className="h-6 w-6 rounded-full object-cover border"
+          />
+          <p className="font-medium ">{employee.name}</p>
+        </Link>
+      )
+    },
   },
   {
     accessorKey: "email",
@@ -32,5 +42,9 @@ export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: "phone",
     header: "Phone",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
   },
 ]

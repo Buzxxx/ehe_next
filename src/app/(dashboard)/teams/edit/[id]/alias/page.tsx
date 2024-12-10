@@ -1,12 +1,12 @@
 // @/app/(dashboard)/workforce/edit/[id]/alias/page.tsx
 
 "use client"
-import UserAliasTable from "@/components/workforce/layout/userAliasTable"
+import UserAliasTable from "@/components/teams/layout/userAliasTable"
 import React, { useState } from "react"
 import { useParams } from "next/navigation"
-import { Alias, Workforce } from "@/components/workforce/feature/workforce"
-import { sampleData, aliases } from "@/components/workforce/lib/sampleData"
-import { WorkforceUser } from "@/components/workforce/ui/tableColumns"
+import { Alias, Workforce } from "@/components/teams/feature/workforce"
+import { sampleData, aliases } from "@/components/teams/lib/sampleData"
+import { WorkforceUser } from "@/components/teams/ui/tableColumns"
 
 const EditAlias = () => {
   const { id } = useParams()
