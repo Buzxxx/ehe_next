@@ -8,9 +8,13 @@ import { SetStateAction } from "react"
 const EmployeeDetails = ({
   isEditing,
   setIsEditing,
+  employee,
+  setEmployee,
 }: {
   isEditing: boolean
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+  employee: Employee
+  setEmployee: React.Dispatch<SetStateAction<Employee | undefined>>
 }) => {
   return (
     <Card className="p-4 rounded-md border mt-4 bg-white shadow-sm">
@@ -32,13 +36,60 @@ const EmployeeDetails = ({
         </h6>
       </CardHeader>
       <CardContent className="grid grid-cols-3 gap-4 mt-4">
-        <EmployeeDetail title="Company" value="EHE Industries" />
-        <EmployeeDetail title="Date Joined" value="12 August 2024" />
-        <EmployeeDetail title="Team" value="Software" />
-        <EmployeeDetail title="Phone Number" value="+91 9012344567" />
-        <EmployeeDetail span={2} title="Country" value="India" />
-        <EmployeeDetail title="Email" value="example@ehe.com" />
         <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
+          title="Company"
+          value="EHE Industries"
+        />
+        <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
+          title="Date Joined"
+          value="12 August 2024"
+        />
+        <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
+          title="Team"
+          value="Software"
+        />
+        <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
+          title="Phone Number"
+          value="+91 9012344567"
+        />
+        <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
+          span={2}
+          title="Country"
+          value="India"
+        />
+        <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
+          title="Email"
+          value="example@ehe.com"
+        />
+        <EmployeeDetail
+          employee={employee}
+          setEmployee={setEmployee}
+          isEditable={true}
+          isEditing={isEditing}
           span={2}
           title="Address"
           value="004 Gurugram, Harayana, India"
