@@ -13,7 +13,6 @@ import {
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 
-
 const EntityCard = ({
   name,
   description,
@@ -66,12 +65,7 @@ const EntityCard = ({
         >
           Add User
         </Link>
-        <Link
-          href={"#"}
-          className="md:text-sm text-xs font-medium  text-slate-400 hover:text-sky-600"
-        >
-          Delete User
-        </Link>
+
         <Link
           href={"#"}
           className="md:text-sm text-xs font-medium text-slate-400 hover:text-sky-600"
@@ -84,8 +78,6 @@ const EntityCard = ({
 }
 
 export default EntityCard
-
-
 
 export const EntityCardSkeleton = () => {
   return (
@@ -119,10 +111,7 @@ export const EntityCardSkeleton = () => {
       <CardFooter className="pt-4 flex-col items-start gap-4">
         <Skeleton className="h-5 md:h-6 w-1/3" />
         <Skeleton className="h-5 md:h-6 w-1/3" />
-        <Skeleton className="h-5 md:h-6 w-1/3" />
       </CardFooter>
     </Card>
   )
 }
-
-

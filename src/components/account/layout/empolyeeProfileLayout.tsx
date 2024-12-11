@@ -20,17 +20,17 @@ const EmpolyeeProfileLayout = ({ employeeId }: { employeeId: string }) => {
     setIsEditing(false)
   }
 
-const handleRoleChange = (newRole: string) => {
-  setEmployee((prev) => {
-    if (prev) {
-      return {
-        ...prev,
-        role: newRole,
+  const handleRoleChange = (newRole: string) => {
+    setEmployee((prev) => {
+      if (prev) {
+        return {
+          ...prev,
+          role: newRole,
+        }
       }
-    }
-    return prev
-  })
-}
+      return prev
+    })
+  }
 
   return (
     <div className="px-4 lg:px-6 py-6 bg-[#d1d1d1]/10 min-h-screen rounded-lg">
