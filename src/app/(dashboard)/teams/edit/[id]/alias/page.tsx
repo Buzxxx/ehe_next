@@ -1,7 +1,7 @@
 // @/app/(dashboard)/workforce/edit/[id]/alias/page.tsx
 
 "use client"
-import UserAliasTable from "@/components/account/feature/userAliasTable"
+import UserAliasTable from "@/components/teams/layout/userAliasTable"
 import React, { useState } from "react"
 import { useParams } from "next/navigation"
 import { Alias, Workforce } from "@/components/teams/feature/workforce"
