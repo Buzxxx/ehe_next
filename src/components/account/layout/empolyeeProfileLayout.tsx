@@ -8,6 +8,7 @@ import EmployeeDetails from "../feature/employeeDetails"
 import EmployeeActivityList from "../feature/employeeActivityList"
 import { useState } from "react"
 import { employeeData } from "@/components/teams/lib/employees"
+import UserAliasTable from "../feature/userAliasTable"
 
 const EmpolyeeProfileLayout = ({ employeeId }: { employeeId: string }) => {
   const [isEditing, setIsEditing] = useState(false)
@@ -51,6 +52,7 @@ const EmpolyeeProfileLayout = ({ employeeId }: { employeeId: string }) => {
           setEmployee={setEmployee}
         />
       )}
+      <UserAliasTable />
       <EmployeeActivityList />
     </div>
   )

@@ -18,9 +18,9 @@ const EmployeeDetails = ({
 }) => {
   return (
     <Card className="p-4 rounded-md border mt-4 bg-white shadow-sm">
-      <CardHeader className="py-4 border-b flex-row justify-between">
+      <CardHeader className="py-2 border-b flex-row justify-between">
         <div className="flex gap-2 items-center">
-          <h4 className="text-xl font-medium">Work Details</h4>
+          <h4 className="text-xl font-medium">Employee Details</h4>
           <Badge
             variant="secondary"
             className="text-xs bg-green-600 font-normal text-gray-100"
@@ -35,65 +35,95 @@ const EmployeeDetails = ({
           </button>
         </h6>
       </CardHeader>
-      <CardContent className="grid grid-cols-3 gap-4 mt-4">
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          title="Company"
-          value="EHE Industries"
-        />
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          title="Date Joined"
-          value="12 August 2024"
-        />
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          title="Team"
-          value="Software"
-        />
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          title="Phone Number"
-          value="+91 9012344567"
-        />
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          span={2}
-          title="Country"
-          value="India"
-        />
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          title="Email"
-          value="example@ehe.com"
-        />
-        <EmployeeDetail
-          employee={employee}
-          setEmployee={setEmployee}
-          isEditable={true}
-          isEditing={isEditing}
-          span={2}
-          title="Address"
-          value="004 Gurugram, Harayana, India"
-        />
+      <CardContent className=" mt-4 flex gap-4 justify-between items-start">
+        {/* Work Details */}
+        <div className="p-4 border bg-gray-50 rounded-md shadow-sm flex-1">
+          <div className="pb-2 border-b mb-4">
+            <h6 className="font-medium text-gray-700">Work Details</h6>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              title="Manager"
+              value="EHE Industries"
+              span={2}
+            />
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              title="Department"
+              value="Software"
+            />
+
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              title="Date Joined"
+              value="12 August 2024"
+              type="date"
+            />
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              span={2}
+              title="Location"
+              value="India"
+            />
+          </div>
+        </div>
+
+        {/* Personal Details */}
+        <div className="p-4 border bg-gray-50 rounded-md shadow-sm flex-1">
+          <div className="pb-2 border-b mb-4">
+            <h6 className="font-medium text-gray-700">Personal Details</h6>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              title="Name"
+              value={"John Doe"}
+              span={2}
+            />
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              title="Phone Number"
+              value="+91 9012344567"
+            />
+
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              title="Email"
+              value="example@ehe.com"
+            />
+            <EmployeeDetail
+              employee={employee}
+              setEmployee={setEmployee}
+              isEditable={true}
+              isEditing={isEditing}
+              span={2}
+              title="Address"
+              value="004 Gurugram, Haryana, India"
+            />
+          </div>
+        </div>
       </CardContent>
     </Card>
   )

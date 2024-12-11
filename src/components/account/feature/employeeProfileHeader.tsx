@@ -9,15 +9,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import ChevronDown from "@/components/ui/icons/chevronDown"
 import { FolderPen, UserRoundMinus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-
+import { useRouter } from "next/navigation"
 
 const EmployeeProfileHeader = ({
   isEditing,
@@ -32,6 +29,16 @@ const EmployeeProfileHeader = ({
   role: string // Current role of the employee
   onRoleChange: (newRole: string) => void // Callback to update role
 }) => {
+  const router = useRouter()
+  const handleAliasClick = () => {
+    const currentUrl = window.location.href
+    // Append #aliasTable to the current URL
+    const newUrl = currentUrl.includes("#")
+      ? currentUrl.split("#")[0]
+      : currentUrl
+    router.push(`${newUrl}#aliasTable`)
+  }
+
   return (
     <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md p-4 mb-6">
       <div className="flex gap-4 items-center">
@@ -82,7 +89,10 @@ const EmployeeProfileHeader = ({
                 <Edit size={16} className="mr-1" />
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-sm text-gray-600">
+              <DropdownMenuItem
+                className="text-sm text-gray-600"
+                onClick={handleAliasClick}
+              >
                 <FolderPen size={16} className="mr-1" />
                 Alias
               </DropdownMenuItem>
