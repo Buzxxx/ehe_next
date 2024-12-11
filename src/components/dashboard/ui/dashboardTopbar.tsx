@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/menubar"
 import ChevronDown from "@/components/ui/icons/chevronDown"
 import { Badge } from "@/components/ui/badge"
-import { handleToggle } from "@/utility/toggle"
 import { Dashboard } from "../feature/dashboard"
 
 type DashboardTopBarProps = {
