@@ -1,10 +1,20 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react"
+/**
+ * @path src/components/lead/features/leadListing/leadList.tsx
+ */
+
+
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  SetStateAction,
+  useCallback,
+} from "react"
 import { useSearchParams } from "next/navigation"
 import { Spinner } from "@/components/ui/icons"
 import { LeadCard } from "@/components/lead/ui/leadListing/leadCard"
 import LeadRow from "@/components/lead/ui/leadListing/leadRow"
 import {
-  lead_listing_controller,
   LeadsResponse,
   DefaultLeadsResponse,
 } from "@/components/lead/features/leadObject"
@@ -16,7 +26,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import useDebounce from "@/hooks/useDebounce" // Custom debounce hook
 import useFetchLeads from "@/components/lead/hooks/useFetchLeads" // Custom hook for fetching leads
@@ -25,12 +34,22 @@ interface LeadListProps {
   leadsResponse: LeadsResponse
   setLeadsResponse: (response: LeadsResponse) => void
   viewMode: "card" | "row"
+  isLoading: boolean
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>
+  setSelectedLeads: React.Dispatch<SetStateAction<number[]>>
+  selectedLeads: number[]
 }
 
 const LeadList: React.FC<LeadListProps> = React.memo(
-  ({ leadsResponse = DefaultLeadsResponse, setLeadsResponse, viewMode }) => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [selectAll, setSelectAll] = useState(false)
+  ({
+    leadsResponse = DefaultLeadsResponse,
+    setLeadsResponse,
+    viewMode,
+    isLoading,
+    setIsLoading,
+    setSelectedLeads,
+    selectedLeads,
+  }) => {
     const [queryParams, setQueryParams] = useState("")
     const URLParams = useSearchParams()
     const debouncedQueryParams = useDebounce(queryParams, 300) // Debounce query params
@@ -38,7 +57,6 @@ const LeadList: React.FC<LeadListProps> = React.memo(
 
     // Custom hook to fetch leads with caching
     const { leads, fetchLeads, isFetching } = useFetchLeads()
-    console.log(leads)
 
     // Fetch leads whenever URLParams or debouncedQueryParams change
     useEffect(() => {
@@ -60,11 +78,33 @@ const LeadList: React.FC<LeadListProps> = React.memo(
       }
 
       loadLeads()
-    }, [debouncedQueryParams, URLParams, fetchLeads, setLeadsResponse, toast])
+    }, [debouncedQueryParams, URLParams, fetchLeads, setLeadsResponse, toast, setIsLoading])
 
-    const handleToggleLeadSelection = useCallback((index: number) => {
-      console.log(index)
-    }, [])
+    const handleToggleLeadSelection = useCallback((id: number) => {
+      setSelectedLeads((prevSelected) =>
+        prevSelected.includes(id)
+          ? prevSelected.filter((leadId) => leadId !== id)
+          : [...prevSelected, id]
+      )
+    }, [setSelectedLeads])
+
+    const handleSelectAll = (checked: boolean) => {
+      if (checked) {
+        // Select all lead IDs
+        const allLeadIds = leads.map((lead) => lead.id)
+        setSelectedLeads(allLeadIds)
+      } else {
+        // Deselect all leads
+        setSelectedLeads([])
+      }
+    }
+
+    const selectAll = useMemo(() => {
+      return (
+        leads.length > 0 &&
+        leads.every((lead) => selectedLeads.includes(lead.id))
+      )
+    }, [leads, selectedLeads])
 
     const hasLeads = useMemo(() => leads?.length > 0, [leads])
 
@@ -72,7 +112,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
       <div className="w-full relative">
         {isLoading || isFetching ? (
           <div className="absolute mt-2 inset-0 flex justify-center items-center bg-gray-300 bg-opacity-30 z-30 min-h-96 rounded-xl">
-            <Spinner className="animate-spin h-10 w-10" />
+            <Spinner className="animate-spin h-10 w-10 text-gray-400 " />
           </div>
         ) : (
           <div className="pt-2">
@@ -85,7 +125,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                       idx={index}
                       lead={lead}
                       isSelected={lead.isSelected}
-                      onToggle={() => handleToggleLeadSelection(index)}
+                      onToggle={() => handleToggleLeadSelection(lead.id)}
                     />
                   ))
                 ) : (
@@ -100,11 +140,11 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[50px] p-2">
-                        <Checkbox
+                        <input
+                          type="checkbox"
+                          className="peer h-4 w-4 shrink-0 rounded-md border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text- checked:bg-primary"
                           checked={selectAll}
-                          onChange={(e) =>
-                            setSelectAll((e.target as HTMLInputElement).checked)
-                          }
+                          onChange={(e) => handleSelectAll(e.target.checked)}
                         />
                       </TableHead>
                       <TableHead>Lead</TableHead>
@@ -115,12 +155,12 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                   </TableHeader>
                   <TableBody>
                     {hasLeads ? (
-                      leads.map((lead, index) => (
+                      leads.map((lead) => (
                         <LeadRow
                           key={lead.id}
                           lead={lead}
-                          isSelected={lead.isSelected}
-                          onToggle={() => handleToggleLeadSelection(index)}
+                          isSelected={selectedLeads.includes(lead.id)}
+                          onToggle={handleToggleLeadSelection}
                         />
                       ))
                     ) : (

@@ -7,7 +7,6 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
-import { useRouter } from "next/navigation"
 import { ChevronLeft } from "@/components/ui/icons"
 import { logout } from "@/components/authentication/features/UserObject"
 import {
@@ -18,6 +17,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { useSidebar } from "@/components/ui/sidebar"
+import {useRouter, usePathname} from 'next/navigation'
 
 interface SubItem {
   name: string
@@ -40,10 +40,14 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
   const {setOpenMobile} = useSidebar()
   const [openMenu, setOpenMenu] = useState<boolean>(false)
   const router = useRouter()
+  const currentRoute = usePathname()
 
   const handleItemClick = () => {
     setOpenMenu((prevState) => !prevState)
   }
+
+  const isActive = subItems.some((subItem) => subItem.route === currentRoute)
+
 
   const handleSubItemClick = async (subItem: SubItem) => {
     setOpenMobile(false)
@@ -76,14 +80,17 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
           <SidebarMenuSub
             className="overflow-hidden"
             style={{
-              height: openMenu ? `${subItems.length * 2.25}rem` : "0",
+              height:
+                openMenu || isActive ? `${subItems.length * 2.25}rem` : "0",
               transition: "height 0.3s ease",
             }}
           >
             {subItems.map((subItem, index) => (
               <SidebarMenuSubItem key={index}>
                 <SidebarMenuSubButton
-                  className="cursor-pointer hover:bg-sky-400/10"
+                  className={`cursor-pointer hover:bg-sky-400/10 ${
+                    subItem.route === currentRoute && "bg-sky-400/10"
+                  }`}
                   onClick={() => handleSubItemClick(subItem)}
                 >
                   {subItem.name}

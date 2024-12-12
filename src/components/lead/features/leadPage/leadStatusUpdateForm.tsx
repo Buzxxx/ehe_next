@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/dashboard/ui/customFormField";
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
 import { SelectItem } from "@/components/ui/select";
+import OverlayLoading from "@/components/ui/overlayLoading";
+import { Spinner } from "@/components/ui/icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useLeadProfile } from "../context/leadProfileContext";
 import {
@@ -87,7 +89,10 @@ const LeadStatusUpdateForm = ({
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 w-full bg-gray-50 h-fit my-auto border p-4 rounded-md"
+        >
           <div className="flex  gap-4">
             <CustomFormField
               control={form.control}

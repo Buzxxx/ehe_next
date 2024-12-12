@@ -1,30 +1,25 @@
-"use client";
+"use client"
 
-import { Suspense, lazy, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar";
-import ChevronDown from "@/components/ui/icons/chevronDown";
-import { Filter } from "@/components/ui/icons";
-import { Badge } from "@/components/ui/badge";
-import { handleToggle } from "@/utility/toggle";
-import PaginationComp from "@/components/ui/paginationComp";
-import { Dashboard } from "../feature/dashboard";
-import FilterModal from "@/components/lead/features/leadListing/filterModal";
+} from "@/components/ui/menubar"
+import ChevronDown from "@/components/ui/icons/chevronDown"
+import { Badge } from "@/components/ui/badge"
+import { Dashboard } from "../feature/dashboard"
 
 type DashboardTopBarProps = {
-  onSelectAll?: () => void;
-  onUnselectAll?: () => void;
-  onReassign?: () => void;
-  selectedCount?: number;
-  totalLeads?: number;
-  page?: "lead" | "workplace" | "workforce" | "dashboard" | "task";
-};
+  onSelectAll?: () => void
+  onUnselectAll?: () => void
+  onReassign?: () => void
+  selectedCount?: number
+  totalLeads?: number
+  page?: "lead" | "workplace" | "workforce" | "dashboard" | "task"
+}
 
 const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   onSelectAll,
@@ -34,16 +29,11 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
   totalLeads = 0,
   page = "lead",
 }) => {
-  const [filterVisible, setFilterVisible] = useState<boolean>(false);
-  const router = useRouter();
-
-  const onToggle = () => {
-    handleToggle(filterVisible, setFilterVisible);
-  };
+  const router = useRouter()
 
   const navigateTo = (path: string) => {
-    router.push(path);
-  };
+    router.push(path)
+  }
 
   const menuItems = Dashboard.getMenuItems(
     navigateTo,
@@ -52,7 +42,7 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
     onUnselectAll,
     onReassign,
     selectedCount
-  );
+  )
 
   return (
     <Menubar className=" mt-4 bg-transparent border-0 border-b border-slate-300 flex items-center justify-between rounded-none pb-2 z-50 ">
@@ -80,43 +70,9 @@ const DashboardTopBar: React.FC<DashboardTopBarProps> = ({
               : `${totalLeads} Leads`}
           </Badge>
         )}
-
-        {page === "lead" && (
-          <>
-            <PaginationComp
-              perPage={20}
-              totalPages={50}
-              className="flex-shrink-0 justify-start "
-            />
-
-            <button
-              onClick={onToggle}
-              className="text-sky-600 visible"
-            >
-              <Filter
-                color="grey"
-                className={`hover:fill-gray-500 ${
-                  filterVisible && "fill-gray-500"
-                }`}
-              />
-            </button>
-          </>
-        )}
       </div>
-
-      {page === "lead" && filterVisible && (
-        <Suspense fallback={<> </>}>
-          <FilterModal
-            className={`${
-              filterVisible
-                ? "filter-form translate-x-0"
-                : "translate-x-96 2xl:translate-x-[35rem]"
-            }`}
-          />
-        </Suspense>
-      )}
     </Menubar>
-  );
-};
+  )
+}
 
-export default DashboardTopBar;
+export default DashboardTopBar

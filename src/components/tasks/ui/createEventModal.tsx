@@ -1,4 +1,7 @@
-// components/EventModal.js
+/**
+ * @path src/components/tasks/ui/createEventModal.tsx
+ */
+
 "use client"
 import React, { useEffect, useState } from "react"
 import {
@@ -7,7 +10,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { format } from "date-fns"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -15,7 +17,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,62 +24,90 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 
-// Define schema for form validation with Zod
-const eventSchema = z.object({
-  title: z.string().min(2).max(50),
-  description: z.string().optional(),
-  time: z.string().min(2).max(50),
-  priority: z.string().optional(),
-  teamMembers: z.array(z.string()).optional(),
-})
+// Schema for form validation
+const eventSchema = z
+  .object({
+    title: z.string().min(2, "Title is too short").max(50, "Title is too long"),
+    description: z.string().optional(),
+    date: z.string().nonempty("Date is required"),
+    start: z.string().nonempty("Start time is required"),
+    end: z.string().nonempty("End time is required"),
+    teamMembers: z.array(z.string()).optional(),
+  })
+  .refine(
+    (data) =>
+      new Date(`${data.date}T${data.end}`) >
+      new Date(`${data.date}T${data.start}`),
+    {
+      message: "End time must be after start time",
+      path: ["endTime"],
+    }
+  )
+
+interface EventModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onSave: (event: {
+    title: string
+    description?: string
+    start: Date
+    end: Date
+    teamMembers: string[]
+  }) => void
+  defaultEvent?: {
+    title: string
+    description?: string
+    start: Date
+    end: Date
+    teamMembers?: string[]
+  }
+  isEditing?: boolean
+}
 
 export default function EventModal({
   isOpen,
   onClose,
   onSave,
-  defaultDateTime,
-}: {
-  isOpen: boolean
-  onClose: () => void
-  onSave: (event: any) => void
-  defaultDateTime: Date
-}) {
+  isEditing, // Use the explicit prop
+  defaultEvent,
+}: EventModalProps) {
   const [teamSearch, setTeamSearch] = useState("")
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
-  const [dateTime, setDateTime] = useState(defaultDateTime)
-
-  useEffect(() => {
-    setDateTime(defaultDateTime) // Update dateTime whenever defaultDateTime changes
-  }, [defaultDateTime])
 
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      time: format(defaultDateTime, "yyyy-MM-dd'T'HH:mm"),
-      priority: "low",
-      teamMembers: [],
+      title: defaultEvent?.title || "",
+      description: defaultEvent?.description || "",
+      teamMembers: defaultEvent?.teamMembers || [],
+      date: defaultEvent
+        ? defaultEvent.start.toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
+      start: defaultEvent
+        ? defaultEvent.start.toTimeString().slice(0, 5)
+        : "08:00",
+      end: defaultEvent ? defaultEvent.end.toTimeString().slice(0, 5) : "09:00",
     },
   })
 
   const handleSave = form.handleSubmit((values) => {
+    const startDateTime = new Date(`${values.date}T${values.start}`)
+    const endDateTime = new Date(`${values.date}T${values.end}`)
+
     onSave({
       ...values,
-      title: values.title,
-      start: dateTime, // Use dateTime directly as the event's start time
-      color: "bg-blue-500",
+      start: startDateTime,
+      end: endDateTime,
       teamMembers: selectedMembers,
     })
+
     form.reset()
+    setSelectedMembers([])
     onClose()
   })
 
-  // Mock team members list for the search functionality
   const teamMembers = ["Alice", "Bob", "Charlie", "David", "Eve"]
 
   const handleSelectMember = (member: string) => {
@@ -95,96 +124,76 @@ export default function EventModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="rounded-2xl p-6 max-h-[600px] overflow-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">
-            Create New Event
-          </DialogTitle>
-        </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSave} className="space-y-2">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Event Title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={handleSave} className="space-y-4">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-gray-800">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormControl>
+                        <Input
+                          type="text"
+                          {...field}
+                       
+                          placeholder="Title"
+                          className="text-2xl border-0 focus-visible:ring-0 focus-visible:border-0 focus-visible:ring-offset-0 px-0 "
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </DialogTitle>
+            </DialogHeader>
 
-            <FormField
-              control={form.control}
-              name="time"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Time</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="datetime-local"
-                      {...field}
-                      value={format(dateTime, "yyyy-MM-dd'T'HH:mm")}
-                      onChange={(e) => {
-                        setDateTime(new Date(e.target.value))
-                      }}
-                      className="mt-1 block w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* Separate Date, Start Time, and End Time Inputs */}
+            <div className="flex flex-col md:flex-row gap-4">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Date</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="start"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Start Time</FormLabel>
+                    <FormControl>
+                      <Input type="time" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="end"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>End Time</FormLabel>
+                    <FormControl>
+                      <Input type="time" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Event Description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="priority"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Priority</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      {...field}
-                      defaultValue="low"
-                      className="flex space-x-4"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="low" id="low" />
-                        <Label htmlFor="low">Low</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="medium" id="medium" />
-                        <Label htmlFor="medium">Medium</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="high" id="high" />
-                        <Label htmlFor="high">High</Label>
-                      </div>
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Team Members Search & Select */}
-            <FormItem>
+            {/* Team Members */}
+            <FormItem className="relative">
               <FormLabel>Team Members</FormLabel>
               <Input
                 placeholder="Search and add team members"
@@ -193,7 +202,7 @@ export default function EventModal({
                 className="mb-2"
               />
               {teamSearch && (
-                <div className="border rounded bg-white shadow-md max-h-40 overflow-y-auto">
+                <div className="border rounded bg-white shadow-md max-h-40 overflow-y-auto absolute w-full">
                   {teamMembers
                     .filter((member) =>
                       member.toLowerCase().includes(teamSearch.toLowerCase())
@@ -227,12 +236,27 @@ export default function EventModal({
               </div>
             </FormItem>
 
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Event Description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Action Buttons */}
             <div className="flex justify-end space-x-3 pt-4">
               <Button type="button" variant="secondary" onClick={onClose}>
                 Cancel
               </Button>
               <Button type="submit" className="bg-sky-700 hover:bg-sky-800">
-                Save
+                {isEditing ? "Save Changes" : "Create Event"}
               </Button>
             </div>
           </form>

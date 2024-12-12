@@ -2,73 +2,42 @@
  * @path src/components/lead/ui/modal.tsx
  */
 
+import { Button } from "@/components/ui/button"
+import React from "react"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { X } from "lucide-react"
-import React from "react"
-import { PropsWithChildren } from "react"
 
-interface DialogItemProps extends PropsWithChildren {
-  triggerChildren: React.ReactNode
-  onSelect?: () => void
-  onOpenChange?: (arg0: boolean) => void
-  className?: string
+interface ModalProps {
+  isOpen: boolean
+  onClose: () => void
+  header?: string
+  children: React.ReactElement
 }
 
-const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
-  const {
-    triggerChildren,
-    children,
-    onSelect,
-    onOpenChange,
-    className,
-    ...itemProps
-  } = props
-
-  const handleOpenChange = (open: boolean) => {
-    if (onOpenChange) {
-      onOpenChange(open)
-    }
-  }
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  header,
+  children,
+}) => {
+  if (!isOpen) return null
 
   return (
-    <Dialog onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <DropdownMenuItem
-          {...itemProps}
-          ref={forwardedRef as React.LegacyRef<HTMLDivElement>}
-          className={`DropdownMenuItem ${className}`}
-          onSelect={(event) => {
-            event.preventDefault()
-            onSelect && onSelect()
-          }}
-        >
-          {triggerChildren}
-        </DropdownMenuItem>
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay className="DialogOverlay" />
-        <DialogContent className="DialogContent">
-          {children}
-          <DialogClose asChild>
-            <button className="IconButton" aria-label="Close">
-              <X />
-            </button>
-          </DialogClose>
-        </DialogContent>
-      </DialogPortal>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-md:top-1/3">
+      <DialogTitle>{header ?? ''}</DialogTitle>
+        <DialogHeader>{header}</DialogHeader>
+        <DialogDescription >  </DialogDescription>
+        <div>{children}</div>
+    
+      </DialogContent>
     </Dialog>
   )
-})
+}
 
-DialogItem.displayName = "DialogItem"
-export default DialogItem
+export default Modal

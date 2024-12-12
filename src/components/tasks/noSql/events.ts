@@ -1,4 +1,18 @@
-// data/events.js
+/**
+ * @path src/components/tasks/noSql/events.ts
+ */
+
+export interface Event {
+  id: string
+  title: string
+  description?: string
+  date?: Date
+  start: Date
+  end: Date
+  teamMembers?: string[]
+  color?: string
+}
+
 export const initialEvents = [
   {
     id: "1",
@@ -24,8 +38,8 @@ export const initialEvents = [
   {
     id: "4",
     title: "Demo Presentation",
-    start: new Date(2024, 10, 9, 11, 0), // November 9, 2024, 11:00 AM
-    end: new Date(2024, 10, 9, 12, 0),
+    start: new Date(2024, 10, 2, 12, 0), // November 9, 2024, 11:00 AM
+    end: new Date(2024, 10, 2, 12, 0),
     color: "bg-red-500",
   },
 ]

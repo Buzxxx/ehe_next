@@ -5,6 +5,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Avataar from "./avataar";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface ProfilePopoverProps {
   className: string;
@@ -26,25 +28,25 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({
   return (
     <Popover>
       <PopoverTrigger>{trigger}</PopoverTrigger>
-      <PopoverContent className={className}>
-        <div className="p-4 flex flex-col justify-center items-center bg-sky-500 text-white">
-          <div className="border-2 mb-3 p-2 rounded-full border-sky-200">
+      <PopoverContent className={className} content="rounded-2xl">
+        <div className="p-4 flex flex-col justify-center items-center bg-gray-50 border-b">
+          <Link href={`/profile/${username}`} className="border mb-2 p-1 rounded-full border-sky-600">
             <Avataar className="w-16 h-16" src={src} />
-          </div>
-          <h4 className="text-md mb-1">
-            {username ? username + "&nbsp; -- &nbsp; " : "Guest"}
+          </Link>
+          <Link href={`/profile/${username}`} className="text-base">
+            {username ? username : "Guest"}
 
             {role ? role : ""}
-          </h4>
+          </Link>
           <p className="text-xs">
             Last Login - &nbsp;
             {lastLogin ? lastLogin : "Recently"}
           </p>
         </div>
         <div className="p-2 w-full flex justify-end">
-          <button className="py-2 px-2 bg-slate-300 hover:bg-slate-200 ">
+          <Button className="py-2 px-4 text-slate-400 bg-slate-50 border transition-all hover:border-slate-600 hover:bg-white hover:text-slate-600">
             Log Out
-          </button>
+          </Button>
         </div>
       </PopoverContent>
     </Popover>
