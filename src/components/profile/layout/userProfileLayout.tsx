@@ -22,7 +22,7 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
   }
 
   return (
-    <div className="md:px-4 px-2 lg:px-6 md:py-6 bg-[#d1d1d1]/10 min-h-screen rounded-lg">
+    <div className="md:px-4 px-2 lg:px-6 md:py-6 bg-[#d1d1d1]/10 min-h-screen rounded-lg scroll-smooth">
       <UserProfileHeader
         isEditing={isEditing}
         setIsEditing={setIsEditing}

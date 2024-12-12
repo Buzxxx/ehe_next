@@ -63,7 +63,7 @@ const EmployeeDetail = ({
           type={type}
           value={tempValue || ""} // Ensure value is never null
           onChange={(e) => setTempValue(e.target.value)}
-          className="border-b flex-1 w-fit border-gray-300 focus:outline-none"
+          className="border-b flex-1 w-full bg-transparent border-gray-300 focus:outline-none"
           placeholder={placeholder}
           autoFocus
         />

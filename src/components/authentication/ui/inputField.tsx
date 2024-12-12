@@ -11,12 +11,14 @@ import { UseFormRegisterReturn } from "react-hook-form"
 
 import ClosedEye from "@/components/ui/icons/closedEye"
 import OpenEye from "@/components/ui/icons/openEye"
+import { cn } from "@/lib/utils"
 
 interface InputFieldProps {
   label: string
   placeholder: string
   field: UseFormRegisterReturn
   isPassword?: boolean
+  className?: string
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -24,6 +26,7 @@ const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   field,
   isPassword = false,
+  className
 }) => {
   const [visible, setVisible] = useState(false)
 
@@ -40,7 +43,7 @@ const InputField: React.FC<InputFieldProps> = ({
             placeholder={placeholder}
             {...field}
             type={isPassword ? (visible ? "text" : "password") : "text"}
-            className="py-6 mb-2 md:text-sm text-xs"
+            className={cn("py-6 mb-2 md:text-sm text-xs", className)}
           />
           {isPassword && (
             <>
