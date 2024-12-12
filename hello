@@ -1,0 +1,97 @@
+ .../[entity]/employees/[employeeId]/page.tsx       |  19 [32m++[m
+ src/app/(dashboard)/account/[entity]/page.tsx      |  23 [32m++[m
+ src/app/(dashboard)/account/page.tsx               |   5 [32m+[m
+ .../lead/@modal/(.)leadReassignModal/page.tsx      |  30 [31m---[m
+ src/app/(dashboard)/lead/@modal/default.tsx        |   3 [31m-[m
+ src/app/(dashboard)/lead/layout.tsx                |  13 [31m-[m
+ .../(dashboard)/lead/leadReassignModal/page.tsx    |  32 [31m---[m
+ src/app/(dashboard)/profile/page.tsx               |  19 [32m++[m
+ .../{workforce => teams}/create/page.tsx           |   2 [32m+[m[31m-[m
+ .../{workforce => teams}/edit/[id]/alias/page.tsx  |   8 [32m+[m[31m-[m
+ .../{workforce => teams}/edit/[id]/page.tsx        |   8 [32m+[m[31m-[m
+ src/app/(dashboard)/teams/page.tsx                 |  10 [32m+[m
+ .../(dashboard)/workforce/[employeeId]/page.tsx    |  12 [31m-[m
+ src/app/(dashboard)/workforce/page.tsx             |  10 [31m-[m
+ .../account/feature/deactivateUserModal.tsx        |  44 [32m++++[m
+ .../feature/employeeActivityList.tsx               |   2 [32m+[m[31m-[m
+ src/components/account/feature/employeeColumn.tsx  |  86 [32m+++++++[m
+ src/components/account/feature/employeeDetails.tsx | 132 [32m++++++++++[m
+ .../account/feature/employeeProfileHeader.tsx      | 129 [32m++++++++++[m
+ .../feature/employeeStatsOverview.tsx              |   6 [32m+[m[31m-[m
+ .../account/feature/resetPasswordModal.tsx         |  95 [32m++++++++[m
+ src/components/account/feature/userAliasTable.tsx  | 110 [32m+++++++++[m
+ src/components/account/layout/accountLayout.tsx    |  72 [32m++++++[m
+ .../account/layout/empolyeeProfileLayout.tsx       |  48 [32m++++[m
+ src/components/account/layout/entityPageLayout.tsx | 181 [32m++++++++++++++[m
+ .../ui/employeeActivityItem.tsx                    |   0
+ src/components/account/ui/employeeDetail.tsx       |  77 [32m++++++[m
+ .../{workforce => account}/ui/employeeStatCard.tsx |   0
+ src/components/account/ui/entityCard.tsx           | 117 [32m+++++++++[m
+ .../dashboard/feature/dashboardHeader.tsx          |   3 [32m+[m[31m-[m
+ src/components/dashboard/feature/sideBar.tsx       |  27 [32m++[m[31m-[m
+ src/components/dashboard/layout/dashboard.tsx      |   2 [32m+[m[31m-[m
+ .../dashboard/library/dashboardItems.tsx           |  17 [32m+[m[31m-[m
+ src/components/dashboard/ui/avataar.tsx            |   2 [32m+[m[31m-[m
+ src/components/dashboard/ui/dashboardTopbar.tsx    |  84 [32m++[m[31m-----[m
+ src/components/dashboard/ui/profilePopover.tsx     |  20 [32m+[m[31m-[m
+ src/components/dashboard/ui/profileTab.tsx         |  43 [32m+++[m[31m-[m
+ src/components/dashboard/ui/sideNavItem.tsx        |  13 [32m+[m[31m-[m
+ .../import/feature/dragNDrop/previewTable.tsx      |   2 [32m+[m[31m-[m
+ src/components/import/layout/dragNDropLayout.tsx   |   2 [32m+[m[31m-[m
+ .../lead/features/forms/leadReassignForm.tsx       |  20 [32m+[m[31m-[m
+ .../lead/features/leadListing/leadList.tsx         |  82 [32m+++++[m[31m--[m
+ .../features/leadListing/leadSummarySection.tsx    | 105 [32m+++++++[m[31m-[m
+ .../features/leadListing}/paginationComp.tsx       |  56 [32m+++[m[31m--[m
+ .../lead/features/leadListing/topBar.tsx           |  72 [32m+++[m[31m---[m
+ .../lead/features/leadPage/leadPageHeader.tsx      | 195 [32m+++++++++++[m[31m----[m
+ .../features/leadPage/leadStatusUpdateForm.tsx     |  87 [32m+++[m[31m----[m
+ .../lead/features/leadPage/leadTimeline.tsx        |  27 [32m++[m[31m-[m
+ src/components/lead/hooks/useLeadSave.ts           |  33 [32m+++[m
+ src/components/lead/layout/leadLayout.tsx          |  32 [32m++[m[31m-[m
+ src/components/lead/layout/leadPageLayout.tsx      |   5 [32m+[m[31m-[m
+ src/components/lead/ui/dropDownModal.tsx           |  73 [32m++++++[m
+ src/components/lead/ui/leadListing/leadCard.tsx    | 138 [32m++++++[m[31m-----[m
+ src/components/lead/ui/leadListing/leadRow.tsx     |  73 [32m++++[m[31m--[m
+ .../lead/ui/leadListing/leadSummaryCard.tsx        |  65 [32m++++[m[31m-[m
+ src/components/lead/ui/leadPage/avataar.tsx        |   2 [32m+[m[31m-[m
+ src/components/lead/ui/leadPage/timelineTopbar.tsx |  37 [32m+[m[31m--[m
+ src/components/lead/ui/leadPage/timelineUI.tsx     |  28 [32m+[m[31m--[m
+ src/components/lead/ui/modal.tsx                   |  81 [32m++[m[31m-----[m
+ .../profile/feature/userProfileDetails.tsx         | 132 [32m++++++++++[m
+ .../profile/feature/userProfileHeader.tsx          | 128 [32m++++++++++[m
+ .../profile/layout/userProfileLayout.tsx           |  47 [32m++++[m
+ .../propertyPage/features/bookAppointment.tsx      |   2 [32m+[m[31m-[m
+ .../propertyPage/features/shareModal.tsx           |   3 [32m+[m
+ src/components/propertyPage/ui/shareModalUI.tsx    |   8 [32m+[m[31m-[m
+ src/components/tasks/feature/calendar.tsx          | 154 [32m++++++[m[31m------[m
+ src/components/tasks/noSql/events.ts               |  20 [32m+[m[31m-[m
+ src/components/tasks/ui/createEventModal.tsx       | 270 [32m+++++++++++[m[31m----------[m
+ src/components/tasks/ui/dayView.tsx                | 119 [32m++++++[m[31m---[m
+ src/components/tasks/ui/weekView.tsx               | 130 [32m++++++[m[31m----[m
+ .../{workforce => teams}/feature/workforce.ts      |   0
+ src/components/teams/feature/workforceMain.tsx     | 111 [32m+++++++++[m
+ .../feature/workforceTopbar.tsx                    |  22 [32m+[m[31m-[m
+ src/components/teams/layout/teamsLayout.tsx        |  15 [32m++[m
+ .../{workforce => teams}/layout/userAliasTable.tsx |   0
+ src/components/teams/lib/employees.ts              |  97 [32m++++++++[m
+ .../{workforce => teams}/lib/sampleData.ts         |   0
+ .../{workforce => teams}/ui/actionCell.tsx         |   0
+ src/components/teams/ui/chatWindow.tsx             | 149 [32m++++++++++++[m
+ .../{workforce => teams}/ui/createUserForm.tsx     |   0
+ .../{workforce => teams}/ui/tableColumns.tsx       |   0
+ src/components/teams/ui/userProfileModal.tsx       |  72 [32m++++++[m
+ src/components/teams/ui/workCard.tsx               |  34 [32m+++[m
+ .../{workforce => teams}/ui/workforceModal.tsx     |   0
+ .../{workforce => teams}/ui/workforceTableRow.tsx  |   0
+ .../{workforce => teams}/ui/workforceTabs.tsx      |   2 [32m+[m[31m-[m
+ src/components/ui/dataTable.tsx                    |  34 [32m++[m[31m-[m
+ src/components/ui/editableField.tsx                |  14 [32m+[m[31m-[m
+ src/components/ui/icons/index.ts                   |   2 [32m+[m
+ .../workforce/feature/employeeDetails.tsx          |  43 [31m----[m
+ .../workforce/feature/employeeProfileHeader.tsx    |  34 [31m---[m
+ src/components/workforce/feature/workforceMain.tsx |  40 [31m---[m
+ .../workforce/layout/empolyeeProfileLayout.tsx     |  20 [31m--[m
+ src/components/workforce/layout/workforce.tsx      |  25 [31m--[m
+ src/components/workforce/ui/employeeDetail.tsx     |  18 [31m--[m
+ src/components/workforce/ui/workCard.tsx           |  44 [31m----[m
+ 96 files changed, 3356 insertions(+), 1152 deletions(-)
