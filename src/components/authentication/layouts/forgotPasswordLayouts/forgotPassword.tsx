@@ -38,7 +38,6 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("")
 
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const handleNextStep = () => setCurrentStep((prevStep) => prevStep + 1)
   const handlePrevStep = () => setCurrentStep((prevStep) => prevStep - 1)
