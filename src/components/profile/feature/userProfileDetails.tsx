@@ -1,9 +1,9 @@
-import EmployeeDetail from "../ui/employeeDetail"
+import EmployeeDetail from "@/components/account/ui/employeeDetail"
 import { Copy } from "@/components/ui/icons"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Employee } from "./employeeColumn"
 import { SetStateAction } from "react"
+import { Employee } from "@/components/account/feature/employeeColumn"
 
 const EmployeeDetails = ({
   isEditing,
@@ -35,9 +35,9 @@ const EmployeeDetails = ({
           </button>
         </h6>
       </CardHeader>
-      <CardContent className="p-0 md:px-4 md:flex-row flex-col mt-4 flex gap-4 justify-between items-start">
+      <CardContent className="p-0 md:px-4 mt-4 flex md:flex-row flex-col gap-4 justify-between items-start">
         {/* Work Details */}
-        <div className="p-4 border bg-gray-50 rounded-md shadow-sm flex-1 w-full">
+        <div className="p-4 w-full border bg-gray-50 rounded-md shadow-sm flex-1">
           <div className="pb-2 border-b mb-4">
             <h6 className="font-medium text-gray-700">Work Details</h6>
           </div>
@@ -45,7 +45,7 @@ const EmployeeDetails = ({
             <EmployeeDetail
               employee={employee}
               setEmployee={setEmployee}
-              isEditable={true}
+              isEditable={false}
               isEditing={isEditing}
               title="Manager"
               value="EHE Industries"
@@ -54,7 +54,7 @@ const EmployeeDetails = ({
             <EmployeeDetail
               employee={employee}
               setEmployee={setEmployee}
-              isEditable={true}
+              isEditable={false}
               isEditing={isEditing}
               title="Department"
               value="Software"
@@ -63,7 +63,7 @@ const EmployeeDetails = ({
             <EmployeeDetail
               employee={employee}
               setEmployee={setEmployee}
-              isEditable={true}
+              isEditable={false}
               isEditing={isEditing}
               title="Date Joined"
               value="12 August 2024"
@@ -72,7 +72,7 @@ const EmployeeDetails = ({
             <EmployeeDetail
               employee={employee}
               setEmployee={setEmployee}
-              isEditable={true}
+              isEditable={false}
               isEditing={isEditing}
               span={2}
               title="Location"
@@ -82,7 +82,7 @@ const EmployeeDetails = ({
         </div>
 
         {/* Personal Details */}
-        <div className="p-4 border bg-gray-50 rounded-md shadow-sm flex-1 w-full">
+        <div className="p-4 w-full border bg-gray-50 rounded-md shadow-sm flex-1">
           <div className="pb-2 border-b mb-4">
             <h6 className="font-medium text-gray-700">Personal Details</h6>
           </div>

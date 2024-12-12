@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/popover";
 import Avataar from "./avataar";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface ProfilePopoverProps {
   className: string;
@@ -29,14 +30,14 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({
       <PopoverTrigger>{trigger}</PopoverTrigger>
       <PopoverContent className={className} content="rounded-2xl">
         <div className="p-4 flex flex-col justify-center items-center bg-gray-50 border-b">
-          <div className="border mb-2 p-1 rounded-full border-sky-600">
+          <Link href={`/profile/${username}`} className="border mb-2 p-1 rounded-full border-sky-600">
             <Avataar className="w-16 h-16" src={src} />
-          </div>
-          <h4 className="text-base">
+          </Link>
+          <Link href={`/profile/${username}`} className="text-base">
             {username ? username : "Guest"}
 
             {role ? role : ""}
-          </h4>
+          </Link>
           <p className="text-xs">
             Last Login - &nbsp;
             {lastLogin ? lastLogin : "Recently"}

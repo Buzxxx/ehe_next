@@ -3,22 +3,33 @@
  */
 
 'use client'
-
 import Avataar from "@/components/dashboard/ui/avataar"
 import { DataTable } from "@/components/ui/dataTable"
-import { Employee, columns } from "../feature/employeeColumn"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
+import { columns } from "../feature/employeeColumn"
+import ResetPasswordModal from "../feature/resetPasswordModal"
+import DeactivateUserModal from "../feature/deactivateUserModal"
+
+// Employee interface and columns
+interface Employee {
+  id: number
+  name: string
+  email: string
+  phone: string
+  status: "active" | "inactive"
+  teamId: number
+}
 
 export default function EntityPageLayout({ entity }: { entity: string }) {
-  const sampleData: Employee[] = [
+  const [sampleData, setSampleData] = useState<Employee[]>([
     {
       id: 1,
       name: "John Doe",
       email: "john@example.com",
       phone: "123-456-7890",
       status: "active",
-      teamId: 1
+      teamId: 1,
     },
     {
       id: 2,
@@ -26,7 +37,7 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
       email: "jane@example.com",
       phone: "234-567-8901",
       status: "inactive",
-      teamId: 2
+      teamId: 2,
     },
     {
       id: 3,
@@ -34,7 +45,7 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
       email: "alice@example.com",
       phone: "345-678-9012",
       status: "active",
-      teamId:3
+      teamId: 3,
     },
     {
       id: 4,
@@ -42,7 +53,7 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
       email: "bob@example.com",
       phone: "456-789-0123",
       status: "inactive",
-      teamId: 4
+      teamId: 4,
     },
     {
       id: 5,
@@ -50,18 +61,39 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
       email: "charlie@example.com",
       phone: "567-890-1234",
       status: "active",
-      teamId: 4
+      teamId: 4,
     },
-  ]
+  ])
 
-  
   const [selectedTab, setSelectedTab] = useState<"active" | "inactive">(
     "active"
   )
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
+    null
+  )
+  const [selectedEmployeeForDeactivation, setSelectedEmployeeForDeactivation] =
+    useState<Employee | null>(null)
 
   const filteredData = sampleData.filter(
     (employee) => employee.status === selectedTab
   )
+
+  const handleResetPassword = (id: number) => {
+    setSelectedEmployeeId(id) // Set the ID for the employee
+  }
+
+  const handleDeactivateUser = (employee: Employee) => {
+    setSelectedEmployeeForDeactivation(employee)
+  }
+
+  const confirmDeactivation = (id: number) => {
+    setSampleData((prevData) =>
+      prevData.map((employee) =>
+        employee.id === id ? { ...employee, status: "inactive" } : employee
+      )
+    )
+    setSelectedEmployeeForDeactivation(null)
+  }
 
   return (
     <>
@@ -80,7 +112,6 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
         </div>
       </div>
       <div>
-        {/* Tabs Section */}
         <Tabs
           value={selectedTab}
           onValueChange={(value) =>
@@ -102,8 +133,49 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
             </TabsTrigger>
           </TabsList>
         </Tabs>
-        <DataTable columns={columns} data={filteredData} />
+        <DataTable
+          columns={columns.map((col) => {
+            if (col.header === "Actions") {
+              return {
+                ...col,
+                cell: ({ row }: any) => (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleResetPassword(row.original.id)}
+                      className="text-blue-600 underline"
+                    >
+                      Reset Password
+                    </button>
+                    <button
+                      onClick={() => handleDeactivateUser(row.original)}
+                      className="text-red-600 underline"
+                    >
+                      Deactivate User
+                    </button>
+                  </div>
+                ),
+              }
+            }
+            return col
+          })}
+          data={filteredData}
+        />
       </div>
+      {selectedEmployeeId !== null && (
+        <ResetPasswordModal
+          employeeId={selectedEmployeeId}
+          onClose={() => setSelectedEmployeeId(null)}
+        />
+      )}
+      {selectedEmployeeForDeactivation !== null && (
+        <DeactivateUserModal
+          employee={selectedEmployeeForDeactivation}
+          onConfirm={() =>
+            confirmDeactivation(selectedEmployeeForDeactivation.id)
+          }
+          onClose={() => setSelectedEmployeeForDeactivation(null)}
+        />
+      )}
     </>
   )
 }

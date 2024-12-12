@@ -35,6 +35,7 @@ const dashboardItems = [
     title: "Settings",
     icon: <Settings size={20} />,
     subItems: [
+      {name: "Profile", route: "/profile"},
       { name: "Account", route: "/account" },
       { name: "Change Password", route: "/auth/resetPassword" },
       { name: "Logout", route: "/auth/login" },
