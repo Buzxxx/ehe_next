@@ -2,7 +2,7 @@
  * @path src/app/(dashboard)/profile/[user]/page.tsx
  */
 
-import EmpolyeeProfileLayout from "@/components/account/layout/empolyeeProfileLayout"
+import UserProfileLayout from "@/components/profile/layout/userProfileLayout"
 
 interface ProfilePageProps {
   params: Promise<{
@@ -13,7 +13,7 @@ interface ProfilePageProps {
 const EmployeeProfile = async ({ params }: ProfilePageProps) => {
   const resolvedParams = await params
 
-  return <EmpolyeeProfileLayout employeeId={resolvedParams.user} />
+  return <UserProfileLayout employeeId={resolvedParams.user} />
 }
 
 export default EmployeeProfile

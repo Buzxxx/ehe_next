@@ -15,15 +15,14 @@ import ChevronDown from "@/components/ui/icons/chevronDown"
 import { FolderPen, UserRoundMinus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import React from "react"
-import { Employee } from "./employeeColumn"
+import { Employee } from "@/components/account/feature/employeeColumn"
 
 const EmployeeProfileHeader = ({
   isEditing,
   setIsEditing,
   onSave,
   role,
-  setEmployee,
+  setEmployee
 }: {
   isEditing: boolean
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
@@ -54,7 +53,7 @@ const EmployeeProfileHeader = ({
   }
 
   return (
-    <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 px-2 mb-6">
+    <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 p-2 md:mb-6 mb-2">
       <div className="flex gap-4 items-center">
         <div className="border-r pr-4">
           <Avataar className="rounded-full" />

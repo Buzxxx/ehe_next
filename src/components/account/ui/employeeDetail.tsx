@@ -58,7 +58,7 @@ const EmployeeDetail = ({
       onMouseLeave={handleBlur}
     >
       <p className="text-gray-400 text-sm font-light">{title}</p>
-      {isEditing ? (
+      {isEditable && isEditing ? (
         <input
           type={type}
           value={tempValue || ""} // Ensure value is never null

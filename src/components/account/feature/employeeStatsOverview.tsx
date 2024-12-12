@@ -12,11 +12,9 @@ const EmployeeStatsOverview = () => {
           <h4 className="text-lg font-semibold text-gray-800">Overview</h4>
           <p className="text-gray-500">Joined: 12 August 2024</p>
         </div>
-        <Button className="bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-2 focus:ring-gray-400">
-          All Time <ChevronDown />
-        </Button>
+      
       </div>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mt-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 mt-4">
         <EmployeeStatCard title="Attendance" value="16/28" />
         <EmployeeStatCard title="Working Hours" value="2.43" />
         <EmployeeStatCard title="Earnings" value="711" />
