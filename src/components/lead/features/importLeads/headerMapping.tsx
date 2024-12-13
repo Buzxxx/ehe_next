@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import LeadImportNavButtons, {
   LeadImportButtonProps,
-} from "./importLeads/leadImportNavButtons";
+} from "./leadImportNavButtons";
 
 interface HeaderMappingProps {
   headers: string[];
