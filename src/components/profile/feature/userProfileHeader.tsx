@@ -116,7 +116,7 @@ const EmployeeProfileHeader = ({
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={onSave} className="h-8 w-fit py-0">
+          <Button onClick={onSave} className="h-8 w-fit py-0 bg-sky-600 hover:bg-sky-700">
             Save
           </Button>
         )}

@@ -37,7 +37,7 @@ const dashboardItems = [
     subItems: [
       {name: "Profile", route: "/profile"},
       { name: "Account", route: "/account" },
-      { name: "Change Password", route: "/auth/resetPassword" },
+      { name: "Change Password", route: "/resetPassword" },
       { name: "Logout", route: "/auth/login" },
     ],
   },

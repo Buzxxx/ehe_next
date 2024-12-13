@@ -95,10 +95,10 @@ const UserAliasTable = () => {
               className="mb-4"
             />
             <div className="flex justify-end space-x-4">
-              <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+              <Button variant="secondary"  onClick={() => setIsModalOpen(false)}>
                 Cancel
               </Button>
-              <Button onClick={handleAddAlias}>Add Alias</Button>
+              <Button className="bg-sky-600 hover:bg-sky-500" onClick={handleAddAlias}>Add Alias</Button>
             </div>
           </div>
         </DialogContent>
