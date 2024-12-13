@@ -12,7 +12,7 @@ export const vendors = [
     vendorServices: "Procurement",
     vendorMatchPercentage: 85,
     isVerified: true,
-    regions: [1,2,3, 4],
+    regions: [1, 2, 3, 4],
     capabilities: [1, 2, 3],
     organizationalFunctions: [2, 4],
     contractTypes: [1, 5],
@@ -200,14 +200,14 @@ export const vendors = [
     licensingModels: [1, 3, 5],
     integrations: [1, 2, 3],
   },
-]
+];
 
 export const regions = [
   { id: 1, name: "APAC" },
   { id: 2, name: "EMEA" },
   { id: 3, name: "LATM " },
   { id: 4, name: "North America" },
-]
+];
 
 export const capabilities = [
   { id: 1, name: "Change Management" },
@@ -217,7 +217,7 @@ export const capabilities = [
   { id: 5, name: "Repository and Integration Capabilities" },
   { id: 6, name: "Custom Reporting and Queries" },
   { id: 7, name: "Obligation Tracking and Upload of Evidence" },
-]
+];
 
 export const organizationalFunctions = [
   { id: 1, name: "Commercial" },
@@ -225,7 +225,7 @@ export const organizationalFunctions = [
   { id: 3, name: "Other Dept" },
   { id: 4, name: "Procurement" },
   { id: 5, name: "Risk/Compliance" },
-]
+];
 
 export const contractTypes = [
   { id: 1, name: "Buy Side" },
@@ -233,7 +233,7 @@ export const contractTypes = [
   { id: 3, name: "Employment" },
   { id: 4, name: "Other Type" },
   { id: 5, name: "Sell Side" },
-]
+];
 
 export const licensingModels = [
   { id: 1, name: "Annual subscription fee" },
@@ -241,11 +241,11 @@ export const licensingModels = [
   { id: 3, name: "Monthly subscription fee" },
   { id: 4, name: "Perpetual" },
   { id: 5, name: "Volume-based" },
-]
+];
 
 export const integrations = [
   { id: 1, name: "Application Integration (API)" },
   { id: 2, name: "E-mail Client" },
   { id: 3, name: "eSignatures" },
   { id: 4, name: "Financials and Supply Chain Management (FSCM)" },
-]
+];
