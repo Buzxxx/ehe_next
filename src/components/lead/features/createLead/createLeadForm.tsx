@@ -1,6 +1,6 @@
-// /components/lead/feature/CreateLeadForm.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,20 +11,26 @@ import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
 import { SelectItem } from "@/components/ui/select";
 import { create_lead_controller } from "@/components/lead/features/leadObject";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  get_all_active_employee_list_controller,
+  get_user_data_from_cookie,
+} from "../userObject";
+
+const userData = await get_user_data_from_cookie();
 
 export const CreateLeadFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   contact: z.string().min(10, "Phone number must be at least 10 digits"),
-  lead_type: z.enum(["A", "B", "C", "D", "E", "F"]),
+  lead_type: z.string().optional(),
   query: z.string().optional(),
-  interested_in: z.string().optional(),
-  assigned_to: z.string().min(1, "Assigned To is required"), // Assuming this is required
+  interested_in: z.string().min(10),
+  assigned_to: z.string().min(1, "Assigned To is required"),
   product_code: z.string().optional(),
-  product_type: z.enum(["A", "B", "C", "D", "E", "F"]),
-  status: z.number().optional().default(1), // Default value if not provided
-  source: z.string().optional().default("4"), // Default value if not provided
-  priority: z.enum(["cold", "hot", "C", "D", "E", "F"]),
+  product_type: z.string().optional(),
+  status: z.number().optional().default(1),
+  source: z.string().optional().default("4"),
+  priority: z.enum(["cold", "warm", "hot"]),
 });
 
 const CreateLeadForm = () => {
@@ -32,31 +38,58 @@ const CreateLeadForm = () => {
   const form = useForm<z.infer<typeof CreateLeadFormSchema>>({
     resolver: zodResolver(CreateLeadFormSchema),
     defaultValues: {
-      name: "", // Default to an empty string or a sensible default
+      name: "",
       email: "",
       contact: "",
-      lead_type: "D", // Assuming "D" is a valid default
+      lead_type: "",
       query: "",
       interested_in: "",
-      assigned_to: "Virat Kohli", // Default assigned person
+      assigned_to: userData.id.toString(),
       product_code: "",
-      product_type: "A", // Assuming "A" is a valid default
+      product_type: "",
       priority: "cold",
       status: 1,
     },
   });
 
+  const [users, setUsers] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    const fetchActiveEmployees = async () => {
+      try {
+        const result = await get_all_active_employee_list_controller();
+        if (result) {
+          setUsers(result);
+        } else {
+          toast({
+            title: "Error fetching users",
+            variant: "destructive",
+            description: "Could not load active employees.",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+        toast({
+          title: "Error",
+          variant: "destructive",
+          description: "Failed to fetch active employees.",
+        });
+      }
+    };
+
+    fetchActiveEmployees();
+  }, [toast]);
+
   async function onSubmit(values: z.infer<typeof CreateLeadFormSchema>) {
     const leadData = {
       ...values,
       status: values.status ?? 1,
-      source: values.source ?? "4",
+      source: values.source ?? "Lead Form",
     };
 
     try {
       const result = await create_lead_controller(leadData);
       if (result.lead) {
-        console.log("Lead created successfully:", result);
         toast({
           title: "Lead created successfully",
           description: `LeadId: ${result.lead}`,
@@ -65,7 +98,7 @@ const CreateLeadForm = () => {
         toast({
           title: "Something went wrong",
           variant: "destructive",
-          description: `Please try again later or contact the administrator`,
+          description: "Please try again later or contact the administrator.",
         });
       }
     } catch (error) {
@@ -74,8 +107,6 @@ const CreateLeadForm = () => {
       form.reset();
     }
   }
-
-  const leadTypeOptions = ["A", "B", "C", "D", "E", "F"];
 
   return (
     <Form {...form}>
@@ -89,92 +120,97 @@ const CreateLeadForm = () => {
             fieldType={FormFieldType.INPUT}
             name="name"
             label="Name"
-            placeholder="Kapil Dev"
+            placeholder="Enter full name (e.g., Kapil Dev)"
           />
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="email"
             label="Email"
-            placeholder="example@user.com"
+            placeholder="Enter a valid email address (e.g., example@user.com)"
           />
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.PHONE}
             name="contact"
             label="Phone Number"
-            placeholder="+91 12345 67890"
+            placeholder="Enter phone number with country code (e.g., +91 12345 67890)"
           />
           <CustomFormField
             control={form.control}
-            fieldType={FormFieldType.SELECT}
+            fieldType={FormFieldType.INPUT}
             name="lead_type"
             label="Lead Type"
-            placeholder="D"
-          >
-            {["A", "B", "C", "D", "E", "F"].map((option) => (
-              <SelectItem key={option} value={option}>
-                {option}
-              </SelectItem>
-            ))}
-          </CustomFormField>
+            placeholder="Specify lead type (e.g., New, Follow-up)"
+          />
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="query"
             label="Query"
-            placeholder="D"
+            placeholder="Provide details about the query or request"
           />
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
             name="assigned_to"
-            label="Assigned To"
-            placeholder="Virat Kohli"
+            label="Assigned to"
+            placeholder="Select team member to assign the lead"
           >
-            <SelectItem key={"Avinash"} value={"Avinash Jha"}>
-              {"Avinash Jha"}
-            </SelectItem>
+            {users.map((user) => (
+              <SelectItem key={user.id} value={user.id.toString()}>
+                {user.name}
+              </SelectItem>
+            ))}
           </CustomFormField>
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="product_code"
             label="Product Code"
-            placeholder="sfsdf"
+            placeholder="Enter the product code (e.g., P12345)"
           />
           <CustomFormField
             control={form.control}
-            fieldType={FormFieldType.SELECT}
+            fieldType={FormFieldType.INPUT}
             name="product_type"
             label="Product Type"
-            placeholder="D"
-          >
-            {leadTypeOptions.map((option) => (
-              <SelectItem key={option} value={option}>
-                {option}
-              </SelectItem>
-            ))}
-          </CustomFormField>
+            placeholder="Enter the product type (e.g., Software, Hardware)"
+          />
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SELECT}
             name="priority"
             label="Priority"
-            placeholder="Cold"
+            placeholder="Select lead priority"
           >
-            <SelectItem key={"cold"} value={"cold"}>
-              {"cold"}
+            <SelectItem key="cold" value="cold">
+              <div className="flex items-center">
+                <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
+                Cold
+              </div>
+            </SelectItem>
+            <SelectItem key="warm" value="warm">
+              <div className="flex items-center">
+                <span className="w-4 h-4 bg-yellow-500 rounded-full mr-2"></span>
+                Warm
+              </div>
+            </SelectItem>
+            <SelectItem key="hot" value="hot">
+              <div className="flex items-center">
+                <span className="w-4 h-4 bg-red-500 rounded-full mr-2"></span>
+                Hot
+              </div>
             </SelectItem>
           </CustomFormField>
 
-          <div className="col-span-1  md:col-span-3">
+          <div className="col-span-1 md:col-span-3">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.TEXTAREA}
               name="interested_in"
               label="Interested In"
-              placeholder="34432 Helium Fields, New York, NY"
+              placeholder="Provide details on the lead's interest (e.g., product features, demo)"
               rows={1}
             />
           </div>
