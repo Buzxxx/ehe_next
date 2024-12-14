@@ -1,9 +1,16 @@
 import settings, { Server } from "@/settings/settings";
+import { getCookie } from "@/cookies/cookiesService";
 
 export interface RequestOptions {
   method: string;
   headers?: HeadersInit;
   body?: string;
+  skipAuth?: boolean;
+}
+
+async function get_access_token() {
+  const accessTokenName = "accessToken";
+  return await getCookie(accessTokenName);
 }
 
 const apiClient = async (
@@ -12,11 +19,13 @@ const apiClient = async (
   options: RequestOptions
 ) => {
   const url = apiurls(endpoint, serverName);
+  const token = options.skipAuth ? null : await get_access_token();
   try {
     const response = await fetch(url, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(options.headers || {}),
       },
     });

@@ -153,9 +153,6 @@ async function get_leads_from_server(queryParams: string) {
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response;
   } catch (error: any) {
@@ -171,9 +168,6 @@ async function get_lead_from_server(id: string) {
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response;
   } catch (error: any) {
@@ -183,12 +177,10 @@ async function get_lead_from_server(id: string) {
 }
 
 async function push_create_lead_to_server(data: any) {
+  const token = await get_access_token();
   try {
     const response = await apiClient(apiPaths.createLead, "ProdBackendServer", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(data),
     });
     return response;
@@ -198,15 +190,13 @@ async function push_create_lead_to_server(data: any) {
 }
 
 async function push_create_bulk_lead_to_server(data: any) {
+  const token = await get_access_token();
   try {
     const response = await apiClient(
       apiPaths.createLeadBulk,
       "ProdBackendServer",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(data),
       }
     );
@@ -222,11 +212,9 @@ export interface CsvUploadPayload {
 }
 
 export async function UploadLeadsFromCsv({ data, headers }: CsvUploadPayload) {
+  const token = await get_access_token();
   const response = await apiClient("/api/upload", "ProdBackedServer", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({ data, headers }),
   });
   return response;
