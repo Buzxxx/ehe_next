@@ -16,6 +16,7 @@ export interface Employee {
   teamId: number
   role?: string
   date_joined?: string
+  
 }
 
 export const columns: ColumnDef<Employee, any>[] = [

@@ -20,40 +20,36 @@ import { formatDate } from "@/utility/formatDate"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Employee } from "../feature/employeeColumn"
+import { only } from "node:test"
 
 type EmployeeCardProps = {
   employee: Employee
-	onResetPassword: () => void
-	onDeactivateUser: () => void
+  onResetPassword: () => void
+  onDeactivateUser: () => void
 }
 
-export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, onResetPassword, onDeactivateUser }) => {
-	
+export const EmployeeCard: React.FC<EmployeeCardProps> = ({
+  employee,
+  onResetPassword,
+  onDeactivateUser,
+}) => {
   return (
     <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] flex flex-col">
       <CardHeader className="flex flex-row items-start justify-between p-4 gap-3 space-y-0">
         <div className="flex gap-2 items-center rounded-sm border p-1 ">
-          <Image
-            src={"/lead/99acres.svg"}
-            height={16}
-            width={16}
-            alt="Company placeholder logo"
-          />
           <span className="text-xs font-medium opac">
-            {employee.status ?? "Unknown"}
+            {employee.role ?? "User"}
           </span>
         </div>
 
         <Badge className="bg-slate-300/75 text-slate-800 hover:bg-slate-400/50 font-medium capitalize">
-          {employee.role ?? "User"}
+          {employee.status ?? "Unknown"}
         </Badge>
       </CardHeader>
 
-      <CardContent className=" pb-6 px-4 text-sm flex-1">
-        <CardTitle className="  text-indigo-950/80 mb-2 font-normal text-sm">
-          {employee.follow_up_current_status
-            ? employee.follow_up_current_status
-            : "In Progress "}
+      <CardContent className=" pb-6 px-4 text-sm flex-1 md:pb-2">
+        <CardTitle className="  text-indigo-950/80 mb-1 font-normal text-sm">
+        
         </CardTitle>
         <Link
           href={`/account/${employee.teamId}/employees/${employee.id}`}
@@ -65,6 +61,14 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, onResetPas
             <p className="text-sm">{employee.name ?? "Unknown Name"}</p>
           </Badge>
         </Link>
+        <div className="flex gap-2 items-center mt-2 text-xs">
+          <button onClick={onResetPassword} className="text-blue-600 underline">
+            Reset Password
+          </button>
+          <button onClick={onDeactivateUser} className="text-red-600 underline">
+            Deactivate User
+          </button>
+        </div>
       </CardContent>
 
       <CardFooter className="p-4 py-2 flex gap-2 justify-between border-t border-slate-200 ">
@@ -98,23 +102,9 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, onResetPas
           {employee.date_joined && (
             <>
               <CalendarIcon size={16} />
-              {formatDate(employee.date_joined)}
+              {formatDate(employee.date_joined, { onlyDate: true })}
             </>
           )}
-          <div className="flex gap-2 items-center">
-            <button
-              onClick={() => onResetPassword(employee.id)}
-              className="text-blue-600 underline"
-            >
-              Reset Password
-            </button>
-            <button
-              onClick={() => onDeactivateUser(employee.id)}
-              className="text-red-600 underline"
-            >
-              Deactivate User
-            </button>
-          </div>
         </div>
       </CardFooter>
     </Card>

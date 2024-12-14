@@ -26,48 +26,59 @@ interface Employee {
 }
 
 export default function EntityPageLayout({ entity }: { entity: string }) {
-  const [sampleData, setSampleData] = useState<Employee[]>([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "123-456-7890",
-      status: "active",
-      teamId: 1,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      phone: "234-567-8901",
-      status: "inactive",
-      teamId: 2,
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      email: "alice@example.com",
-      phone: "345-678-9012",
-      status: "active",
-      teamId: 3,
-    },
-    {
-      id: 4,
-      name: "Bob Brown",
-      email: "bob@example.com",
-      phone: "456-789-0123",
-      status: "inactive",
-      teamId: 4,
-    },
-    {
-      id: 5,
-      name: "Charlie Black",
-      email: "charlie@example.com",
-      phone: "567-890-1234",
-      status: "active",
-      teamId: 4,
-    },
-  ])
+const [sampleData, setSampleData] = useState<Employee[]>([
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    phone: "123-456-7890",
+    status: "active",
+    teamId: 1,
+    role: "Manager",
+    date_joined: "2023-01-15",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    phone: "234-567-8901",
+    status: "inactive",
+    teamId: 2,
+    role: "Developer",
+    date_joined: "2022-08-22",
+  },
+  {
+    id: 3,
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    phone: "345-678-9012",
+    status: "active",
+    teamId: 3,
+    role: "Designer",
+    date_joined: "2023-05-12",
+  },
+  {
+    id: 4,
+    name: "Bob Brown",
+    email: "bob@example.com",
+    phone: "456-789-0123",
+    status: "inactive",
+    teamId: 4,
+    role: "Tester",
+    date_joined: "2021-11-30",
+  },
+  {
+    id: 5,
+    name: "Charlie Black",
+    email: "charlie@example.com",
+    phone: "567-890-1234",
+    status: "active",
+    teamId: 4,
+    role: "Support Engineer",
+    date_joined: "2020-03-18",
+  },
+])
+
 
   const [viewMode, setViewMode] = useState<"card" | "row">("card")
   const [selectedTab, setSelectedTab] = useState<"active" | "inactive">(
