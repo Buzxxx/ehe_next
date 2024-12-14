@@ -2,16 +2,17 @@
  * @path src/components/account/layout/entityPageLayout.tsx
  */
 
-'use client'
+"use client"
+
+import { useState } from "react"
 import Avataar from "@/components/dashboard/ui/avataar"
 import { DataTable } from "@/components/ui/dataTable"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useState } from "react"
-import { columns } from "../feature/employeeColumn"
 import ResetPasswordModal from "../feature/resetPasswordModal"
 import DeactivateUserModal from "../feature/deactivateUserModal"
+import EntityPageTopBar from "../feature/entityPageTopBar"
+import { EmployeeCard } from "../ui/employeeCard"
+import { columns } from "../feature/employeeColumn"
 
-// Employee interface and columns
 interface Employee {
   id: number
   name: string
@@ -19,6 +20,9 @@ interface Employee {
   phone: string
   status: "active" | "inactive"
   teamId: number
+  role?: string
+  follow_up_current_status?: string
+  date_joined?: string
 }
 
 export default function EntityPageLayout({ entity }: { entity: string }) {
@@ -65,6 +69,7 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
     },
   ])
 
+  const [viewMode, setViewMode] = useState<"card" | "row">("card")
   const [selectedTab, setSelectedTab] = useState<"active" | "inactive">(
     "active"
   )
@@ -79,7 +84,7 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
   )
 
   const handleResetPassword = (id: number) => {
-    setSelectedEmployeeId(id) // Set the ID for the employee
+    setSelectedEmployeeId(id)
   }
 
   const handleDeactivateUser = (employee: Employee) => {
@@ -98,7 +103,7 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
   return (
     <>
       <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between">
-        <div className="flex items-center justify-between gap-2 ">
+        <div className="flex items-center gap-2">
           <Avataar
             className="border-2 h-12 w-12 aspect-square"
             src="/logo.svg"
@@ -111,28 +116,26 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
           </div>
         </div>
       </div>
-      <div>
-        <Tabs
-          value={selectedTab}
-          onValueChange={(value) =>
-            setSelectedTab(value as "active" | "inactive")
-          }
-        >
-          <TabsList className="flex gap-2 justify-start bg-gray-100 p-4 py-6 border-b rounded-none rounded-t">
-            <TabsTrigger
-              value="active"
-              className={`px-4 py-2 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:bg-gray-200`}
-            >
-              Active
-            </TabsTrigger>
-            <TabsTrigger
-              value="inactive"
-              className={`px-4 py-2 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:bg-gray-200`}
-            >
-              Inactive
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+
+      <EntityPageTopBar
+        setSelectedTab={setSelectedTab}
+        selectedTab={selectedTab}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+      />
+
+      {viewMode === "card" ? (
+        <div className="flex flex-wrap mt-4 gap-2">
+          {filteredData.map((employee) => (
+            <EmployeeCard
+              key={employee.id}
+              employee={employee}
+              onResetPassword={() => handleResetPassword(employee.id)}
+              onDeactivateUser={() => handleDeactivateUser(employee)}
+            />
+          ))}
+        </div>
+      ) : (
         <DataTable
           columns={columns.map((col) => {
             if (col.header === "Actions") {
@@ -160,7 +163,8 @@ export default function EntityPageLayout({ entity }: { entity: string }) {
           })}
           data={filteredData}
         />
-      </div>
+      )}
+
       {selectedEmployeeId !== null && (
         <ResetPasswordModal
           employeeId={selectedEmployeeId}
