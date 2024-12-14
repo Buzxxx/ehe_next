@@ -83,7 +83,7 @@ const LeadStatusUpdateForm = ({
       toast({
         title: `Timeline updated!`,
       });
-    }, 5000);
+    }, 1000);
   };
 
   return (
