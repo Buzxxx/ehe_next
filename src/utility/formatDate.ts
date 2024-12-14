@@ -1,5 +1,19 @@
-export function formatDate(dateString: string): string {
+export function formatDate(
+  dateString: string,
+  options?: { onlyDate?: boolean }
+): string {
   const date = new Date(dateString)
+
+  // Check if only the date is requested
+  if (options?.onlyDate) {
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }).format(date)
+  }
+
+  // Default behavior: return both date and time
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "2-digit",

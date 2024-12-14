@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import BackIcon from "@/components/ui/icons/back";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button"
+import BackIcon from "@/components/ui/icons/back"
+import { useRouter } from "next/navigation"
 import {
   Bookmark,
   ChevronLeft,
@@ -12,25 +12,25 @@ import {
   Edit,
   Chat,
   WhatsAppOutline,
-} from "@/components/ui/icons";
-import EditableField from "@/components/ui/editableField";
-import Avataar from "@/components/dashboard/ui/avataar";
-import { useEffect, useState } from "react";
-import { useLeadProfile } from "../context/leadProfileContext";
+} from "@/components/ui/icons"
+import EditableField from "@/components/ui/editableField"
+import Avataar from "@/components/dashboard/ui/avataar"
+import { useEffect, useState } from "react"
+import { useLeadProfile } from "../context/leadProfileContext"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CheckCircle, MailIcon } from "lucide-react";
-import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
-import dynamic from "next/dynamic";
-import { useLeadSave } from "../../hooks/useLeadSave";
+} from "@/components/ui/dropdown-menu"
+import { CheckCircle, MailIcon } from "lucide-react"
+import Link from "next/link"
+import { useToast } from "@/components/ui/use-toast"
+import dynamic from "next/dynamic"
+import { useLeadSave } from "../../hooks/useLeadSave"
 const ShareModal = dynamic(
   () => import("@/components/propertyPage/features/shareModal")
-);
+)
 
 const LeadPageHeader = ({
   id,
@@ -38,41 +38,41 @@ const LeadPageHeader = ({
   activeTab,
   setActiveTab,
 }: {
-  id: number;
-  navItems: { name: string; component: React.ReactNode }[];
-  activeTab: number;
-  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+  id: number
+  navItems: { name: string; component: React.ReactNode }[]
+  activeTab: number
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const { leadProfile, setLeadProfile, isEditing, setIsEditing } =
-    useLeadProfile();
-  const router = useRouter();
-  const { isSaved, toggleSave } = useLeadSave(id);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false); // State for share modal
+    useLeadProfile()
+  const router = useRouter()
+  const { isSaved, toggleSave } = useLeadSave(id)
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false) // State for share modal
 
   const toggleShareModal = () => {
-    setIsShareModalOpen(!isShareModalOpen);
-  };
+    setIsShareModalOpen(!isShareModalOpen)
+  }
 
-  const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile);
+  const [localLeadProfile, setLocalLeadProfile] = useState(leadProfile)
 
   const handleSave = () => {
-    setLeadProfile(localLeadProfile);
-    setIsEditing(false);
-  };
+    setLeadProfile(localLeadProfile)
+    setIsEditing(false)
+  }
 
   // Cancel editing and revert changes
   const handleCancel = () => {
-    setLocalLeadProfile(leadProfile);
-    setIsEditing(false);
-  };
+    setLocalLeadProfile(leadProfile)
+    setIsEditing(false)
+  }
 
   // Function to handle navigation
   const handleNavigation = (direction: "prev" | "next") => {
-    const newId = direction === "prev" ? id - 1 : id + 1;
+    const newId = direction === "prev" ? id - 1 : id + 1
     if (newId > 0) {
-      router.push(`/lead/${newId}`);
+      router.push(`/lead/${newId}`)
     }
-  };
+  }
 
   return (
     <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-gray-50 shadow-sm rounded-lg">
@@ -120,8 +120,7 @@ const LeadPageHeader = ({
             <EditableField
               value={leadProfile.name}
               fieldKey="name"
-              textSize="xl"
-              fontWeight="semibold"
+              className="font-semibold text-2xl p-0"
             />
             <div>
               <div className="flex gap-1 items-center text-gray-500 text-sm">
@@ -129,7 +128,7 @@ const LeadPageHeader = ({
                 <EditableField
                   value={leadProfile.email || "Email not provided"}
                   fieldKey="email"
-                  textSize="sm"
+                  className="text-sm p-0"
                 />
               </div>
               <div className="flex gap-1 items-center text-gray-500 text-sm">
@@ -137,7 +136,7 @@ const LeadPageHeader = ({
                 <EditableField
                   value={leadProfile.contact}
                   fieldKey="contact"
-                  textSize="sm"
+                  className="text-sm p-0"
                 />
                 <span className="text-gray-300 h-4 overflow-hidden my-auto px-1">
                   |
@@ -314,7 +313,7 @@ const LeadPageHeader = ({
         title={"Share this Lead"}
       />
     </section>
-  );
-};
+  )
+}
 
-export default LeadPageHeader;
+export default LeadPageHeader
