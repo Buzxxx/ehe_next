@@ -83,7 +83,7 @@ const LeadStatusUpdateForm = ({
       toast({
         title: `Timeline updated!`,
       });
-    }, 1000);
+    }, 5000);
   };
 
   return (
@@ -91,7 +91,7 @@ const LeadStatusUpdateForm = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 w-full bg-gray-50 h-fit my-auto border p-4 rounded-md"
+          className="space-y-4 w-full  h-fit my-auto  p-4 rounded-md"
         >
           <div className="flex  gap-4">
             <CustomFormField

@@ -6,7 +6,7 @@ import DragNDropLayout from "@/components/import/layout/dragNDropLayout";
 import ImportHeader from "@/components/lead/ui/importHeader";
 import { Separator } from "@/components/ui/separator";
 import { MoveLeft, MoveRight, Trash2 } from "@/components/ui/icons";
-import { HeaderMapping } from "@/components/lead/features/headerMapping";
+import { HeaderMapping } from "@/components/lead/features/importLeads/headerMapping";
 import FileUploader from "@/components/lead/features/importLeads/fileUploader";
 import { create_lead_bulk_controller } from "@/components/lead/features/leadObject";
 import { useToast } from "@/components/ui/use-toast";
