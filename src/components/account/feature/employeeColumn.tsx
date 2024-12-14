@@ -15,6 +15,8 @@ export interface Employee {
   img?: string
   teamId: number
   role?: string
+  date_joined?: string
+  
 }
 
 export const columns: ColumnDef<Employee, any>[] = [
@@ -66,21 +68,6 @@ export const columns: ColumnDef<Employee, any>[] = [
   {
     accessorKey: "actions", // Actions column
     header: "Actions",
-    cell: ({ row }: any) => (
-      <div className="flex gap-2">
-        <button
-          onClick={() => alert(`Reset password for ${row.original.name}`)}
-          className="text-blue-600 underline"
-        >
-          Reset Password
-        </button>
-        <button
-          onClick={() => alert(`Deactivate user ${row.original.name}`)}
-          className="text-red-600 underline"
-        >
-          Deactivate User
-        </button>
-      </div>
-    ),
+ 
   },
 ]

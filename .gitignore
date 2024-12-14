@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+settings.tsx
 
 # vercel
 .vercel
@@ -35,3 +36,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 ehe_next.code-workspace
+
