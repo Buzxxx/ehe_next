@@ -9,4 +9,6 @@ export const apiPaths = {
   createLead: "lead/api/createlead",
   createLeadBulk: "lead/api/createlead/bulk",
   getLeadStatusList: "lead/api/getstatuslist",
+  getAllActiveEmployeeList: "lead/api/getEmployee",
+  gettimelinelist: "lead/api/gettimelinelist",
 };
