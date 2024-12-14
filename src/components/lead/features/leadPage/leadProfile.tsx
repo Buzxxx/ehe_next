@@ -1,19 +1,11 @@
-import { Copy } from "@/components/ui/icons";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import EditableField from "../../../ui/editableField";
-import { useLeadProfile } from "../context/leadProfileContext";
+import { Copy } from "@/components/ui/icons"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import EditableField from "../../../ui/editableField"
+import { useLeadProfile } from "../context/leadProfileContext"
 
 const LeadProfile = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile();
-
-  // Update specific field in leadProfile
-  const handleFieldSave = (fieldName: string, newValue: string) => {
-    setLeadProfile((prev) => ({
-      ...prev,
-      [fieldName]: newValue, // Update the specific field
-    }));
-  };
+  const { leadProfile, setLeadProfile } = useLeadProfile()
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -38,64 +30,54 @@ const LeadProfile = () => {
               </button>
             </h6>
           </CardHeader>
-          <CardContent className="max-md:px-2 grid md:grid-cols-1 gap-4 mt-4">
-            <EditableField
-              fieldKey="assigned_to"
-              value={leadProfile.assigned_to.name}
-              textSize="sm"
-              title="Assigned To"
-              textAlign="right"
-              isEditable={false}
-            />
-            <EditableField
-              fieldKey="source_assigned"
-              value={leadProfile.source_assigned}
-              textSize="sm"
-              title="Source Assigned to"
-              textAlign="right"
-              isEditable={false}
-            />
-            <EditableField
-              fieldKey="priority"
-              value={leadProfile.priority}
-              textSize="sm"
-              title="Priority"
-              textAlign="right"
-              isEditable={false}
-            />
-            <EditableField
-              fieldKey="status"
-              value={leadProfile.status.status}
-              textSize="sm"
-              title="Status"
-              textAlign="right"
-              isEditable={false}
-            />
+          <CardContent className="p-0 md:px-4 mt-4 flex md:flex-row flex-col gap-4 justify-between items-start">
+            <div className="grid grid-cols-2 gap-4">
+              <EditableField
+                fieldKey="assigned_to"
+                value={leadProfile.assigned_to.id ?? "Unassigned"}
+                title="Assigned To"
+                isEditable={false}
+                span={2}
+              />
+              <EditableField
+                fieldKey="source_assigned"
+                value={leadProfile.source_assigned ?? "Unassigned"}
+                title="Source Assigned to"
+                isEditable={false}
+                span={2}
+              />
+              <EditableField
+                fieldKey="priority"
+                value={leadProfile.priority ?? "Unknown"}
+                title="Priority"
+                isEditable={false}
+              />
+              <EditableField
+                fieldKey="status"
+                value={leadProfile.status.status ?? "-"}
+                title="Status"
+                isEditable={false}
+              />
 
-            <EditableField
-              fieldKey="source"
-              value={leadProfile.source}
-              textSize="sm"
-              title="Source"
-              textAlign="right"
-              isEditable={false}
-            />
-            <EditableField
-              fieldKey="created_dt"
-              value={new Date(leadProfile.created_dt).toLocaleString()}
-              textSize="sm"
-              title="Created at"
-              textAlign="right"
-              isEditable={false}
-            />
-            <EditableField
-              fieldKey="last_updated_dt"
-              value={new Date(leadProfile.last_updated_dt).toLocaleString()}
-              textSize="sm"
-              title="Last updated at"
-              textAlign="right"
-              isEditable={false}
-            />
+              <EditableField
+                fieldKey="source"
+                value={leadProfile.source ?? "Unknown"}
+                title="Source"
+                isEditable={false}
+              />
+              <EditableField
+                fieldKey="created_dt"
+                value={new Date(leadProfile.created_dt).toLocaleString()}
+                title="Created at"
+                isEditable={false}
+              />
+              <EditableField
+                fieldKey="last_updated_dt"
+                value={new Date(leadProfile.last_updated_dt).toLocaleString()}
+                title="Last updated at"
+                isEditable={false}
+              />
+            </div>
           </CardContent>
         </Card>
 
@@ -106,62 +88,50 @@ const LeadProfile = () => {
               Additional Info
             </CardTitle>
           </CardHeader>
-          <CardContent className="max-md:px-2 grid md:grid-cols-1 gap-4 mt-4">
+          <CardContent className="max-md:px-2 pb-8 grid md:grid-cols-1 gap-4 mt-4">
             <EditableField
               fieldKey="lead_type"
               value={leadProfile.lead_type}
-              textSize="sm"
               title="Lead Type"
-              textAlign="right"
+              span={1}
             />
             <EditableField
               fieldKey="budget"
               value={leadProfile.budget}
-              textSize="sm"
               title="Budget"
-              textAlign="right"
+              span={1}
             />
             <EditableField
               fieldKey="follow_up_current_status"
               value={leadProfile.follow_up_current_status}
-              textSize="sm"
               title="Follow up current status"
-              textAlign="right"
+              span={2}
             />
             <EditableField
               fieldKey="interested_in"
               value={leadProfile.interested_in}
-              textSize="sm"
               title="Interested In"
-              textAlign="right"
+              span={2}
             />
             <EditableField
               fieldKey="product_code"
               value={leadProfile.product_code}
-              textSize="sm"
               title="Product code"
-              textAlign="right"
             />
             <EditableField
               fieldKey="product_type"
               value={leadProfile.product_type}
-              textSize="sm"
               title="Product Type"
-              textAlign="right"
             />
             <EditableField
               fieldKey="recieved_date"
               value={leadProfile.recieved_date}
-              textSize="sm"
               title="Recieved date"
-              textAlign="right"
             />
             <EditableField
               fieldKey="query"
               value={leadProfile.query}
-              textSize="sm"
               title="Query"
-              textAlign="right"
             />
           </CardContent>
         </Card>
@@ -203,7 +173,7 @@ const LeadProfile = () => {
         </CardContent>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default LeadProfile;
+export default LeadProfile
