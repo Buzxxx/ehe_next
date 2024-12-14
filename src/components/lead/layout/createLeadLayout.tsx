@@ -1,34 +1,18 @@
-"use client"
-
-import React, { useState } from "react"
-import CreateLeadForm from "@/components/lead/features/createLead/createLeadForm"
-import { Lead } from "../features/leadObject"
-import LeadProfileHeader from "../ui/createLead/leadProfileHeader"
-import LeadDetails from "../ui/createLead/leadDetails"
-import UserAliasTable from "@/components/account/feature/userAliasTable"
+import React from "react";
+import CreateLeadForm from "@/components/lead/features/createLead/createLeadForm";
 
 const CreateLeadLayout = () => {
-  const [lead, setLead] = useState<Lead>()
-  const [isEditing, setIsEditing] = useState(true)
-
-  const handleSave = (fieldKey: string, value: string | number | boolean) => {
-    setLead((prev) => ({ ...prev!, [fieldKey]: value }))
-  }
-
   return (
     <div>
-      <LeadProfileHeader
-        lead={lead}
-        isEditing={isEditing}
-        onSave={(fieldKey, value) => handleSave(fieldKey, value)}
-        setIsEditing={setIsEditing}
-      />
-      {lead && (
-        <LeadDetails isEditing={isEditing} lead={lead} setLead={setLead} />
-      )}
-      <UserAliasTable />
+      <h1 className="pt-2 text-4xl text-neutral-600 font-semibold">
+        Lead
+        <span className="text-xl ml-4 text-neutral-900 font-medium">
+          Create Lead
+        </span>
+      </h1>
+      <CreateLeadForm />
     </div>
-  )
-}
+  );
+};
 
-export default CreateLeadLayout
+export default CreateLeadLayout;
