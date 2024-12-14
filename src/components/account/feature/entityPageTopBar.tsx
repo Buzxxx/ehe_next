@@ -25,9 +25,10 @@ const EntityPageTopBar = ({
           value={selectedTab}
           onValueChange={(value) =>
             setSelectedTab(value as "active" | "inactive")
+            
           }
         >
-          <TabsList>
+          <TabsList className="">
             <TabsTrigger
               value="active"
               className={`px-4 py-2 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:bg-gray-200`}

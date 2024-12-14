@@ -113,7 +113,7 @@ const [sampleData, setSampleData] = useState<Employee[]>([
 
   return (
     <>
-      <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between">
+      <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between ">
         <div className="flex items-center gap-2">
           <Avataar
             className="border-2 h-12 w-12 aspect-square"
@@ -136,7 +136,7 @@ const [sampleData, setSampleData] = useState<Employee[]>([
       />
 
       {viewMode === "card" ? (
-        <div className="flex flex-wrap mt-4 gap-2">
+        <div className="flex flex-wrap mt-4 gap-2 md:px-0 px-2">
           {filteredData.map((employee) => (
             <EmployeeCard
               key={employee.id}

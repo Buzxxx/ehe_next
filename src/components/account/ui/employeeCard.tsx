@@ -34,7 +34,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({
   onDeactivateUser,
 }) => {
   return (
-    <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] flex flex-col">
+    <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] w-full flex flex-col">
       <CardHeader className="flex flex-row items-start justify-between p-4 gap-3 space-y-0">
         <div className="flex gap-2 items-center rounded-sm border p-1 ">
           <span className="text-xs font-medium opac">
