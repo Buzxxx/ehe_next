@@ -2,7 +2,7 @@
  * @path src/components/lead/ui/leadPage/timelineTopbar.tsx
  */
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Blocks,
   Plus,
@@ -10,36 +10,39 @@ import {
   Chat,
   Settings2,
   Ellipsis,
-} from "@/components/ui/icons"
+} from "@/components/ui/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import DialogItem from "../dropDownModal"
-import LeadCallbackForm from "../../features/leadPage/leadCallbackForm"
-import LeadMeetingForm from "../../features/leadPage/leadMeetingForm"
-import React from "react"
-import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
-import LeadStatusUpdateForm from "../../features/leadPage/leadStatusUpdateForm"
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import DialogItem from "../dropDownModal";
+import LeadCallbackForm from "../../features/leadPage/leadCallbackForm";
+import LeadMeetingForm from "../../features/leadPage/leadMeetingForm";
+import React from "react";
+import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import LeadStatusUpdateForm from "../../features/leadPage/leadStatusUpdateForm";
 
 const TimelineTopbar = ({ leadId }: { leadId: string }) => {
-  const [dropdownOpen, setDropdownOpen] = React.useState(false)
-  const [hasOpenDialog, setHasOpenDialog] = React.useState(false)
-  const dropdownTriggerRef = React.useRef<HTMLButtonElement | null>(null)
-  const focusRef = React.useRef<HTMLButtonElement | null>(null)
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [hasOpenDialog, setHasOpenDialog] = React.useState(false);
+  const dropdownTriggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const focusRef = React.useRef<HTMLButtonElement | null>(null);
 
   function handleDialogItemSelect() {
-    focusRef.current = dropdownTriggerRef.current // Save the trigger element
+    focusRef.current = dropdownTriggerRef.current; // Save the trigger element
   }
 
   function handleDialogItemOpenChange(open: boolean) {
-    setHasOpenDialog(open)
+    setHasOpenDialog(open);
 
     if (!open && focusRef.current) {
-      focusRef.current.focus() // Restore focus to the dropdown trigger
-      focusRef.current = null // Reset focusRef
+      focusRef.current.focus(); // Restore focus to the dropdown trigger
+      focusRef.current = null; // Reset focusRef
     }
   }
   return (
@@ -65,60 +68,63 @@ const TimelineTopbar = ({ leadId }: { leadId: string }) => {
             hidden={hasOpenDialog}
             onCloseAutoFocus={(event) => {
               if (focusRef.current) {
-                focusRef.current.focus()
-                focusRef.current = null
-                event.preventDefault()
+                focusRef.current.focus();
+                focusRef.current = null;
+                event.preventDefault();
               }
             }}
           >
-            <DialogItem
-              triggerChildren="Update Status"
-              onSelect={handleDialogItemSelect}
-              onOpenChange={handleDialogItemOpenChange}
-              className="md:hidden"
-            >
-              <DialogTitle className="DialogTitle">Update Status</DialogTitle>
-              <DialogDescription className="DialogDescription"></DialogDescription>
-              <LeadStatusUpdateForm
-                id={leadId}
-                setOpen={handleDialogItemOpenChange}
-              />
-            </DialogItem>
-            <DialogItem
-              triggerChildren="Callback"
-              onSelect={handleDialogItemSelect}
-              onOpenChange={handleDialogItemOpenChange}
-            >
-              <DialogTitle className="DialogTitle">
-                Set up a Call back
-              </DialogTitle>
-              <DialogDescription className="DialogDescription"></DialogDescription>
-              <LeadCallbackForm
-                id={leadId}
-                setOpen={handleDialogItemOpenChange}
-              />
-            </DialogItem>
-            <DialogItem
-              triggerChildren="Meeting"
-              onSelect={handleDialogItemSelect}
-              onOpenChange={handleDialogItemOpenChange}
-            >
-              <DialogTitle className="DialogTitle">
-                Set up a Meeting
-              </DialogTitle>
-              <DialogDescription className="DialogDescription"></DialogDescription>
-              <LeadMeetingForm
-                id={leadId}
-                setOpen={handleDialogItemOpenChange}
-              />
-            </DialogItem>
+            <DropdownMenuLabel>Add Activity</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DialogItem
+                triggerChildren="Update Status"
+                onSelect={handleDialogItemSelect}
+                onOpenChange={handleDialogItemOpenChange}
+                className="md:hidden"
+              >
+                <DialogTitle className="DialogTitle">Update Status</DialogTitle>
+                <DialogDescription className="DialogDescription"></DialogDescription>
+                <LeadStatusUpdateForm
+                  id={leadId}
+                  setOpen={handleDialogItemOpenChange}
+                />
+              </DialogItem>
+
+              <DialogItem
+                triggerChildren="Callback"
+                onSelect={handleDialogItemSelect}
+                onOpenChange={handleDialogItemOpenChange}
+              >
+                <DialogTitle className="DialogTitle">
+                  Set up a Call back
+                </DialogTitle>
+                <DialogDescription className="DialogDescription"></DialogDescription>
+                <LeadCallbackForm
+                  id={leadId}
+                  setOpen={handleDialogItemOpenChange}
+                />
+              </DialogItem>
+              <DialogItem
+                triggerChildren="Meeting"
+                onSelect={handleDialogItemSelect}
+                onOpenChange={handleDialogItemOpenChange}
+              >
+                <DialogTitle className="DialogTitle">
+                  Set up a Meeting
+                </DialogTitle>
+                <DialogDescription className="DialogDescription"></DialogDescription>
+                <LeadMeetingForm
+                  id={leadId}
+                  setOpen={handleDialogItemOpenChange}
+                />
+              </DialogItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
-    
     </div>
-  )
-}
+  );
+};
 
-export default TimelineTopbar
+export default TimelineTopbar;

@@ -33,7 +33,7 @@ export async function authenticate_user(
     if (res) {
       return res;
     } else {
-      return redirect_to_login(request);
+      return await redirect_to_login(request);
     }
   }
   if (request.nextUrl.pathname === DEFAULT_LOGOUT_REDIRECT) {
@@ -41,8 +41,12 @@ export async function authenticate_user(
   }
 }
 
-export function redirect_to_login(request: NextRequest) {
-  const loginUrl = new URL(DEFAULT_LOGOUT_REDIRECT, request.url);
+export async function redirect_to_login(request: NextRequest) {
+  const login_redirect_path = await logout();
+  const loginUrl = new URL(
+    login_redirect_path || DEFAULT_LOGOUT_REDIRECT,
+    request.url
+  );
   loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
   return NextResponse.redirect(loginUrl);
 }
