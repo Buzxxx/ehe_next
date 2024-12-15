@@ -20,6 +20,7 @@ const apiClient = async (
 ) => {
   const url = apiurls(endpoint, serverName);
   const token = options.skipAuth ? null : await get_access_token();
+  console.log("token check", token ? { Authorization: `Bearer ${token}` } : {});
   try {
     const response = await fetch(url, {
       ...options,

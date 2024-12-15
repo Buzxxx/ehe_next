@@ -4,7 +4,6 @@ import { getCookie } from "@/cookies/cookiesService";
 
 export async function get_timeline_controller(lead_id: string) {
   const timeline = await get_timeline_from_server(lead_id);
-  console.log("timeline fetched", timeline.timeline);
   return timeline.timeline;
 }
 
