@@ -1,3 +1,7 @@
+/**
+ * @path src/components/authentication/ui/inputField.tsx
+ */
+
 "use client"
 import { useState } from "react"
 import {
@@ -19,6 +23,7 @@ interface InputFieldProps {
   field: UseFormRegisterReturn
   isPassword?: boolean
   className?: string
+  icon?: React.ReactNode
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -26,7 +31,8 @@ const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   field,
   isPassword = false,
-  className
+  className,
+  icon,
 }) => {
   const [visible, setVisible] = useState(false)
 
@@ -38,13 +44,23 @@ const InputField: React.FC<InputFieldProps> = ({
     <FormItem>
       <FormLabel className="md:text-sm text-xs">{label}</FormLabel>
       <FormControl>
-        <div className={isPassword ? "relative" : ""}>
+        <div className={`w-full relative`}>
           <Input
             placeholder={placeholder}
             {...field}
             type={isPassword ? (visible ? "text" : "password") : "text"}
-            className={cn("py-6 mb-2 md:text-sm text-xs", className)}
+            className={cn(
+              `py-6 mb-2 md:text-sm text-xs focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-gray-400 rounded-sm ${
+                icon && "pl-7"
+              }`,
+              className
+            )}
           />
+          {icon && (
+            <div className="absolute z-20 left-2 top-1/2 -translate-y-1/2">
+              {icon}
+            </div>
+          )}
           {isPassword && (
             <>
               <span
