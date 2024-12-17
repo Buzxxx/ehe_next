@@ -9,8 +9,9 @@ export default function AccountsLayout({
 }) {
   return (
     <>
-      <article className="md:bg-gray-100 md:flex justify-center items-center h-screen">
-        <div className=" md:w-1/3 bg-gray-50 md:border w-full md:mx-auto px-12 py-16 md:pb-2 md:pt-8 rounded-md md:drop-shadow-md flex flex-col items-center justify-center h-full md:h-fit">
+    
+      <article className="md:bg-gray-100 md:flex justify-center items-center h-screen md:py-16">
+        <div className=" md:w-1/3 bg-gray-50 md:border w-full md:mx-auto px-12 py-16 md:py-6 rounded-md md:drop-shadow-md flex flex-col items-center justify-start h-full ">
           {children}
         </div>
       </article>

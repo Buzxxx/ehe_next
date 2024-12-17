@@ -50,14 +50,14 @@ const InputField: React.FC<InputFieldProps> = ({
             {...field}
             type={isPassword ? (visible ? "text" : "password") : "text"}
             className={cn(
-              `py-6 mb-2 md:text-sm text-xs focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-gray-400 rounded-sm ${
-                icon && "pl-7"
+              `py-5 mb-2 md:text-sm text-xs focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-gray-400 rounded-sm ${
+                icon && "pl-8"
               }`,
               className
             )}
           />
           {icon && (
-            <div className="absolute z-20 left-2 top-1/2 -translate-y-1/2">
+            <div className="absolute z-20 left-2 top-1/2 -translate-y-1/2 mr-4">
               {icon}
             </div>
           )}

@@ -1,3 +1,7 @@
+/**
+ * @path src/components/authentication/layouts/forgotPasswordLayouts/forgotPassword.tsx
+ */
+
 "use client"
 
 import { z } from "zod"
@@ -7,6 +11,9 @@ import { useRouter, useSearchParams } from "next/navigation"
 import StepForm from "../../features/forms/stepForm"
 import LoadingSpinner from "@/components/contracts/ui/loadingSpinner"
 import { paths } from "../../urls"
+import ReactDOM from "react-dom"
+import { Mail, LockKeyhole } from "@/components/ui/icons"
+import { InputOTPForm } from "../../features/forms/InputOtpForm"
 
 const emailSchema = z.object({
   email: z.string().email().min(1, {
@@ -32,6 +39,15 @@ const passwordSchema = z
     path: ["confirmPassword"],
   })
 
+const LoadingOverlay = () => {
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 flex justify-center items-center bg-gray-100 bg-opacity-75 z-50">
+      <LoadingSpinner />
+    </div>,
+    document.body
+  )
+}
+
 const ForgotPassword = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
@@ -40,7 +56,7 @@ const ForgotPassword = () => {
   const router = useRouter()
 
   const handleNextStep = () => setCurrentStep((prevStep) => prevStep + 1)
-  const handlePrevStep = () => setCurrentStep((prevStep) => prevStep - 1)
+  const handlePrevStep = () => router.push(paths.login)
 
   const handleEmailSubmit = async (values: { email: string }) => {
     setIsLoading(true)
@@ -78,30 +94,27 @@ const ForgotPassword = () => {
 
   return (
     <>
-      {isLoading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-gray-100 bg-opacity-75 z-50">
-          <LoadingSpinner />
-        </div>
-      )}
+      {isLoading && <LoadingOverlay />}
 
       {currentStep === 0 && (
         <StepForm
           schema={emailSchema}
           onSubmit={handleEmailSubmit}
           title="Enter your email address"
-          fields={[{ name: "email", label: "Email", type: "email" }]}
+          onBack={handlePrevStep}
+          fields={[
+            {
+              name: "email",
+              label: "Email",
+              type: "email",
+              placeholder: "Enter your email",
+              icon: <Mail color="gray" size={16} />,
+            },
+          ]}
         />
       )}
 
-      {currentStep === 1 && (
-        <StepForm
-          schema={otpSchema}
-          onSubmit={handleOtpSubmit}
-          title="Enter the OTP"
-          fields={[{ name: "otp", label: "OTP", type: "text" }]}
-          onBack={handlePrevStep}
-        />
-      )}
+      {currentStep === 1 && <InputOTPForm onBack={handlePrevStep} onSubmit={handleOtpSubmit}  />}
 
       {currentStep === 2 && (
         <StepForm
@@ -109,16 +122,24 @@ const ForgotPassword = () => {
           onSubmit={handlePasswordSubmit}
           title="Reset your password"
           fields={[
-            { name: "password", label: "New Password", type: "password" },
+            {
+              name: "password",
+              label: "New Password",
+              type: "password",
+              placeholder: "Enter your new password",
+            },
             {
               name: "confirmPassword",
               label: "Confirm Password",
               type: "password",
+              placeholder: "Re-enter your new password to confirm",
             },
           ]}
           onBack={handlePrevStep}
         />
       )}
+
+      <p className=" text-slate-400 text-sm mt-auto">© 2020-2021</p>
     </>
   )
 }
