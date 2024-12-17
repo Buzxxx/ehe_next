@@ -3,33 +3,33 @@
  * @description FilterModal component for the lead listing page
  */
 
-import { useEffect, useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { MultiSelectCombobox } from "../../ui/multiSelectCombobox"
-import { cn } from "@/lib/utils"
-import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { MultiSelectCombobox } from "../../ui/multiSelectCombobox";
+import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 import {
   filter_multiselect_change_controller,
   FilterSelect,
   get_default_filterBy_obj,
   get_filter_object,
-} from "../filterObject"
+} from "../filterObject";
 
 const FilterModal = ({ className }: { className: string }) => {
   const [selectedValues, setSelectedValues] = useState<{
-    [key: string]: number[]
+    [key: string]: number[];
   }>({
     assigned_to: [],
     status: [],
-  })
-  const [filterSelect, setFilterSelect] = useState(FilterSelect)
+  });
+  const [filterSelect, setFilterSelect] = useState(FilterSelect);
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     async function fetchAndSetFilters() {
-      const filterData = await get_filter_object()
+      const filterData = await get_filter_object();
       if (filterData) {
         setFilterSelect((prevFilters) => ({
           ...prevFilters,
@@ -41,28 +41,28 @@ const FilterModal = ({ className }: { className: string }) => {
             ...prevFilters.status,
             options: filterData.status?.options || {},
           },
-        }))
+        }));
       }
     }
 
-    fetchAndSetFilters()
+    fetchAndSetFilters();
 
-    const params = new URLSearchParams(window.location.search)
+    const params = new URLSearchParams(window.location.search);
 
-    setSelectedValues(() => get_default_filterBy_obj(params)) // Set default filter values based on URL params
-  }, [searchParams])
+    setSelectedValues(() => get_default_filterBy_obj(params)); // Set default filter values based on URL params
+  }, [searchParams]);
 
   // Handle multi-select changes
   const handleMultiSelectChange = (filterName: string, selected: number[]) => {
-    const params = new URLSearchParams(window.location.search)
+    const params = new URLSearchParams(window.location.search);
     const newSelectedValues = {
       ...selectedValues,
       [filterName]: selected,
-    }
-    setSelectedValues(newSelectedValues)
+    };
+    setSelectedValues(newSelectedValues);
     // updates URLs according to input by user
-    filter_multiselect_change_controller(params, newSelectedValues)
-  }
+    filter_multiselect_change_controller(params, newSelectedValues);
+  };
 
   return (
     <aside
@@ -155,7 +155,7 @@ const FilterModal = ({ className }: { className: string }) => {
         </Tabs>
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default FilterModal
+export default FilterModal;

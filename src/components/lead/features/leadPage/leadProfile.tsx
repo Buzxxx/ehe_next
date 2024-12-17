@@ -1,11 +1,11 @@
-import { Copy } from "@/components/ui/icons"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import EditableField from "../../../ui/editableField"
-import { useLeadProfile } from "../context/leadProfileContext"
+import { Copy } from "@/components/ui/icons";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import EditableField from "../../../ui/editableField";
+import { useLeadProfile } from "../context/leadProfileContext";
 
 const LeadProfile = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile()
+  const { leadProfile, setLeadProfile } = useLeadProfile();
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -23,8 +23,7 @@ const LeadProfile = () => {
               </Badge>
             </div>
             <h6 className="font-semibold flex items-center">
-              Lead Id{" "}
-              <span className="text-sky-600 ml-1">{leadProfile.id}</span>{" "}
+              Lead # <span className="text-sky-600 ml-1">{leadProfile.id}</span>{" "}
               <button className="ml-2">
                 <Copy color="gray" size={16} />
               </button>
@@ -173,7 +172,7 @@ const LeadProfile = () => {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default LeadProfile
+export default LeadProfile;
