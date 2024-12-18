@@ -16,6 +16,7 @@ type StepFormProps<T> = {
   schema: ZodType<T>
   onSubmit: (values: T) => void
   title: string
+  description?: string
   fields: { name: keyof T; label: string; type: string; placeholder?: string, icon?: React.ReactNode }[]
   onBack?: () => void
 }
@@ -26,6 +27,7 @@ const StepForm = <T extends Record<string, any>>({
   title,
   fields,
   onBack,
+  description,
 }: StepFormProps<T>) => {
   const form: UseFormReturn<T> = useForm<T>({
     resolver: zodResolver(schema),
@@ -37,18 +39,18 @@ const StepForm = <T extends Record<string, any>>({
 
   return (
     <Form {...form}>
-      <div className="flex flex-col h-full justify-between ">
+      <div className="flex flex-col h-full justify-between w-full">
         <div className="text-center">
           <h1 className="text-center font-bold md:text-2xl text-xl uppercase">
             {title}
           </h1>
-          <p className="text-gray-500 text-sm mb-8">
-            Please enter your registered email address{" "}
+          <p className="text-gray-500 text-sm mb-10">
+            {description}
           </p>
         </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full text-sm flex-1 mt-12"
+          className="w-full text-sm flex-1 mt-4"
         >
           {fields.map((field) => (
             <div key={String(field.name)} className="space-y-1">
@@ -58,6 +60,7 @@ const StepForm = <T extends Record<string, any>>({
                 field={form.register(field.name as Path<T>)}
                 isPassword={field.type === "password"}
                 icon={field.icon || null}
+                
               />
               {errors[field.name as Path<T>] && (
                 <p className="text-red-500 text-sm">
@@ -67,7 +70,7 @@ const StepForm = <T extends Record<string, any>>({
             </div>
           ))}
 
-          <div className="flex justify-between items-center w-full  mt-16">
+          <div className="flex justify-between items-center w-full  mt-12">
             {onBack && (
               <Button
                 type="button"
@@ -86,13 +89,13 @@ const StepForm = <T extends Record<string, any>>({
             </Button>
           </div>
 
-          <p className="mt-16 text-gray-600 text-center">
+          {/* <p className="mt-10 text-gray-600 text-center">
             Not a member yet?{" "}
             <Link href="#" className="text-indigo-600 font-medium">
               {" "}
               Sign Up
             </Link>
-          </p>
+          </p> */}
         </form>
       </div>
     </Form>

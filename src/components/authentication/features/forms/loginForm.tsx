@@ -85,9 +85,7 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
             placeholder="password"
             field={Loginform.register("password")}
             isPassword={true}
-            icon={
-              <LockKeyhole size={18}  fill="gray" stroke="white" />
-            }
+            icon={<LockKeyhole size={18} fill="gray" stroke="white" />}
           />
           {/* Display the password validation error */}
           {errors.password && (
@@ -108,22 +106,21 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
               </div>
             </div>
           )}
-
-          <Link
-            className="mt-2 text-sm block text-indigo-600 font-semibold w-fit ml-auto"
-            href={paths.forgotPassword}
-            prefetch={true}
-          >
-            Forgot Password
-          </Link>
         </div>
+        <Link
+          className=" text-sm block text-indigo-600 font-semibold w-fit ml-auto"
+          href={paths.forgotPassword}
+          prefetch={true}
+        >
+          Forgot Password
+        </Link>
         <Button
           type="submit"
-          className="py-6 h-5 w-full bg-blue-500 hover:bg-primary-hover rounded-md text-lg mt-10 uppercase font-medium"
+          className="py-6 h-5 w-full bg-blue-500 hover:bg-primary-hover rounded-md text-lg mt-6 uppercase font-medium"
         >
           Log in
         </Button>
-        <p className="mt-2 text-gray-600 text-center" >
+        <p className="mt-2 text-gray-600 text-center">
           Not a member yet?{" "}
           <Link href="#" className="text-indigo-600 font-medium">
             {" "}

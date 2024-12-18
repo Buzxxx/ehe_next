@@ -100,7 +100,10 @@ const ForgotPassword = () => {
         <StepForm
           schema={emailSchema}
           onSubmit={handleEmailSubmit}
-          title="Enter your email address"
+          title="Password Reset"
+          description="
+            Please enter your registered email address to reset your password
+          "
           onBack={handlePrevStep}
           fields={[
             {
@@ -114,13 +117,16 @@ const ForgotPassword = () => {
         />
       )}
 
-      {currentStep === 1 && <InputOTPForm onBack={handlePrevStep} onSubmit={handleOtpSubmit}  />}
+      {currentStep === 1 && (
+        <InputOTPForm onBack={handlePrevStep} onSubmit={handleOtpSubmit} />
+      )}
 
       {currentStep === 2 && (
         <StepForm
           schema={passwordSchema}
           onSubmit={handlePasswordSubmit}
           title="Reset your password"
+          description="Please set your new password"
           fields={[
             {
               name: "password",
