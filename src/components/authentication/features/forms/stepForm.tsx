@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import InputField from "@/components/authentication/ui/inputField"
 import { ZodType } from "zod"
-import { Mail } from "@/components/ui/icons"
-import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { paths } from "../../urls"
 
@@ -51,7 +49,9 @@ const StepForm = <T extends Record<string, any>>({
           <h1 className="text-center font-bold md:text-2xl text-xl uppercase">
             {title}
           </h1>
-          <p className="text-gray-500 text-sm mb-10">{description}</p>
+          <p className="text-gray-500 text-sm mb-10 text-pretty">
+            {description}
+          </p>
         </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -80,9 +80,16 @@ const StepForm = <T extends Record<string, any>>({
           >
             Next
           </Button>
-          <div className="flex items-center justify-end text-gray-500 text-sm gap-4 mt-4">
-            <Link href={paths.login} className="hover:text-sky-700 transition-colors">Login </Link>
-            <Link href={"/"} className="hover:text-sky-700 transition-colors">Register </Link>
+          <div className="flex items-center justify-end text-gray-500 text-sm gap-4 mt-2">
+            <Link
+              href={paths.login}
+              className="hover:text-sky-700 transition-colors"
+            >
+              Login{" "}
+            </Link>
+            <Link href={"/"} className="hover:text-sky-700 transition-colors">
+              Register{" "}
+            </Link>
           </div>
         </form>
       </div>
