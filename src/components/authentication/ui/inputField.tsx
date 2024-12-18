@@ -18,7 +18,7 @@ import OpenEye from "@/components/ui/icons/openEye"
 import { cn } from "@/lib/utils"
 
 interface InputFieldProps {
-  label: string
+  label?: string
   placeholder: string
   field: UseFormRegisterReturn
   isPassword?: boolean
@@ -42,7 +42,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <FormItem>
-      <FormLabel className="md:text-sm text-xs">{label}</FormLabel>
+      {label && <FormLabel className="md:text-sm text-xs">{label}</FormLabel>}
       <FormControl>
         <div className={`w-full relative`}>
           <Input

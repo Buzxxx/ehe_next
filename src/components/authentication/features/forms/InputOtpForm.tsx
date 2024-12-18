@@ -24,6 +24,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import { paths } from "../../urls"
 
 const FormSchema = z.object({
   otp: z.string().min(6, {
@@ -60,17 +62,17 @@ export function InputOTPForm({
                 <div className="mt-16">
                   <FormControl>
                     <InputOTP maxLength={6} {...field}>
-                      <InputOTPGroup className="flex items-center justify-center w-fit mx-auto">
-                        <InputOTPSlot index={0} />
-                        <InputOTPSlot index={1} />
-                        <InputOTPSlot index={2} />
-                        <InputOTPSlot index={3} />
-                        <InputOTPSlot index={4} />
-                        <InputOTPSlot index={5} />
+                      <InputOTPGroup className="flex items-center justify-center w-fit mx-auto ">
+                        <InputOTPSlot className=" border-gray-400" index={0} />
+                        <InputOTPSlot className=" border-gray-400" index={1} />
+                        <InputOTPSlot className=" border-gray-400" index={2} />
+                        <InputOTPSlot className=" border-gray-400" index={3} />
+                        <InputOTPSlot className=" border-gray-400" index={4} />
+                        <InputOTPSlot className=" border-gray-400" index={5} />
                       </InputOTPGroup>
                     </InputOTP>
                   </FormControl>
-                  <FormDescription className="mt-4">
+                  <FormDescription className="mt-2">
                     Please enter the one-time password sent to your phone.
                   </FormDescription>
                   <FormMessage />
@@ -78,23 +80,23 @@ export function InputOTPForm({
               </FormItem>
             )}
           />
-          <div className="flex justify-between items-center w-full  mt-16">
-            {onBack && (
-              <Button
-                type="button"
-                onClick={onBack}
-                className=" hover:bg-transparent bg-transparent hover:border-gray-500 bgtr text-gray-600 px-0 py-2 rounded-md transition"
-              >
-                <ArrowLeft />
-                Back to Login
-              </Button>
-            )}
-            <Button
-              type="submit"
-              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-6 py-2 rounded-md transition-all block ml-auto"
+
+          <Button
+            type="submit"
+            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-6 py-2 rounded-md transition-all block w-full mt-6"
+          >
+            Next
+          </Button>
+          <div className="flex items-center justify-end text-gray-500 text-sm gap-4 mt-2">
+            <Link
+              href={paths.login}
+              className="hover:text-sky-700 transition-colors"
             >
-              Next
-            </Button>
+              Login{" "}
+            </Link>
+            <Link href={"/"} className="hover:text-sky-700 transition-colors">
+              Register{" "}
+            </Link>
           </div>
         </form>
       </div>

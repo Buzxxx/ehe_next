@@ -11,13 +11,20 @@ import { ZodType } from "zod"
 import { Mail } from "@/components/ui/icons"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { paths } from "../../urls"
 
 type StepFormProps<T> = {
   schema: ZodType<T>
   onSubmit: (values: T) => void
   title: string
   description?: string
-  fields: { name: keyof T; label: string; type: string; placeholder?: string, icon?: React.ReactNode }[]
+  fields: {
+    name: keyof T
+    label?: string
+    type: string
+    placeholder?: string
+    icon?: React.ReactNode
+  }[]
   onBack?: () => void
 }
 
@@ -44,23 +51,20 @@ const StepForm = <T extends Record<string, any>>({
           <h1 className="text-center font-bold md:text-2xl text-xl uppercase">
             {title}
           </h1>
-          <p className="text-gray-500 text-sm mb-10">
-            {description}
-          </p>
+          <p className="text-gray-500 text-sm mb-10">{description}</p>
         </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full text-sm flex-1 mt-4"
+          className="w-full text-sm flex-1 mt-10"
         >
           {fields.map((field) => (
             <div key={String(field.name)} className="space-y-1">
               <InputField
                 label={field.label}
-                placeholder={field.placeholder || field.label}
+                placeholder={field.placeholder || ""}
                 field={form.register(field.name as Path<T>)}
                 isPassword={field.type === "password"}
                 icon={field.icon || null}
-                
               />
               {errors[field.name as Path<T>] && (
                 <p className="text-red-500 text-sm">
@@ -70,32 +74,16 @@ const StepForm = <T extends Record<string, any>>({
             </div>
           ))}
 
-          <div className="flex justify-between items-center w-full  mt-12">
-            {onBack && (
-              <Button
-                type="button"
-                onClick={onBack}
-                className=" hover:bg-transparent bg-transparent hover:border-gray-500 bgtr text-gray-600 px-0 py-2 rounded-md transition"
-              >
-                <ArrowLeft />
-                Back to Login
-              </Button>
-            )}
-            <Button
-              type="submit"
-              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-6 py-2 rounded-md transition-all block ml-auto"
-            >
-              Next
-            </Button>
+          <Button
+            type="submit"
+            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-6 py-2 rounded-md transition-all block w-full mt-4"
+          >
+            Next
+          </Button>
+          <div className="flex items-center justify-end text-gray-500 text-sm gap-4 mt-4">
+            <Link href={paths.login} className="hover:text-sky-700 transition-colors">Login </Link>
+            <Link href={"/"} className="hover:text-sky-700 transition-colors">Register </Link>
           </div>
-
-          {/* <p className="mt-10 text-gray-600 text-center">
-            Not a member yet?{" "}
-            <Link href="#" className="text-indigo-600 font-medium">
-              {" "}
-              Sign Up
-            </Link>
-          </p> */}
         </form>
       </div>
     </Form>

@@ -26,7 +26,7 @@ const Login = () => {
       <p className="text-gray-500 text-sm mb-8">You must be a member to access the CRM</p>
       <LoginForm setLoading={setIsLoading} />
 
-      <p className="mt-12 text-slate-400 text-sm">© 2020-2021</p>
+      <p className="mt-auto text-slate-400 text-sm">© 2020-2021</p>
     </>
   );
 };

@@ -108,7 +108,7 @@ const ForgotPassword = () => {
           fields={[
             {
               name: "email",
-              label: "Email",
+             
               type: "email",
               placeholder: "Enter your email",
               icon: <Mail color="gray" size={16} />,
@@ -130,13 +130,13 @@ const ForgotPassword = () => {
           fields={[
             {
               name: "password",
-              label: "New Password",
+          
               type: "password",
               placeholder: "Enter your new password",
             },
             {
               name: "confirmPassword",
-              label: "Confirm Password",
+             
               type: "password",
               placeholder: "Re-enter your new password to confirm",
             },

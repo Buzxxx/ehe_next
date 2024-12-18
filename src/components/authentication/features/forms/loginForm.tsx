@@ -68,7 +68,6 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
       >
         <div className="space-y-4">
           <InputField
-            label="Username"
             placeholder="username"
             field={Loginform.register("username")}
             icon={<PersonIcon size={16} color="gray" stroke="gray" />}
@@ -81,7 +80,6 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
           )}
 
           <InputField
-            label="Password"
             placeholder="password"
             field={Loginform.register("password")}
             isPassword={true}
