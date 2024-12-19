@@ -65,7 +65,7 @@ const ForgotPassPasswordStep = ({
   }
 
   return (
-    <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border max-w-sm mx-auto">
+    <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border max-w-sm mx-auto shadow-none sm:shadow-none">
       <Form {...form}>
         <CardContent className="py-6 w-full min-w-80">
           <CardTitle className="text-center font-medium md:text-xl text-lg text-gray-700">

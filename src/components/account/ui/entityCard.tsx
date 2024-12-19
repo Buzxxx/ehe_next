@@ -13,6 +13,15 @@ import {
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChevronRight } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ChevronDown } from "@/components/ui/icons"
 
 const EntityCard = ({
   name,
@@ -36,7 +45,12 @@ const EntityCard = ({
           <p className="md:text-sm text-xs text-gray-500">{description}</p>
         </div>
         <button className="md:text-base text-sm transition-all font-semibold text-sky-500 hover:text-sky-800">
-          <Link href={`/account/${name}`}>Manage</Link>
+          <Link
+            href={"#"}
+            className="md:text-sm text-xs font-medium text-sky-400 hover:text-sky-600"
+          >
+            View Reports
+          </Link>
         </button>
       </CardHeader>
 
@@ -61,17 +75,36 @@ const EntityCard = ({
       {/* Footer */}
       <CardFooter className="pt-4 flex-col  gap-4 ">
         <ul className="md:text-sm text-xs font-medium w-full">
-          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center">India <ChevronRight size={16} /></li>
-          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center">Australia <ChevronRight size={16} /></li>
-          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center">Sweden <ChevronRight size={16} /></li>
+          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer">
+            India <ChevronRight size={16} />
+          </li>
+          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer">
+            Australia <ChevronRight size={16} />
+          </li>
+          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer">
+            Sweden <ChevronRight size={16} />
+          </li>
         </ul>
-
-        <Link
-          href={"#"}
-          className="md:text-sm text-xs font-medium text-slate-400 hover:text-sky-600"
-        >
-          View Reports
-        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="text-gray-500 text-xs flex flex-col gap-1">
+            More Locations
+            <span className="flex flex-col relative items-center ">
+              <ChevronDown size={12} />
+              <ChevronDown size={12} className="absolute -top-1" />
+            </span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="min-w-80">
+            <DropdownMenuItem className="text-gray-500 hover:text-sky-600 text-sm flex gap-2 justify-between items-center">
+              China <ChevronRight size={16} />
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-gray-500 hover:text-sky-600 text-sm flex gap-2 justify-between items-center">
+              England <ChevronRight size={16} />
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-gray-500 hover:text-sky-600 text-sm flex gap-2 justify-between items-center">
+              Span <ChevronRight size={16} />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardFooter>
     </Card>
   )
