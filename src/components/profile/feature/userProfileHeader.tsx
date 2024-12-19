@@ -84,6 +84,7 @@ const EmployeeProfileHeader = ({
       title: "Password updated successfully",
       className: "bg-green-500 text-white",
     })
+    setShowResetPasswordModal(false)
   }
 
   return (
@@ -162,18 +163,15 @@ const EmployeeProfileHeader = ({
                 onSelect={handleDialogItemSelect}
                 onOpenChange={handleDialogItemOpenChange}
               >
-                {/* <DialogTitle className="DialogTitle">Update Status</DialogTitle>
-                <DialogDescription className="DialogDescription"></DialogDescription> */}
+                {/* <DialogTitle className="DialogTitle">Update Status</DialogTitle> */}
+                <DialogDescription className="DialogDescription"></DialogDescription>
                 <ForgotPassPasswordStep
                   onSuccess={handleSubmit}
                   setLoading={setLoading}
                   isLoggedIn={true}
                 />
               </DialogItem>
-              {/* <DropdownMenuItem
-                className="text-sm text-gray-600"
-                onClick={() => setShowResetPasswordModal(true)}
-              ></DropdownMenuItem> */}
+             
               <DropdownMenuItem className="text-sm text-red-400">
                 <UserRoundMinus size={16} className="mr-1" />
                 Deactivate User
