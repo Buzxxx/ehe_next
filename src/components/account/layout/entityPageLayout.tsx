@@ -12,6 +12,22 @@ import DeactivateUserModal from "../feature/deactivateUserModal"
 import EntityPageTopBar from "../feature/entityPageTopBar"
 import { EmployeeCard } from "../ui/employeeCard"
 import { columns } from "../feature/employeeColumn"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ChevronDownIcon } from "lucide-react"
+import { entities } from "../entities"
 
 interface Employee {
   id: number
@@ -25,60 +41,66 @@ interface Employee {
   date_joined?: string
 }
 
-export default function EntityPageLayout({ entity }: { entity: string }) {
-const [sampleData, setSampleData] = useState<Employee[]>([
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "123-456-7890",
-    status: "active",
-    teamId: 1,
-    role: "Manager",
-    date_joined: "2023-01-15",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "234-567-8901",
-    status: "inactive",
-    teamId: 2,
-    role: "Developer",
-    date_joined: "2022-08-22",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    phone: "345-678-9012",
-    status: "active",
-    teamId: 3,
-    role: "Designer",
-    date_joined: "2023-05-12",
-  },
-  {
-    id: 4,
-    name: "Bob Brown",
-    email: "bob@example.com",
-    phone: "456-789-0123",
-    status: "inactive",
-    teamId: 4,
-    role: "Tester",
-    date_joined: "2021-11-30",
-  },
-  {
-    id: 5,
-    name: "Charlie Black",
-    email: "charlie@example.com",
-    phone: "567-890-1234",
-    status: "active",
-    teamId: 4,
-    role: "Support Engineer",
-    date_joined: "2020-03-18",
-  },
-])
-
+export default function EntityPageLayout({
+  entity,
+  location,
+}: {
+  entity: string
+  location: string
+}) {
+  const locations = entities.find((e) => e.name === entity)?.locations || []
+  const [sampleData, setSampleData] = useState<Employee[]>([
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "123-456-7890",
+      status: "active",
+      teamId: 1,
+      role: "Manager",
+      date_joined: "2023-01-15",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      phone: "234-567-8901",
+      status: "inactive",
+      teamId: 2,
+      role: "Developer",
+      date_joined: "2022-08-22",
+    },
+    {
+      id: 3,
+      name: "Alice Johnson",
+      email: "alice@example.com",
+      phone: "345-678-9012",
+      status: "active",
+      teamId: 3,
+      role: "Designer",
+      date_joined: "2023-05-12",
+    },
+    {
+      id: 4,
+      name: "Bob Brown",
+      email: "bob@example.com",
+      phone: "456-789-0123",
+      status: "inactive",
+      teamId: 4,
+      role: "Tester",
+      date_joined: "2021-11-30",
+    },
+    {
+      id: 5,
+      name: "Charlie Black",
+      email: "charlie@example.com",
+      phone: "567-890-1234",
+      status: "active",
+      teamId: 4,
+      role: "Support Engineer",
+      date_joined: "2020-03-18",
+    },
+  ])
 
   const [viewMode, setViewMode] = useState<"card" | "row">("card")
   const [selectedTab, setSelectedTab] = useState<"active" | "inactive">(
@@ -120,10 +142,39 @@ const [sampleData, setSampleData] = useState<Employee[]>([
             src="/logo.svg"
           />
           <div className="flex flex-col">
-            <h2 className="text-2xl font-semibold text-gray-800 leading-6">
-              {entity}
-            </h2>
-            <p className="text-gray-500">Welcome to the admin console.</p>
+            <h2 className="text-2xl font-semibold text-gray-800 ">{entity}</h2>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href={`/account/${entity}`}>
+                    {entity}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbPage className="capitalize">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center gap-1">
+                      {location}
+                      <ChevronDownIcon />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      {locations
+                        .filter((loc) => loc.location !== location)
+                        .map((loc, index) => (
+                          <DropdownMenuItem key={index}>
+                            <a
+                              href={`/account/${entity}/${loc.location}`}
+                              className="capitalize"
+                            >
+                              {loc.location}
+                            </a>
+                          </DropdownMenuItem>
+                        ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </BreadcrumbPage>
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
         </div>
       </div>
