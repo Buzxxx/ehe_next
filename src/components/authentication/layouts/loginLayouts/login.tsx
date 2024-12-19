@@ -22,7 +22,7 @@ const Login = () => {
     <>
       {isLoading && <LoadingOverlay />}
 
-      <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border">
+      <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border shadow-none ">
         <CardHeader className="pb-2">
           <Image
             src={"/pin-code(1).svg"}

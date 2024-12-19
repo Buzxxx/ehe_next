@@ -25,12 +25,14 @@ const EmployeeProfileHeader = ({
   onSave,
   role,
   setEmployee,
+  setShowResetPasswordModal,
 }: {
   isEditing: boolean
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
   onSave: () => void
   role: string
   setEmployee: React.Dispatch<React.SetStateAction<Employee | undefined>>
+  setShowResetPasswordModal: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const router = useRouter()
   const handleAliasClick = () => {
@@ -53,6 +55,7 @@ const EmployeeProfileHeader = ({
       return prev
     })
   }
+  
 
   return (
     <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 p-2 md:mb-6 mb-2">
@@ -113,7 +116,7 @@ const EmployeeProfileHeader = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-sm text-gray-600"
-                onClick={() => router.push('/resetPassword')}
+                onClick={() => setShowResetPasswordModal(true)}
               >
                 <EditPassword size={16} className="mr-1" />
                 Reset Password

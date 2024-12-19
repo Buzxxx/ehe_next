@@ -9,9 +9,11 @@ import EmployeeActivityList from "@/components/account/feature/employeeActivityL
 import { useState } from "react"
 import { employeeData } from "@/components/teams/lib/employees"
 import UserAliasTable from "@/components/account/feature/userAliasTable"
+import ResetPasswordModal from "../feature/resetPasswordModal"
 
 const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [showResetPasswordModal, setShowResetPasswordModal] = useState(false)
   const [employee, setEmployee] = useState(
     employeeData.find((emp) => emp.id == 1)
   )
@@ -29,6 +31,7 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
         onSave={handleSave}
         role={employee?.role || "User"}
         setEmployee={setEmployee}
+        setShowResetPasswordModal={setShowResetPasswordModal}
       />
       <EmployeeStatsOverview />
 
@@ -41,6 +44,10 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
 
       <UserAliasTable />
       <EmployeeActivityList />
+      <ResetPasswordModal
+        open={showResetPasswordModal}
+        handleOpenClose={() => setShowResetPasswordModal(false)}
+      />
     </div>
   )
 }
