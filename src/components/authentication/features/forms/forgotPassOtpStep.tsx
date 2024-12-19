@@ -38,10 +38,12 @@ export default function ForgotPassOtpStep({
   onNext,
   onBack,
   setLoading,
+  isLoggedIn,
 }: {
   onNext: () => void
   onBack?: () => void
   setLoading: (loading: boolean) => void
+  isLoggedIn: boolean
 }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -63,7 +65,7 @@ export default function ForgotPassOtpStep({
   }
 
   return (
-    <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border">
+    <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border max-w-sm">
       <Form {...form}>
         <CardContent className="py-6">
           <CardTitle className="text-center font-medium md:text-xl text-lg text-gray-700">
@@ -103,6 +105,8 @@ export default function ForgotPassOtpStep({
             >
               Next
             </Button>
+          </form>
+          {!isLoggedIn && (
             <div className="flex items-center justify-end text-gray-500 text-sm gap-4 mt-2">
               <Link
                 href={paths.login}
@@ -114,7 +118,7 @@ export default function ForgotPassOtpStep({
                 Register
               </Link>
             </div>
-          </form>
+          )}
         </CardContent>
       </Form>
     </Card>

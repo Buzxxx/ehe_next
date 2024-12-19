@@ -5,11 +5,7 @@
 "use client"
 
 import LoginForm from "@/components/authentication/features/forms/loginForm"
-import Link from "next/link"
 import { useState } from "react"
-import OverlayLoading from "@/components/authentication/ui/overlayLoading"
-import Spinner from "@/components/ui/icons/spinner"
-import { paths } from "@/components/authentication/urls"
 import {
   Card,
   CardContent,
@@ -18,16 +14,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Image from "next/image"
+import LoadingOverlay from "@/components/ui/loadingOverlay"
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
   return (
     <>
-      {isLoading ? (
-        <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-75 z-50">
-          <Spinner className="w-8 h-8 md:w-14 md:h-16 "></Spinner>
-        </div>
-      ) : null}
+      {isLoading && <LoadingOverlay />}
 
       <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border">
         <CardHeader className="pb-2">

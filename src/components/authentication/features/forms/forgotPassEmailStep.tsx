@@ -26,10 +26,12 @@ const ForgotPassEmailStep = ({
   onNext,
   setLoading,
   onBack,
+  isLoggedIn,
 }: {
   onNext: (email: string) => void
   setLoading: (loading: boolean) => void
   onBack: () => void
+  isLoggedIn: boolean
 }) => {
   const form = useForm<z.infer<typeof ForgotPassEmailStepFormSchema>>({
     resolver: zodResolver(ForgotPassEmailStepFormSchema),
@@ -53,7 +55,7 @@ const ForgotPassEmailStep = ({
   }
 
   return (
-    <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border">
+    <Card className="gap-4 flex flex-col items-center justify-center border-0 md:border max-w-sm">
       <Form {...form}>
         <CardContent className="py-6">
           <CardTitle className="text-center font-medium md:text-xl text-lg text-gray-700">
@@ -78,17 +80,19 @@ const ForgotPassEmailStep = ({
               Next
             </Button>
           </form>
-          <div className="flex gap-4 items-center justify-end text-sm mt-2">
-            <Link
-              href={paths.login}
-              className=" text-gray-500 hover:text-sky-500 "
-            >
-              Login
-            </Link>
-            <Link href={"#"} className="text-gray-500 hover:text-sky-500 ">
-              Register
-            </Link>
-          </div>
+          {!isLoggedIn && (
+            <div className="flex gap-4 items-center justify-end text-sm mt-2">
+              <Link
+                href={paths.login}
+                className=" text-gray-500 hover:text-sky-500 "
+              >
+                Login
+              </Link>
+              <Link href={"#"} className="text-gray-500 hover:text-sky-500 ">
+                Register
+              </Link>
+            </div>
+          )}
         </CardContent>
       </Form>
     </Card>
