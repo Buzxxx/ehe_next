@@ -44,10 +44,7 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
 
       <UserAliasTable />
       <EmployeeActivityList />
-      <ResetPasswordModal
-        open={showResetPasswordModal}
-        handleOpenClose={() => setShowResetPasswordModal(false)}
-      />
+      
     </div>
   )
 }

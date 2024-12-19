@@ -7,6 +7,7 @@ import EntityPageLayout from "@/components/account/layout/entityPageLayout"
 interface EntityPageProps {
   params: Promise<{
     entity: string
+    location: string
   }>
 }
 
@@ -15,7 +16,7 @@ const LeadPage = async ({ params }: EntityPageProps) => {
 
   return (
     <>
-      <EntityPageLayout entity={decodeURI(resolvedParams.entity)} />
+      <EntityPageLayout entity={decodeURI(resolvedParams.entity)} location={decodeURI(resolvedParams.location)} />
     </>
   )
 }

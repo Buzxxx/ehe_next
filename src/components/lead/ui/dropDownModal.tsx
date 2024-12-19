@@ -45,7 +45,6 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
         <DropdownMenuItem
           {...itemProps}
           ref={forwardedRef as React.LegacyRef<HTMLDivElement>}
-          className={`DropdownMenuItem ${className}`}
           onSelect={(event) => {
             event.preventDefault()
             onSelect && onSelect()
@@ -54,17 +53,13 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
           {triggerChildren}
         </DropdownMenuItem>
       </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay className="DialogOverlay" />
-        <DialogContent className="DialogContent">
+   
+        <DialogContent
+          className={`DropdownMenuItem ${className}`}
+        >
           {children}
-          <DialogClose asChild>
-            <button className="IconButton" aria-label="Close">
-              <X />
-            </button>
-          </DialogClose>
         </DialogContent>
-      </DialogPortal>
+      
     </Dialog>
   )
 })

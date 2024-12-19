@@ -1,14 +1,9 @@
-/**
- * @path src/components/authentication/layouts/forgotPasswordLayouts/PasswordStep.tsx
- */
-
 "use client"
 
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
-import { useState } from "react"
 import InputField from "../../ui/inputField"
 import { Form } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
@@ -16,18 +11,18 @@ import Link from "next/link"
 import { paths } from "../../urls"
 
 const resetPasswordSchema = z.object({
-  password: z.string().min(6),
-  confirmPassword: z.string().min(6),
+  password: z.string().min(6, "Password must be at least 6 characters long."),
+  confirmPassword: z
+    .string()
+    .min(6, "Confirm password must be at least 6 characters long."),
 })
 
 const ForgotPassPasswordStep = ({
   setLoading,
-  onBack,
   onSuccess,
   isLoggedIn,
 }: {
   setLoading: (loading: boolean) => void
-  onBack: () => void
   onSuccess: () => void
   isLoggedIn: boolean
 }) => {
@@ -39,22 +34,26 @@ const ForgotPassPasswordStep = ({
     },
   })
 
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState("")
+  const { control, handleSubmit, register, setError, clearErrors, formState } =
+    form
+  const { errors } = formState
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    if (password.length < 6 || confirmPassword.length < 6) {
-      setError("Passwords must be at least 6 characters.")
-      return
-    }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.")
-      return
-    }
+  // Watch for real-time validation
+  const password = useWatch({ control, name: "password" })
+  const confirmPassword = useWatch({ control, name: "confirmPassword" })
 
+  // Validate passwords in real-time
+  const handleValidation = () => {
+    if (confirmPassword === "") {
+      clearErrors("confirmPassword")
+    } else if (password !== confirmPassword) {
+      setError("confirmPassword", { message: "Passwords do not match." })
+    } else {
+      clearErrors("confirmPassword")
+    }
+  }
+
+  const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
     setLoading(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 3000)) // Simulate API call
@@ -74,21 +73,31 @@ const ForgotPassPasswordStep = ({
           <p className="text-gray-600 text-sm mb-8 text-center">
             Please set your new password.
           </p>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)} onChange={handleValidation}>
             <InputField
               isPassword={true}
-              field={form.register("password")}
+              field={register("password")}
               placeholder="Enter new password"
               className="w-full px-4 py-2 border rounded"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
 
             <InputField
               isPassword={true}
-              field={form.register("confirmPassword")}
+              field={register("confirmPassword")}
               placeholder="Confirm new password"
               className="w-full px-4 py-2 border rounded"
             />
-            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+
             <Button
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
