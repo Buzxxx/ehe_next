@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
+import { ChevronRight } from "lucide-react"
 
 const EntityCard = ({
   name,
@@ -58,13 +59,12 @@ const EntityCard = ({
       </CardContent>
 
       {/* Footer */}
-      <CardFooter className="pt-4 flex-col items-start gap-4 ">
-        <Link
-          href={"#"}
-          className="md:text-sm text-xs font-medium text-slate-400 hover:text-sky-600"
-        >
-          Add User
-        </Link>
+      <CardFooter className="pt-4 flex-col  gap-4 ">
+        <ul className="md:text-sm text-xs font-medium w-full">
+          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center">India <ChevronRight size={16} /></li>
+          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center">Australia <ChevronRight size={16} /></li>
+          <li className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center">Sweden <ChevronRight size={16} /></li>
+        </ul>
 
         <Link
           href={"#"}

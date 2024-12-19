@@ -16,18 +16,20 @@ import { FolderPen, UserRoundMinus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { Employee } from "@/components/account/feature/employeeColumn"
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu"
+import EditPassword from "@/components/ui/icons/editPassword"
 
 const EmployeeProfileHeader = ({
   isEditing,
   setIsEditing,
   onSave,
   role,
-  setEmployee
+  setEmployee,
 }: {
   isEditing: boolean
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
   onSave: () => void
-  role: string 
+  role: string
   setEmployee: React.Dispatch<React.SetStateAction<Employee | undefined>>
 }) => {
   const router = useRouter()
@@ -109,6 +111,14 @@ const EmployeeProfileHeader = ({
                 <FolderPen size={16} className="mr-1" />
                 Alias
               </DropdownMenuItem>
+              <DropdownMenuItem
+                className="text-sm text-gray-600"
+                onClick={() => router.push('/resetPassword')}
+              >
+                <EditPassword size={16} className="mr-1" />
+                Reset Password
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem className="text-sm text-red-400">
                 <UserRoundMinus size={16} className="mr-1" />
                 Deactivate User
@@ -116,7 +126,10 @@ const EmployeeProfileHeader = ({
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={onSave} className="h-8 w-fit py-0 bg-sky-600 hover:bg-sky-700">
+          <Button
+            onClick={onSave}
+            className="h-8 w-fit py-0 bg-sky-600 hover:bg-sky-700"
+          >
             Save
           </Button>
         )}
