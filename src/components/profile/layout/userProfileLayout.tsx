@@ -12,6 +12,7 @@ import UserAliasTable from "@/components/account/feature/userAliasTable"
 
 const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [showResetPasswordModal, setShowResetPasswordModal] = useState(false)
   const [employee, setEmployee] = useState(
     employeeData.find((emp) => emp.id == 1)
   )
@@ -29,6 +30,8 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
         onSave={handleSave}
         role={employee?.role || "User"}
         setEmployee={setEmployee}
+        setShowResetPasswordModal={setShowResetPasswordModal}
+        showResetPasswordModal={showResetPasswordModal}
       />
       <EmployeeStatsOverview />
 
@@ -41,6 +44,7 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
 
       <UserAliasTable />
       <EmployeeActivityList />
+      
     </div>
   )
 }
