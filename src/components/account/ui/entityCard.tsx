@@ -1,8 +1,9 @@
 /**
  * @path src/components/account/ui/entityCard.tsx
  */
+"use client"
 
-import React from "react"
+import React, { useState } from "react"
 import {
   Card,
   CardContent,
@@ -28,18 +29,90 @@ import {
 import { ChevronDown } from "@/components/ui/icons"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChevronRight, EllipsisVertical } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { AddLocationForm } from "../feature/addLocationForm"
+import DeleteEntityConfirmation from "../feature/deleteEntityConfirmation"
+import { Button } from "@/components/ui/button"
+import DialogItem from "@/components/lead/ui/dropDownModal"
+import { Entity } from "../entities"
 
 const EntityCard = ({
+  id,
   name,
   description,
   totalEmployees,
   activeEmployees,
+  locations,
+  entities,
+  setEntities,
 }: {
+  id: number
   name: string
   description: string
   totalEmployees: number
   activeEmployees: number
+  entities: Entity[]
+  setEntities: (entities: Entity[]) => void
+  locations: {
+    location: string
+    totalEmployees: number
+    activeEmployees: number
+  }[]
 }) => {
+  const focusRef = React.useRef<HTMLButtonElement | null>(null)
+  const dropdownTriggerRef = React.useRef<HTMLButtonElement | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showLocationModal, setShowLocationModal] = useState(false)
+
+  const handleDeleteConfirm = () => {
+    setEntities(entities.filter((entity: Entity) => entity.id !== id))
+    setShowDeleteModal(false)
+  }
+
+   const handleAddLocation = (newLocation: {
+     location: string
+     totalEmployees: number
+     activeEmployees: number
+   }) => {
+     const updatedEntities = entities.map((entity) =>
+       entity.id === id
+         ? { ...entity, locations: [...entity.locations, newLocation] }
+         : entity
+     )
+
+     setEntities(updatedEntities)
+     setShowLocationModal(false) // Close the modal after adding
+   }
+
+  function handleDialogItemSelect() {
+    focusRef.current = dropdownTriggerRef.current // Save the trigger element
+  }
+
+  function handleDeleteDialogItemOpenChange(open: boolean) {
+    setShowDeleteModal(open)
+
+    if (!open && focusRef.current) {
+      focusRef.current.focus() // Restore focus to the dropdown trigger
+      focusRef.current = null // Reset focusRef
+    }
+  }
+
+  function handleLocationModalOpenChange(open: boolean) {
+    setShowLocationModal(open)
+
+    if (!open && focusRef.current) {
+      focusRef.current.focus() // Restore focus to the dropdown trigger
+      focusRef.current = null // Reset focusRef
+    }
+  }
   return (
     <Card className="backdrop-blur-xl bg-gray-50 flex flex-col">
       {/* Header */}
@@ -50,12 +123,21 @@ const EntityCard = ({
           </CardTitle>
           <p className="md:text-sm text-xs text-gray-500">{description}</p>
         </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger className="text-gray-500 text-xs flex flex-col gap-1">
             <EllipsisVertical />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <TooltipProvider>
+          <DropdownMenuContent
+            onCloseAutoFocus={(event) => {
+              if (focusRef.current) {
+                focusRef.current.focus()
+                focusRef.current = null
+                event.preventDefault()
+              }
+            }}
+          >
+            <TooltipProvider delayDuration={250}>
               <Tooltip>
                 <TooltipTrigger>
                   <DropdownMenuItem disabled={true}>
@@ -69,10 +151,43 @@ const EntityCard = ({
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <DropdownMenuItem>Add Location</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-500">
-              Delete Entity
-            </DropdownMenuItem>
+
+            <DialogItem
+              open={showLocationModal}
+              className="*:border-none w-fit rounded-none"
+              triggerChildren={
+                <div className="text-sm text-gray-600 flex items-center cursor-pointer">
+                  Add Location
+                </div>
+              }
+              onSelect={handleDialogItemSelect}
+              onOpenChange={handleLocationModalOpenChange}
+            >
+              <DialogDescription className="DialogDescription"></DialogDescription>
+              <AddLocationForm
+                onAddLocation={handleAddLocation}
+                onCancel={() => setShowLocationModal(false)}
+              />
+            </DialogItem>
+
+            <DialogItem
+              open={showDeleteModal}
+              className="*:border-none md:w-fit w-[99%] mx-auto rounded-none md:p-6 px-0 py-4 "
+              triggerChildren={
+                <div className="text-sm text-red-500 flex items-center cursor-pointer">
+                  Delete Entity
+                </div>
+              }
+              onSelect={handleDialogItemSelect}
+              onOpenChange={handleDeleteDialogItemOpenChange}
+            >
+              <DialogDescription className="DialogDescription hidden"></DialogDescription>
+              <DeleteEntityConfirmation
+                entity={name}
+                onConfirm={handleDeleteConfirm}
+                onCancel={() => setShowDeleteModal(false)}
+              />
+            </DialogItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>
@@ -98,44 +213,39 @@ const EntityCard = ({
       {/* Footer */}
       <CardFooter className="pt-4 flex-col  gap-4 ">
         <ul className="md:text-sm text-xs font-medium w-full">
-          <li>
-            {" "}
-            <Link
-              href={`/account/${name}/india`}
-              className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer"
-            >
-              India <ChevronRight size={16} />
-            </Link>
-          </li>
-          <li>
-            {" "}
-            <Link
-              href={`/account/${name}/australia`}
-              className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer"
-            >
-              Australia <ChevronRight size={16} />
-            </Link>
-          </li>
-          <li>
-            {" "}
-            <Link
-              href={`/account/${name}/sweden`}
-              className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer"
-            >
-              Sweden <ChevronRight size={16} />
-            </Link>
-          </li>
+          {locations &&
+            locations.slice(0, 3).map((loc) => (
+              <li key={loc.location}>
+                <Link
+                  href={`/account/${name}/${loc.location}`}
+                  className="text-slate-400 hover:text-sky-600 w-full flex justify-between items-center cursor-pointer"
+                >
+                  {loc.location} <ChevronRight size={16} />
+                </Link>
+              </li>
+            ))}
         </ul>
-        <DropdownMenu>
-          <DropdownMenuTrigger className="text-gray-500 text-xs flex flex-col gap-1">
-            More Locations
-            <span className="flex flex-col relative items-center ">
-              <ChevronDown size={12} />
-              <ChevronDown size={12} className="absolute -top-1" />
-            </span>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="min-w-80">
-            <DropdownMenuItem>
+        {locations.length > 3 && (
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-gray-500 text-xs flex flex-col gap-1">
+              More Locations
+              <span className="flex flex-col relative items-center ">
+                <ChevronDown size={12} />
+                <ChevronDown size={12} className="absolute -top-1" />
+              </span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="min-w-80">
+              {locations.slice(3).map((loc) => (
+                <DropdownMenuItem key={loc.location}>
+                  <Link
+                    href={`/account/${name}/${loc.location}`}
+                    className="text-gray-500 hover:text-sky-600 text-sm flex gap-2 justify-between items-center w-full"
+                  >
+                    {loc.location} <ChevronRight size={16} />
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+              {/* <DropdownMenuItem>
               <Link
                 href={`/account/${name}/china`}
                 className="text-gray-500 hover:text-sky-600 text-sm flex gap-2 justify-between items-center"
@@ -159,9 +269,10 @@ const EntityCard = ({
               >
                 Span <ChevronRight size={16} />
               </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuItem> */}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </CardFooter>
     </Card>
   )

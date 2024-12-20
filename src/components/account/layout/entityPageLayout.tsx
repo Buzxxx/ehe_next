@@ -155,9 +155,9 @@ export default function EntityPageLayout({
                   <DropdownMenu>
                     <DropdownMenuTrigger className="flex items-center gap-1">
                       {location}
-                      <ChevronDownIcon />
+                      <ChevronDownIcon size={16} />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start">
+                    <DropdownMenuContent align="center" className="min-w-24">
                       {locations
                         .filter((loc) => loc.location !== location)
                         .map((loc, index) => (

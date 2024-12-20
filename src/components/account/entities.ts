@@ -1,4 +1,15 @@
-export const entities = [
+export interface Entity {
+  id: number
+  name: string
+  description: string
+  locations: {
+    location: string
+    totalEmployees: number
+    activeEmployees: number
+  }[]
+}
+
+export const entities: Entity[] = [
   {
     id: 1,
     name: "Tech Solutions Inc.",
