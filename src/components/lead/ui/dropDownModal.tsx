@@ -21,6 +21,7 @@ interface DialogItemProps extends PropsWithChildren {
   onSelect?: () => void
   onOpenChange?: (arg0: boolean) => void
   className?: string
+  open?: boolean
 }
 
 const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
@@ -30,6 +31,7 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
     onSelect,
     onOpenChange,
     className,
+    open,
     ...itemProps
   } = props
 
@@ -40,7 +42,7 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
   }
 
   return (
-    <Dialog onOpenChange={handleOpenChange}>
+    <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <DropdownMenuItem
           {...itemProps}

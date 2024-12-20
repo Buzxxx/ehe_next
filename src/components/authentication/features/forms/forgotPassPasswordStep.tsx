@@ -56,8 +56,9 @@ const ForgotPassPasswordStep = ({
   const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
     setLoading(true)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 3000)) // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
       onSuccess()
+      form.reset()
     } finally {
       setLoading(false)
     }

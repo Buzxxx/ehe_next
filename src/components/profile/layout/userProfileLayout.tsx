@@ -32,6 +32,7 @@ const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
         role={employee?.role || "User"}
         setEmployee={setEmployee}
         setShowResetPasswordModal={setShowResetPasswordModal}
+        showResetPasswordModal={showResetPasswordModal}
       />
       <EmployeeStatsOverview />
 

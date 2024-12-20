@@ -31,6 +31,7 @@ const EmployeeProfileHeader = ({
   role,
   setEmployee,
   setShowResetPasswordModal,
+  showResetPasswordModal
 }: {
   isEditing: boolean
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,6 +39,7 @@ const EmployeeProfileHeader = ({
   role: string
   setEmployee: React.Dispatch<React.SetStateAction<Employee | undefined>>
   setShowResetPasswordModal: React.Dispatch<React.SetStateAction<boolean>>
+  showResetPasswordModal: boolean
 }) => {
   const router = useRouter()
   const focusRef = React.useRef<HTMLButtonElement | null>(null)
@@ -153,6 +155,7 @@ const EmployeeProfileHeader = ({
                 Alias
               </DropdownMenuItem>
               <DialogItem
+              open={showResetPasswordModal}
                 className="*:border-none w-fit rounded-none"
                 triggerChildren={
                   <div className="text-sm text-gray-600 flex items-center ">
