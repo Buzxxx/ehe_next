@@ -43,7 +43,6 @@ const ForgotPasswordLayout = ({ name }: { name?: string }) => {
     <ForgotPassPasswordStep
       key={2}
       setLoading={setIsLoading}
-      onBack={handlePrevStep}
       onSuccess={() => router.push(paths.login)}
       isLoggedIn={isLoggedIn}
     />,
