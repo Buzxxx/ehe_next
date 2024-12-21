@@ -11,7 +11,7 @@ import ResetPasswordModal from "../feature/resetPasswordModal"
 import DeactivateUserModal from "../feature/deactivateUserModal"
 import EntityPageTopBar from "../feature/entityPageTopBar"
 import { EmployeeCard } from "../ui/employeeCard"
-import { columns } from "../feature/employeeColumn"
+import { columns, Employee } from "../feature/employeeColumn"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,17 +29,6 @@ import {
 import { ChevronDownIcon } from "lucide-react"
 import { entities } from "../entities"
 
-interface Employee {
-  id: number
-  name: string
-  email: string
-  phone: string
-  status: "active" | "inactive"
-  teamId: number
-  role?: string
-  follow_up_current_status?: string
-  date_joined?: string
-}
 
 export default function EntityPageLayout({
   entity,
@@ -184,6 +173,12 @@ export default function EntityPageLayout({
         selectedTab={selectedTab}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        onAddEmployee={(newEmployee: Employee) =>
+          setSampleData((prev) => [
+            ...prev,
+            { ...newEmployee, id: prev.length + 1 },
+          ])
+        }
       />
 
       {viewMode === "card" ? (
