@@ -2,6 +2,7 @@
  * @path src/components/workplace/features/employeeProfileHeader.tsx
  */
 
+import React, { useState } from "react"
 import Avataar from "@/components/lead/ui/leadPage/avataar"
 import { Badge } from "@/components/ui/badge"
 import { Edit, EllipsisVertical } from "@/components/ui/icons"
@@ -16,21 +17,49 @@ import { FolderPen, UserRoundMinus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { Employee } from "@/components/account/feature/employeeColumn"
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu"
+import EditPassword from "@/components/ui/icons/editPassword"
+import DialogItem from "@/components/lead/ui/dropDownModal"
+import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
+import ForgotPassPasswordStep from "@/components/authentication/features/forms/forgotPassPasswordStep"
+import { useToast } from "@/components/ui/use-toast"
 
 const EmployeeProfileHeader = ({
   isEditing,
   setIsEditing,
   onSave,
   role,
-  setEmployee
+  setEmployee,
+  setShowResetPasswordModal,
+  showResetPasswordModal
 }: {
   isEditing: boolean
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
   onSave: () => void
-  role: string 
+  role: string
   setEmployee: React.Dispatch<React.SetStateAction<Employee | undefined>>
+  setShowResetPasswordModal: React.Dispatch<React.SetStateAction<boolean>>
+  showResetPasswordModal: boolean
 }) => {
   const router = useRouter()
+  const focusRef = React.useRef<HTMLButtonElement | null>(null)
+  const dropdownTriggerRef = React.useRef<HTMLButtonElement | null>(null)
+  const [loading, setLoading] = useState(false)
+  const { toast } = useToast()
+
+  function handleDialogItemSelect() {
+    focusRef.current = dropdownTriggerRef.current // Save the trigger element
+  }
+
+  function handleDialogItemOpenChange(open: boolean) {
+    setShowResetPasswordModal(open)
+
+    if (!open && focusRef.current) {
+      focusRef.current.focus() // Restore focus to the dropdown trigger
+      focusRef.current = null // Reset focusRef
+    }
+  }
+
   const handleAliasClick = () => {
     const currentUrl = window.location.href
     // Append #aliasTable to the current URL
@@ -50,6 +79,14 @@ const EmployeeProfileHeader = ({
       }
       return prev
     })
+  }
+
+  const handleSubmit = () => {
+    toast({
+      title: "Password updated successfully",
+      className: "bg-green-500 text-white",
+    })
+    setShowResetPasswordModal(false)
   }
 
   return (
@@ -94,7 +131,15 @@ const EmployeeProfileHeader = ({
             <DropdownMenuTrigger>
               <EllipsisVertical className="text-gray-500 hover:text-gray-700 cursor-pointer" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent
+              onCloseAutoFocus={(event) => {
+                if (focusRef.current) {
+                  focusRef.current.focus()
+                  focusRef.current = null
+                  event.preventDefault()
+                }
+              }}
+            >
               <DropdownMenuItem
                 className="text-sm text-gray-600"
                 onClick={() => setIsEditing(true)}
@@ -109,6 +154,27 @@ const EmployeeProfileHeader = ({
                 <FolderPen size={16} className="mr-1" />
                 Alias
               </DropdownMenuItem>
+              <DialogItem
+              open={showResetPasswordModal}
+                className="*:border-none w-fit rounded-none"
+                triggerChildren={
+                  <div className="text-sm text-gray-600 flex items-center ">
+                    <EditPassword size={16} className="mr-1" />
+                    Reset Password
+                  </div>
+                }
+                onSelect={handleDialogItemSelect}
+                onOpenChange={handleDialogItemOpenChange}
+              >
+                {/* <DialogTitle className="DialogTitle">Update Status</DialogTitle> */}
+                <DialogDescription className="DialogDescription"></DialogDescription>
+                <ForgotPassPasswordStep
+                  onSuccess={handleSubmit}
+                  setLoading={setLoading}
+                  isLoggedIn={true}
+                />
+              </DialogItem>
+             
               <DropdownMenuItem className="text-sm text-red-400">
                 <UserRoundMinus size={16} className="mr-1" />
                 Deactivate User
@@ -116,7 +182,10 @@ const EmployeeProfileHeader = ({
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={onSave} className="h-8 w-fit py-0 bg-sky-600 hover:bg-sky-700">
+          <Button
+            onClick={onSave}
+            className="h-8 w-fit py-0 bg-sky-600 hover:bg-sky-700"
+          >
             Save
           </Button>
         )}

@@ -21,6 +21,7 @@ interface DialogItemProps extends PropsWithChildren {
   onSelect?: () => void
   onOpenChange?: (arg0: boolean) => void
   className?: string
+  open?: boolean
 }
 
 const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
@@ -30,6 +31,7 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
     onSelect,
     onOpenChange,
     className,
+    open,
     ...itemProps
   } = props
 
@@ -40,12 +42,11 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
   }
 
   return (
-    <Dialog onOpenChange={handleOpenChange}>
+    <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <DropdownMenuItem
           {...itemProps}
           ref={forwardedRef as React.LegacyRef<HTMLDivElement>}
-          className={`DropdownMenuItem ${className}`}
           onSelect={(event) => {
             event.preventDefault()
             onSelect && onSelect()
@@ -54,17 +55,13 @@ const DialogItem = React.forwardRef((props: DialogItemProps, forwardedRef) => {
           {triggerChildren}
         </DropdownMenuItem>
       </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay className="DialogOverlay" />
-        <DialogContent className="DialogContent">
+   
+        <DialogContent
+          className={`DropdownMenuItem ${className}`}
+        >
           {children}
-          <DialogClose asChild>
-            <button className="IconButton" aria-label="Close">
-              <X />
-            </button>
-          </DialogClose>
         </DialogContent>
-      </DialogPortal>
+      
     </Dialog>
   )
 })

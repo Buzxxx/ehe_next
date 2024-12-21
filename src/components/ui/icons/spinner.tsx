@@ -4,7 +4,7 @@ type classType = {
 
 export default function Spinner({ className = "w-8 h-8" }: classType) {
   const customeClass =
-    className + "text-gray-200 animate-spin dark:text-gray-600 fill-blue-600";
+    className + "text-gray-200 animate-spin dark:text-gray-400 fill-blue-600";
   return (
     <div role="status">
       <svg
