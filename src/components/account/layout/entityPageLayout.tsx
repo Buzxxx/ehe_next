@@ -186,6 +186,7 @@ export default function EntityPageLayout({
           {filteredData.map((employee) => (
             <EmployeeCard
               key={employee.id}
+              location={location}
               employee={employee}
               onResetPassword={() => handleResetPassword(employee.id)}
               onDeactivateUser={() => handleDeactivateUser(employee)}

@@ -23,12 +23,14 @@ import { Employee } from "../feature/employeeColumn"
 import { only } from "node:test"
 
 type EmployeeCardProps = {
+  location: string
   employee: Employee
   onResetPassword: () => void
   onDeactivateUser: () => void
 }
 
 export const EmployeeCard: React.FC<EmployeeCardProps> = ({
+  location,
   employee,
   onResetPassword,
   onDeactivateUser,
@@ -52,7 +54,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({
         
         </CardTitle>
         <Link
-          href={`/account/${employee.teamId}/employees/${employee.id}`}
+          href={`/account/${employee.teamId}/${location}/employees/${employee.id}`}
           className="flex items-center gap-1"
         >
           <PersonIcon size={20} color="transparent" stroke="gray" />
