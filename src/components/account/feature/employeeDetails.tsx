@@ -1,18 +1,20 @@
+/**
+ * @path src/components/account/feature/employeeDetails.tsx
+ */
+
 import EmployeeDetail from "../ui/employeeDetail"
 import { Copy } from "@/components/ui/icons"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Employee } from "./employeeColumn"
-import { SetStateAction } from "react"
+import React, { SetStateAction } from "react"
 
 const EmployeeDetails = ({
   isEditing,
-  setIsEditing,
   employee,
   setEmployee,
 }: {
   isEditing: boolean
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
   employee: Employee
   setEmployee: React.Dispatch<SetStateAction<Employee | undefined>>
 }) => {
@@ -129,4 +131,4 @@ const EmployeeDetails = ({
   )
 }
 
-export default EmployeeDetails
+export default React.memo(EmployeeDetails)

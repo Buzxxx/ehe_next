@@ -3,7 +3,7 @@
  */
 "use client"
 
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import {
   Card,
   CardContent,
@@ -29,18 +29,9 @@ import {
 import { ChevronDown } from "@/components/ui/icons"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChevronRight, EllipsisVertical } from "lucide-react"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { DialogDescription } from "@/components/ui/dialog"
 import { AddLocationForm } from "../feature/addLocationForm"
 import DeleteEntityConfirmation from "../feature/deleteEntityConfirmation"
-import { Button } from "@/components/ui/button"
 import DialogItem from "@/components/lead/ui/dropDownModal"
 import { Entity } from "../entities"
 
@@ -72,25 +63,32 @@ const EntityCard = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showLocationModal, setShowLocationModal] = useState(false)
 
-  const handleDeleteConfirm = () => {
-    setEntities(entities.filter((entity: Entity) => entity.id !== id))
+  const [firstThreeLocations, remainingLocations] = [
+    locations.slice(0, 3),
+    locations.slice(3),
+  ]
+
+  const handleDeleteConfirm = useCallback(() => {
+    setEntities(entities.filter((entity) => entity.id !== id))
     setShowDeleteModal(false)
-  }
+  }, [entities, id, setEntities])
 
-   const handleAddLocation = (newLocation: {
-     location: string
-     totalEmployees: number
-     activeEmployees: number
-   }) => {
-     const updatedEntities = entities.map((entity) =>
-       entity.id === id
-         ? { ...entity, locations: [...entity.locations, newLocation] }
-         : entity
-     )
-
-     setEntities(updatedEntities)
-     setShowLocationModal(false) // Close the modal after adding
-   }
+  const handleAddLocation = useCallback(
+    (newLocation: {
+      location: string
+      totalEmployees: number
+      activeEmployees: number
+    }) => {
+      const updatedEntities = entities.map((entity) =>
+        entity.id === id
+          ? { ...entity, locations: [...entity.locations, newLocation] }
+          : entity
+      )
+      setEntities(updatedEntities)
+      setShowLocationModal(false)
+    },
+    [entities, id, setEntities]
+  )
 
   function handleDialogItemSelect() {
     focusRef.current = dropdownTriggerRef.current // Save the trigger element
@@ -214,7 +212,7 @@ const EntityCard = ({
       <CardFooter className="pt-4 flex-col  gap-4 ">
         <ul className="md:text-sm text-xs font-medium w-full">
           {locations &&
-            locations.slice(0, 3).map((loc) => (
+            firstThreeLocations.map((loc) => (
               <li key={loc.location}>
                 <Link
                   href={`/account/${name}/${loc.location}`}
@@ -235,7 +233,7 @@ const EntityCard = ({
               </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="min-w-80">
-              {locations.slice(3).map((loc) => (
+              {remainingLocations.map((loc) => (
                 <DropdownMenuItem key={loc.location}>
                   <Link
                     href={`/account/${name}/${loc.location}`}

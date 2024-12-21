@@ -1,6 +1,6 @@
 /**
- * @path src/app/(dashboard)/lead/[slug]/page.tsx
- */
+  @path src/app/(dashboard)/account/[entity]/[location]/page.tsx
+*/
 
 import EntityPageLayout from "@/components/account/layout/entityPageLayout"
 
@@ -11,14 +11,15 @@ interface EntityPageProps {
   }>
 }
 
-const LeadPage = async ({ params }: EntityPageProps) => {
+export default async function EntityPage({ params }: EntityPageProps) {
   const resolvedParams = await params
 
   return (
     <>
-      <EntityPageLayout entity={decodeURI(resolvedParams.entity)} location={decodeURI(resolvedParams.location)} />
+      <EntityPageLayout
+        entity={decodeURI(resolvedParams.entity)}
+        location={decodeURI(resolvedParams.location)}
+      />
     </>
   )
 }
-
-export default LeadPage

@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Trash } from "lucide-react"
-import { useState } from "react"
+import React, { useState } from "react"
 
 const UserAliasTable = () => {
   const [aliases, setAliases] = useState<{ name: string; createdAt: string }[]>(
@@ -107,4 +107,4 @@ const UserAliasTable = () => {
   )
 }
 
-export default UserAliasTable
+export default React.memo(UserAliasTable)

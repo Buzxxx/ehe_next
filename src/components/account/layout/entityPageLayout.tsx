@@ -4,11 +4,9 @@
 
 "use client"
 
-import { useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import Avataar from "@/components/dashboard/ui/avataar"
 import { DataTable } from "@/components/ui/dataTable"
-import ResetPasswordModal from "../feature/resetPasswordModal"
-import DeactivateUserModal from "../feature/deactivateUserModal"
 import EntityPageTopBar from "../feature/entityPageTopBar"
 import { EmployeeCard } from "../ui/employeeCard"
 import { columns, Employee } from "../feature/employeeColumn"
@@ -28,7 +26,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ChevronDownIcon } from "lucide-react"
 import { entities } from "../entities"
+import dynamic from "next/dynamic"
 
+const ResetPasswordModal = dynamic(
+  () => import("../feature/resetPasswordModal")
+)
+const DeactivateUserModal = dynamic(
+  () => import("../feature/deactivateUserModal")
+)
 
 export default function EntityPageLayout({
   entity,
@@ -101,17 +106,18 @@ export default function EntityPageLayout({
   const [selectedEmployeeForDeactivation, setSelectedEmployeeForDeactivation] =
     useState<Employee | null>(null)
 
-  const filteredData = sampleData.filter(
-    (employee) => employee.status === selectedTab
+  const filteredData = useMemo(
+    () => sampleData.filter((employee) => employee.status === selectedTab),
+    [sampleData, selectedTab]
   )
 
-  const handleResetPassword = (id: number) => {
+  const handleResetPassword = useCallback((id: number) => {
     setSelectedEmployeeId(id)
-  }
+  }, [])
 
-  const handleDeactivateUser = (employee: Employee) => {
+  const handleDeactivateUser = useCallback((employee: Employee) => {
     setSelectedEmployeeForDeactivation(employee)
-  }
+  }, [])
 
   const confirmDeactivation = (id: number) => {
     setSampleData((prevData) =>
