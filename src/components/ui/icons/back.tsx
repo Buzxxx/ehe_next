@@ -1,21 +1,18 @@
-
-'use client'
-
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button";
 
 type classType = {
-  className?: string
-}
+  className?: string;
+  onClick: () => void;
+};
 
 export default function BackIcon({
   className = "w-20 h-20",
+  onClick,
 }: classType) {
-  const customeClass = className + " " + "text-black"
-  const router = useRouter()
+  const customeClass = className + "text-black";
   return (
     <Button
-      onClick={() => router.back()}
+      onClick={onClick}
       className={`bg-transparent border-none hover:bg-gray-100 text-black font-bold py-2 px-4 rounded ${customeClass}`}
     >
       <svg
@@ -28,5 +25,5 @@ export default function BackIcon({
         <path d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
       </svg>
     </Button>
-  )
+  );
 }

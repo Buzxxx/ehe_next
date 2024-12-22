@@ -3,7 +3,7 @@
  */
 
 import Avataar from "@/components/lead/ui/leadPage/avataar"
-import { BackIcon, Edit, EllipsisVertical } from "@/components/ui/icons"
+import { Edit, EllipsisVertical } from "@/components/ui/icons"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,17 +46,14 @@ const EmployeeProfileHeader = React.memo(
     }, [])
 
     return (
-      <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 md:pl-0 pr-2 mb-6">
+      <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 px-2 mb-6">
         <div className="flex gap-4 items-center">
-          <div className="border-r">
-            <BackIcon className="w-fit px-6" />
-          </div>
-          <div className="flex gap-2 items-center">
+          <div className="border-r pr-4">
             <Avataar className="rounded-full" />
-            <div className="flex flex-col">
-              <h3 className="font-bold text-2xl text-gray-800">John Doe</h3>
-              <span className="text-gray-500 text-sm">Software Engineer</span>
-            </div>
+          </div>
+          <div>
+            <h3 className="font-bold text-2xl text-gray-800">John Doe</h3>
+            <span className="text-gray-500 text-sm">Software Engineer</span>
           </div>
         </div>
         <div className="flex gap-2 items-center">
