@@ -12,7 +12,6 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         height="4px"
         color="#06b6d4"
         options={{ showSpinner: false }}
-        shallowRouting
       />
     </>
   )
