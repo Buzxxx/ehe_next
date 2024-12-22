@@ -4,11 +4,11 @@ import apiClient from "@/apiServices/apiClient";
 import { getCookie } from "@/cookies/cookiesService";
 
 type FilterOption = {
-  name: string
-  label: string
-  placeholder: string
-  options: { [key: string]: string }
-}
+  name: string;
+  label: string;
+  placeholder: string;
+  options: { [key: string]: string };
+};
 
 export const FilterSelect: { [key: string]: FilterOption } = {
   assigned_to: {
@@ -23,7 +23,7 @@ export const FilterSelect: { [key: string]: FilterOption } = {
     placeholder: "Select Status",
     options: {}, // Type is now inferred correctly
   },
-}
+};
 
 //getfilter
 
@@ -32,19 +32,10 @@ export async function get_filter_object() {
   return filterData;
 }
 
-export async function get_access_token() {
-  const accessTokenName = "accessToken";
-  return await getCookie(accessTokenName);
-}
-
 async function get_filter_obj_from_server() {
-  const token = await get_access_token();
   try {
     const response = await apiClient(apiPaths.getfilter, "ProdBackendServer", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response;
   } catch (error: any) {

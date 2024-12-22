@@ -1,5 +1,4 @@
 import { apiPaths } from "../urls";
-import { get_access_token } from "./filterObject";
 import apiClient from "@/apiServices/apiClient";
 import {
   setCookie,
@@ -26,13 +25,9 @@ export async function get_all_active_employee_list_controller() {
 
 async function get_all_active_employee_list() {
   const urlPart = apiPaths.getAllActiveEmployeeList;
-  const token = await get_access_token();
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response;
   } catch (error: any) {

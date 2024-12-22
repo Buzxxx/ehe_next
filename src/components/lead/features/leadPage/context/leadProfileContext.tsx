@@ -1,7 +1,6 @@
 /**
  * @path src/components/lead/context/leadProfileContext.tsx
  */
-
 import {
   createContext,
   SetStateAction,
@@ -9,7 +8,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { DefaultLead, get_lead_details_controller, Lead } from "../leadObject";
+import {
+  DefaultLead,
+  get_lead_details_controller,
+  Lead,
+} from "@/components/lead/features/leadObject";
+import { LeadStatus } from "@/components/lead/features/statusObject";
+import { TimelineEvents } from "../../timelineObject";
 
 // Context to store lead profile state
 const LeadProfileContext = createContext<{
@@ -17,6 +22,11 @@ const LeadProfileContext = createContext<{
   setLeadProfile: React.Dispatch<React.SetStateAction<Lead>>;
   isEditing: boolean;
   setIsEditing: React.Dispatch<SetStateAction<boolean>>;
+  statusList: LeadStatus[];
+  setStatusList: React.Dispatch<SetStateAction<LeadStatus[]>>;
+  timelineEvents: TimelineEvents[];
+  setTimelineEvents: React.Dispatch<SetStateAction<TimelineEvents[]>>;
+  leadId: string;
 } | null>(null);
 
 // Context provider
@@ -29,6 +39,8 @@ export const LeadProfileProvider = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [leadProfile, setLeadProfile] = useState<Lead>(DefaultLead);
+  const [statusList, setStatusList] = useState<LeadStatus[]>([]);
+  const [timelineEvents, setTimelineEvents] = useState<any[]>([]);
 
   // Fetch lead details when the component mounts or the `leadId` changes
   useEffect(() => {
@@ -47,7 +59,17 @@ export const LeadProfileProvider = ({
 
   return (
     <LeadProfileContext.Provider
-      value={{ leadProfile, setLeadProfile, isEditing, setIsEditing }}
+      value={{
+        leadProfile,
+        setLeadProfile,
+        isEditing,
+        setIsEditing,
+        statusList,
+        setStatusList,
+        timelineEvents,
+        setTimelineEvents,
+        leadId,
+      }}
     >
       {children}
     </LeadProfileContext.Provider>

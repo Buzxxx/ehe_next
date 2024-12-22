@@ -1,6 +1,6 @@
 import apiClient from "@/apiServices/apiClient";
 import { apiPaths } from "../urls";
-import { encodeUrlParameters, get_access_token } from "./filterObject";
+import { encodeUrlParameters } from "./filterObject";
 import update_url from "@/utility/updateUrl";
 
 export interface individualLead {
@@ -27,10 +27,10 @@ export const defaultIndividualLead: individualLead = {
 export interface Lead {
   img?: string;
   location?: string;
-  id: number;
+  id: string;
   name: string;
   created_dt: string;
-  status: { id: number; status: string };
+  status: { id: string; status: string };
   isSelected: boolean;
   assigned_to: { id: number; name: string };
   brokerage?: number;
@@ -75,13 +75,13 @@ export const DefaultLeadsResponse: LeadsResponse = {
 };
 
 export const DefaultLead: Lead = {
-  id: 0,
+  id: "",
   name: "Default",
   email: "example@gmail.com",
   contact: "+91 9876543210",
   budget: "00",
   created_dt: "1970-01-01T00:00:00Z",
-  status: { id: 0, status: "None" },
+  status: { id: "", status: "None" },
   isSelected: false,
   img: "/base/profile.webp",
   location: "Unknown",
@@ -117,6 +117,15 @@ export async function lead_listing_controller(params: URLSearchParams) {
   }
 }
 
+export async function set_lead_status_priority_on_server(data: any) {
+  console.log(data);
+  const returnObj = await push_update_lead_to_server(data);
+  if (returnObj) {
+    return returnObj;
+  }
+  return false;
+}
+
 export async function get_lead_details_controller(leadId: string) {
   const leadDetails = await get_lead_from_server(leadId);
   return leadDetails;
@@ -149,7 +158,6 @@ export function get_selected_leads_count(LeadsResponse: LeadsResponse) {
 /* Fetch leads from the backend server on the basis of URL created by filter or default using apiclient */
 async function get_leads_from_server(queryParams: string) {
   const urlPart = apiPaths.leadPage + queryParams;
-  const token = await get_access_token();
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
@@ -164,7 +172,6 @@ async function get_leads_from_server(queryParams: string) {
 /* Fetch single lead for lead page, URL is system generated just adding lead ID to url */
 async function get_lead_from_server(id: string) {
   const urlPart = apiPaths.getlead + "?leadId=" + id;
-  const token = await get_access_token();
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
@@ -177,7 +184,6 @@ async function get_lead_from_server(id: string) {
 }
 
 async function push_create_lead_to_server(data: any) {
-  const token = await get_access_token();
   try {
     const response = await apiClient(apiPaths.createLead, "ProdBackendServer", {
       method: "POST",
@@ -189,8 +195,20 @@ async function push_create_lead_to_server(data: any) {
   }
 }
 
+async function push_update_lead_to_server(data: any) {
+  try {
+    const response = await apiClient(apiPaths.updatelead, "ProdBackendServer", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (error) {
+    console.error("Failed to update lead:", error as Error);
+    return false;
+  }
+}
+
 async function push_create_bulk_lead_to_server(data: any) {
-  const token = await get_access_token();
   try {
     const response = await apiClient(
       apiPaths.createLeadBulk,
@@ -212,7 +230,6 @@ export interface CsvUploadPayload {
 }
 
 export async function UploadLeadsFromCsv({ data, headers }: CsvUploadPayload) {
-  const token = await get_access_token();
   const response = await apiClient("/api/upload", "ProdBackedServer", {
     method: "POST",
     body: JSON.stringify({ data, headers }),

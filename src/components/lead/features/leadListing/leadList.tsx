@@ -2,22 +2,21 @@
  * @path src/components/lead/features/leadListing/leadList.tsx
  */
 
-
 import React, {
   useEffect,
   useState,
   useMemo,
   SetStateAction,
   useCallback,
-} from "react"
-import { useSearchParams } from "next/navigation"
-import { Spinner } from "@/components/ui/icons"
-import { LeadCard } from "@/components/lead/ui/leadListing/leadCard"
-import LeadRow from "@/components/lead/ui/leadListing/leadRow"
+} from "react";
+import { useSearchParams } from "next/navigation";
+import { Spinner } from "@/components/ui/icons";
+import { LeadCard } from "@/components/lead/ui/leadListing/leadCard";
+import LeadRow from "@/components/lead/ui/leadListing/leadRow";
 import {
   LeadsResponse,
   DefaultLeadsResponse,
-} from "@/components/lead/features/leadObject"
+} from "@/components/lead/features/leadObject";
 import {
   Table,
   TableBody,
@@ -25,19 +24,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { useToast } from "@/components/ui/use-toast"
-import useDebounce from "@/hooks/useDebounce" // Custom debounce hook
-import useFetchLeads from "@/components/lead/hooks/useFetchLeads" // Custom hook for fetching leads
+} from "@/components/ui/table";
+import { useToast } from "@/components/ui/use-toast";
+import useDebounce from "@/hooks/useDebounce"; // Custom debounce hook
+import useFetchLeads from "@/components/lead/hooks/useFetchLeads"; // Custom hook for fetching leads
 
 interface LeadListProps {
-  leadsResponse: LeadsResponse
-  setLeadsResponse: (response: LeadsResponse) => void
-  viewMode: "card" | "row"
-  isLoading: boolean
-  setIsLoading: React.Dispatch<SetStateAction<boolean>>
-  setSelectedLeads: React.Dispatch<SetStateAction<number[]>>
-  selectedLeads: number[]
+  leadsResponse: LeadsResponse;
+  setLeadsResponse: (response: LeadsResponse) => void;
+  viewMode: "card" | "row";
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>;
+  setSelectedLeads: React.Dispatch<SetStateAction<number[]>>;
+  selectedLeads: number[];
 }
 
 const LeadList: React.FC<LeadListProps> = React.memo(
@@ -50,63 +49,73 @@ const LeadList: React.FC<LeadListProps> = React.memo(
     setSelectedLeads,
     selectedLeads,
   }) => {
-    const [queryParams, setQueryParams] = useState("")
-    const URLParams = useSearchParams()
-    const debouncedQueryParams = useDebounce(queryParams, 300) // Debounce query params
-    const { toast } = useToast()
+    const [queryParams, setQueryParams] = useState("");
+    const URLParams = useSearchParams();
+    const debouncedQueryParams = useDebounce(queryParams, 300); // Debounce query params
+    const { toast } = useToast();
 
     // Custom hook to fetch leads with caching
-    const { leads, fetchLeads, isFetching } = useFetchLeads()
+    const { leads, fetchLeads, isFetching } = useFetchLeads();
 
     // Fetch leads whenever URLParams or debouncedQueryParams change
     useEffect(() => {
-      const query = URLParams.toString()
-      setQueryParams(query)
+      const query = URLParams.toString();
+      setQueryParams(query);
 
       const loadLeads = async () => {
-        setIsLoading(true)
+        setIsLoading(true);
         try {
-          const result = await fetchLeads(query)
-          setLeadsResponse(result)
+          const result = await fetchLeads(query);
+          setLeadsResponse(result);
         } catch (error) {
-          console.error("Error fetching leads:", error)
-          setLeadsResponse(DefaultLeadsResponse)
-          toast({ title: "Error fetching leads.", variant: "destructive" })
+          console.error("Error fetching leads:", error);
+          setLeadsResponse(DefaultLeadsResponse);
+          toast({ title: "Error fetching leads.", variant: "destructive" });
         } finally {
-          setIsLoading(false)
+          setIsLoading(false);
         }
-      }
+      };
 
-      loadLeads()
-    }, [debouncedQueryParams, URLParams, fetchLeads, setLeadsResponse, toast, setIsLoading])
+      loadLeads();
+    }, [
+      debouncedQueryParams,
+      URLParams,
+      fetchLeads,
+      setLeadsResponse,
+      toast,
+      setIsLoading,
+    ]);
 
-    const handleToggleLeadSelection = useCallback((id: number) => {
-      setSelectedLeads((prevSelected) =>
-        prevSelected.includes(id)
-          ? prevSelected.filter((leadId) => leadId !== id)
-          : [...prevSelected, id]
-      )
-    }, [setSelectedLeads])
+    const handleToggleLeadSelection = useCallback(
+      (id: number) => {
+        setSelectedLeads((prevSelected) =>
+          prevSelected.includes(id)
+            ? prevSelected.filter((leadId) => leadId !== id)
+            : [...prevSelected, id]
+        );
+      },
+      [setSelectedLeads]
+    );
 
     const handleSelectAll = (checked: boolean) => {
       if (checked) {
         // Select all lead IDs
-        const allLeadIds = leads.map((lead) => lead.id)
-        setSelectedLeads(allLeadIds)
+        const allLeadIds = leads.map((lead) => parseInt(lead.id, 10));
+        setSelectedLeads(allLeadIds);
       } else {
         // Deselect all leads
-        setSelectedLeads([])
+        setSelectedLeads([]);
       }
-    }
+    };
 
     const selectAll = useMemo(() => {
       return (
         leads.length > 0 &&
-        leads.every((lead) => selectedLeads.includes(lead.id))
-      )
-    }, [leads, selectedLeads])
+        leads.every((lead) => selectedLeads.includes(parseInt(lead.id)))
+      );
+    }, [leads, selectedLeads]);
 
-    const hasLeads = useMemo(() => leads?.length > 0, [leads])
+    const hasLeads = useMemo(() => leads?.length > 0, [leads]);
 
     return (
       <div className="w-full relative flex-1 h-[calc(100%-10rem)] overflow-auto">
@@ -125,7 +134,9 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                       idx={index}
                       lead={lead}
                       isSelected={lead.isSelected}
-                      onToggle={() => handleToggleLeadSelection(lead.id)}
+                      onToggle={() =>
+                        handleToggleLeadSelection(parseInt(lead.id))
+                      }
                     />
                   ))
                 ) : (
@@ -159,7 +170,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                         <LeadRow
                           key={lead.id}
                           lead={lead}
-                          isSelected={selectedLeads.includes(lead.id)}
+                          isSelected={selectedLeads.includes(parseInt(lead.id))}
                           onToggle={handleToggleLeadSelection}
                         />
                       ))
@@ -177,9 +188,9 @@ const LeadList: React.FC<LeadListProps> = React.memo(
           </div>
         )}
       </div>
-    )
+    );
   }
-)
-LeadList.displayName = "LeadList"
+);
+LeadList.displayName = "LeadList";
 
-export default LeadList
+export default LeadList;
