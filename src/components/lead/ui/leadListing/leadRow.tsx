@@ -2,25 +2,25 @@
  * @path src/components/lead/ui/leadListing/leadRow.tsx
  */
 
-import React from "react"
-import { Checkbox } from "@/components/ui/checkbox"
-import { TableCell, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons"
-import { formatDate } from "@/utility/formatDate"
-import { Lead } from "@/components/lead/features/leadObject"
-import Avataar from "../leadPage/avataar"
-import Link from "next/link"
-import { useLeadSave } from "../../hooks/useLeadSave"
+import React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons";
+import { formatDate } from "@/utility/formatDate";
+import { Lead } from "@/components/lead/features/leadObject";
+import Avataar from "../leadPage/avataar";
+import Link from "next/link";
+import { useLeadSave } from "../../hooks/useLeadSave";
 
 interface LeadRowProps {
-  lead: Lead
-  isSelected: boolean
-  onToggle: (id: number) => void
+  lead: Lead;
+  isSelected: boolean;
+  onToggle: (id: number) => void;
 }
 
 const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
-  const { isSaved, toggleSave } = useLeadSave(lead.id)
+  const { isSaved, toggleSave } = useLeadSave(lead.id);
   return (
     <TableRow className="hover:bg-gray-50 transition-colors">
       {/* Selection Checkbox */}
@@ -28,7 +28,7 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
         <Checkbox
           checked={isSelected}
           onClick={() => {
-            onToggle(lead.id)
+            onToggle(parseInt(lead.id));
           }}
         />
       </TableCell>
@@ -95,7 +95,7 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
         </div>
       </TableCell>
     </TableRow>
-  )
-}
+  );
+};
 
-export default LeadRow
+export default LeadRow;

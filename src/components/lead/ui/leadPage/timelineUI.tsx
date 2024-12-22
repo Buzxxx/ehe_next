@@ -13,6 +13,12 @@ type EventName =
   | "User Comment"
   | "Lead Edited";
 
+// Define a type for the change value structure
+type ChangeValue = {
+  from?: string;
+  to: string;
+};
+
 const TimelineUI = ({
   groupedEvents,
   activeMonth,
@@ -133,21 +139,25 @@ const TimelineUI = ({
                               {event.description}
                               <div className="p-2 rounded-md mt-2">
                                 {Object.entries(event.changes).map(
-                                  ([key, value]) => (
-                                    <p
-                                      key={key}
-                                      className="text-sm text-gray-700"
-                                    >
-                                      <span className="font-normal">
-                                        {key}:{" "}
-                                      </span>
-                                      <span className="text-gray-400">
-                                        {value.from
-                                          ? `${value.to} was ${value.from}`
-                                          : value.to}
-                                      </span>
-                                    </p>
-                                  )
+                                  ([key, value]) => {
+                                    // Type assertion to define the shape of the value object
+                                    const changeValue = value as ChangeValue;
+                                    return (
+                                      <p
+                                        key={key}
+                                        className="text-sm text-gray-700"
+                                      >
+                                        <span className="font-normal">
+                                          {key}:{" "}
+                                        </span>
+                                        <span className="text-gray-400">
+                                          {changeValue.from
+                                            ? `${changeValue.to} was ${changeValue.from}`
+                                            : changeValue.to}
+                                        </span>
+                                      </p>
+                                    );
+                                  }
                                 )}
                               </div>
                             </span>

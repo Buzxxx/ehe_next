@@ -88,7 +88,7 @@ const TimelineTopbar = () => {
               >
                 <DialogTitle className="DialogTitle">Update Status</DialogTitle>
                 <DialogDescription className="DialogDescription"></DialogDescription>
-                <TimelineForm setOpen={handleDialogItemOpenChange} />
+                <TimelineForm />
               </DialogItem>
 
               <DialogItem
