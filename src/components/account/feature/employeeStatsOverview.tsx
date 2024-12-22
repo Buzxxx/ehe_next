@@ -1,7 +1,5 @@
 // src/components/workplace/features/employeeStatsOverview.tsx
 
-import { Button } from "@/components/ui/button"
-import ChevronDown from "@/components/ui/icons/chevronDown"
 import EmployeeStatCard from "../ui/employeeStatCard"
 
 const EmployeeStatsOverview = () => {

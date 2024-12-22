@@ -3,10 +3,15 @@
  */
 
 "use client"
-import { Suspense, useState } from "react"
+import { useState } from "react"
 import AccountLayoutHeader from "../feature/accountLayoutHeader"
-import EntityCard, { EntityCardSkeleton } from "../ui/entityCard"
+import { EntityCardSkeleton } from "../feature//entityCard"
 import { Entity, entities as initialEntities } from "../entities"
+import dynamic from "next/dynamic"
+
+const EntityCardLazy = dynamic(() => import("../feature/entityCard"), {
+  loading: () => <EntityCardSkeleton />,
+})
 
 export default function AccountLayout() {
   const [entities, setEntities] = useState<Entity[]>(initialEntities)
@@ -26,19 +31,17 @@ export default function AccountLayout() {
           )
 
           return (
-            <Suspense key={business.id} fallback={<EntityCardSkeleton />}>
-              <EntityCard
+            <EntityCardLazy
               id={business.id}
-                key={business.id}
-                name={business.name}
-                description={business.description}
-                totalEmployees={totalEmployees}
-                activeEmployees={activeEmployees}
-                locations={business.locations}
-                entities={entities}
-                setEntities={setEntities}
-              />
-            </Suspense>
+              key={business.id}
+              name={business.name}
+              description={business.description}
+              totalEmployees={totalEmployees}
+              activeEmployees={activeEmployees}
+              locations={business.locations}
+              entities={entities}
+              setEntities={setEntities}
+            />
           )
         })}
       </div>

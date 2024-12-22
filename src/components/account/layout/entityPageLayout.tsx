@@ -4,14 +4,12 @@
 
 "use client"
 
-import { useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import Avataar from "@/components/dashboard/ui/avataar"
 import { DataTable } from "@/components/ui/dataTable"
-import ResetPasswordModal from "../feature/resetPasswordModal"
-import DeactivateUserModal from "../feature/deactivateUserModal"
 import EntityPageTopBar from "../feature/entityPageTopBar"
 import { EmployeeCard } from "../ui/employeeCard"
-import { columns } from "../feature/employeeColumn"
+import { columns, Employee } from "../feature/employeeColumn"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,18 +26,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ChevronDownIcon } from "lucide-react"
 import { entities } from "../entities"
+import dynamic from "next/dynamic"
+import { BackIcon } from "@/components/ui/icons"
+import { useRouter } from "next/navigation"
 
-interface Employee {
-  id: number
-  name: string
-  email: string
-  phone: string
-  status: "active" | "inactive"
-  teamId: number
-  role?: string
-  follow_up_current_status?: string
-  date_joined?: string
-}
+const ResetPasswordModal = dynamic(
+  () => import("../feature/resetPasswordModal")
+)
+const DeactivateUserModal = dynamic(
+  () => import("../feature/deactivateUserModal")
+)
 
 export default function EntityPageLayout({
   entity,
@@ -48,6 +44,7 @@ export default function EntityPageLayout({
   entity: string
   location: string
 }) {
+  const router = useRouter()
   const locations = entities.find((e) => e.name === entity)?.locations || []
   const [sampleData, setSampleData] = useState<Employee[]>([
     {
@@ -112,17 +109,18 @@ export default function EntityPageLayout({
   const [selectedEmployeeForDeactivation, setSelectedEmployeeForDeactivation] =
     useState<Employee | null>(null)
 
-  const filteredData = sampleData.filter(
-    (employee) => employee.status === selectedTab
+  const filteredData = useMemo(
+    () => sampleData.filter((employee) => employee.status === selectedTab),
+    [sampleData, selectedTab]
   )
 
-  const handleResetPassword = (id: number) => {
+  const handleResetPassword = useCallback((id: number) => {
     setSelectedEmployeeId(id)
-  }
+  }, [])
 
-  const handleDeactivateUser = (employee: Employee) => {
+  const handleDeactivateUser = useCallback((employee: Employee) => {
     setSelectedEmployeeForDeactivation(employee)
-  }
+  }, [])
 
   const confirmDeactivation = (id: number) => {
     setSampleData((prevData) =>
@@ -136,7 +134,8 @@ export default function EntityPageLayout({
   return (
     <>
       <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between ">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center md:gap-2">
+          <BackIcon className="w-fit px-4" onClick={() => router.back} />
           <Avataar
             className="border-2 h-12 w-12 aspect-square"
             src="/logo.svg"
@@ -184,6 +183,12 @@ export default function EntityPageLayout({
         selectedTab={selectedTab}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        onAddEmployee={(newEmployee: Employee) =>
+          setSampleData((prev) => [
+            ...prev,
+            { ...newEmployee, id: prev.length + 1 },
+          ])
+        }
       />
 
       {viewMode === "card" ? (
@@ -191,6 +196,7 @@ export default function EntityPageLayout({
           {filteredData.map((employee) => (
             <EmployeeCard
               key={employee.id}
+              location={location}
               employee={employee}
               onResetPassword={() => handleResetPassword(employee.id)}
               onDeactivateUser={() => handleDeactivateUser(employee)}

@@ -109,9 +109,9 @@ const LeadList: React.FC<LeadListProps> = React.memo(
     const hasLeads = useMemo(() => leads?.length > 0, [leads])
 
     return (
-      <div className="w-full relative">
+      <div className="w-full relative flex-1 h-[calc(100%-10rem)] overflow-auto">
         {isLoading || isFetching ? (
-          <div className="absolute mt-2 inset-0 flex justify-center items-center bg-gray-300 bg-opacity-30 z-30 min-h-96 rounded-xl">
+          <div className="absolute mt-2 h-full inset-0 flex justify-center items-center bg-gray-200 bg-opacity-30 z-30 rounded-xl">
             <Spinner className="animate-spin h-10 w-10 text-gray-400 " />
           </div>
         ) : (
