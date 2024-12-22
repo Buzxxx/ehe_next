@@ -3,6 +3,7 @@
  */
 
 import Dashboard from "@/components/dashboard/layout/dashboard";
+import Providers from "@/components/providers/progressBarProvider";
 
 export default function DashboardLayout({
   children,
@@ -11,5 +12,9 @@ export default function DashboardLayout({
 }) 
   
 {
-  return <Dashboard>{children}</Dashboard>;
+  return (
+    <Dashboard>
+      <Providers>{children}</Providers>
+    </Dashboard>
+  )
 }
