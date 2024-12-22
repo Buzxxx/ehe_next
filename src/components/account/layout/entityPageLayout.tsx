@@ -27,6 +27,7 @@ import {
 import { ChevronDownIcon } from "lucide-react"
 import { entities } from "../entities"
 import dynamic from "next/dynamic"
+import { BackIcon } from "@/components/ui/icons"
 
 const ResetPasswordModal = dynamic(
   () => import("../feature/resetPasswordModal")
@@ -131,7 +132,8 @@ export default function EntityPageLayout({
   return (
     <>
       <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between ">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center md:gap-2">
+        <BackIcon className="w-fit px-4"/>
           <Avataar
             className="border-2 h-12 w-12 aspect-square"
             src="/logo.svg"
