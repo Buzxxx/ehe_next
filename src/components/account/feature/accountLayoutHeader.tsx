@@ -22,7 +22,7 @@ const AccountLayoutHeader = ({
   const [showCreateEntity, setShowCreateEntity] = useState(false)
 
   const handleAddEntity = (newEntity: Entity) => {
-  setEntities([...entities, newEntity])
+    setEntities([...entities, newEntity])
   }
 
   return (
@@ -51,7 +51,7 @@ const AccountLayoutHeader = ({
         </Button>
       </div>
       <Dialog open={showCreateEntity} onOpenChange={setShowCreateEntity}>
-        <DialogContent className="overflow-y-scroll w-full max-w-[50%] overflow-auto h-[90%]">
+        <DialogContent className="overflow-y-scroll w-[95%] md:max-w-[50%] overflow-auto h-[90%]">
           <DialogTitle className="hidden"></DialogTitle>
           <CreateEntityForm
             onAddEntity={(newEntity: Entity) => {
