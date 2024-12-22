@@ -21,17 +21,20 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import DialogItem from "../dropDownModal";
-import LeadCallbackForm from "../../features/leadPage/leadCallbackForm";
-import LeadMeetingForm from "../../features/leadPage/leadMeetingForm";
+import LeadCallbackForm from "../../features/leadPage/profile/leadCallbackForm";
+import LeadMeetingForm from "../../features/leadPage/profile/leadMeetingForm";
 import React from "react";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import LeadStatusUpdateForm from "../../features/leadPage/leadStatusUpdateForm";
+import TimelineForm from "../../features/leadPage/timeline/timelineForm";
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
 
-const TimelineTopbar = ({ leadId }: { leadId: string }) => {
+const TimelineTopbar = () => {
+  const { leadProfile } = useLeadProfile();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [hasOpenDialog, setHasOpenDialog] = React.useState(false);
   const dropdownTriggerRef = React.useRef<HTMLButtonElement | null>(null);
   const focusRef = React.useRef<HTMLButtonElement | null>(null);
+  const id = leadProfile.id?.toString() || "";
 
   function handleDialogItemSelect() {
     focusRef.current = dropdownTriggerRef.current; // Save the trigger element
@@ -85,10 +88,7 @@ const TimelineTopbar = ({ leadId }: { leadId: string }) => {
               >
                 <DialogTitle className="DialogTitle">Update Status</DialogTitle>
                 <DialogDescription className="DialogDescription"></DialogDescription>
-                <LeadStatusUpdateForm
-                  id={leadId}
-                  setOpen={handleDialogItemOpenChange}
-                />
+                <TimelineForm setOpen={handleDialogItemOpenChange} />
               </DialogItem>
 
               <DialogItem
@@ -101,7 +101,7 @@ const TimelineTopbar = ({ leadId }: { leadId: string }) => {
                 </DialogTitle>
                 <DialogDescription className="DialogDescription"></DialogDescription>
                 <LeadCallbackForm
-                  id={leadId}
+                  id={id}
                   setOpen={handleDialogItemOpenChange}
                 />
               </DialogItem>
@@ -114,10 +114,7 @@ const TimelineTopbar = ({ leadId }: { leadId: string }) => {
                   Set up a Meeting
                 </DialogTitle>
                 <DialogDescription className="DialogDescription"></DialogDescription>
-                <LeadMeetingForm
-                  id={leadId}
-                  setOpen={handleDialogItemOpenChange}
-                />
+                <LeadMeetingForm id={id} setOpen={handleDialogItemOpenChange} />
               </DialogItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

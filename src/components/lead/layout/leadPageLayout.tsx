@@ -1,34 +1,18 @@
-/**
- * @path src/components/lead/layout/leadPageLayout.tsx
- */
-
 "use client";
 
 import React, { useState } from "react";
-import LeadPageHeader from "../features/leadPage/leadPageHeader";
-import LeadTimeLine from "@/components/lead/features/leadPage/leadTimeline";
-import { LeadProfileProvider } from "@/components/lead/features/context/leadProfileContext";
-import LeadProfile from "../features/leadPage/leadProfile";
+import LeadPageHeader from "../features/leadPage/header/leadPageHeader";
+import { LeadProfileProvider } from "@/components/lead/features/leadPage/context/leadProfileContext";
+import LeadProfile from "../features/leadPage/profile/leadProfile";
+import LeadTimeLine from "@/components/lead/features/leadPage/timeline/leadTimeline";
 
-type LeadPageLayoutProps = {
-  leadId: string;
-};
-
-const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
+const LeadPageLayout = ({ leadId }: { leadId: string }) => {
   const [activeTab, setActiveTab] = React.useState(0);
-  const [showCallbackForm, setShowCallbackForm] = useState(false);
-  const [showMeetingForm, setShowMeetingForm] = useState(false);
 
   const navItems = [
     {
       name: "Timeline",
-      component: (
-        <LeadTimeLine
-          setShowCallback={setShowCallbackForm}
-          setShowMeeting={setShowMeetingForm}
-          id={leadId}
-        />
-      ),
+      component: <LeadTimeLine />,
     },
     {
       name: "Profile",
@@ -39,15 +23,15 @@ const LeadPageLayout = ({ leadId }: LeadPageLayoutProps) => {
   return (
     <LeadProfileProvider leadId={leadId}>
       <div className="flex h-screen flex-col">
-      <LeadPageHeader
-        id={parseInt(leadId)}
-        navItems={navItems}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-    
+        <LeadPageHeader
+          id={parseInt(leadId)}
+          navItems={navItems}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+
         {navItems[activeTab].component}
-    </div>
+      </div>
     </LeadProfileProvider>
   );
 };

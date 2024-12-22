@@ -1,8 +1,17 @@
 "use client";
 
-import { Plus, Mail, Check } from "@/components/ui/icons";
+import { Plus, Mail, Check, Edit } from "@/components/ui/icons";
+import { FaUser } from "react-icons/fa";
 import { LegacyRef } from "react";
 import Avataar from "./avataar";
+
+// Define a type for the event names
+type EventName =
+  | "Lead Creation"
+  | "Lead Assigned"
+  | "Lead Updated"
+  | "User Comment"
+  | "Lead Edited";
 
 const TimelineUI = ({
   groupedEvents,
@@ -21,8 +30,25 @@ const TimelineUI = ({
   lastEventRef: React.RefObject<HTMLElement>;
   formatDate: (date: string) => string;
 }) => {
+  // Mapping icons and colors based on event names
+  const eventIcons: Record<EventName, JSX.Element> = {
+    "Lead Creation": <Plus size={16} className="text-white" />,
+    "Lead Assigned": <FaUser size={16} className="text-white" />,
+    "Lead Updated": <Check size={16} className="text-white" />,
+    "User Comment": <Mail size={16} className="text-white" />,
+    "Lead Edited": <Edit size={16} className="text-white" />, // Example for another event type
+  };
+
+  const eventColors: Record<EventName, string> = {
+    "Lead Creation": "bg-green-500",
+    "Lead Assigned": "bg-blue-500",
+    "Lead Updated": "bg-yellow-500",
+    "User Comment": "bg-gray-500",
+    "Lead Edited": "bg-purple-500", // Color for 'Lead Edited'
+  };
+
   return (
-    <div className="h-[calc(75vh-4rem)] overflow-y-auto overflow-x-hidden timeline-wrapper relative px-4">
+    <div className="timeline-wrapper relative px-4">
       {/* Floating Month/Year Marker */}
       {activeMonth && (
         <div className="fixed top-0 left-0 w-full bg-white z-10 shadow-md py-2 px-4">
@@ -76,42 +102,56 @@ const TimelineUI = ({
                     {/* Icon Marker */}
                     <div
                       className={`absolute max-md:-top-[12%] left-0 md:left-16 -translate-x-1/2 p-1 rounded-sm flex gap-2 items-center justify-center ${
-                        event.category === "created"
-                          ? "bg-blue-500"
-                          : event.category === "qualified"
-                          ? "bg-green-500"
-                          : "bg-yellow-500"
+                        eventColors[event.eventname as EventName] ||
+                        "bg-gray-500"
                       } ${
                         index === events.length - 1 &&
                         groupIndex === Object.keys(groupedEvents).length - 1 &&
                         "self-start"
                       }`}
                     >
-                      {event.category === "created" ? (
-                        <Plus size={16} className="text-white" />
-                      ) : event.category === "qualified" ? (
-                        <Check size={16} className="text-white" />
-                      ) : (
+                      {eventIcons[event.eventname as EventName] || (
                         <Mail size={16} className="text-white" />
                       )}
                     </div>
 
                     {/* Event Card */}
-                    <div className={`flex flex-col gap-2 w-full md:ml-16 `}>
+                    <div className={`flex flex-col gap-2 w-full md:ml-16`}>
                       {/* Date on the Left */}
                       <div className="max-md:absolute max-md:left-0 max-md:-top-[10%] max-md:px-6 text-right flex justify-between items-center w-full text-sm text-gray-500">
                         <p className="capitalize">{event.eventname}</p>
-                        <p className="">{formatDate(event.date)}</p>
+                        <p>{formatDate(event.date)}</p>
                       </div>
-                      <div className="p-4 max-md:mt-4 pt-2 bg-white border border-gray-300 rounded-lg w-full md:w-5/6 mx-auto">
-                        <div className="text-sm font-semibold capitalize flex items-start gap-2">
+                      <div className="p-4 mt-4 pt-2 bg-white border border-gray-300 rounded-lg w-full md:w-5/6 mx-auto">
+                        <div className="text-sm font-semibold capitalize flex items-start gap-3">
                           <Avataar className="size-5 border-2" />
-                          <p className="flex flex-col">
-                            <span className="">{event.username}</span>
-                            <span className="text-sm font-normal text-center text-gray-500">
-                              {event.description}
+                          <div className="flex flex-col">
+                            <span className="font-medium text-gray-800">
+                              {event.username}
                             </span>
-                          </p>
+                            <span className="text-sm font-normal text-gray-500">
+                              {event.description}
+                              <div className="p-2 rounded-md mt-2">
+                                {Object.entries(event.changes).map(
+                                  ([key, value]) => (
+                                    <p
+                                      key={key}
+                                      className="text-sm text-gray-700"
+                                    >
+                                      <span className="font-normal">
+                                        {key}:{" "}
+                                      </span>
+                                      <span className="text-gray-400">
+                                        {value.from
+                                          ? `${value.to} was ${value.from}`
+                                          : value.to}
+                                      </span>
+                                    </p>
+                                  )
+                                )}
+                              </div>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
