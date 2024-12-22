@@ -26,25 +26,27 @@ const LeadLayout = () => {
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
 
   return (
-    <div className="px-1 md:px-0">
-      <LeadSummarySection setIsLoading={setIsLoading} />
+    <div className="px-1 md:px-0 h-full">
+      {/* <LeadSummarySection setIsLoading={setIsLoading} /> */}
 
-      <TopBar
-        LeadsResponse={leadsResponse}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        setShowReassignModal={setShowReassignModal}
-        setIsLoading={setIsLoading}
-      />
-      <LeadList
-        leadsResponse={leadsResponse}
-        setLeadsResponse={setLeadsResponse}
-        viewMode={viewMode}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        selectedLeads={selectedLeads}
-        setSelectedLeads={setSelectedLeads}
-      />
+   
+        <TopBar
+          LeadsResponse={leadsResponse}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          setShowReassignModal={setShowReassignModal}
+          setIsLoading={setIsLoading}
+        />
+        <LeadList
+          leadsResponse={leadsResponse}
+          setLeadsResponse={setLeadsResponse}
+          viewMode={viewMode}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          selectedLeads={selectedLeads}
+          setSelectedLeads={setSelectedLeads}
+        />
+    
       <Modal
         isOpen={showReassignModal}
         onClose={() => setShowReassignModal(false)}

@@ -2,6 +2,7 @@ import EmployeeActivityItem from "../ui/employeeActivityItem"
 import { Copy, Filter } from "@/components/ui/icons"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import React from "react"
 
 const EmployeeActivityList = () => {
   return (
@@ -45,4 +46,4 @@ const EmployeeActivityList = () => {
   )
 }
 
-export default EmployeeActivityList
+export default React.memo(EmployeeActivityList)
