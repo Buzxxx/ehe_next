@@ -27,7 +27,7 @@ const AccountLayoutHeader = ({
 
   return (
     <>
-      <div className="flex items-center pt-4 pb-3 mb-4 border-b justify-between px-2 md:px-0">
+      <div className="flex items-center md:pt-0 pt-4 pb-3 mb-4 border-b justify-between px-2 md:px-0">
         <div className="flex items-center justify-between gap-2 ">
           <span className="h-12 w-12 border-2 flex items-center justify-center rounded-full">
             <Building2 />
