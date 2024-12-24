@@ -46,7 +46,7 @@ const EmployeeProfileHeader = React.memo(
     }, [])
 
     return (
-      <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 px-2 py-4 mb-6">
+      <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 px-2 py-4  mt-2 mb-6">
         <div className="flex justify-between items-center  gap-2">
           <div>
             <BackIcon onClick={() => router.back()} className="w-fit p-2" />
