@@ -11,4 +11,6 @@ export const apiPaths = {
   getLeadStatusList: "lead/api/getstatuslist",
   getAllActiveEmployeeList: "lead/api/getEmployee",
   gettimelinelist: "lead/api/gettimelinelist",
+  settimeline: "lead/api/settimeline",
+  updatelead: "lead/api/updatelead",
 };
