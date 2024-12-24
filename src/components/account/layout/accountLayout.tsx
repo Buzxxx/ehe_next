@@ -35,7 +35,7 @@ export default function AccountLayout() {
               id={business.id}
               key={business.id}
               name={business.name}
-              description={business.description}
+              description={business.description ?? ''}
               totalEmployees={totalEmployees}
               activeEmployees={activeEmployees}
               locations={business.locations}

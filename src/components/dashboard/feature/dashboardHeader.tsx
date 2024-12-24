@@ -1,13 +1,14 @@
-import Notifs from "../ui/notifs";
-import MenuIcon from "@/components/ui/icons/menuIcon";
-import ProfilePopover from "../ui/profilePopover";
-import ProfileTab from "../ui/profileTab";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import Notifs from "../ui/notifs"
+import MenuIcon from "@/components/ui/icons/menuIcon"
+import ProfilePopover from "../ui/profilePopover"
+import ProfileTab from "../ui/profileTab"
+import { SidebarTrigger } from "@/components/ui/sidebar"
+import CustomTrigger from "./customSidebarTrigger"
 
 interface DashboardNavProps {
-  onNext?: () => void;
-  name?: string;
-  img?: string;
+  onNext?: () => void
+  name?: string
+  img?: string
 }
 
 const DashboardHeader: React.FC<DashboardNavProps> = ({
@@ -16,26 +17,21 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({
   img,
 }) => {
   return (
-    <nav className="flex bg-white justify-between w-full items-center z-50 fixed top-0 border py-1">
+    <nav className="flex bg-white justify-between w-full items-center z-50 fixed top-0 border ">
       <div className=" min-w-64 h-full py-3 hidden md:block border-r ">
         <h4 className="text-center mx-auto">CRM</h4>
       </div>
-      <div className="flex justify-between flex-1 pr-4 items-center">
-        <SidebarTrigger
-          className=" px-4 py-3"
-          onClick={onNext}
-        >
-          <MenuIcon />
-        </SidebarTrigger>
-        <div className="flex gap-2 items-center">
+      <div className="flex justify-between flex-1 px-2 py-3 items-center">
+        <CustomTrigger />
+        <div className="flex gap-4 items-center justify-between">
           <Notifs />
           <ProfilePopover
             trigger={
               <ProfileTab
                 name={name ?? "Loading..."}
                 img={img}
-                avatarClass="h-8 w-8"
-                className="text-sm px-3"
+                avatarClass="h-6 w-6 border"
+                className="text-sm"
                 profileNameTag="md:flex hidden"
               />
             }
@@ -46,7 +42,7 @@ const DashboardHeader: React.FC<DashboardNavProps> = ({
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default DashboardHeader;
+export default DashboardHeader

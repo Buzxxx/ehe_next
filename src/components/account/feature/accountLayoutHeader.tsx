@@ -5,8 +5,8 @@
 "use client"
 import Avataar from "@/components/dashboard/ui/avataar"
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import { useState } from "react"
+import { Building2, Plus } from "lucide-react"
+import { createElement, useState } from "react"
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import CreateEntityForm from "../feature/createEntityForm"
@@ -27,12 +27,11 @@ const AccountLayoutHeader = ({
 
   return (
     <>
-      <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between px-2 md:px-0">
+      <div className="flex items-center pt-4 pb-3 mb-4 border-b justify-between px-2 md:px-0">
         <div className="flex items-center justify-between gap-2 ">
-          <Avataar
-            className="border-2 h-12 w-12 aspect-square"
-            src="/logo.svg"
-          />
+          <span className="h-12 w-12 border-2 flex items-center justify-center rounded-full">
+            <Building2 />
+          </span>
           <div className="flex flex-col">
             <h2 className="md:text-2xl text-lg font-semibold text-gray-800 leading-6">
               Ehe_Industries

@@ -12,7 +12,7 @@ const EmployeeStatsOverview = () => {
         </div>
       
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 mt-4">
+      <div className="grid grid-cols-1 md:gap-4 gap-2 md:grid-cols-4 mt-4">
         <EmployeeStatCard title="Attendance" value="16/28" />
         <EmployeeStatCard title="Working Hours" value="2.43" />
         <EmployeeStatCard title="Earnings" value="711" />

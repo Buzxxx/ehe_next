@@ -35,8 +35,6 @@ export const EmployeeCard = React.memo(
     onDeactivateUser,
     location,
   }: EmployeeCardProps) => {
-    console.log(location)
-
     return (
       <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] w-full flex flex-col">
         <CardHeader className="flex flex-row items-start justify-between p-4 gap-3 space-y-0">

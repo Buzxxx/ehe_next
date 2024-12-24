@@ -19,8 +19,8 @@ const EmployeeDetails = ({
   setEmployee: React.Dispatch<SetStateAction<Employee | undefined>>
 }) => {
   return (
-    <Card className="p-4 rounded-md border mt-4 bg-white shadow-sm">
-      <CardHeader className="py-2 border-b flex-row justify-between">
+    <Card className="md:p-4 rounded-md border mt-4 bg-white shadow-sm">
+      <CardHeader className="py-2 border-b flex-row justify-between md:p-6 md:py-2 px-2">
         <div className="flex gap-2 items-center">
           <h4 className="text-xl font-medium">Employee Details</h4>
           <Badge
