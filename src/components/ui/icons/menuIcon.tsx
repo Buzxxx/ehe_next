@@ -1,4 +1,4 @@
-const MenuIcon = ({ color }: { color?: string }) => {
+const MenuIcon = ({ color, size = 24 }: { color?: string; size?: number }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,8 @@ const MenuIcon = ({ color }: { color?: string }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke={color ?? "currentColor"}
-      className="w-6 h-6"
+      height={size}
+      width={size}
     >
       <path
         strokeLinecap="round"

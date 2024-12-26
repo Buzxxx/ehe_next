@@ -24,7 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronDownIcon } from "lucide-react"
+import { Building2, ChevronDownIcon } from "lucide-react"
 import { entities } from "../entities"
 import dynamic from "next/dynamic"
 import { BackIcon } from "@/components/ui/icons"
@@ -133,15 +133,16 @@ export default function EntityPageLayout({
 
   return (
     <>
-      <div className="flex items-center pt-2 pb-3 mb-4 border-b justify-between ">
-        <div className="flex items-center md:gap-2">
-          <BackIcon className="w-fit px-4" onClick={() => router.back} />
-          <Avataar
-            className="border-2 h-12 w-12 aspect-square"
-            src="/logo.svg"
-          />
-          <div className="flex flex-col">
-            <h2 className="text-2xl font-semibold text-gray-800 ">{entity}</h2>
+      <div className="flex items-center md:pt-0 pt-4 pb-3 mb-4 border-b justify-between ">
+        <div className="flex items-center  gap-2 w-full px-2 md:px-0">
+          <BackIcon className="w-fit p-2 h-fit" onClick={() => router.back()} />
+          <span className="h-12 w-12 border-2 flex items-center justify-center rounded-full">
+            <Building2 />
+          </span>
+          <div className="flex flex-col flex-1">
+            <h2 className="md:text-2xl text-xl font-semibold text-gray-800 ">
+              {entity}
+            </h2>
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>

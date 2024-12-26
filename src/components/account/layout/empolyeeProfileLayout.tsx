@@ -27,7 +27,7 @@ const EmpolyeeProfileLayout = ({ employeeId }: { employeeId: string }) => {
   const [employee, setEmployee] = useState(currentEmployee)
 
   return (
-    <div className="px-2 lg:px-6 md:py-6 bg-[#d1d1d1]/10 min-h-screen rounded-lg">
+    <div className="px-2 md:pt-0 min-h-screen rounded-lg">
       <EmployeeProfileHeader
         isEditing={isEditing}
         setIsEditing={setIsEditing}

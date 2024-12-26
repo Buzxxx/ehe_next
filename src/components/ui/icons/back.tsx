@@ -9,7 +9,7 @@ export default function BackIcon({
   className = "w-20 h-20",
   onClick,
 }: classType) {
-  const customeClass = className + "text-black";
+  const customeClass = className + " " +  "text-black";
   return (
     <Button
       onClick={onClick}

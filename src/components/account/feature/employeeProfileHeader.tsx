@@ -46,15 +46,21 @@ const EmployeeProfileHeader = React.memo(
     }, [])
 
     return (
-      <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 px-2 mb-6">
-        <div className="flex gap-2 items-center">
-          <div className="border-r ">
-            <BackIcon onClick={() => router.back()} className="w-fit px-4" />
+      <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 px-2 py-4  mt-2 mb-6">
+        <div className="flex justify-between items-center  gap-2">
+          <div>
+            <BackIcon onClick={() => router.back()} className="w-fit p-2" />
           </div>
-          <div className="flex gap-2">
-            <Avataar className="rounded-full" />
-            <div className="flex flex-col">
-              <h3 className="font-bold text-2xl text-gray-800">John Doe</h3>
+          {/* <span className="h-10 w-px bg-gray-200"></span> */}
+          <div className="flex gap-2 items-center">
+            <Avataar className="rounded-full md:size-10 size-8 border" />
+            <div className="flex flex-col ">
+              <h3
+                className="font-semibold md:text-2xl text-lg text-gray-800  max-w-40 truncate cursor-pointer "
+                title="John Doe"
+              >
+                John Doe
+              </h3>
               <span className="text-gray-500 text-sm">Software Engineer</span>
             </div>
           </div>
@@ -65,7 +71,10 @@ const EmployeeProfileHeader = React.memo(
           {!isEditing ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <EllipsisVertical className="text-gray-500 hover:text-gray-700 cursor-pointer" />
+                <EllipsisVertical
+                  size={16}
+                  className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem

@@ -1,7 +1,8 @@
 export interface Entity {
   id: number
   name: string
-  description: string
+  description?: string
+  logo?: string
   locations: {
     location: string
     totalEmployees: number

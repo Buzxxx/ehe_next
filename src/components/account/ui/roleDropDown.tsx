@@ -20,7 +20,7 @@ const RoleDropdown = React.memo(
       <DropdownMenuTrigger>
         <Badge
           variant="outline"
-          className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded flex items-center justify-center gap-2 w-full min-w-24 font-medium text-right "
+          className="md:text-sm text-xs bg-blue-100 text-blue-800 w-fit px-2 py-1 rounded flex items-center justify-center gap-2 font-medium text-right "
         >
           {role}
           <ChevronDown />

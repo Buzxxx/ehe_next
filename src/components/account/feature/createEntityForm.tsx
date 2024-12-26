@@ -86,7 +86,7 @@ const onSubmit = (data: EntityFormValues) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 md:p-6 p-4 w-full mx-auto bg-white overflow-auto"
+        className="space-y-6 md:p-6 p-4 w-full mx-auto bg-white "
       >
         <h2 className="md:text-2xl text-lg font-semibold">Create Entity</h2>
 
