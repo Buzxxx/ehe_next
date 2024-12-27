@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Form,
   FormField,
@@ -9,13 +9,15 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
-import { update_lead_on_server } from "@/components/lead/features/leadObject";
-import { useToast } from "@/components/ui/use-toast";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext"
+import { update_lead_on_server } from "@/components/lead/features/leadObject"
+import { useToast } from "@/components/ui/use-toast"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Edit, Save } from "lucide-react"
 
 // Define Zod schema
 const formSchema = z.object({
@@ -27,11 +29,12 @@ const formSchema = z.object({
   product_code: z.string().optional(),
   product_type: z.string().optional(),
   query: z.string().optional(),
-});
+})
 
 const LeadProfileAdditionalDetails = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile();
-  const { toast } = useToast();
+  const { leadProfile, setLeadProfile } = useLeadProfile()
+  const [isEditing, setIsEditing] = useState(false)
+  const { toast } = useToast()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -45,21 +48,22 @@ const LeadProfileAdditionalDetails = () => {
       query: leadProfile.query || "",
       id: leadProfile.id.toString(),
     },
-  });
+  })
 
   useEffect(() => {
     if (leadProfile) {
       form.reset({
         id: leadProfile?.id?.toString() || "",
-      });
+      })
     }
-  }, []);
+  }, [])
 
   // Submit handler
   const onSubmit = async (data: any) => {
-    console.log(data); // `id` will be included here
+    console.log(data) // `id` will be included here
     try {
-      const isLeadSaved = await update_lead_on_server(data);
+      setIsEditing(false)
+      const isLeadSaved = await update_lead_on_server(data)
 
       if (isLeadSaved) {
         // Update lead profile locally
@@ -74,173 +78,205 @@ const LeadProfileAdditionalDetails = () => {
           product_code: data.product_code || prev.product_code,
           product_type: data.product_type || prev.product_type,
           query: data.query || prev.query,
-        }));
-
-        toast({ title: "Profile updated successfully!" });
+        }))
+        toast({ title: "Profile updated successfully!", variant: "success" })
       } else {
+        setIsEditing(false)
         toast({
           title: "Error updating database, please contact your Admin",
           variant: "destructive",
-        });
+        })
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error updating profile:", error)
       toast({
         title: "An unexpected error occurred",
         variant: "destructive",
-      });
+      })
+      setIsEditing(false)
     }
-  };
+  }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
-        {/* Responsive Flex Container */}
-        <div className="flex md:flex-row flex-col gap-2 mx-2">
-          {/* First Column */}
-          <div className="w-full md:w-1/2 px-2">
-            {/* Lead Type */}
-            <FormField
-              control={form.control}
-              name="lead_type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Lead Type</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter lead type"
-                      {...field}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Budget */}
-            <FormField
-              control={form.control}
-              name="budget"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Budget</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter budget"
-                      {...field}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Follow-up Current Status */}
-            <FormField
-              control={form.control}
-              name="follow_up_current_status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Follow-up Current Status</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter current status"
-                      {...field}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+    <Card>
+      <CardHeader className="space-y-0 max-md:px-2 py-4 border-b flex-row justify-between">
+        <CardTitle className="text-lg font-medium text-gray-700">
+          Additional Info
+        </CardTitle>
+        {!isEditing ? (
+          <button onClick={() => setIsEditing(true)}>
+            <Edit size={16} color="grey" />
+          </button>
+        ) : (
+          <button onClick={form.handleSubmit(onSubmit)}>
+            <Save size={16} color="grey" />
+          </button>
+        )}
+      </CardHeader>
+      <CardContent className="max-md:px-2 pb-8 mt-4">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 w-full"
+          >
+            {/* Responsive Flex Container */}
+            <div className="flex md:flex-row flex-col gap-2 mx-2">
+              {/* First Column */}
+              <div className="w-full md:w-1/2 px-2 space-y-6">
+                {/* Lead Type */}
+                <FormField
+                  control={form.control}
+                  name="lead_type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">Lead Type</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!isEditing}
+                          placeholder="Enter lead type"
+                          {...field}
+                          className="w-full disabled:cursor-default"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Budget */}
+                <FormField
+                  control={form.control}
+                  name="budget"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">Budget</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!isEditing}
+                          placeholder="Enter budget"
+                          {...field}
+                          className="w-full disabled:cursor-default"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Follow-up Current Status */}
+                <FormField
+                  control={form.control}
+                  name="follow_up_current_status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">
+                        Follow-up Current Status
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!isEditing}
+                          placeholder="Enter current status"
+                          {...field}
+                          className="w-full disabled:cursor-default"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          {/* Second Column */}
-          <div className="w-full md:w-1/2 px-2">
-            {/* Query */}
-            <FormField
-              control={form.control}
-              name="query"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Query</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter query"
-                      {...field}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Product Code */}
-            <FormField
-              control={form.control}
-              name="product_code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Product Code</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter product code"
-                      {...field}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Product Type */}
-            <FormField
-              control={form.control}
-              name="product_type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Product Type</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter product type"
-                      {...field}
-                      className="w-full"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-        <div className="mx-4">
-          {/* Interested In */}
-          <FormField
-            control={form.control}
-            name="interested_in"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Interested In</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Enter interest"
-                    {...field}
-                    className="w-full"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+              {/* Second Column */}
+              <div className="w-full md:w-1/2 px-2 space-y-6">
+                {/* Query */}
+                <FormField
+                  control={form.control}
+                  name="query"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">Query</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!isEditing}
+                          placeholder="Enter query"
+                          {...field}
+                          className="w-full disabled:cursor-default"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Product Code */}
+                <FormField
+                  control={form.control}
+                  name="product_code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">
+                        Product Code
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!isEditing}
+                          placeholder="Enter product code"
+                          {...field}
+                          className="w-full disabled:cursor-default"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Product Type */}
+                <FormField
+                  control={form.control}
+                  name="product_type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">
+                        Product Type
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!isEditing}
+                          placeholder="Enter product type"
+                          {...field}
+                          className="w-full disabled:cursor-default"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="mx-4">
+              {/* Interested In */}
+              <FormField
+                control={form.control}
+                name="interested_in"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600">
+                      Interested In
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        disabled={!isEditing}
+                        placeholder="Enter interest"
+                        {...field}
+                        className="w-full disabled:cursor-default"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  )
+}
 
-        {/* Submit Button */}
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
-      </form>
-    </Form>
-  );
-};
-
-export default LeadProfileAdditionalDetails;
+export default LeadProfileAdditionalDetails

@@ -28,7 +28,7 @@ const LeadProfile = () => {
     <div className="py-4">
       <div className="flex md:flex-row flex-col gap-2 mx-2">
         <div className="md:w-1/3">
-          <Card className="mb-4">
+          <Card className="mb-2">
             <CardHeader className="space-y-0 max-md:px-2 py-4 border-b flex-row justify-between">
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-2 items-center">
@@ -59,31 +59,23 @@ const LeadProfile = () => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pb-4">
               <LeadProfileDetails
                 isEditing={isEditing}
                 ref={leadProfileDetailsRef}
               />
             </CardContent>
           </Card>
-          <Card className="mb-4">
-            <CardContent>
+          <Card className="mb-4 shadow-none">
+            <CardContent className="py-4 px-6 text-sm">
               <LeadProfileFixedDetails />
             </CardContent>
           </Card>
         </div>
         <div className="md:w-2/3">
           {/* Additional Info */}
-          <Card>
-            <CardHeader className="space-y-0 max-md:px-2 py-4 border-b flex-row justify-between">
-              <CardTitle className="text-lg font-medium">
-                Additional Info
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="max-md:px-2 pb-8 mt-4">
-              <LeadProfileAdditionalDetails />
-            </CardContent>
-          </Card>
+
+          <LeadProfileAdditionalDetails />
         </div>
       </div>
     </div>

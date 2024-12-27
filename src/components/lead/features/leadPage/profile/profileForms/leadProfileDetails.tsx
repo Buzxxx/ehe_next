@@ -90,12 +90,12 @@ const LeadProfileDetails = forwardRef<
 
   return (
     <Form {...form}>
-      <form className="space-y-4 py-4">
+      <form className="space-y-2 py-4">
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="space-y-1">
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
@@ -113,7 +113,7 @@ const LeadProfileDetails = forwardRef<
           control={form.control}
           name="contact"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="space-y-1">
               <FormLabel>Contact</FormLabel>
               <FormControl>
                 <Input
@@ -131,7 +131,7 @@ const LeadProfileDetails = forwardRef<
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="space-y-1">
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
