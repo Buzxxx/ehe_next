@@ -99,7 +99,7 @@ const LeadProfileAdditionalDetails = () => {
 
   return (
     <Card>
-      <CardHeader className="space-y-0 max-md:px-2 py-4 border-b flex-row justify-between">
+      <CardHeader className="space-y-0 py-4 border-b flex-row justify-between">
         <CardTitle className="text-lg font-medium text-gray-700">
           Additional Info
         </CardTitle>

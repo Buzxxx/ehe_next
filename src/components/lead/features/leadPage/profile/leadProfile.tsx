@@ -28,8 +28,8 @@ const LeadProfile = () => {
     <div className="py-4">
       <div className="flex md:flex-row flex-col gap-2 mx-2">
         <div className="md:w-1/3">
-          <Card className="mb-2">
-            <CardHeader className="space-y-0 max-md:px-2 py-4 border-b flex-row justify-between">
+          <Card className="mb-2 shadow-none">
+            <CardHeader className="space-y-0 py-4 border-b flex-row justify-between">
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-2 items-center">
                   <h6 className="font-semibold flex items-center">
@@ -66,7 +66,7 @@ const LeadProfile = () => {
               />
             </CardContent>
           </Card>
-          <Card className="mb-4 shadow-none">
+          <Card className="md:mb-4 shadow-none">
             <CardContent className="py-4 px-6 text-sm">
               <LeadProfileFixedDetails />
             </CardContent>
