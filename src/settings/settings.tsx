@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 export const DEFAULT_LOGIN_REDIRECT = "/home";
 export const DEFAULT_LOGOUT_REDIRECT = "/auth/login";
 
