@@ -24,6 +24,8 @@ const LeadProfileContext = createContext<{
   setIsEditing: React.Dispatch<SetStateAction<boolean>>;
   statusList: LeadStatus[];
   setStatusList: React.Dispatch<SetStateAction<LeadStatus[]>>;
+  users: { id: string; name: string }[];
+  setUsers: React.Dispatch<SetStateAction<{ id: string; name: string }[]>>;
   timelineEvents: TimelineEvents[];
   setTimelineEvents: React.Dispatch<SetStateAction<TimelineEvents[]>>;
   leadId: string;
@@ -40,6 +42,7 @@ export const LeadProfileProvider = ({
   const [isEditing, setIsEditing] = useState(false);
   const [leadProfile, setLeadProfile] = useState<Lead>(DefaultLead);
   const [statusList, setStatusList] = useState<LeadStatus[]>([]);
+  const [users, setUsers] = useState<{ id: string; name: string }[]>([]);
   const [timelineEvents, setTimelineEvents] = useState<any[]>([]);
 
   // Fetch lead details when the component mounts or the `leadId` changes
@@ -66,6 +69,8 @@ export const LeadProfileProvider = ({
         setIsEditing,
         statusList,
         setStatusList,
+        users,
+        setUsers,
         timelineEvents,
         setTimelineEvents,
         leadId,

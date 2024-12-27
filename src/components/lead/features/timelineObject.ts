@@ -19,7 +19,6 @@ export const DefaultLeadStatus: TimelineEvents = {
 
 export async function get_timeline_controller(lead_id: string) {
   const timeline = await get_timeline_from_server(lead_id);
-  console.log(timeline.timeline);
   return timeline.timeline;
 }
 
@@ -30,7 +29,6 @@ export async function set_timeline_controller(data: any) {
     description: data.description,
   };
   const timelineObj = await set_timeline_on_server(data_log);
-  console.log("timeline", timelineObj);
   return timelineObj;
 }
 

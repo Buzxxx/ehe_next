@@ -3,39 +3,39 @@
  * @description TopBar component for the lead listing page
  */
 
-import { SetStateAction, useState } from "react"
+import { SetStateAction, useState } from "react";
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar"
-import ChevronDown from "@/components/ui/icons/chevronDown"
-import { Badge } from "@/components/ui/badge"
-import PaginationComp from "@/components/lead/features/leadListing/paginationComp"
+} from "@/components/ui/menubar";
+import ChevronDown from "@/components/ui/icons/chevronDown";
+import { Badge } from "@/components/ui/badge";
+import PaginationComp from "@/components/lead/features/leadListing/paginationComp";
 import {
   Filter,
   List,
   BetweenHorizontalEnd,
   Search,
   X,
-} from "@/components/ui/icons"
+} from "@/components/ui/icons";
 import {
   LeadsResponse,
   get_total_leads,
   get_selected_leads_count,
-} from "@/components/lead/features/leadObject"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import FilterModal from "./filterModal"
+} from "@/components/lead/features/leadObject";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import FilterModal from "./filterModal";
 
 interface TopBarProps {
-  LeadsResponse: LeadsResponse
-  viewMode: "card" | "row" // View mode prop
-  setViewMode: React.Dispatch<React.SetStateAction<"card" | "row">> // Setter for view mode
-  setShowReassignModal: React.Dispatch<SetStateAction<boolean>>
-  setIsLoading: React.Dispatch<SetStateAction<boolean>>
+  LeadsResponse: LeadsResponse;
+  viewMode: "card" | "row"; // View mode prop
+  setViewMode: React.Dispatch<React.SetStateAction<"card" | "row">>; // Setter for view mode
+  setShowReassignModal: React.Dispatch<SetStateAction<boolean>>;
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -43,19 +43,19 @@ const TopBar: React.FC<TopBarProps> = ({
   viewMode,
   setViewMode,
   setShowReassignModal,
-  setIsLoading
+  setIsLoading,
 }) => {
-  const [filterVisible, setFilterVisible] = useState<boolean>(false)
-  const [searchModalVisible, setSearchModalVisible] = useState(false)
-  const totalLeads = get_total_leads(LeadsResponse)
-  const selectedCount = get_selected_leads_count(LeadsResponse)
+  const [filterVisible, setFilterVisible] = useState<boolean>(false);
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
+  const totalLeads = get_total_leads(LeadsResponse);
+  const selectedCount = get_selected_leads_count(LeadsResponse);
 
   const handleReassign = () => {
-    setShowReassignModal(() => true)
-  }
+    setShowReassignModal(() => true);
+  };
 
   return (
-    <div className="topbar-wrapper overflow-x-clip w-full">
+    <div className="topbar-wrapper overflow-x-clip w-full ">
       <div className="relative bg-white border border-slate-200 shadow-sm rounded-lg md:p-3 p-2 z-40 flex items-center justify-between w-full">
         <div className="flex items-center justify-between gap-2">
           <Menubar>
@@ -74,7 +74,6 @@ const TopBar: React.FC<TopBarProps> = ({
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
-
           {/* Mobile Search Button */}
           <div className="relative md:hidden">
             <button
@@ -84,7 +83,6 @@ const TopBar: React.FC<TopBarProps> = ({
               <Search size={20} color="gray" />
             </button>
           </div>
-
           {/* Desktop Search Input */}
           <div className="relative hidden md:block">
             <Input placeholder="Search" />
@@ -156,7 +154,6 @@ const TopBar: React.FC<TopBarProps> = ({
           }
         />
       </div>
-
       {/* Full-Page Search Modal */}
       {searchModalVisible && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col p-4">
@@ -173,7 +170,7 @@ const TopBar: React.FC<TopBarProps> = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default TopBar
+export default TopBar;

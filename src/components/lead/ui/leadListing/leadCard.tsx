@@ -1,13 +1,13 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Avataar from "../leadPage/avataar"
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Avataar from "../leadPage/avataar";
 
 import {
   Phone,
@@ -15,22 +15,22 @@ import {
   Bookmark,
   PersonIcon,
   CalendarIcon,
-} from "@/components/ui/icons"
+} from "@/components/ui/icons";
 
-import { paths } from "../../urls"
-import { Lead } from "@/components/lead/features/leadObject"
+import { paths } from "../../urls";
+import { Lead } from "@/components/lead/features/leadObject";
 
-import { formatDate } from "@/utility/formatDate"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { useLeadSave } from "../../hooks/useLeadSave"
+import { formatDate } from "@/utility/formatDate";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { useLeadSave } from "../../hooks/useLeadSave";
 
 type LeadCardProps = {
-  isSelected: boolean
-  onToggle: () => void
-  idx: number
-  lead: Lead
-}
+  isSelected: boolean;
+  onToggle: () => void;
+  idx: number;
+  lead: Lead;
+};
 
 export const LeadCard: React.FC<LeadCardProps> = ({
   idx,
@@ -38,8 +38,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({
   isSelected,
   onToggle,
 }) => {
-  const { isSaved, toggleSave } = useLeadSave(lead.id)
-
+  const { isSaved, toggleSave } = useLeadSave(lead.id);
   return (
     <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] flex flex-col">
       <CardHeader className="flex flex-row items-start justify-between p-4 gap-3 space-y-0">
@@ -62,9 +61,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({
 
       <CardContent className=" pb-6 px-4 text-sm flex-1">
         <CardTitle className="  text-indigo-950/80 mb-2 font-normal text-sm">
-          {lead.follow_up_current_status
-            ? lead.follow_up_current_status
-            : "In Progress "}
+          {lead.status ? lead.status.status : "In Progress "}
         </CardTitle>
         <Link
           href={paths.leadPage + lead.id}
@@ -121,5 +118,5 @@ export const LeadCard: React.FC<LeadCardProps> = ({
         </div>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};

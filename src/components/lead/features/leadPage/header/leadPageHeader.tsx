@@ -65,13 +65,14 @@ const LeadPageHeader = ({
   };
 
   return (
-    <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-gray-50 shadow-sm rounded-lg">
+    <section className="p-2 md:p-4 md:pt-2 md:pb-0 pb-0 bg-white shadow-sm rounded-lg">
       <header className="flex justify-between items-center mt-10 md:mb-1 md:mt-0">
         <div className="flex items-center gap-2">
           <BackIcon
             onClick={() => router.back()}
             className="p-1 cursor-pointer hover:bg-gray-200 rounded-full h-fit py-0"
-          />
+          />{" "}
+          <div className="font-semibold text-lg p-0">{leadProfile.name}</div>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -100,35 +101,8 @@ const LeadPageHeader = ({
           </Button>
         </div>
       </header>
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-        <div className="flex items-start gap-3 ml-2">
-          <Avataar
-            src={leadProfile.img ?? "/base/profile.webp"}
-            className="h-20 w-20 rounded-full border border-sky-800 p-1"
-          />
-          <div className="flex flex-col 1">
-            <div className="font-semibold text-2xl p-0">{leadProfile.name}</div>
-            <div>
-              <div className="flex gap-1 items-center text-gray-500 text-sm">
-                <Mail size={16} />
-                <div className="text-sm p-0">
-                  {leadProfile.email || "Email not provided"}
-                </div>
-              </div>
-              <div className="flex gap-1 items-center text-gray-500 text-sm">
-                <Phone size={16} />
-                <div className="text-sm p-0">{leadProfile.contact}</div>
-                <span className="text-gray-300 h-4 overflow-hidden my-auto px-1">
-                  |
-                </span>
-                <BriefCase size={16} />
-                <p>{leadProfile.priority}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav className="md:pt-2 mt-2 flex items-center justify-start bg-white w-full">
+
+      <nav className="md:pt-2 mt-2 flex items-center justify-startw-full">
         {navItems.map((item, index) => (
           <button
             key={item.name}

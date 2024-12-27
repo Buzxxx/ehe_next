@@ -1,7 +1,3 @@
-/**
- * @path src/components/lead/features/leadListing/leadList.tsx
- */
-
 import React, {
   useEffect,
   useState,
@@ -118,7 +114,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
     const hasLeads = useMemo(() => leads?.length > 0, [leads]);
 
     return (
-      <div className="w-full relative flex-1 h-[calc(100%-10rem)] overflow-auto">
+      <div className="w-full relative flex-1 ">
         {isLoading || isFetching ? (
           <div className="absolute mt-2 h-full inset-0 flex justify-center items-center bg-gray-200 bg-opacity-30 z-30 rounded-xl">
             <Spinner className="animate-spin h-10 w-10 text-gray-400 " />
@@ -160,7 +156,7 @@ const LeadList: React.FC<LeadListProps> = React.memo(
                       </TableHead>
                       <TableHead>Lead</TableHead>
                       <TableHead>Date Created</TableHead>
-                      <TableHead className="text-right">Status</TableHead>
+                      <TableHead className="text-center">Status</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>

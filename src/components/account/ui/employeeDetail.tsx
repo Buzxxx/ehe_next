@@ -1,5 +1,5 @@
-import { SetStateAction, useEffect, useState } from "react"
-import { Employee } from "../feature/employeeColumn"
+import { SetStateAction, useEffect, useState } from "react";
+import { Employee } from "../feature/employeeColumn";
 
 const EmployeeDetail = ({
   title,
@@ -12,23 +12,23 @@ const EmployeeDetail = ({
   placeholder,
   isEditing,
 }: {
-  title: string
-  value: string
-  span?: number
-  isEditable?: boolean
-  employee?: Employee
-  setEmployee: React.Dispatch<SetStateAction<Employee | undefined>>
-  type?: string
-  placeholder?: string
-  isEditing: boolean
+  title: string;
+  value: string;
+  span?: number;
+  isEditable?: boolean;
+  employee?: Employee;
+  setEmployee: React.Dispatch<SetStateAction<Employee | undefined>>;
+  type?: string;
+  placeholder?: string;
+  isEditing: boolean;
 }) => {
-  const [tempValue, setTempValue] = useState(value)
-  const [isFieldEditing, setIsFieldEditing] = useState(false)
+  const [tempValue, setTempValue] = useState(value);
+  const [isFieldEditing, setIsFieldEditing] = useState(false);
 
   // Sync internal state with the updated value prop
   useEffect(() => {
-    setTempValue(value)
-  }, [value])
+    setTempValue(value);
+  }, [value]);
 
   const handleSave = () => {
     if (tempValue !== value) {
@@ -38,18 +38,18 @@ const EmployeeDetail = ({
             ...prev,
             [title]: tempValue,
           } as Employee | undefined)
-      )
+      );
     }
-    setIsFieldEditing(false)
-  }
+    setIsFieldEditing(false);
+  };
 
   const handleEdit = () => {
-    setIsFieldEditing(true)
-  }
+    setIsFieldEditing(true);
+  };
 
   const handleBlur = () => {
-    handleSave()
-  }
+    handleSave();
+  };
 
   return (
     <div
@@ -71,7 +71,7 @@ const EmployeeDetail = ({
         <h4 className="font-medium text-base">{tempValue}</h4>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default EmployeeDetail
+export default EmployeeDetail;

@@ -150,10 +150,18 @@ const TimelineUI = ({
                                         <span className="font-normal">
                                           {key}:{" "}
                                         </span>
+
                                         <span className="text-gray-400">
-                                          {changeValue.from
-                                            ? `${changeValue.to} was ${changeValue.from}`
-                                            : changeValue.to}
+                                          {changeValue.to}
+                                          {changeValue.from && (
+                                            <span>
+                                              {" "}
+                                              <span className="mx-2 text-gray-800 text-xs">
+                                                was
+                                              </span>{" "}
+                                              {changeValue.from}
+                                            </span>
+                                          )}
                                         </span>
                                       </p>
                                     );

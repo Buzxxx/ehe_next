@@ -21,8 +21,8 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import DialogItem from "../dropDownModal";
-import LeadCallbackForm from "../../features/leadPage/profile/leadCallbackForm";
-import LeadMeetingForm from "../../features/leadPage/profile/leadMeetingForm";
+import LeadCallbackForm from "../../features/leadPage/timeline/leadCallbackForm";
+import LeadMeetingForm from "../../features/leadPage/timeline/leadMeetingForm";
 import React from "react";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import TimelineForm from "../../features/leadPage/timeline/timelineForm";
