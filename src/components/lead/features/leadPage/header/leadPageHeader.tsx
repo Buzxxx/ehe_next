@@ -102,7 +102,7 @@ const LeadPageHeader = ({
         </div>
       </header>
 
-      <nav className="md:pt-2 mt-2 flex items-center justify-startw-full">
+      <nav className="md:pt-2 mt-2 flex items-center justify-start w-full">
         {navItems.map((item, index) => (
           <button
             key={item.name}
