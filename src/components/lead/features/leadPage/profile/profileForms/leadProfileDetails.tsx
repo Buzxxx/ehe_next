@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { forwardRef, useImperativeHandle, useEffect } from "react"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Form,
   FormField,
@@ -9,27 +9,37 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
-import { update_lead_on_server } from "@/components/lead/features/leadObject";
-import { useToast } from "@/components/ui/use-toast";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext"
+import { useToast } from "@/components/ui/use-toast"
+import { update_lead_on_server } from "../../../leadObject"
 
-// Define schema with `id`
 const formSchema = z.object({
   id: z.string().optional(),
   name: z.string().nonempty("Name is required"),
   contact: z.string().nonempty("Contact is required"),
   email: z.string().email("Invalid email address").optional(),
-});
+})
 
-const LeadProfileDetails = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile();
-  const { toast } = useToast();
+type FormSchemaType = z.infer<typeof formSchema>
 
-  // Initialize the form
-  const form = useForm({
+export interface LeadProfileDetailsRef {
+  submit: () => void
+}
+
+interface LeadProfileDetailsProps {
+  isEditing: boolean
+}
+
+const LeadProfileDetails = forwardRef<
+  LeadProfileDetailsRef,
+  LeadProfileDetailsProps
+>(({ isEditing }, ref) => {
+  const { leadProfile, setLeadProfile } = useLeadProfile()
+  const { toast } = useToast()
+
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: leadProfile.name || "",
@@ -37,7 +47,7 @@ const LeadProfileDetails = () => {
       email: leadProfile.email || "",
       id: leadProfile.id.toString(),
     },
-  });
+  })
 
   useEffect(() => {
     if (leadProfile) {
@@ -46,45 +56,41 @@ const LeadProfileDetails = () => {
         name: leadProfile?.name || "",
         contact: leadProfile?.contact?.toString() || "",
         email: leadProfile?.email || "",
-      });
+      })
     }
-  }, []);
+  }, [leadProfile, form])
 
-  const onSubmit = async (data: any) => {
-    console.log(data); // `id` will be included here
+  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+    console.log(data)
     try {
-      const isLeadSaved = await update_lead_on_server(data);
-
+      const isLeadSaved = await update_lead_on_server(data)
       if (isLeadSaved) {
-        // Update lead profile locally
         setLeadProfile((prev) => ({
           ...prev,
           id: data.id || prev.id,
           name: data.name || prev.name,
           contact: data.contact || prev.contact,
           email: data.email || prev.email,
-        }));
-
-        toast({ title: "Profile updated successfully!" });
+        }))
+        toast({ title: "Profile updated successfully!", variant: "success" })
       } else {
-        toast({
-          title: "Error updating database, please contact your Admin",
-          variant: "destructive",
-        });
+        toast({ title: "Error updating database", variant: "destructive" })
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
-      toast({
-        title: "An unexpected error occurred",
-        variant: "destructive",
-      });
+      console.error("Error updating profile:", error)
+      toast({ title: "An unexpected error occurred", variant: "destructive" })
     }
-  };
+  }
+
+  useImperativeHandle(ref, () => ({
+    submit: () => {
+      form.handleSubmit(onSubmit)()
+    },
+  }))
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4">
-        {/* Name Field */}
+      <form className="space-y-4 py-4">
         <FormField
           control={form.control}
           name="name"
@@ -92,13 +98,17 @@ const LeadProfileDetails = () => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter name" {...field} className="w-full" />
+                <Input
+                  disabled={!isEditing}
+                  placeholder="Enter name"
+                  {...field}
+                  className="w-full disabled:cursor-default"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        {/* Contact Field */}
         <FormField
           control={form.control}
           name="contact"
@@ -107,16 +117,16 @@ const LeadProfileDetails = () => {
               <FormLabel>Contact</FormLabel>
               <FormControl>
                 <Input
+                  disabled={!isEditing}
                   placeholder="Enter contact"
                   {...field}
-                  className="w-full"
+                  className="w-full disabled:cursor-default"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
@@ -125,22 +135,20 @@ const LeadProfileDetails = () => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
+                  disabled={!isEditing}
                   placeholder="Enter email"
                   {...field}
-                  className="w-full"
+                  className="w-full disabled:cursor-default"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        {/* Submit Button */}
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
       </form>
     </Form>
-  );
-};
+  )
+})
 
-export default LeadProfileDetails;
+LeadProfileDetails.displayName = "LeadProfileDetails"
+export default LeadProfileDetails
