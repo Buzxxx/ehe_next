@@ -118,7 +118,14 @@ export async function lead_listing_controller(params: URLSearchParams) {
 }
 
 export async function set_lead_status_priority_on_server(data: any) {
-  console.log(data);
+  const returnObj = await push_update_lead_to_server(data);
+  if (returnObj) {
+    return returnObj;
+  }
+  return false;
+}
+
+export async function update_lead_on_server(data: any) {
   const returnObj = await push_update_lead_to_server(data);
   if (returnObj) {
     return returnObj;

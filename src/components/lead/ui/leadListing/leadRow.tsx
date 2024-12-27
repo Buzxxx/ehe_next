@@ -42,9 +42,7 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
           <Link href={`/lead/${lead.id}`} className="font-medium text-gray-800">
             {lead.name || "Lead Name"}
           </Link>
-          <p className="text-xs text-gray-500">
-            {lead.interested_in || "Unknown Location"}
-          </p>
+          <p className="text-xs text-gray-500">{lead.contact || lead.email}</p>
         </div>
       </TableCell>
 
@@ -54,8 +52,8 @@ const LeadRow: React.FC<LeadRowProps> = ({ lead, isSelected, onToggle }) => {
       </TableCell>
 
       {/* Status */}
-      <TableCell className="p-2 text-right text-sm font-medium text-gray-600">
-        {lead.status.status || "Closed"}
+      <TableCell className="p-2 text-center text-sm font-medium text-gray-600">
+        {lead.status.status || "Unknown status"}
       </TableCell>
 
       {/* Actions */}

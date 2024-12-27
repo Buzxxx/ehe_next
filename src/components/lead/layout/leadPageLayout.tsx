@@ -22,7 +22,7 @@ const LeadPageLayout = ({ leadId }: { leadId: string }) => {
 
   return (
     <LeadProfileProvider leadId={leadId}>
-      <div className="flex h-screen flex-col">
+      <div className="flex flex-col shadow-xl">
         <LeadPageHeader
           id={parseInt(leadId)}
           navItems={navItems}

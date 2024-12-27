@@ -23,10 +23,10 @@ import {
 const LeadTimeLine = () => {
   const { leadId } = useLeadProfile();
   return (
-    <div className="relative w-full h-[calc(75vh-4rem)] bg-gray-100 md:flex items-stretch overflow-auto justify-between gap-4 mt-4">
+    <div className="relative h-[calc(100vh-4rem)] bg-gray-100 md:flex items-stretch overflow-auto justify-between gap-4 m-2 mt-4">
       {/* Lead Status Form Wrapper */}
-      <div className="md:w-1/3 hidden md:flex flex-col  rounded-md shadow-sm border ">
-        <div className="flex justify-between items-center w-full bg-white px-4 py-2 mb-8 rounded-t-md">
+      <div className="md:w-1/3 hidden md:flex flex-col bg-white  rounded-md shadow-sm border ">
+        <div className="flex justify-between items-center w-full px-4 py-2 mb-8 rounded-t-md">
           {" "}
           <div className="flex items-center justify-between gap-2">
             {" "}
@@ -61,7 +61,7 @@ const LeadTimeLine = () => {
       </div>
 
       {/* Timeline Wrapper */}
-      <div className="md:w-fit overflow-hidden max-h-full flex-1 border rounded-t-md bg-gray-100 rounded-md shadow-sm mx-2 flex flex-col">
+      <div className="md:w-fit overflow-hidden max-h-full flex-1 border rounded-t-md bg-gray-100 rounded-md shadow-sm flex flex-col">
         <TimelineTopbar />
 
         {/* Loading Spinner or Timeline */}
