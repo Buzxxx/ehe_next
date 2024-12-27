@@ -84,7 +84,7 @@ const EmployeeDetails = ({
         {/* Personal Details */}
         <div className="p-4 w-full border bg-gray-50 rounded-md shadow-sm flex-1">
           <div className="pb-2 border-b mb-4">
-            <h6 className="font-medium text-gray-700">Personal Details</h6>
+            <h6 className="font-medium text-gray-700"></h6>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <EmployeeDetail

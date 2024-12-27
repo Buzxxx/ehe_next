@@ -4,16 +4,9 @@
 
 import UserProfileLayout from "@/components/profile/layout/userProfileLayout"
 
-interface ProfilePageProps {
-  params: Promise<{
-    user: string
-  }>
-}
+const EmployeeProfile = () => {
 
-const EmployeeProfile = async ({ params }: ProfilePageProps) => {
-  const resolvedParams = await params
-
-  return <UserProfileLayout employeeId={resolvedParams.user} />
+  return <UserProfileLayout />
 }
 
 export default EmployeeProfile

@@ -9,42 +9,46 @@ import EmployeeActivityList from "@/components/account/feature/employeeActivityL
 import { useState } from "react"
 import { employeeData } from "@/components/teams/lib/employees"
 import UserAliasTable from "@/components/account/feature/userAliasTable"
+import UserProfileEditable from "../feature/userProfileEditable"
+import UserWorkDetailsEditable from "../feature/userWorkDetailsEditable"
 
-const UserProfileLayout = ({ employeeId }: { employeeId: string }) => {
-  const [isEditing, setIsEditing] = useState(false)
+const UserProfileLayout = () => {
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false)
   const [employee, setEmployee] = useState(
     employeeData.find((emp) => emp.id == 1)
   )
 
-  const handleSave = () => {
-    console.log("Saving employee:", employee)
-    setIsEditing(false)
-  }
-
   return (
-    <div className="md:px-4 px-2 lg:px-6 md:py-6 bg-[#d1d1d1]/10 min-h-screen rounded-lg scroll-smooth">
+    <div className=" min-h-screen rounded-lg scroll-smooth">
       <UserProfileHeader
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
-        onSave={handleSave}
         role={employee?.role || "User"}
         setEmployee={setEmployee}
         setShowResetPasswordModal={setShowResetPasswordModal}
         showResetPasswordModal={showResetPasswordModal}
       />
-      <EmployeeStatsOverview />
-
-      <UserProfileDetails
+      {/* <EmployeeStatsOverview /> */}
+      <div className="flex gap-2 items-stretch md:flex-row flex-col ">
+        <div className="md:w-1/3">
+          <UserProfileEditable employee={employee!} setEmployee={setEmployee} />
+        </div>
+        <div className="md:w-2/3">
+          <UserWorkDetailsEditable
+            employee={employee!}
+            setEmployee={setEmployee}
+          />
+        </div>
+      </div>
+      {/* <UserProfileDetails
         isEditing={isEditing}
         setIsEditing={setIsEditing}
         employee={employee!}
         setEmployee={setEmployee}
-      />
+      /> */}
 
-      <UserAliasTable />
-      <EmployeeActivityList />
-      
+      <div className="flex gap-2 items-stretch md:flex-row flex-col mt-2">
+        <EmployeeActivityList />
+        <UserAliasTable />
+      </div>
     </div>
   )
 }

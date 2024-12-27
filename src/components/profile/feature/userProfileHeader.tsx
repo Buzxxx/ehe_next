@@ -25,17 +25,11 @@ import ForgotPassPasswordStep from "@/components/authentication/features/forms/f
 import { useToast } from "@/components/ui/use-toast"
 
 const EmployeeProfileHeader = ({
-  isEditing,
-  setIsEditing,
-  onSave,
   role,
   setEmployee,
   setShowResetPasswordModal,
-  showResetPasswordModal
+  showResetPasswordModal,
 }: {
-  isEditing: boolean
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
-  onSave: () => void
   role: string
   setEmployee: React.Dispatch<React.SetStateAction<Employee | undefined>>
   setShowResetPasswordModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -60,27 +54,6 @@ const EmployeeProfileHeader = ({
     }
   }
 
-  const handleAliasClick = () => {
-    const currentUrl = window.location.href
-    // Append #aliasTable to the current URL
-    const newUrl = currentUrl.includes("#")
-      ? currentUrl.split("#")[0]
-      : currentUrl
-    router.push(`${newUrl}#aliasTable`)
-  }
-
-  const handleRoleChange = (newRole: string) => {
-    setEmployee((prev) => {
-      if (prev) {
-        return {
-          ...prev,
-          role: newRole,
-        }
-      }
-      return prev
-    })
-  }
-
   const handleSubmit = () => {
     toast({
       title: "Password updated successfully",
@@ -90,7 +63,7 @@ const EmployeeProfileHeader = ({
   }
 
   return (
-    <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 p-2 md:mb-6 mb-2">
+    <div className="profile-header flex gap-4 justify-between items-center bg-white shadow-sm rounded-md md:p-4 p-2 mb-2 mt-1 md:mt-0">
       <div className="flex gap-4 items-center">
         <div className="border-r pr-4">
           <Avataar className="rounded-full" />
@@ -103,92 +76,44 @@ const EmployeeProfileHeader = ({
       <div className="flex gap-2 items-center">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Badge
-              variant="outline"
-              className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded flex items-center gap-2"
-            >
-              {role}
-              <ChevronDown />
-            </Badge>
+            <EllipsisVertical className="text-gray-500 hover:text-gray-700 cursor-pointer" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {["Admin", "User", "Sub-User"].map((r) => (
-              <DropdownMenuItem
-                key={r}
-                className={`text-sm ${
-                  role === r ? "text-blue-600" : "text-gray-600"
-                }`}
-                onClick={() => handleRoleChange(r)}
-              >
-                {r}
-              </DropdownMenuItem>
-            ))}
+          <DropdownMenuContent
+            onCloseAutoFocus={(event) => {
+              if (focusRef.current) {
+                focusRef.current.focus()
+                focusRef.current = null
+                event.preventDefault()
+              }
+            }}
+          >
+            <DialogItem
+              open={showResetPasswordModal}
+              className="*:border-none w-fit rounded-none"
+              triggerChildren={
+                <div className="text-sm text-gray-600 flex items-center ">
+                  <EditPassword size={16} className="mr-1" />
+                  Reset Password
+                </div>
+              }
+              onSelect={handleDialogItemSelect}
+              onOpenChange={handleDialogItemOpenChange}
+            >
+              {/* <DialogTitle className="DialogTitle">Update Status</DialogTitle> */}
+              <DialogDescription className="DialogDescription"></DialogDescription>
+              <ForgotPassPasswordStep
+                onSuccess={handleSubmit}
+                setLoading={setLoading}
+                isLoggedIn={true}
+              />
+            </DialogItem>
+
+            <DropdownMenuItem className="text-sm text-red-400">
+              <UserRoundMinus size={16} className="mr-1" />
+              Deactivate User
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {!isEditing ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <EllipsisVertical className="text-gray-500 hover:text-gray-700 cursor-pointer" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              onCloseAutoFocus={(event) => {
-                if (focusRef.current) {
-                  focusRef.current.focus()
-                  focusRef.current = null
-                  event.preventDefault()
-                }
-              }}
-            >
-              <DropdownMenuItem
-                className="text-sm text-gray-600"
-                onClick={() => setIsEditing(true)}
-              >
-                <Edit size={16} className="mr-1" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-sm text-gray-600"
-                onClick={handleAliasClick}
-              >
-                <FolderPen size={16} className="mr-1" />
-                Alias
-              </DropdownMenuItem>
-              <DialogItem
-              open={showResetPasswordModal}
-                className="*:border-none w-fit rounded-none"
-                triggerChildren={
-                  <div className="text-sm text-gray-600 flex items-center ">
-                    <EditPassword size={16} className="mr-1" />
-                    Reset Password
-                  </div>
-                }
-                onSelect={handleDialogItemSelect}
-                onOpenChange={handleDialogItemOpenChange}
-              >
-                {/* <DialogTitle className="DialogTitle">Update Status</DialogTitle> */}
-                <DialogDescription className="DialogDescription"></DialogDescription>
-                <ForgotPassPasswordStep
-                  onSuccess={handleSubmit}
-                  setLoading={setLoading}
-                  isLoggedIn={true}
-                />
-              </DialogItem>
-             
-              <DropdownMenuItem className="text-sm text-red-400">
-                <UserRoundMinus size={16} className="mr-1" />
-                Deactivate User
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Button
-            onClick={onSave}
-            className="h-8 w-fit py-0 bg-sky-600 hover:bg-sky-700"
-          >
-            Save
-          </Button>
-        )}
       </div>
     </div>
   )
