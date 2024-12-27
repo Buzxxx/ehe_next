@@ -2,8 +2,8 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -41,9 +41,9 @@ const UserAliasTable = () => {
   }
 
   return (
-    <Card className="space-y-4 mt-4" id="aliasTable">
+    <Card className="md:w-2/3 h-full" id="aliasTable">
       <CardHeader className="py-4 border-b flex-row justify-between items-center">
-        <h4 className="text-xl font-medium">Alias Names</h4>
+        <CardTitle className="text-lg font-semibold">Alias Names</CardTitle>
         {/* Button to open modal */}
         <Button
           className="bg-sky-600 hover:bg-sky-700 text-white"
@@ -86,19 +86,26 @@ const UserAliasTable = () => {
       {/* Modal for adding new alias */}
       <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
         <DialogContent>
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mb-4">Add New Alias</h3>
+          <DialogHeader>
+            <DialogTitle>Add New Alias Name</DialogTitle>
+          </DialogHeader>
+          <div className="p-4 mt-6">
             <Input
               value={newAlias}
               onChange={(e) => setNewAlias(e.target.value)}
               placeholder="Enter new alias name"
-              className="mb-4"
+              className="mb-6"
             />
             <div className="flex justify-end space-x-4">
-              <Button variant="secondary"  onClick={() => setIsModalOpen(false)}>
+              <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
                 Cancel
               </Button>
-              <Button className="bg-sky-600 hover:bg-sky-500" onClick={handleAddAlias}>Add Alias</Button>
+              <Button
+                className="bg-sky-600 hover:bg-sky-500"
+                onClick={handleAddAlias}
+              >
+                Add Alias
+              </Button>
             </div>
           </div>
         </DialogContent>
