@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Form,
   FormField,
@@ -9,15 +9,20 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
-import { update_lead_on_server } from "@/components/lead/features/leadObject";
-import { useToast } from "@/components/ui/use-toast";
-import { Edit } from "@/components/ui/icons";
-import { Save } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext"
+import { update_lead_on_server } from "@/components/lead/features/leadObject"
+import { useToast } from "@/components/ui/use-toast"
+import { Edit, Save, X } from "@/components/ui/icons"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -28,12 +33,12 @@ const formSchema = z.object({
   product_code: z.string().optional(),
   product_type: z.string().optional(),
   query: z.string().optional(),
-});
+})
 
 const LeadProfileAdditionalDetails = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile();
-  const [isEditing, setIsEditing] = useState(false);
-  const { toast } = useToast();
+  const { leadProfile, setLeadProfile } = useLeadProfile()
+  const [isEditing, setIsEditing] = useState(false)
+  const { toast } = useToast()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -47,20 +52,20 @@ const LeadProfileAdditionalDetails = () => {
       query: leadProfile.query || "",
       id: leadProfile.id.toString(),
     },
-  });
+  })
 
   useEffect(() => {
     if (leadProfile) {
       form.reset({
         id: leadProfile?.id?.toString() || "",
-      });
+      })
     }
-  }, []);
+  }, [])
 
   const onSubmit = async (data: any) => {
     try {
-      setIsEditing(false);
-      const isLeadSaved = await update_lead_on_server(data);
+      setIsEditing(false)
+      const isLeadSaved = await update_lead_on_server(data)
 
       if (isLeadSaved) {
         setLeadProfile((prev) => ({
@@ -74,39 +79,75 @@ const LeadProfileAdditionalDetails = () => {
           product_code: data.product_code || prev.product_code,
           product_type: data.product_type || prev.product_type,
           query: data.query || prev.query,
-        }));
-        toast({ title: "Profile updated successfully!", variant: "success" });
+        }))
+        toast({ title: "Profile updated successfully!", variant: "success" })
       } else {
-        setIsEditing(false);
+        setIsEditing(false)
         toast({
           title: "Error updating database, please contact your Admin",
           variant: "destructive",
-        });
+        })
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error updating profile:", error)
       toast({
         title: "An unexpected error occurred",
         variant: "destructive",
-      });
-      setIsEditing(false);
+      })
+      setIsEditing(false)
     }
-  };
+  }
 
   return (
-    <Card>
+    <Card className="h-full shadow-none">
       <CardHeader className="space-y-0 py-4 border-b flex-row justify-between">
         <CardTitle className="text-lg font-medium text-gray-700">
           Additional Info
         </CardTitle>
         {!isEditing ? (
-          <button onClick={() => setIsEditing(true)}>
-            <Edit size={16} color="grey" />
-          </button>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={() => setIsEditing(true)}>
+                  <Edit size={16} color="grey" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="bg-gray-500 text-gray-100">
+                <p className="text-sm">Edit </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         ) : (
-          <button onClick={form.handleSubmit(onSubmit)}>
-            <Save size={16} color="grey" />
-          </button>
+          <div className="flex items-center gap-2">
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button onClick={() => setIsEditing(false)}>
+                    <X
+                      size={18}
+                      color="grey"
+                      className="hover:stroke-red-700"
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-gray-500 text-gray-100">
+                  <p className="text-sm">Cancel </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button onClick={form.handleSubmit(onSubmit)}>
+                    <Save size={16} color="grey" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-gray-500 text-gray-100">
+                  <p className="text-sm">Save </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         )}
       </CardHeader>
       <CardContent className="max-md:px-2 pb-8 mt-4">
@@ -261,6 +302,7 @@ const LeadProfileAdditionalDetails = () => {
                         placeholder="Enter interest"
                         {...field}
                         className="w-full disabled:cursor-default"
+                        rows={8}
                       />
                     </FormControl>
                     <FormMessage />
@@ -272,7 +314,7 @@ const LeadProfileAdditionalDetails = () => {
         </Form>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default LeadProfileAdditionalDetails;
+export default LeadProfileAdditionalDetails
