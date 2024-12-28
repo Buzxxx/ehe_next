@@ -20,7 +20,7 @@ import {
 import { paths } from "../../urls";
 import { Lead } from "@/components/lead/features/leadObject";
 
-import { formatDate } from "@/utility/formatDate";
+import { formatDate } from "@/lib/formatDate";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useLeadSave } from "../../hooks/useLeadSave";

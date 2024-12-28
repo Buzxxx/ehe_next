@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { WhatsAppOutline, Phone, Bookmark } from "@/components/ui/icons";
-import { formatDate } from "@/utility/formatDate";
+import { formatDate } from "@/lib/formatDate";
 import { Lead } from "@/components/lead/features/leadObject";
 import Avataar from "../leadPage/avataar";
 import Link from "next/link";

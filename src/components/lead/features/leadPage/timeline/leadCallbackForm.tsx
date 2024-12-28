@@ -1,16 +1,24 @@
-import React, { SetStateAction, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/dashboard/ui/customFormField";
 import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
-import { LeadCallbackFormValidation } from "@/lib/validation";
 import { useToast } from "@/components/ui/use-toast";
 import OverlayLoading from "@/components/ui/overlayLoading";
 import { Spinner } from "@/components/ui/icons";
-import { formatDate } from "@/utility/formatDate";
+import { formatDate } from "@/lib/formatDate";
+
+// Define validation schema directly in the component
+const LeadCallbackFormSchema = z.object({
+  id: z.string(),
+  date: z.date(),
+  description: z.string().optional(),
+});
+
+type LeadCallbackFormData = z.infer<typeof LeadCallbackFormSchema>;
 
 const LeadCallbackForm = ({
   id,
@@ -21,16 +29,17 @@ const LeadCallbackForm = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof LeadCallbackFormValidation>>({
-    resolver: zodResolver(LeadCallbackFormValidation),
+
+  const form = useForm<LeadCallbackFormData>({
+    resolver: zodResolver(LeadCallbackFormSchema),
     defaultValues: {
       id: id,
-      date: new Date(Date.now()),
+      date: new Date(),
       description: "",
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof LeadCallbackFormValidation>) => {
+  const onSubmit = async (data: LeadCallbackFormData) => {
     setIsLoading(true);
     console.log({ ...data, id });
     setTimeout(() => {
@@ -46,7 +55,7 @@ const LeadCallbackForm = ({
     <div className="form-wrapper py-2 max-md:px-4">
       {isLoading ? (
         <OverlayLoading>
-          <Spinner className="w-8 h-8 md:w-14 md:h-16 "></Spinner>
+          <Spinner className="w-8 h-8 md:w-14 md:h-16" />
         </OverlayLoading>
       ) : null}
       <Form {...form}>
@@ -64,26 +73,17 @@ const LeadCallbackForm = ({
             placeholder="dd-mm-yyyy h:mm"
             dateFormat="dd-MM-yyyy h:mm aa"
           />
-
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="description"
             label="Description"
             placeholder="Add a description (if required)"
-          ></CustomFormField>
+          />
           <div className="flex gap-2 justify-end">
-            {/* <Button
-              type="button"
-              onClick={() => form.reset()}
-              className=" text-slate-800 bg-transparent border border-slate-600 hover:border-slate-900 hover:text-slate-900"
-            >
-              Reset All
-            </Button> */}
-
             <Button
               type="submit"
-              className=" bg-sky-600 border border-sky-600 text-white hover:bg-sky-500"
+              className="bg-sky-600 border border-sky-600 text-white hover:bg-sky-500"
             >
               Set a callback
             </Button>

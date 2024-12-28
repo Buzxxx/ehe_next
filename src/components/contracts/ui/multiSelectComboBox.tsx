@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "@/components/ui/icons"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "@/components/ui/icons";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -11,28 +11,27 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import SelectionDisplayBox from "./selectionDisplayBox"
-import Image from "next/image"
+} from "@/components/ui/popover";
+import SelectionDisplayBox from "./selectionDisplayBox";
+import Image from "next/image";
 
-import styles from "@/app/contracts/contract.module.css"
-import { getDisplayName, toCamelCase } from "../features/contractsObject"
-import { shimmer, toBase64 } from "@/utility/generateBlur"
-
+import styles from "@/app/contracts/contract.module.css";
+import { getDisplayName, toCamelCase } from "../features/contractsObject";
+import { shimmer, toBase64 } from "@/components/ui/generateBlur";
 
 interface MultiSelectComboboxProps {
-  title: string
-  description: string
-  imagePath: string
-  inputType?: "singleSelect" | "multiSelect" | string
-  choices: {id: number; name: string}[]
-  selectedItems: number[]
-  onSelectItems: (selectedItems: number[]) => void
+  title: string;
+  description: string;
+  imagePath: string;
+  inputType?: "singleSelect" | "multiSelect" | string;
+  choices: { id: number; name: string }[];
+  selectedItems: number[];
+  onSelectItems: (selectedItems: number[]) => void;
 }
 
 export function MultiSelectCombobox({
@@ -44,7 +43,7 @@ export function MultiSelectCombobox({
   selectedItems,
   onSelectItems,
 }: MultiSelectComboboxProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   /**
    * Handles the selection of an item. If the item is already selected, removes it from the selected items array.
@@ -53,21 +52,21 @@ export function MultiSelectCombobox({
    */
   const handleSelectItem = React.useCallback(
     (id: number) => {
-      let updatedItems = []
+      let updatedItems = [];
 
       if (inputType === "singleSelect") {
-        updatedItems = [id] // Only keep the current item for singleSelect
-        setOpen(false) // Close the dropdown after selecting
+        updatedItems = [id]; // Only keep the current item for singleSelect
+        setOpen(false); // Close the dropdown after selecting
       } else {
         updatedItems = selectedItems.includes(id)
           ? selectedItems.filter((selectedItem) => selectedItem !== id)
-          : [...selectedItems, id]
+          : [...selectedItems, id];
       }
 
-      onSelectItems(updatedItems)
+      onSelectItems(updatedItems);
     },
     [inputType, selectedItems, onSelectItems]
-  )
+  );
 
   /**
    * Handles the removal of a selected item from the `selectedItems` array.
@@ -75,10 +74,10 @@ export function MultiSelectCombobox({
    */
   const handleRemoveItem = React.useCallback(
     (id: number): void => {
-      onSelectItems(selectedItems.filter((i) => i !== id))
+      onSelectItems(selectedItems.filter((i) => i !== id));
     },
     [selectedItems, onSelectItems]
-  )
+  );
 
   return (
     <div
@@ -145,7 +144,7 @@ export function MultiSelectCombobox({
                       key={choice.id}
                       value={getDisplayName(title, choice.id)}
                       onSelect={() => {
-                        handleSelectItem(choice.id)
+                        handleSelectItem(choice.id);
                       }}
                     >
                       <Check
@@ -172,5 +171,5 @@ export function MultiSelectCombobox({
         />
       </div>
     </div>
-  )
+  );
 }

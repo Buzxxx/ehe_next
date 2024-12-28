@@ -1,7 +1,7 @@
 // PropertyFormUI.tsx
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,18 +9,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
-import { UseFormReturn } from "react-hook-form"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
+import { UseFormReturn } from "react-hook-form";
 
 interface PropertyFormUIProps {
-  form: UseFormReturn<any>
-  onSubmit: (values: any) => void
-  bgClassName?: string
-  formClassName?: string
-  showQuestionField?: boolean
+  form: UseFormReturn<any>;
+  onSubmit: (values: any) => void;
+  bgClassName?: string;
+  formClassName?: string;
+  showQuestionField?: boolean;
 }
 
 const PropertyFormUI: React.FC<PropertyFormUIProps> = ({
@@ -122,6 +122,6 @@ const PropertyFormUI: React.FC<PropertyFormUIProps> = ({
       </form>
     </div>
   </Form>
-)
+);
 
-export default PropertyFormUI
+export default PropertyFormUI;

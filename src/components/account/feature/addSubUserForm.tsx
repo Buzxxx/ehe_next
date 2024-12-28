@@ -1,10 +1,10 @@
 // components/EmployeeForm.tsx
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import React, { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -13,54 +13,52 @@ import {
   FormControl,
   FormMessage,
   FormDescription,
-} from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Plus, Trash } from "lucide-react"
+} from "@/components/ui/select";
+import { Plus, Trash } from "lucide-react";
 
-import { Employee } from "./employeeColumn"
-import { CalendarIcon } from "lucide-react"
+import { Employee } from "./employeeColumn";
+import { CalendarIcon } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { format } from "date-fns"
-import { cn } from "@/lib/utils"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
 
 // Zod Schema for Employee Validation
 const employeeSchema = z.object({
   name: z.string().min(1, "First name is required"),
   surname: z.string().min(1, "Surname is required"),
-  phoneNumber: z
-    .string()
-    .min(10, "Phone number must be at least 10 digits"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
   email: z.string().email("Enter a valid email address"),
   location: z.string().min(1, "Location is required"),
   manager: z.string().optional(),
   role: z.string().min(1, "Role is required"),
   dob: z.date().optional(),
   aliasNames: z.array(z.string().min(1, "Alias cannot be empty")).optional(),
-})
+});
 
-type EmployeeFormValues = z.infer<typeof employeeSchema>
+type EmployeeFormValues = z.infer<typeof employeeSchema>;
 
 export default function AddSubUserForm({
   onAddEmployee,
 }: {
-  onAddEmployee: (newEmployee: Employee) => void
+  onAddEmployee: (newEmployee: Employee) => void;
 }) {
-  const [aliasNames, setAliasNames] = useState<string[]>([""])
+  const [aliasNames, setAliasNames] = useState<string[]>([""]);
   const form = useForm<EmployeeFormValues>({
     resolver: zodResolver(employeeSchema),
     defaultValues: {
@@ -74,16 +72,16 @@ export default function AddSubUserForm({
       dob: undefined,
       aliasNames: [""],
     },
-  })
+  });
 
-  const addAliasName = () => setAliasNames([...aliasNames, ""])
+  const addAliasName = () => setAliasNames([...aliasNames, ""]);
   const removeAliasName = (index: number) => {
-    setAliasNames(aliasNames.filter((_, i) => i !== index))
+    setAliasNames(aliasNames.filter((_, i) => i !== index));
     form.setValue(
       "aliasNames",
       form.getValues("aliasNames")?.filter((_, i) => i !== index)
-    )
-  }
+    );
+  };
 
   const onSubmit = (data: EmployeeFormValues) => {
     const newEmployee: Employee = {
@@ -95,9 +93,9 @@ export default function AddSubUserForm({
       teamId: 1, // Adjust as needed
       role: data.role,
       date_joined: new Date().toISOString().split("T")[0],
-    }
-    onAddEmployee(newEmployee)
-  }
+    };
+    onAddEmployee(newEmployee);
+  };
 
   return (
     <Form {...form}>
@@ -326,5 +324,5 @@ export default function AddSubUserForm({
         </Button>
       </form>
     </Form>
-  )
+  );
 }

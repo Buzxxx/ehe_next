@@ -58,6 +58,25 @@ const LeadProfileAdditionalDetails = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
+    const hasFormDataChanged = (data: any, leadProfile: any): boolean => {
+      for (const key in data) {
+        if (
+          data[key]
+            ? String(data[key]).toLowerCase()
+            : "" !== leadProfile[key]
+            ? String(leadProfile[key]).toLowerCase()
+            : ""
+        ) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    if (!hasFormDataChanged(data, leadProfile)) {
+      console.log("No changes made");
+      return;
+    }
     try {
       setIsEditing(false);
       const isLeadSaved = await update_lead_on_server(data);

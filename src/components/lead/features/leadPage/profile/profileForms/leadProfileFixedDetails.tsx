@@ -1,7 +1,7 @@
 import React from "react";
 import { UserIcon } from "lucide-react";
 import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
-import { formatDate } from "@/utility/formatDate";
+import { formatDate } from "@/lib/formatDate";
 
 const LeadProfileFixedDetails = () => {
   const { leadProfile } = useLeadProfile();
@@ -28,11 +28,15 @@ const LeadProfileFixedDetails = () => {
       </p>
       <p className="mb-1">
         <span className="font-semibold text-gray-700">Created at :</span>{" "}
-        <span className="text-gray-900">{formatDate(leadProfile.created_dt)}</span>
+        <span className="text-gray-900">
+          {formatDate(leadProfile.created_dt)}
+        </span>
       </p>
       <p className="mb-1">
         <span className="font-semibold text-gray-700">Last updated at :</span>{" "}
-        <span className="text-gray-900">{formatDate(leadProfile.last_updated_dt)}</span>
+        <span className="text-gray-900">
+          {formatDate(leadProfile.last_updated_dt)}
+        </span>
       </p>
     </>
   );

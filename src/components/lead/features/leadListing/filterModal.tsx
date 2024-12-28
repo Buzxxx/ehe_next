@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { MultiSelectCombobox } from "../../ui/multiSelectCombobox";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
 import { useSearchParams } from "next/navigation";
 import {
   filter_multiselect_change_controller,
