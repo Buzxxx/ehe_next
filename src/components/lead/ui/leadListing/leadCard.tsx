@@ -24,6 +24,7 @@ import { formatDate } from "@/lib/formatDate";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useLeadSave } from "../../hooks/useLeadSave";
+import Box from "@/components/ui/icons/box";
 
 type LeadCardProps = {
   isSelected: boolean;
@@ -42,13 +43,8 @@ export const LeadCard: React.FC<LeadCardProps> = ({
   return (
     <Card className="bg-white shadow-sm drop-shadow-sm border border-slate-200 text-gray-800 rounded-lg transition hover:shadow-xl md:w-[49%] lg:w-[32.85%] flex flex-col">
       <CardHeader className="flex flex-row items-start justify-between p-4 gap-3 space-y-0">
-        <div className="flex gap-2 items-center rounded-sm border p-1 ">
-          <Image
-            src={"/lead/99acres.svg"}
-            height={16}
-            width={16}
-            alt="Company placeholder logo"
-          />
+        <div className="flex gap-1 items-center rounded-sm border p-1 px-2 ">
+          <Box size={18} />
           <span className="text-xs font-medium opac">
             {lead.source ?? "Unknown source"}
           </span>
