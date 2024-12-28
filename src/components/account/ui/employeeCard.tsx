@@ -1,32 +1,32 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Avataar from "@/components/dashboard/ui/avataar"
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Avataar from "@/components/dashboard/ui/avataar";
 
 import {
   Phone,
   WhatsAppOutline,
   PersonIcon,
   CalendarIcon,
-} from "@/components/ui/icons"
+} from "@/components/ui/icons";
 
-import { formatDate } from "@/utility/formatDate"
-import { Badge } from "@/components/ui/badge"
-import { Employee } from "../feature/employeeColumn"
-import React from "react"
+import { formatDate } from "@/lib/formatDate";
+import { Badge } from "@/components/ui/badge";
+import { Employee } from "../feature/employeeColumn";
+import React from "react";
 
 type EmployeeCardProps = {
-  location: string
-  employee: Employee
-  onResetPassword: () => void
-  onDeactivateUser: () => void
-}
+  location: string;
+  employee: Employee;
+  onResetPassword: () => void;
+  onDeactivateUser: () => void;
+};
 
 export const EmployeeCard = React.memo(
   ({
@@ -114,9 +114,9 @@ export const EmployeeCard = React.memo(
           </div>
         </CardFooter>
       </Card>
-    )
+    );
   }
-)
+);
 
 // Add display name for debugging
-EmployeeCard.displayName = "EmployeeCard"
+EmployeeCard.displayName = "EmployeeCard";

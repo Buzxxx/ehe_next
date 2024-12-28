@@ -61,7 +61,18 @@ const LeadProfileDetails = forwardRef<
   }, [leadProfile, form]);
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log(data);
+    const hasFormDataChanged = (data: any, leadProfile: any): boolean => {
+      for (const key in data) {
+        if (data[key] !== leadProfile[key]) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    if (!hasFormDataChanged(data, leadProfile)) {
+      return;
+    }
     try {
       const isLeadSaved = await update_lead_on_server(data);
       if (isLeadSaved) {

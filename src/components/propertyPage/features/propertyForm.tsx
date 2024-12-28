@@ -1,12 +1,12 @@
 // PropertyForm.tsx
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import PropertyFormUI from "../ui/propertyFormUI"
-import { cn } from "@/lib/utils"
-import { useToast } from "@/components/ui/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import PropertyFormUI from "../ui/propertyFormUI";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
+import { useToast } from "@/components/ui/use-toast";
 
 // Define the form schema
 const formSchema = z.object({
@@ -20,7 +20,7 @@ const formSchema = z.object({
     .min(10, { message: "Phone number must be at least 10 digits." })
     .max(13, "Phone number should not exceed 13 digits."),
   question: z.string().optional(), // Make it optional
-})
+});
 
 const PropertyForm = ({
   bgClassName,
@@ -30,14 +30,14 @@ const PropertyForm = ({
   onSuccess,
   showQuestionField = false, // Add new prop here
 }: {
-  bgClassName?: string
-  wrapperClassName?: string
-  title?: string
-  formClassName?: string
-  onSuccess?: () => void
-  showQuestionField?: boolean // New prop type
+  bgClassName?: string;
+  wrapperClassName?: string;
+  title?: string;
+  formClassName?: string;
+  onSuccess?: () => void;
+  showQuestionField?: boolean; // New prop type
 }) => {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   // Initialize form with validation
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,31 +47,31 @@ const PropertyForm = ({
       email: "",
       phone: "",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log("Submitting values:", values)
+      console.log("Submitting values:", values);
       // Simulate an async API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Show success toast
       toast({
         title: "Success",
         description: "Your inquiry has been submitted successfully!",
         className: "bg-green-500 text-white",
-      })
-      form.reset()
-      onSuccess?.()
+      });
+      form.reset();
+      onSuccess?.();
     } catch (error) {
-      console.error("Submission failed:", error)
+      console.error("Submission failed:", error);
 
       // Show failure toast
       toast({
         title: "Error",
         description: "Failed to submit the form. Please try again.",
         className: "bg-red-500 text-white",
-      })
+      });
     }
   }
 
@@ -88,7 +88,7 @@ const PropertyForm = ({
         showQuestionField={showQuestionField} // Pass prop down to UI component
       />
     </div>
-  )
-}
+  );
+};
 
-export default PropertyForm
+export default PropertyForm;

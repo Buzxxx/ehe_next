@@ -1,6 +1,6 @@
-import * as React from "react"
-import { Check } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
 import {
   Command,
   CommandEmpty,
@@ -8,12 +8,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 
 interface MultiSelectComboboxProps {
-  items: { value: string; label: string }[]
-  selectedValues: number[]
-  onSelectionChange: (selected: number[]) => void
+  items: { value: string; label: string }[];
+  selectedValues: number[];
+  onSelectionChange: (selected: number[]) => void;
 }
 
 export function MultiSelectCombobox({
@@ -24,11 +24,11 @@ export function MultiSelectCombobox({
   const handleSelect = (value: string) => {
     const updatedSelectedValues = selectedValues.includes(parseInt(value))
       ? selectedValues.filter((v) => v !== parseInt(value)) // Remove if already selected
-      : [...selectedValues, parseInt(value)] // Add if not selected
+      : [...selectedValues, parseInt(value)]; // Add if not selected
 
     // Call the parent function with the updated selection
-    onSelectionChange(updatedSelectedValues)
-  }
+    onSelectionChange(updatedSelectedValues);
+  };
 
   return (
     <Command className="border rounded-md">
@@ -56,5 +56,5 @@ export function MultiSelectCombobox({
         </CommandGroup>
       </CommandList>
     </Command>
-  )
+  );
 }

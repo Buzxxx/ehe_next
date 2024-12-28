@@ -1,12 +1,23 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import React, { useState } from "react"
-import { leadShareValidation } from "@/lib/validation"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import React, { useState } from "react";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
+
+const leadShareValidation = z.object({
+  from: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters"),
+  to: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters"),
+  crm: z.string(),
+});
 
 const LeadSharePage = () => {
   const form = useForm<z.infer<typeof leadShareValidation>>({
@@ -16,7 +27,7 @@ const LeadSharePage = () => {
       to: "",
       crm: "",
     },
-  })
+  });
 
   // 2. Define a submit handler.
   async function onSubmit({
@@ -24,19 +35,19 @@ const LeadSharePage = () => {
     to,
     crm,
   }: z.infer<typeof leadShareValidation>) {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const userData = {
         from,
         to,
         crm,
-      }
+      };
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Form {...form}>
@@ -64,7 +75,7 @@ const LeadSharePage = () => {
         />
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default LeadSharePage
+export default LeadSharePage;
