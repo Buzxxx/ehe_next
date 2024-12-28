@@ -67,7 +67,7 @@ const LeadProfile = () => {
             </CardContent>
           </Card>
           <Card className="md:mb-4 shadow-none">
-            <CardContent className="py-4 px-6 text-sm">
+            <CardContent className="py-4 px-6  text-sm md:text-xs">
               <LeadProfileFixedDetails />
             </CardContent>
           </Card>
