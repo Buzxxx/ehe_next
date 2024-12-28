@@ -77,12 +77,10 @@ const TimelineForm = () => {
 
         if (statusListResponse) {
           setStatusList(statusListResponse.statusList);
-          console.log("Fetched status list successfully.");
         }
 
         if (employeeListResponse) {
           setUsers(employeeListResponse);
-          console.log("Fetched user list successfully.");
         }
 
         if (leadProfile) {
@@ -93,7 +91,6 @@ const TimelineForm = () => {
             priority: leadProfile?.priority || "",
             description: "",
           });
-          console.log("Form reset with lead profile data.");
         }
       } catch (error) {
         console.error("Error during fetch:", error);
@@ -107,7 +104,6 @@ const TimelineForm = () => {
         setIsLoading(false);
       }
     };
-    console.log("leadProfile is - ", leadProfile);
     if (leadProfile && leadProfile.id && leadProfile.id !== DefaultLead.id) {
       fetchData();
     }
