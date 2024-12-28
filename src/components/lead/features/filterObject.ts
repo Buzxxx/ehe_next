@@ -1,7 +1,5 @@
-import update_url from "@/utility/updateUrl";
 import { apiPaths } from "../urls";
 import apiClient from "@/apiServices/apiClient";
-import { getCookie } from "@/cookies/cookiesService";
 
 type FilterOption = {
   name: string;
@@ -67,7 +65,7 @@ export function filter_multiselect_change_controller(
   const serializedObj = covert_filterByObj_to_string(obj);
   params.set("filter_by", serializedObj);
   const finalUrl = encodeUrlParameters(params);
-  update_url(finalUrl);
+  history.replaceState(null, "", finalUrl);
 }
 
 // Reads FilterBy obj and return string

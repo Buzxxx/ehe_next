@@ -1,7 +1,6 @@
 import apiClient from "@/apiServices/apiClient";
 import { apiPaths } from "../urls";
 import { encodeUrlParameters } from "./filterObject";
-import update_url from "@/utility/updateUrl";
 
 export interface individualLead {
   phone?: string;
@@ -104,7 +103,7 @@ export const DefaultLead: Lead = {
   source_assigned: "None",
 };
 
-const DEFAULTURL = "?page=1&per_page=20";
+export const DEFAULTURL = "?page=1&per_page=20";
 
 export async function lead_listing_controller(params: URLSearchParams) {
   if (params.keys().next().value) {
@@ -112,7 +111,7 @@ export async function lead_listing_controller(params: URLSearchParams) {
     const leads = await get_leads_from_server(urlParams);
     return leads;
   } else {
-    update_url(DEFAULTURL);
+    history.replaceState(null, "", DEFAULTURL);
     return [];
   }
 }

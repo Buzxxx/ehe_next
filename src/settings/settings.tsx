@@ -35,3 +35,11 @@ const Servers = {
 };
 
 export default Servers;
+
+// Common breakpoints (in pixels) - useResponsive.ts library
+export const SCREEN_SIZES = {
+  mobile: 768,
+  tablet: 1024,
+  laptop: 1440,
+  desktop: Infinity,
+};

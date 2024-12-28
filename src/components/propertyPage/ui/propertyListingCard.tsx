@@ -1,19 +1,19 @@
-import React from "react"
-import { Button } from "@/components/ui/button" // Assuming you have a button component
-import Image from "next/image"
+import React from "react";
+import { Button } from "@/components/ui/button"; // Assuming you have a button component
+import Image from "next/image";
 
-import { Bath, MapPin, Bed, SetSquare } from "@/components/ui/icons"
-import { shimmer, toBase64 } from "@/utility/generateBlur"
+import { Bath, MapPin, Bed, SetSquare } from "@/components/ui/icons";
+import { shimmer, toBase64 } from "@/components/ui/generateBlur";
 
 interface Property {
-  title: string
-  location: string
-  price: string
-  beds: number
-  baths: number
-  size: string
-  status?: string
-  image: string
+  title: string;
+  location: string;
+  price: string;
+  beds: number;
+  baths: number;
+  size: string;
+  status?: string;
+  image: string;
 }
 
 const PropertyListingCard = ({ property }: { property: Property }) => {
@@ -62,7 +62,7 @@ const PropertyListingCard = ({ property }: { property: Property }) => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PropertyListingCard
+export default PropertyListingCard;

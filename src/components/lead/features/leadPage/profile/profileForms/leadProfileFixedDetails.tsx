@@ -1,15 +1,15 @@
-import React from "react"
-import { UserIcon } from "lucide-react"
-import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext"
-import { formatDate } from "@/utility/formatDate"
-import { Badge } from "@/components/ui/badge"
-import { DotIcon } from "@/components/ui/icons"
-import Box from "@/components/ui/icons/box"
-import FireColored from "@/components/ui/icons/fireColored"
-import IceColored from "@/components/ui/icons/iceColored"
+import { formatDate } from "@/lib/formatDate";
+import React from "react";
+import { UserIcon } from "lucide-react";
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
+import { Badge } from "@/components/ui/badge";
+import { DotIcon } from "@/components/ui/icons";
+import Box from "@/components/ui/icons/box";
+import FireColored from "@/components/ui/icons/fireColored";
+import IceColored from "@/components/ui/icons/iceColored";
 
 const LeadProfileFixedDetails = () => {
-  const { leadProfile } = useLeadProfile()
+  const { leadProfile } = useLeadProfile();
   return (
     <>
       <p className="mb-2">
@@ -64,7 +64,7 @@ const LeadProfileFixedDetails = () => {
         </span>
       </p>
     </>
-  )
-}
+  );
+};
 
-export default LeadProfileFixedDetails
+export default LeadProfileFixedDetails;

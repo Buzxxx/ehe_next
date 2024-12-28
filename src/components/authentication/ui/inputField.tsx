@@ -2,28 +2,28 @@
  * @path src/components/authentication/ui/inputField.tsx
  */
 
-"use client"
-import { useState } from "react"
+"use client";
+import { useState } from "react";
 import {
   FormControl,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { UseFormRegisterReturn } from "react-hook-form"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-import ClosedEye from "@/components/ui/icons/closedEye"
-import OpenEye from "@/components/ui/icons/openEye"
-import { cn } from "@/lib/utils"
+import ClosedEye from "@/components/ui/icons/closedEye";
+import OpenEye from "@/components/ui/icons/openEye";
+import { cn } from "@/lib/tailwindClassnameMergeLib";
 
 interface InputFieldProps {
-  label?: string
-  placeholder: string
-  field: UseFormRegisterReturn
-  isPassword?: boolean
-  className?: string
-  icon?: React.ReactNode
+  label?: string;
+  placeholder: string;
+  field: UseFormRegisterReturn;
+  isPassword?: boolean;
+  className?: string;
+  icon?: React.ReactNode;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -34,11 +34,11 @@ const InputField: React.FC<InputFieldProps> = ({
   className,
   icon,
 }) => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const toggleVisibility = () => {
-    setVisible((prev) => !prev)
-  }
+    setVisible((prev) => !prev);
+  };
 
   return (
     <FormItem>
@@ -81,7 +81,7 @@ const InputField: React.FC<InputFieldProps> = ({
       </FormControl>
       <FormMessage />
     </FormItem>
-  )
-}
+  );
+};
 
-export default InputField
+export default InputField;

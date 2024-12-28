@@ -2,38 +2,44 @@
  * @path src/components/lead/features/forms/leadReassignForm.tsx
  */
 
-import CustomFormField from "@/components/dashboard/ui/customFormField"
-import { LeadReassignFormSchema } from "@/lib/validation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import React from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import { FormFieldType } from "@/components/dashboard/library/formFieldEnum"
-import { Button } from "@/components/ui/button"
-import { SelectItem } from "@/components/ui/select"
-import { useToast } from "@/components/ui/use-toast"
+import CustomFormField from "@/components/dashboard/ui/customFormField";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { FormFieldType } from "@/components/dashboard/library/formFieldEnum";
+import { Button } from "@/components/ui/button";
+import { SelectItem } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+
+const LeadReassignFormSchema = z.object({
+  assignTo: z.string().min(1, "Please select a user"),
+});
 
 interface LeadReassignFormProps {
-  leadIds: number[]
-  setShowLeadReassignModal: React.Dispatch<React.SetStateAction<boolean>>
+  leadIds: number[];
+  setShowLeadReassignModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds, setShowLeadReassignModal })=> {
+const LeadReassignForm: React.FC<LeadReassignFormProps> = ({
+  leadIds,
+  setShowLeadReassignModal,
+}) => {
   const form = useForm<z.infer<typeof LeadReassignFormSchema>>({
     resolver: zodResolver(LeadReassignFormSchema),
-  })
-  const {toast} = useToast()
+  });
+  const { toast } = useToast();
 
   const onSubmit = async (data: z.infer<typeof LeadReassignFormSchema>) => {
-    console.log(data, leadIds)
-    setShowLeadReassignModal(() => false)
+    console.log(data, leadIds);
+    setShowLeadReassignModal(() => false);
     toast({
       title: `Lead: ${leadIds} reassigned to ${data.assignTo}`,
-      className: 'bg-green-400 text-white'
-    })
-  }
+      className: "bg-green-400 text-white",
+    });
+  };
 
-  const users = Array.from({ length: 5 }, (_, i) => `User ${i + 1}`)
+  const users = Array.from({ length: 5 }, (_, i) => `User ${i + 1}`);
 
   return (
     <Form {...form}>
@@ -70,7 +76,7 @@ const LeadReassignForm: React.FC<LeadReassignFormProps> = ({ leadIds, setShowLea
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default LeadReassignForm
+export default LeadReassignForm;
