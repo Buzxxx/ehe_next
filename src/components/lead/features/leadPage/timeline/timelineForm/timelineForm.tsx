@@ -6,8 +6,13 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
-import { get_lead_status_controller } from "../../statusObject";
-import { set_timeline_controller } from "../../timelineObject";
+import { get_lead_status_controller } from "@/components/lead/features/statusObject";
+import { set_timeline_controller } from "@/components/lead/features/timelineObject";
+import { get_all_active_employee_list_controller } from "@/components/lead/features/userObject";
+import {
+  set_lead_status_priority_on_server,
+  DefaultLead,
+} from "@/components/lead/features/leadObject";
 import {
   Select,
   SelectContent,
@@ -24,8 +29,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { set_lead_status_priority_on_server } from "../../leadObject";
-import { get_all_active_employee_list_controller } from "@/components/lead/features/userObject";
 
 export const TimelineFormSchema = z.object({
   id: z.string(),
@@ -61,19 +64,25 @@ const TimelineForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
-        // Fetch status list if it's not already available
-        if (!statusList || statusList.length === 0) {
-          const statusListResponse = await get_lead_status_controller();
+        setIsLoading(true);
+        const [statusListResponse, employeeListResponse] = await Promise.all([
+          !statusList || statusList.length === 0
+            ? get_lead_status_controller()
+            : Promise.resolve(null),
+          !users || users.length === 0
+            ? get_all_active_employee_list_controller()
+            : Promise.resolve(null),
+        ]);
+
+        if (statusListResponse) {
           setStatusList(statusListResponse.statusList);
-          console.log("called status");
         }
-        const employeeListResponse =
-          await get_all_active_employee_list_controller();
-        setUsers(employeeListResponse);
-        console.log("called users");
-        // Fetch profile data after status list is set or already available
+
+        if (employeeListResponse) {
+          setUsers(employeeListResponse);
+        }
+
         if (leadProfile) {
           form.reset({
             id: leadProfile?.id?.toString() || "",
@@ -87,15 +96,18 @@ const TimelineForm = () => {
         console.error("Error during fetch:", error);
         toast({
           title: "Error",
-          description: "Failed to load profile or status data.",
+          description:
+            "Failed to load profile or status data. Please try again later.",
+          variant: "destructive",
         });
       } finally {
         setIsLoading(false);
       }
     };
-
-    fetchData();
-  }, [leadProfile, form, statusList, setStatusList, toast]);
+    if (leadProfile && leadProfile.id && leadProfile.id !== DefaultLead.id) {
+      fetchData();
+    }
+  }, [leadProfile]);
 
   const onSubmit = async (data: {
     status: string;
@@ -104,12 +116,10 @@ const TimelineForm = () => {
     description: string;
   }) => {
     setIsLoading(true);
-    // Save data on server
     const isLeadSaved = await set_lead_status_priority_on_server(data);
     const isTimelineUpdated = await set_timeline_controller(data);
     if (isLeadSaved && isTimelineUpdated) {
       try {
-        // Update lead profile locally
         setLeadProfile((prev) => {
           const matchedStatus = statusList.find(
             (item) => item.id.toString() === data.status
@@ -127,10 +137,10 @@ const TimelineForm = () => {
               : { id: "default-id", status: "Unknown" },
             assigned_to: matchedUser
               ? {
-                  id: Number(matchedUser.id), // Convert id to number
+                  id: Number(matchedUser.id),
                   name: matchedUser.name,
                 }
-              : { id: 0, name: "Unknown" }, // Default id as number
+              : { id: 0, name: "Unknown" },
             priority: data.priority,
           };
         });
@@ -290,4 +300,4 @@ const TimelineForm = () => {
   );
 };
 
-export default TimelineForm;
+export default React.memo(TimelineForm);

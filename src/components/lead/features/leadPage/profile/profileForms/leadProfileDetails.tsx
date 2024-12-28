@@ -1,7 +1,7 @@
-import React, { forwardRef, useImperativeHandle, useEffect } from "react"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import React, { forwardRef, useImperativeHandle, useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -9,35 +9,35 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext"
-import { useToast } from "@/components/ui/use-toast"
-import { update_lead_on_server } from "../../../leadObject"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
+import { useToast } from "@/components/ui/use-toast";
+import { update_lead_on_server } from "../../../leadObject";
 
 const formSchema = z.object({
   id: z.string().optional(),
   name: z.string().nonempty("Name is required"),
   contact: z.string().nonempty("Contact is required"),
   email: z.string().email("Invalid email address").optional(),
-})
+});
 
-type FormSchemaType = z.infer<typeof formSchema>
+type FormSchemaType = z.infer<typeof formSchema>;
 
 export interface LeadProfileDetailsRef {
-  submit: () => void
+  submit: () => void;
 }
 
 interface LeadProfileDetailsProps {
-  isEditing: boolean
+  isEditing: boolean;
 }
 
 const LeadProfileDetails = forwardRef<
   LeadProfileDetailsRef,
   LeadProfileDetailsProps
 >(({ isEditing }, ref) => {
-  const { leadProfile, setLeadProfile } = useLeadProfile()
-  const { toast } = useToast()
+  const { leadProfile, setLeadProfile } = useLeadProfile();
+  const { toast } = useToast();
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -47,7 +47,7 @@ const LeadProfileDetails = forwardRef<
       email: leadProfile.email || "",
       id: leadProfile.id.toString(),
     },
-  })
+  });
 
   useEffect(() => {
     if (leadProfile) {
@@ -56,14 +56,14 @@ const LeadProfileDetails = forwardRef<
         name: leadProfile?.name || "",
         contact: leadProfile?.contact?.toString() || "",
         email: leadProfile?.email || "",
-      })
+      });
     }
-  }, [leadProfile, form])
+  }, [leadProfile, form]);
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log(data)
+    console.log(data);
     try {
-      const isLeadSaved = await update_lead_on_server(data)
+      const isLeadSaved = await update_lead_on_server(data);
       if (isLeadSaved) {
         setLeadProfile((prev) => ({
           ...prev,
@@ -71,22 +71,22 @@ const LeadProfileDetails = forwardRef<
           name: data.name || prev.name,
           contact: data.contact || prev.contact,
           email: data.email || prev.email,
-        }))
-        toast({ title: "Profile updated successfully!", variant: "success" })
+        }));
+        toast({ title: "Profile updated successfully!", variant: "success" });
       } else {
-        toast({ title: "Error updating database", variant: "destructive" })
+        toast({ title: "Error updating database", variant: "destructive" });
       }
     } catch (error) {
-      console.error("Error updating profile:", error)
-      toast({ title: "An unexpected error occurred", variant: "destructive" })
+      console.error("Error updating profile:", error);
+      toast({ title: "An unexpected error occurred", variant: "destructive" });
     }
-  }
+  };
 
   useImperativeHandle(ref, () => ({
     submit: () => {
-      form.handleSubmit(onSubmit)()
+      form.handleSubmit(onSubmit)();
     },
-  }))
+  }));
 
   return (
     <Form {...form}>
@@ -147,8 +147,8 @@ const LeadProfileDetails = forwardRef<
         />
       </form>
     </Form>
-  )
-})
+  );
+});
 
-LeadProfileDetails.displayName = "LeadProfileDetails"
-export default LeadProfileDetails
+LeadProfileDetails.displayName = "LeadProfileDetails";
+export default LeadProfileDetails;

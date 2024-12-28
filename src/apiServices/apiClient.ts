@@ -46,9 +46,7 @@ const apiClient = async (
     }
   } catch (error: any) {
     console.error("API Client error:", error);
-
-    // Re-throw the error to let the calling function handle it
-    throw new Error(error.message || "An unknown error occurred");
+    console.error("API Client error message:", error.message);
   }
 };
 

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -9,17 +9,16 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext"
-import { update_lead_on_server } from "@/components/lead/features/leadObject"
-import { useToast } from "@/components/ui/use-toast"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Edit, Save } from "lucide-react"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
+import { update_lead_on_server } from "@/components/lead/features/leadObject";
+import { useToast } from "@/components/ui/use-toast";
+import { Edit } from "@/components/ui/icons";
+import { Save } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Define Zod schema
 const formSchema = z.object({
   id: z.string().optional(),
   lead_type: z.string().optional(),
@@ -29,12 +28,12 @@ const formSchema = z.object({
   product_code: z.string().optional(),
   product_type: z.string().optional(),
   query: z.string().optional(),
-})
+});
 
 const LeadProfileAdditionalDetails = () => {
-  const { leadProfile, setLeadProfile } = useLeadProfile()
-  const [isEditing, setIsEditing] = useState(false)
-  const { toast } = useToast()
+  const { leadProfile, setLeadProfile } = useLeadProfile();
+  const [isEditing, setIsEditing] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -48,25 +47,22 @@ const LeadProfileAdditionalDetails = () => {
       query: leadProfile.query || "",
       id: leadProfile.id.toString(),
     },
-  })
+  });
 
   useEffect(() => {
     if (leadProfile) {
       form.reset({
         id: leadProfile?.id?.toString() || "",
-      })
+      });
     }
-  }, [])
+  }, []);
 
-  // Submit handler
   const onSubmit = async (data: any) => {
-    console.log(data) // `id` will be included here
     try {
-      setIsEditing(false)
-      const isLeadSaved = await update_lead_on_server(data)
+      setIsEditing(false);
+      const isLeadSaved = await update_lead_on_server(data);
 
       if (isLeadSaved) {
-        // Update lead profile locally
         setLeadProfile((prev) => ({
           ...prev,
           id: data.id || prev.id,
@@ -78,24 +74,24 @@ const LeadProfileAdditionalDetails = () => {
           product_code: data.product_code || prev.product_code,
           product_type: data.product_type || prev.product_type,
           query: data.query || prev.query,
-        }))
-        toast({ title: "Profile updated successfully!", variant: "success" })
+        }));
+        toast({ title: "Profile updated successfully!", variant: "success" });
       } else {
-        setIsEditing(false)
+        setIsEditing(false);
         toast({
           title: "Error updating database, please contact your Admin",
           variant: "destructive",
-        })
+        });
       }
     } catch (error) {
-      console.error("Error updating profile:", error)
+      console.error("Error updating profile:", error);
       toast({
         title: "An unexpected error occurred",
         variant: "destructive",
-      })
-      setIsEditing(false)
+      });
+      setIsEditing(false);
     }
-  }
+  };
 
   return (
     <Card>
@@ -276,7 +272,7 @@ const LeadProfileAdditionalDetails = () => {
         </Form>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default LeadProfileAdditionalDetails
+export default LeadProfileAdditionalDetails;
