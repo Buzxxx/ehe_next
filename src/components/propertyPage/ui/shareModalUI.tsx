@@ -34,7 +34,7 @@ const ShareModalUI: React.FC<ShareModalUIProps> = ({
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
       </DialogHeader>
-      <DialogDescription className="flex flex-col md:gap-8 gap-4">
+      <div className="flex flex-col md:gap-8 gap-4">
         <div className="flex justify-around mt-4">
           {socials.map((social) => (
             <button
@@ -55,7 +55,7 @@ const ShareModalUI: React.FC<ShareModalUIProps> = ({
             Copy Link
           </Button>
         )}
-      </DialogDescription>
+      </div>
     </DialogContent>
   </Dialog>
 )

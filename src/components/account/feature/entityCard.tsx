@@ -68,10 +68,10 @@ const EntityCard = ({
     locations.slice(3),
   ]
 
-  const handleDeleteConfirm = useCallback(() => {
+  const handleDeleteConfirm = () => {
     setEntities(entities.filter((entity) => entity.id !== id))
-    setShowDeleteModal(false)
-  }, [entities, id, setEntities])
+    setShowDeleteModal(() => false)
+  }
 
   const handleAddLocation = useCallback(
     (newLocation: {
@@ -117,7 +117,9 @@ const EntityCard = ({
       <CardHeader className="flex-row justify-between items-start mb-2 py-4 md:py-6">
         <div className="flex flex-col text-balance flex-1">
           <CardTitle className="md:text-xl text-lg text-gray-600">
-            <Link href={`/account/${name}/${locations[0].location}`}> {name} </Link>
+            <Link href={`/account/${name}/${locations[0].location}`}>
+              {name}
+            </Link>
           </CardTitle>
           <p className="text-sm text-gray-500">{description}</p>
         </div>
