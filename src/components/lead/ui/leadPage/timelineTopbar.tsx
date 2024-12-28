@@ -25,7 +25,7 @@ import LeadCallbackForm from "../../features/leadPage/timeline/leadCallbackForm"
 import LeadMeetingForm from "../../features/leadPage/timeline/leadMeetingForm";
 import React from "react";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import TimelineForm from "../../features/leadPage/timeline/timelineForm";
+import TimelineForm from "../../features/leadPage/timeline/timelineForm/timelineForm";
 import { useLeadProfile } from "@/components/lead/features/leadPage/context/leadProfileContext";
 
 const TimelineTopbar = () => {

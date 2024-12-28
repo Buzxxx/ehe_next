@@ -1,4 +1,4 @@
-import TimelineForm from "@/components/lead/features/leadPage/timeline/timelineForm";
+import TimelineForm from "@/components/lead/features/leadPage/timeline/timelineForm/timelineForm";
 import TimelineContainer from "./timelineContainer";
 import TimelineTopbar from "../../../ui/leadPage/timelineTopbar";
 import { Button } from "@/components/ui/button";

@@ -17,7 +17,6 @@ import { useLeadProfile } from "@/components/lead/features/leadPage/context/lead
 import { update_lead_on_server } from "@/components/lead/features/leadObject";
 import { useToast } from "@/components/ui/use-toast";
 
-// Define Zod schema
 const formSchema = z.object({
   id: z.string().optional(),
   lead_type: z.string().optional(),
@@ -55,14 +54,11 @@ const LeadProfileAdditionalDetails = () => {
     }
   }, []);
 
-  // Submit handler
   const onSubmit = async (data: any) => {
-    console.log(data); // `id` will be included here
     try {
       const isLeadSaved = await update_lead_on_server(data);
 
       if (isLeadSaved) {
-        // Update lead profile locally
         setLeadProfile((prev) => ({
           ...prev,
           id: data.id || prev.id,

@@ -75,7 +75,7 @@ export const DefaultLeadsResponse: LeadsResponse = {
 };
 
 export const DefaultLead: Lead = {
-  id: "",
+  id: "0",
   name: "Default",
   email: "example@gmail.com",
   contact: "+91 9876543210",

@@ -51,12 +51,9 @@ const LeadProfileDetails = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
-    console.log(data); // `id` will be included here
     try {
       const isLeadSaved = await update_lead_on_server(data);
-
       if (isLeadSaved) {
-        // Update lead profile locally
         setLeadProfile((prev) => ({
           ...prev,
           id: data.id || prev.id,
