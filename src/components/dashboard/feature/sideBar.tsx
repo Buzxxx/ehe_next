@@ -30,7 +30,7 @@ const DashboardSideMenu = ({
       variant="floating"
       className={` fixed z-10 top-0 pt-16 left-0  flex flex-col items-center transition-all text-nowrap border-0 `}
     >
-      <SidebarHeader className="text-slate-800 text-left flex flex-col border-b bg-gray-50">
+      <SidebarHeader className="text-slate-800 text-left flex flex-col border-b">
         <Suspense fallback={<ProfileTabSkeleton />}>
           <ProfileTab
             name={name ?? "Unknown User"}
@@ -53,7 +53,7 @@ const DashboardSideMenu = ({
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="bg-gray-50">
+      <SidebarFooter>
         <SideNavMenu items={[dashboardItems[dashboardItems.length - 1]]} />{" "}
       </SidebarFooter>
     </Sidebar>
