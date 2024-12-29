@@ -5,7 +5,7 @@ import React, {
   SetStateAction,
   useCallback,
 } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/ui/icons";
 import { LeadCard } from "@/components/lead/ui/leadListing/leadCard";
 import LeadRow from "@/components/lead/ui/leadListing/leadRow";
@@ -26,36 +26,38 @@ import {
 
 interface LeadListProps {
   viewMode: "card" | "row";
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<SetStateAction<boolean>>;
   setSelectedLeads: React.Dispatch<SetStateAction<number[]>>;
   selectedLeads: number[];
 }
 
 const LeadList: React.FC<LeadListProps> = ({
   viewMode,
-  isLoading,
-  setIsLoading,
   setSelectedLeads,
   selectedLeads,
 }) => {
+  const router = useRouter();
   const URLParams = useSearchParams();
-  const query = URLParams.toString();
   const { toast } = useToast();
 
+  const [query, setQuery] = useState(URLParams.toString());
   const [leads, setLeads] = useState(DefaultLeadsResponse.leads);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    const loadLeads = async (localQuery: string) => {
-      setIsLoading(true);
-      console.log("called Query params:", localQuery);
+    // Only update query when URLParams actually changes
+    const newQuery = URLParams.toString();
+    if (newQuery !== query) {
+      setQuery(newQuery);
+    }
+  }, [URLParams, query]);
+
+  useEffect(() => {
+    const loadLeads = async () => {
+      setIsFetching(true);
       try {
-        setIsFetching(true);
         const result = await lead_listing_controller(
-          new URLSearchParams(localQuery)
+          new URLSearchParams(query)
         );
-        console.log("Leads fetched successfully:", result);
         setLeads(result?.leads || DefaultLeadsResponse.leads);
       } catch (error) {
         console.error("Error fetching leads:", error);
@@ -63,12 +65,15 @@ const LeadList: React.FC<LeadListProps> = ({
         toast({ title: "Error fetching leads.", variant: "destructive" });
       } finally {
         setIsFetching(false);
-        setIsLoading(false);
       }
     };
-    console.log("Query params:", query);
-    loadLeads(query);
-  }, [URLParams, toast, setIsLoading]);
+
+    if (query) {
+      loadLeads();
+    } else {
+      router.push(DEFAULTURL);
+    }
+  }, [query, router, toast]);
 
   const handleToggleLeadSelection = useCallback(
     (id: number) => {
@@ -100,10 +105,10 @@ const LeadList: React.FC<LeadListProps> = ({
   const hasLeads = useMemo(() => leads?.length > 0, [leads]);
 
   return (
-    <div className="w-full relative flex-1 ">
-      {isLoading || isFetching ? (
-        <div className="absolute mt-2 h-full inset-0 flex justify-center items-center bg-gray-200 bg-opacity-30 z-30 rounded-xl">
-          <Spinner className="animate-spin h-10 w-10 text-gray-400 " />
+    <div className="w-full relative flex-1 min-h-screen">
+      {isFetching ? (
+        <div className="absolute inset-0 flex justify-center items-center bg-gray-200 bg-opacity-30 z-30 rounded-xl">
+          <Spinner className="animate-spin h-10 w-10 text-gray-400" />
         </div>
       ) : (
         <div className="pt-2">

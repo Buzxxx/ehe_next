@@ -3,12 +3,12 @@ import { apiPaths } from "../urls";
 import { getCookie } from "@/cookies/cookiesService";
 
 export interface LeadStatus {
-  id: number;
+  id: string;
   status: string;
 }
 
 export const DefaultLeadStatus: LeadStatus = {
-  id: 1,
+  id: "1",
   status: "New",
 };
 
