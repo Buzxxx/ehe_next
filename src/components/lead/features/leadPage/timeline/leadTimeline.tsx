@@ -65,7 +65,7 @@ const LeadTimeLine = () => {
         <TimelineTopbar />
 
         {/* Loading Spinner or Timeline */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto relative">
           <TimelineContainer />
         </div>
       </div>
