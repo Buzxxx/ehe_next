@@ -1,9 +1,4 @@
-/**
- * @path src/components/lead/features/leadListing/topBar.tsx
- * @description TopBar component for the lead listing page
- */
-
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState, Suspense, lazy } from "react";
 import {
   Menubar,
   MenubarContent,
@@ -28,7 +23,9 @@ import {
 } from "@/components/lead/features/leadObject";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import FilterModal from "./filterModal";
+
+// Dynamically import the FilterModal component
+const FilterModal = lazy(() => import("./leadFilter/filterModal"));
 
 interface TopBarProps {
   LeadsResponse: LeadsResponse;
@@ -145,14 +142,15 @@ const TopBar: React.FC<TopBarProps> = ({
             />
           </button>
         </div>
-
-        <FilterModal
-          className={
-            filterVisible
-              ? "translate-x-0 opacity-100"
-              : "translate-x-full opacity-0"
-          }
-        />
+        <Suspense fallback={<div>Loading filter...</div>}>
+          <FilterModal
+            className={
+              filterVisible
+                ? "translate-x-0 opacity-100"
+                : "translate-x-full opacity-0"
+            }
+          />
+        </Suspense>
       </div>
       {/* Full-Page Search Modal */}
       {searchModalVisible && (
