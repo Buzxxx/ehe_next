@@ -75,7 +75,6 @@ const TimelineForm = () => {
             ? get_all_active_employee_list_controller()
             : Promise.resolve(null),
         ]);
-
         if (statusListResponse) {
           setStatusList(statusListResponse);
         }
