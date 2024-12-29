@@ -28,12 +28,16 @@ interface LeadListProps {
   viewMode: "card" | "row";
   setSelectedLeads: React.Dispatch<SetStateAction<number[]>>;
   selectedLeads: number[];
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const LeadList: React.FC<LeadListProps> = ({
   viewMode,
   setSelectedLeads,
   selectedLeads,
+  isLoading,
+  setIsLoading,
 }) => {
   const router = useRouter();
   const URLParams = useSearchParams();
@@ -54,6 +58,7 @@ const LeadList: React.FC<LeadListProps> = ({
   useEffect(() => {
     const loadLeads = async () => {
       setIsFetching(true);
+      setIsLoading(true);
       try {
         const result = await lead_listing_controller(
           new URLSearchParams(query)
@@ -65,6 +70,7 @@ const LeadList: React.FC<LeadListProps> = ({
         toast({ title: "Error fetching leads.", variant: "destructive" });
       } finally {
         setIsFetching(false);
+        setIsLoading(false);
       }
     };
 
@@ -106,7 +112,7 @@ const LeadList: React.FC<LeadListProps> = ({
 
   return (
     <div className="w-full relative flex-1 min-h-screen">
-      {isFetching ? (
+      {isFetching && isLoading ? (
         <div className="absolute inset-0 flex justify-center items-center bg-gray-200 bg-opacity-30 z-30 rounded-xl">
           <Spinner className="animate-spin h-10 w-10 text-gray-400" />
         </div>
