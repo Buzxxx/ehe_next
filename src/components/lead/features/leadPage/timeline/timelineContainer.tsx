@@ -65,9 +65,10 @@ const TimelineContainer = () => {
           variant: "destructive",
           description: "Failed to fetch timeline data.",
         });
-      } finally {
-        setLoading(false);
       }
+      //  finally {
+      //   setLoading(false);
+      // }
     };
     fetchTimeline();
   }, [leadProfile, id, toast]);
@@ -103,9 +104,8 @@ const TimelineContainer = () => {
       const firstEventTop = firstEventRef.current.offsetTop;
       const lastEventTop = lastEventRef.current.offsetTop;
       timelineLineRef.current.style.top = `${firstEventTop}px`;
-      timelineLineRef.current.style.height = `${
-        lastEventTop - firstEventTop
-      }px`;
+      timelineLineRef.current.style.height = `${lastEventTop - firstEventTop
+        }px`;
     }
   }, [
     timelineEvents,
@@ -116,10 +116,10 @@ const TimelineContainer = () => {
   ]);
 
   return (
-    <div>
+    <div className="h-[calc(100%-8rem)] ">
       {loading ? (
-        <div className="flex justify-center items-center h-full">
-          <Spinner className="text-blue-500 w-8 h-8" /> {/* Show Spinner */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Spinner className="text-gray-400 w-8 h-8" /> {/* Show Spinner */}
         </div>
       ) : (
         <TimelineUI
