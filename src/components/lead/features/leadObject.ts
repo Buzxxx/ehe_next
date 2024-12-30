@@ -116,6 +116,16 @@ export async function lead_listing_controller(params: URLSearchParams) {
   }
 }
 
+export async function get_priority_list() {
+  const priorityList = [
+    { id: "cold", value: "Cold" },
+    { id: "warm", value: "Warm" },
+    { id: "hot", value: "Hot" },
+  ];
+
+  return priorityList;
+}
+
 export async function set_lead_status_priority_on_server(data: any) {
   const returnObj = await push_update_lead_to_server(data);
   if (returnObj) {

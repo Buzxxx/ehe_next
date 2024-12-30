@@ -40,17 +40,17 @@ const TimelineContainer = () => {
   const timelineLineRef = useRef<HTMLElement | null>(null);
   const firstEventRef = useRef<HTMLElement | null>(null);
   const lastEventRef = useRef<HTMLElement | null>(null);
-  const [loading, setLoading] = useState<boolean>(false); // New loading state
+  const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const id = leadId?.toString() || "";
 
   useEffect(() => {
     const fetchTimeline = async () => {
-      setLoading(true); // Start loading
+      setLoading(true);
       try {
         const result = await get_timeline_controller(id);
         if (result && Array.isArray(result)) {
-          setTimelineEvents(result.reverse()); // Reverse the events if needed
+          setTimelineEvents(result.reverse());
         } else {
           toast({
             title: "Error fetching timeline",
@@ -65,10 +65,9 @@ const TimelineContainer = () => {
           variant: "destructive",
           description: "Failed to fetch timeline data.",
         });
+      } finally {
+        setLoading(false);
       }
-      //  finally {
-      //   setLoading(false);
-      // }
     };
     fetchTimeline();
   }, [leadProfile, id, toast]);
@@ -104,8 +103,9 @@ const TimelineContainer = () => {
       const firstEventTop = firstEventRef.current.offsetTop;
       const lastEventTop = lastEventRef.current.offsetTop;
       timelineLineRef.current.style.top = `${firstEventTop}px`;
-      timelineLineRef.current.style.height = `${lastEventTop - firstEventTop
-        }px`;
+      timelineLineRef.current.style.height = `${
+        lastEventTop - firstEventTop
+      }px`;
     }
   }, [
     timelineEvents,

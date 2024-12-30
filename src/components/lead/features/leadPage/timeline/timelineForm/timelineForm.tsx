@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { get_lead_status_controller } from "@/components/lead/features/statusObject";
-import { set_timeline_controller } from "@/components/lead/features/timelineObject";
 import { get_all_active_employee_list_controller } from "@/components/lead/features/userObject";
+import { set_timeline_controller } from "@/components/lead/features/timelineObject";
+
 import {
   set_lead_status_priority_on_server,
   DefaultLead,
@@ -74,9 +75,8 @@ const TimelineForm = () => {
             ? get_all_active_employee_list_controller()
             : Promise.resolve(null),
         ]);
-
         if (statusListResponse) {
-          setStatusList(statusListResponse.statusList);
+          setStatusList(statusListResponse);
         }
 
         if (employeeListResponse) {

@@ -1,50 +1,8 @@
-import { apiPaths } from "../urls";
-import apiClient from "@/apiServices/apiClient";
-
-type FilterOption = {
-  name: string;
-  label: string;
-  placeholder: string;
-  options: { [key: string]: string };
-};
-
-export const FilterSelect: { [key: string]: FilterOption } = {
-  assigned_to: {
-    name: "assigned_to",
-    label: "Assigned to",
-    placeholder: "Select User",
-    options: {}, // Type is now inferred correctly
-  },
-  status: {
-    name: "status",
-    label: "Status",
-    placeholder: "Select Status",
-    options: {}, // Type is now inferred correctly
-  },
-};
-
 //getfilter
-
-export async function get_filter_object() {
-  const filterData = await get_filter_obj_from_server();
-  return filterData;
-}
-
-async function get_filter_obj_from_server() {
-  try {
-    const response = await apiClient(apiPaths.getfilter, "ProdBackendServer", {
-      method: "GET",
-    });
-    return response;
-  } catch (error: any) {
-    console.error("Error getting leads:", error);
-    return false;
-  }
-}
 
 // Reads URL OBJ and return filterby Obj from the URL
 export function get_default_filterBy_obj(params: URLSearchParams): {
-  [key: string]: number[];
+  [key: string]: string[];
 } {
   if (params.has("filter_by")) {
     const filterByString = params.get("filter_by");
@@ -68,18 +26,23 @@ export function filter_multiselect_change_controller(
   history.replaceState(null, "", finalUrl);
 }
 
-// Reads FilterBy obj and return string
 const covert_filterByObj_to_string = (
   userInputObj: Record<string, string[]>
 ): string => {
-  const params = Object.entries(userInputObj)
-    .filter(([_, values]) => values && values.length > 0)
-    .map(([filterName, values]) => {
-      const formattedValues = `[${values.join(",")}]`;
-      return `${filterName}:${formattedValues}`;
-    })
-    .join(";");
-  return params.length > 0 ? params : "";
+  try {
+    const params = Object.entries(userInputObj)
+      .filter(([_, values]) => values && values.length > 0)
+      .map(([filterName, values]) => {
+        const formattedValues = JSON.stringify(values);
+        return `${filterName}:${formattedValues}`;
+      })
+      .join(";");
+
+    return params.length > 0 ? params : "";
+  } catch (error) {
+    console.error("Error processing the object:", error);
+    return "";
+  }
 };
 
 // Reads string and return filterby Obj
@@ -109,14 +72,6 @@ const convert_string_to_filterByObj = (filterByString: string) => {
     });
   }
   return { filter_by };
-};
-
-export const decodeUrlParameters = (params: URLSearchParams) => {
-  const result: Record<string, string[]> = {};
-  params.forEach((value, key) => {
-    result[key] = [value];
-  });
-  return result;
 };
 
 export const encodeUrlParameters = (params: URLSearchParams): string => {

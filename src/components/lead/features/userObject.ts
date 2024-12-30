@@ -1,11 +1,6 @@
 import { apiPaths } from "../urls";
 import apiClient from "@/apiServices/apiClient";
-import {
-  setCookie,
-  deleteCookie,
-  getCookie,
-  setResponseCookie,
-} from "@/cookies/cookiesService";
+import { getCookie } from "@/cookies/cookiesService";
 
 const userDataCookieName = "payload";
 
