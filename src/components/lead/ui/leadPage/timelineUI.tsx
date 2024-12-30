@@ -68,7 +68,7 @@ const TimelineUI = ({
         className="absolute md:right-0 md:left-20 left-4 -translate-x-1/2 w-[2px] bg-gray-300"
       ></div>
 
-      <div className="relative">
+      <div >
         {/* Check if there are no events */}
         {Object.keys(groupedEvents).length === 0 ? (
           <div className="text-center py-8 text-gray-500">
@@ -86,7 +86,7 @@ const TimelineUI = ({
                 }}
               >
                 {/* Month/Year Header */}
-                <div className="sticky top-0 md:w-full z-10 mb-2 w-fit mx-auto">
+                <div className="sticky top-0 md:w-full z-10 mb-8 w-fit mx-auto">
                   <h3 className="text-xs font-medium bg-white shadow-sm py-1 px-4 rounded-md text-center w-fit md:relative md:left-1/2 text-gray-700">
                     {monthYear}
                   </h3>
