@@ -49,7 +49,7 @@ const TimelineTopbar = () => {
     }
   }
   return (
-    <div className="flex justify-between items-center w-full bg-white px-4 py-2 mb-8 rounded-t-md">
+    <div className="flex justify-between items-center w-full bg-white px-4 py-2 md:mb-2 mb-8 rounded-t-md">
       <div className="flex items-center justify-between gap-2">
         <Button className="bg-sky-600 hover:bg-sky-500 text-white rounded-sm">
           <Mail size={16} /> New Email

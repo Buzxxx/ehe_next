@@ -52,7 +52,7 @@ const TopBar: React.FC<TopBarProps> = ({
   };
 
   return (
-    <div className="topbar-wrapper overflow-x-clip w-full ">
+    <div className="topbar-wrapper overflow-x-clip w-full mt-1 md:mt-0 ">
       <div className="relative bg-white border border-slate-200 shadow-sm rounded-lg md:p-3 p-2 z-40 flex items-center justify-between w-full">
         <div className="flex items-center justify-between gap-2">
           <Menubar>
