@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { z } from "zod"
-import { useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
-import InputField from "@/components/authentication/ui/inputField"
-import { paths } from "@/components/authentication/urls"
-import { login } from "../../features/UserObject"
-import { DEFAULT_LOGIN_REDIRECT } from "@/settings/settings"
-import { LockKeyhole, PersonIcon } from "@/components/ui/icons"
-import Link from "next/link"
+import { z } from "zod";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import InputField from "@/components/authentication/ui/inputField";
+import { paths } from "@/components/authentication/urls";
+import { login } from "../../features/UserObject";
+import { DEFAULT_LOGIN_REDIRECT } from "@/settings/settings";
+import { LockKeyhole, PersonIcon } from "@/components/ui/icons";
+import Link from "next/link";
 
 // Defined is the schema for the form
 const loginFormSchema = z.object({
@@ -22,17 +22,17 @@ const loginFormSchema = z.object({
   password: z.string().min(1, {
     message: "Password cannot be empty",
   }),
-})
+});
 
 interface LoginFormProps {
-  setLoading: (loading: boolean) => void
+  setLoading: (loading: boolean) => void;
 }
 
 const LoginForm = ({ setLoading }: LoginFormProps) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const redirectPath = searchParams.get("redirect") || DEFAULT_LOGIN_REDIRECT // Default redirect path if not set
-  const [message, setMessage] = useState({ status: "", message: "" })
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || DEFAULT_LOGIN_REDIRECT; // Default redirect path if not set
+  const [message, setMessage] = useState({ status: "", message: "" });
 
   const Loginform = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -40,24 +40,23 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
       username: "",
       password: "",
     },
-  })
+  });
 
   const {
     formState: { errors },
-  } = Loginform
+  } = Loginform;
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    setLoading(true)
-    const loginResponse = await login(values)
+    setLoading(true);
+    const loginResponse = await login(values);
     if (loginResponse.access) {
-      Loginform.reset()
-      router.push(redirectPath)
+      Loginform.reset();
+      router.push(redirectPath);
     }
     setMessage({
       status: loginResponse.status,
       message: loginResponse.message,
-    })
-    setLoading(false)
+    });
   }
 
   return (
@@ -127,7 +126,7 @@ const LoginForm = ({ setLoading }: LoginFormProps) => {
         </p>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
