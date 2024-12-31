@@ -95,27 +95,40 @@ export async function get_user_data_as_cookie() {
 }
 
 export async function login(values: UserLogin) {
-  const response = await get_login_data_from_server(
-    values.username,
-    values.password
-  );
-  if (response) {
-    try {
-      await set_tokens_as_cookie({
-        accessToken: response.access,
-        refreshToken: response.refresh,
-      });
-      await set_user_data_as_cookie(response.custom_data);
-    } catch (error: any) {
-      console.error("Error saving tokens", error);
-    }
+  logout();
 
-    return { access: true, status: "success", message: "Login successful" };
-  } else {
+  try {
+    const response = await get_login_data_from_server(
+      values.username,
+      values.password
+    );
+    if (response) {
+      try {
+        await Promise.all([
+          set_tokens_as_cookie({
+            accessToken: response.access,
+            refreshToken: response.refresh,
+          }),
+          set_user_data_as_cookie(response.custom_data),
+        ]);
+
+        return { access: true, status: "success", message: "Login successful" };
+      } catch (error) {
+        console.error("Error saving tokens or user data", error);
+        throw new Error("Token saving error");
+      }
+    }
     return {
       access: false,
       status: "failed",
       message: "Username or Password Incorrect",
+    };
+  } catch (error) {
+    console.error("Error during login process", error);
+    return {
+      access: false,
+      status: "error",
+      message: "An error occurred during login",
     };
   }
 }
