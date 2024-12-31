@@ -2,38 +2,41 @@
  * @path src/lib/localStorage.ts
  */
 
-const CONFIG_KEY = "appConfig"
-
-// Helper to get the config object from localStorage
-const getConfig = (): Record<string, any> => {
+// Utility function for generic storage handling
+const getStorageItem = (key: string): Record<string, any> => {
   try {
-    return JSON.parse(localStorage.getItem(CONFIG_KEY) || "{}")
+    return JSON.parse(localStorage.getItem(key) || "{}")
   } catch {
-    return {} // If there's an error return an empty object
+    return {} // If parsing fails, return an empty object
   }
 }
 
-// Helper to update the config object in localStorage
-const setConfig = (newConfig: Record<string, any>) => {
-  localStorage.setItem(CONFIG_KEY, JSON.stringify(newConfig))
+const setStorageItem = (key: string, value: Record<string, any>) => {
+  localStorage.setItem(key, JSON.stringify(value))
 }
 
-// Get a specific key from the config
-export const getFromConfig = (key: string) => {
-  const config = getConfig()
-  return config[key]
-}
+// Functions for appConfig (e.g., theme, preferences)
+const APP_CONFIG_KEY = "appConfig"
 
-// Set a specific key in the config
-export const setInConfig = (key: string, value: any) => {
-  const config = getConfig()
+export const getAppConfig = () => getStorageItem(APP_CONFIG_KEY)
+export const setAppConfig = (newConfig: Record<string, any>) =>
+  setStorageItem(APP_CONFIG_KEY, newConfig)
+export const getFromAppConfig = (key: string) => getAppConfig()[key]
+export const setInAppConfig = (key: string, value: any) => {
+  const config = getAppConfig()
   config[key] = value
-  setConfig(config)
+  setAppConfig(config)
 }
 
-// Remove a specific key from the config
-export const removeFromConfig = (key: string) => {
-  const config = getConfig()
-  delete config[key]
-  setConfig(config)
+// Functions for leadPayload (e.g., saved leads)
+const LEAD_PAYLOAD_KEY = "leadPayload"
+
+export const getLeadPayload = () => getStorageItem(LEAD_PAYLOAD_KEY)
+export const setLeadPayload = (newPayload: Record<string, any>) =>
+  setStorageItem(LEAD_PAYLOAD_KEY, newPayload)
+export const getFromLeadPayload = (key: string) => getLeadPayload()[key]
+export const setInLeadPayload = (key: string, value: any) => {
+  const payload = getLeadPayload()
+  payload[key] = value
+  setLeadPayload(payload)
 }

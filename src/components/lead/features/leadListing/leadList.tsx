@@ -22,14 +22,16 @@ import {
   lead_listing_controller,
   DefaultLeadsResponse,
   DEFAULTURL,
+  get_favourite_leads,
 } from "@/components/lead/features/leadObject";
 
 interface LeadListProps {
-  viewMode: "card" | "row";
+  viewMode: "grid" | "list";
   setSelectedLeads: React.Dispatch<SetStateAction<number[]>>;
   selectedLeads: number[];
   isLoading: boolean;
   setIsLoading: React.Dispatch<SetStateAction<boolean>>;
+  showFavourites: boolean
 }
 
 const LeadList: React.FC<LeadListProps> = ({
@@ -38,6 +40,7 @@ const LeadList: React.FC<LeadListProps> = ({
   selectedLeads,
   isLoading,
   setIsLoading,
+  showFavourites
 }) => {
   const router = useRouter();
   const URLParams = useSearchParams();
@@ -63,7 +66,12 @@ const LeadList: React.FC<LeadListProps> = ({
         const result = await lead_listing_controller(
           new URLSearchParams(query)
         );
-        setLeads(result?.leads || DefaultLeadsResponse.leads);
+        if (!showFavourites) {
+          setLeads(result?.leads || DefaultLeadsResponse.leads);
+        }
+        else {
+          setLeads(get_favourite_leads(result || DefaultLeadsResponse));
+        }
       } catch (error) {
         console.error("Error fetching leads:", error);
         setLeads(DefaultLeadsResponse.leads);
@@ -79,7 +87,7 @@ const LeadList: React.FC<LeadListProps> = ({
     } else {
       router.push(DEFAULTURL);
     }
-  }, [query, router, toast]);
+  }, [query, router, toast, showFavourites]);
 
   const handleToggleLeadSelection = useCallback(
     (id: number) => {
@@ -118,7 +126,7 @@ const LeadList: React.FC<LeadListProps> = ({
         </div>
       ) : (
         <div className="pt-2">
-          {viewMode === "card" ? (
+          {viewMode === "grid" ? (
             <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
               {hasLeads ? (
                 leads.map((lead, index) => (

@@ -20,6 +20,7 @@ import {
   LeadsResponse,
   get_total_leads,
   get_selected_leads_count,
+  toggle_lead_list_view,
 } from "@/components/lead/features/leadObject";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,10 +30,11 @@ const FilterModal = lazy(() => import("./leadFilter/filterModal"));
 
 interface TopBarProps {
   LeadsResponse: LeadsResponse;
-  viewMode: "card" | "row"; // View mode prop
-  setViewMode: React.Dispatch<React.SetStateAction<"card" | "row">>; // Setter for view mode
+  viewMode: "grid" | "list"; // View mode prop
+  setViewMode: React.Dispatch<React.SetStateAction<"grid" | "list">>; // Setter for view mode
   setShowReassignModal: React.Dispatch<SetStateAction<boolean>>;
   setIsLoading: React.Dispatch<SetStateAction<boolean>>;
+  setShowFavourites: React.Dispatch<SetStateAction<boolean>>
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -41,14 +43,19 @@ const TopBar: React.FC<TopBarProps> = ({
   setViewMode,
   setShowReassignModal,
   setIsLoading,
+  setShowFavourites
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false);
-  const [searchModalVisible, setSearchModalVisible] = useState(false);
+  const [searchModalVisible, setSearchModalVisible] = useState(false)
   const totalLeads = get_total_leads(LeadsResponse);
   const selectedCount = get_selected_leads_count(LeadsResponse);
 
   const handleReassign = () => {
     setShowReassignModal(() => true);
+  };
+
+  const handleToggleViewMode = () => {
+    setViewMode(toggle_lead_list_view(viewMode));
   };
 
   return (
@@ -68,6 +75,9 @@ const TopBar: React.FC<TopBarProps> = ({
                   Unselect All
                 </MenubarItem>
                 <MenubarItem onClick={handleReassign}>Reassign</MenubarItem>
+                <MenubarItem onClick={() => setShowFavourites(true)}>
+                  Fetch Favorites
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -93,22 +103,20 @@ const TopBar: React.FC<TopBarProps> = ({
         <div className="flex items-center md:gap-4 gap-2 ml-2">
           <div className="items-center bg-gray-200 rounded-full p-1 shadow-inner hidden md:flex">
             <Button
-              className={`rounded-full p-2 py-1 h-fit w-fit transition ${
-                viewMode === "card"
-                  ? "bg-sky-600 text-white shadow-md hover:bg-sky-600"
-                  : "bg-gray-300 text-gray-500 hover:text-gray-200 hover:bg-sky-400"
-              }`}
-              onClick={() => setViewMode("card")}
+              className={`rounded-full p-2 py-1 h-fit w-fit transition ${viewMode === "grid"
+                ? "bg-sky-600 text-white shadow-md hover:bg-sky-600"
+                : "bg-gray-300 text-gray-500 hover:text-gray-200 hover:bg-sky-400"
+                }`}
+              onClick={handleToggleViewMode}
             >
               <BetweenHorizontalEnd size={20} />
             </Button>
             <Button
-              className={`rounded-full p-2 py-1 h-fit w-fit transition ${
-                viewMode === "row"
-                  ? "bg-sky-600 text-white shadow-md hover:bg-sky-600"
-                  : "bg-gray-300 text-gray-500 hover:text-gray-200 hover:bg-sky-400"
-              }`}
-              onClick={() => setViewMode("row")}
+              className={`rounded-full p-2 py-1 h-fit w-fit transition ${viewMode === "list"
+                ? "bg-sky-600 text-white shadow-md hover:bg-sky-600"
+                : "bg-gray-300 text-gray-500 hover:text-gray-200 hover:bg-sky-400"
+                }`}
+              onClick={handleToggleViewMode}
             >
               <List size={20} />
             </Button>
@@ -153,21 +161,23 @@ const TopBar: React.FC<TopBarProps> = ({
         </Suspense>
       </div>
       {/* Full-Page Search Modal */}
-      {searchModalVisible && (
-        <div className="fixed inset-0 z-50 bg-white flex flex-col p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold">Search</h3>
-            <button
-              onClick={() => setSearchModalVisible(false)}
-              className="text-gray-500 hover:text-gray-800"
-            >
-              <X />
-            </button>
+      {
+        searchModalVisible && (
+          <div className="fixed inset-0 z-50 bg-white flex flex-col p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Search</h3>
+              <button
+                onClick={() => setSearchModalVisible(false)}
+                className="text-gray-500 hover:text-gray-800"
+              >
+                <X />
+              </button>
+            </div>
+            <Input placeholder="Type to search..." autoFocus />
           </div>
-          <Input placeholder="Type to search..." autoFocus />
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

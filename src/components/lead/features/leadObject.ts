@@ -1,16 +1,35 @@
-import apiClient from "@/apiServices/apiClient";
-import { apiPaths } from "../urls";
-import { encodeUrlParameters } from "./filterObject";
+import apiClient from "@/apiServices/apiClient"
+import { apiPaths } from "../urls"
+import { encodeUrlParameters } from "./filterObject"
+import { getFromLeadPayload, setInLeadPayload } from "@/lib/localStorage"
+import { useScreenSize } from "@/lib/useResponsive"
+
+export function lead_list_view_mode() {
+  let DEFAULT
+
+  if (getFromLeadPayload("viewMode")) {
+    DEFAULT = getFromLeadPayload("viewMode")
+    return DEFAULT
+  }
+
+  const currentScreenSize = useScreenSize()
+  if (currentScreenSize === "mobile") {
+    DEFAULT = "grid"
+  } else {
+    DEFAULT = "list"
+  }
+  return DEFAULT
+}
 
 export interface individualLead {
-  phone?: string;
-  id: string;
-  name: string;
-  status: number;
-  priority: string;
-  img?: string;
-  email?: string;
-  company?: string;
+  phone?: string
+  id: string
+  name: string
+  status: number
+  priority: string
+  img?: string
+  email?: string
+  company?: string
 }
 
 export const defaultIndividualLead: individualLead = {
@@ -21,46 +40,46 @@ export const defaultIndividualLead: individualLead = {
   email: "example@gamil.com",
   phone: "+91 9876543210",
   company: "Google",
-};
+}
 
 export interface Lead {
-  img?: string;
-  location?: string;
-  id: string;
-  name: string;
-  created_dt: string;
-  status: { id: string; status: string };
-  isSelected: boolean;
-  assigned_to: { id: number; name: string };
-  brokerage?: number;
-  contact?: string;
-  email?: string;
-  follow_up_current_status?: string;
-  golden?: string;
-  hash_key?: string;
-  interested_in?: string;
-  last_updated_dt: string;
-  lead_type?: string;
-  priority?: string;
-  product_code?: string;
-  product_type?: string;
-  query?: string;
-  recieved_date?: string;
-  revenue?: number;
-  sess_id?: number;
-  source?: string;
-  source_assigned?: string;
-  budget?: string;
+  img?: string
+  location?: string
+  id: string
+  name: string
+  created_dt: string
+  status: { id: string; status: string }
+  isSelected: boolean
+  assigned_to: { id: number; name: string }
+  brokerage?: number
+  contact?: string
+  email?: string
+  follow_up_current_status?: string
+  golden?: string
+  hash_key?: string
+  interested_in?: string
+  last_updated_dt: string
+  lead_type?: string
+  priority?: string
+  product_code?: string
+  product_type?: string
+  query?: string
+  recieved_date?: string
+  revenue?: number
+  sess_id?: number
+  source?: string
+  source_assigned?: string
+  budget?: string
 }
 
 export interface LeadsResponse {
-  leads: Lead[];
-  message: string;
+  leads: Lead[]
+  message: string
   pagination: {
-    current_page: number;
-    total_pages: number;
-    total_items: number;
-  };
+    current_page: number
+    total_pages: number
+    total_items: number
+  }
 }
 
 export const DefaultLeadsResponse: LeadsResponse = {
@@ -71,7 +90,7 @@ export const DefaultLeadsResponse: LeadsResponse = {
     total_pages: 1,
     total_items: 0,
   },
-};
+}
 
 export const DefaultLead: Lead = {
   id: "0",
@@ -101,18 +120,18 @@ export const DefaultLead: Lead = {
   sess_id: undefined,
   source: "Unknown",
   source_assigned: "None",
-};
+}
 
-export const DEFAULTURL = "?page=1&per_page=20";
+export const DEFAULTURL = "?page=1&per_page=20"
 
 export async function lead_listing_controller(params: URLSearchParams) {
   if (params.keys().next().value) {
-    const urlParams = encodeUrlParameters(params);
-    const leads = await get_leads_from_server(urlParams);
-    return leads;
+    const urlParams = encodeUrlParameters(params)
+    const leads = await get_leads_from_server(urlParams)
+    return leads
   } else {
-    history.replaceState(null, "", DEFAULTURL);
-    return [];
+    history.replaceState(null, "", DEFAULTURL)
+    return []
   }
 }
 
@@ -121,42 +140,42 @@ export async function get_priority_list() {
     { id: "cold", value: "Cold" },
     { id: "warm", value: "Warm" },
     { id: "hot", value: "Hot" },
-  ];
+  ]
 
-  return priorityList;
+  return priorityList
 }
 
 export async function set_lead_status_priority_on_server(data: any) {
-  const returnObj = await push_update_lead_to_server(data);
+  const returnObj = await push_update_lead_to_server(data)
   if (returnObj) {
-    return returnObj;
+    return returnObj
   }
-  return false;
+  return false
 }
 
 export async function update_lead_on_server(data: any) {
-  const returnObj = await push_update_lead_to_server(data);
+  const returnObj = await push_update_lead_to_server(data)
   if (returnObj) {
-    return returnObj;
+    return returnObj
   }
-  return false;
+  return false
 }
 
 export async function get_lead_details_controller(leadId: string) {
-  const leadDetails = await get_lead_from_server(leadId);
-  return leadDetails;
+  const leadDetails = await get_lead_from_server(leadId)
+  return leadDetails
 }
 
 export async function create_lead_controller(leadData: any) {
-  return await push_create_lead_to_server(leadData);
+  return await push_create_lead_to_server(leadData)
 }
 
 export async function create_lead_bulk_controller(leadList: any) {
-  return await push_create_bulk_lead_to_server(leadList);
+  return await push_create_bulk_lead_to_server(leadList)
 }
 
 export function get_total_leads(LeadsResponse: LeadsResponse) {
-  return LeadsResponse?.pagination?.total_items || 0;
+  return LeadsResponse?.pagination?.total_items || 0
 }
 
 export function get_selected_leads(LeadsResponse: LeadsResponse) {
@@ -164,38 +183,56 @@ export function get_selected_leads(LeadsResponse: LeadsResponse) {
     LeadsResponse?.leads
       ?.filter((lead) => lead.isSelected)
       .map((lead) => lead.id) || []
-  );
+  )
 }
 
 export function get_selected_leads_count(LeadsResponse: LeadsResponse) {
-  return get_selected_leads(LeadsResponse).length || 0;
+  return get_selected_leads(LeadsResponse).length || 0
+}
+
+export function get_favourite_leads(LeadsResponse: LeadsResponse) {
+  const favouriteLeads = getFromLeadPayload("savedLeads")
+
+  return LeadsResponse?.leads?.filter((lead) =>
+    favouriteLeads?.includes(lead.id)
+  )
+}
+
+export function toggle_lead_list_view(currentView: string) {
+  if (currentView === "grid") {
+    setInLeadPayload("viewMode", "list")
+    return "list"
+  } else {
+    setInLeadPayload("viewMode", "grid")
+    return "grid"
+  }
 }
 
 /* Fetch leads from the backend server on the basis of URL created by filter or default using apiclient */
 async function get_leads_from_server(queryParams: string) {
-  const urlPart = apiPaths.leadPage + queryParams;
+  const urlPart = apiPaths.leadPage + queryParams
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
-    });
-    return response;
+    })
+    return response
   } catch (error: any) {
-    console.error("Error getting leads:", error);
-    return false;
+    console.error("Error getting leads:", error)
+    return false
   }
 }
 
 /* Fetch single lead for lead page, URL is system generated just adding lead ID to url */
 async function get_lead_from_server(id: string) {
-  const urlPart = apiPaths.getlead + "?leadId=" + id;
+  const urlPart = apiPaths.getlead + "?leadId=" + id
   try {
     const response = await apiClient(urlPart, "ProdBackendServer", {
       method: "GET",
-    });
-    return response;
+    })
+    return response
   } catch (error: any) {
-    console.error("Error getting leads:", error);
-    return false;
+    console.error("Error getting leads:", error)
+    return false
   }
 }
 
@@ -204,10 +241,10 @@ async function push_create_lead_to_server(data: any) {
     const response = await apiClient(apiPaths.createLead, "ProdBackendServer", {
       method: "POST",
       body: JSON.stringify(data),
-    });
-    return response;
+    })
+    return response
   } catch (error) {
-    throw new Error(`Failed to create lead: ${(error as Error).message}`);
+    throw new Error(`Failed to create lead: ${(error as Error).message}`)
   }
 }
 
@@ -216,11 +253,11 @@ async function push_update_lead_to_server(data: any) {
     const response = await apiClient(apiPaths.updatelead, "ProdBackendServer", {
       method: "POST",
       body: JSON.stringify(data),
-    });
-    return response;
+    })
+    return response
   } catch (error) {
-    console.error("Failed to update lead:", error as Error);
-    return false;
+    console.error("Failed to update lead:", error as Error)
+    return false
   }
 }
 
@@ -233,22 +270,22 @@ async function push_create_bulk_lead_to_server(data: any) {
         method: "POST",
         body: JSON.stringify(data),
       }
-    );
-    return response;
+    )
+    return response
   } catch (error) {
-    throw new Error(`Failed to create lead: ${(error as Error).message}`);
+    throw new Error(`Failed to create lead: ${(error as Error).message}`)
   }
 }
 
 export interface CsvUploadPayload {
-  data: any[];
-  headers: { [key: string]: string };
+  data: any[]
+  headers: { [key: string]: string }
 }
 
 export async function UploadLeadsFromCsv({ data, headers }: CsvUploadPayload) {
   const response = await apiClient("/api/upload", "ProdBackedServer", {
     method: "POST",
     body: JSON.stringify({ data, headers }),
-  });
-  return response;
+  })
+  return response
 }
