@@ -12,6 +12,7 @@ import LeadList from "../features/leadListing/leadList";
 import {
   LeadsResponse,
   DefaultLeadsResponse,
+  lead_list_view_mode,
 } from "@/components/lead/features/leadObject";
 import Modal from "../ui/modal";
 import LeadReassignForm from "../features/forms/leadReassignForm";
@@ -20,9 +21,12 @@ const LeadLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [leadsResponse, setLeadsResponse] =
     useState<LeadsResponse>(DefaultLeadsResponse); // State to store the response from the API call that fetches the list of leads.
-  const [viewMode, setViewMode] = useState<"card" | "row">("card"); // State to determine how the leads are displayed in the LeadList component.
+  const [viewMode, setViewMode] = useState(lead_list_view_mode()); // State to determine how the leads are displayed in the LeadList component.
   const [showReassignModal, setShowReassignModal] = useState(false);
   const [selectedLeads, setSelectedLeads] = useState<number[]>([]);
+  const [showFavourites, setShowFavourites] = useState(false);
+  console.log(lead_list_view_mode())
+
 
   return (
     <div className="px-1 md:px-0 h-full">
@@ -34,6 +38,8 @@ const LeadLayout = () => {
         setViewMode={setViewMode}
         setShowReassignModal={setShowReassignModal}
         setIsLoading={setIsLoading}
+        setShowFavourites={setShowFavourites}
+        showFavourites={showFavourites}
       />
       <LeadList
         viewMode={viewMode}
@@ -41,6 +47,7 @@ const LeadLayout = () => {
         setIsLoading={setIsLoading}
         selectedLeads={selectedLeads}
         setSelectedLeads={setSelectedLeads}
+        showFavourites={showFavourites}
       />
 
       <Modal
