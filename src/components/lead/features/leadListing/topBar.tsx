@@ -24,9 +24,10 @@ import {
 } from "@/components/lead/features/leadObject";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import dynamic from "next/dynamic";
 
 // Dynamically import the FilterModal component
-const FilterModal = lazy(() => import("./leadFilter/filterModal"));
+const FilterModal = dynamic(() => import("./leadFilter/filterModal"));
 
 interface TopBarProps {
   LeadsResponse: LeadsResponse;
@@ -35,6 +36,7 @@ interface TopBarProps {
   setShowReassignModal: React.Dispatch<SetStateAction<boolean>>;
   setIsLoading: React.Dispatch<SetStateAction<boolean>>;
   setShowFavourites: React.Dispatch<SetStateAction<boolean>>
+  showFavourites: boolean
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -43,7 +45,8 @@ const TopBar: React.FC<TopBarProps> = ({
   setViewMode,
   setShowReassignModal,
   setIsLoading,
-  setShowFavourites
+  setShowFavourites,
+  showFavourites
 }) => {
   const [filterVisible, setFilterVisible] = useState<boolean>(false);
   const [searchModalVisible, setSearchModalVisible] = useState(false)
@@ -75,9 +78,11 @@ const TopBar: React.FC<TopBarProps> = ({
                   Unselect All
                 </MenubarItem>
                 <MenubarItem onClick={handleReassign}>Reassign</MenubarItem>
-                <MenubarItem onClick={() => setShowFavourites(true)}>
+
+                {showFavourites ? (<MenubarItem onClick={() => setShowFavourites(false)}>  Fetch All</MenubarItem>) : <MenubarItem onClick={() => setShowFavourites(true)}>
                   Fetch Favorites
-                </MenubarItem>
+                </MenubarItem>}
+
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -150,15 +155,14 @@ const TopBar: React.FC<TopBarProps> = ({
             />
           </button>
         </div>
-        <Suspense fallback={<div>Loading filter...</div>}>
-          <FilterModal
-            className={
-              filterVisible
-                ? "translate-x-0 opacity-100"
-                : "translate-x-full opacity-0"
-            }
-          />
-        </Suspense>
+        <FilterModal
+          className={
+            filterVisible
+              ? "translate-x-0 opacity-100"
+              : "translate-x-full opacity-0"
+          }
+        />
+
       </div>
       {/* Full-Page Search Modal */}
       {

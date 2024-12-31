@@ -5,20 +5,10 @@ import { getFromLeadPayload, setInLeadPayload } from "@/lib/localStorage"
 import { useScreenSize } from "@/lib/useResponsive"
 
 export function lead_list_view_mode() {
-  let DEFAULT
-
-  if (getFromLeadPayload("viewMode")) {
-    DEFAULT = getFromLeadPayload("viewMode")
-    return DEFAULT
-  }
-
   const currentScreenSize = useScreenSize()
-  if (currentScreenSize === "mobile") {
-    DEFAULT = "grid"
-  } else {
-    DEFAULT = "list"
-  }
-  return DEFAULT
+  if (currentScreenSize === "mobile") return "grid" // always set to 'grid' on mobile
+
+  return getFromLeadPayload("viewMode") || "list" // fetch from localStorage if available else default to 'list' on desktop
 }
 
 export interface individualLead {
@@ -199,13 +189,11 @@ export function get_favourite_leads(LeadsResponse: LeadsResponse) {
 }
 
 export function toggle_lead_list_view(currentView: string) {
-  if (currentView === "grid") {
-    setInLeadPayload("viewMode", "list")
-    return "list"
-  } else {
-    setInLeadPayload("viewMode", "grid")
-    return "grid"
-  }
+  const newView = currentView === "grid" ? "list" : "grid"
+
+  setInLeadPayload("viewMode", newView)
+
+  return newView
 }
 
 /* Fetch leads from the backend server on the basis of URL created by filter or default using apiclient */
